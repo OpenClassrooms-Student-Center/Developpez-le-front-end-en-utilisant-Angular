@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged, filter, map, Observable, of, Subscription } from 'rxjs';
+import { filter, map, Observable, of, Subscription } from 'rxjs';
 import { OlympicDTO } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -37,7 +37,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.olympics$ = this.olympicService.getOlympics();
     this.routeSub$ = this.route.params.subscribe(params => {
       this.subscription$ = this.olympics$.pipe(
-        distinctUntilChanged(),
         filter((countries) => !!countries),
         map(countries => countries.find(country => country.id == params['id'])),
         filter(country => {
@@ -58,7 +57,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
             datasets: [{
               label: 'Dates',
               data: country?.participations.map(participation => participation.medalsCount),
-              borderColor: '#42A5F5',
+              borderColor: '#04838f',
             }]
           };
         })

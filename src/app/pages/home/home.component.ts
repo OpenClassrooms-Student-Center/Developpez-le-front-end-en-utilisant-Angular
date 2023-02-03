@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { distinctUntilChanged, filter, Observable, of, Subscription } from 'rxjs';
+import { filter, Observable, of, Subscription } from 'rxjs';
 import { OlympicChartDatas, OlympicDTO } from 'src/app/core/models/Olympic';
 import OlympicParticipationDTO from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -38,7 +38,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
     this.subscription$ = this.olympics$.pipe(
-      distinctUntilChanged(),
       filter((datas) => !!datas)
     )
       .subscribe(datas => {
@@ -73,7 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     this.nbJo = [...new Set(jos.map(jo => jo.id))].length;
   }
-
+  
   public selectData($event: any) {
     const selectedCountry = this.countries[$event.element.index];
     this.router.navigate([`country/${selectedCountry.id}`])
