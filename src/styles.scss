@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+$main-color: rgb(22, 136, 87);
+
 body,
 html,
 app-root,
@@ -13,5 +16,15 @@ app-root,
 .flex {
     display: flex;
 }
+.home-container, .chart-container {
+    height: 100%;
+}
 
-$main-color: rgb(22, 136, 87);
+.home-container {
+    flex-direction: column;
+}
+
+.info-container {
+    justify-content: center;
+    gap: 50px;
+}
