@@ -1,16 +1,18 @@
 @import '../../../styles.scss';
 
 .header-container {
+    padding: 0 12px;
     background-color: $main-color;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     * {
-        margin: 0;
+        color: white;
         text-decoration: none;
     }
-    li {
-        list-style: none;
+    .heading-container {
+        display: flex;
+        flex: 1;
+        justify-content: center;
     }
 }
