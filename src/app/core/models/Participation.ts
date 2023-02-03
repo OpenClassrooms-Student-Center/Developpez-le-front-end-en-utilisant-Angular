@@ -9,3 +9,11 @@ example of participation:
     athleteCount: 372
 }
 */
+
+export default interface OlympicParticipationDTO {
+    id: number;
+    year: number;
+    city: string;
+    medalsCount: number;
+    athleteCount: number;
+}

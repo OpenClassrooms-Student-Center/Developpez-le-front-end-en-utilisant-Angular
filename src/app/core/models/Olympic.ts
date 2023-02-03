@@ -8,13 +8,8 @@ example of an olympic country:
 }
 */
 
-export interface OlympicParticipationDTO {
-    id: number;
-    year: number;
-    city: string;
-    medalsCount: number;
-    athleteCount: number;
-}
+import OlympicParticipationDTO from "./Participation";
+
 export interface OlympicDTO {
     id: number;
     country: string;

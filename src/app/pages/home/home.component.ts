@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, filter, Observable, of, Subscription } from 'rxjs';
-import { OlympicChartDatas, OlympicDTO, OlympicParticipationDTO } from 'src/app/core/models/Olympic';
+import { OlympicChartDatas, OlympicDTO } from 'src/app/core/models/Olympic';
+import OlympicParticipationDTO from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ChartService } from 'src/app/shared/chart.service';
 
