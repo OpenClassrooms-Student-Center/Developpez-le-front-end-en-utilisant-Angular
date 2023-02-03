@@ -1,0 +1,13 @@
+<section class="flex home-container">
+    <h2></h2>
+    <div class="flex info-container">
+        <telesport-data-block [label]="'Number of entries'" [value]="nbEntries"></telesport-data-block>
+        <telesport-data-block [label]="'Number of medalss'" [value]="nbMedals"></telesport-data-block>
+        <telesport-data-block [label]="'Number of athletes'" [value]="nbAtheletes"></telesport-data-block>
+    </div>
+
+    <div class="chart-container">
+        <p-chart type="line" [data]="basicData" height="50%" width="100%"></p-chart>
+    </div>
+
+</section>

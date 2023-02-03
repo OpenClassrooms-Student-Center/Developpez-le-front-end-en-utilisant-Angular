@@ -7,9 +7,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DetailsComponent } from './pages/details/details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, DetailsComponent],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent],
