@@ -1,0 +1,17 @@
+.container, footer, header {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.main {
+    position: relative;
+    height: 100%;
+}
+
+header {
+    height: 62px;
+} 
+
+footer {
+    height: 40px;
+}
