@@ -8,15 +8,24 @@ example of an olympic country:
 }
 */
 
-interface OlympicParticipationDTO {
+export interface OlympicParticipationDTO {
     id: number;
     year: number;
     city: string;
     medalsCount: number;
     athleteCount: number;
 }
-export default interface OlympicDTO {
+export interface OlympicDTO {
     id: number;
     country: string;
     participations: OlympicParticipationDTO[];
+}
+
+export interface OlympicChartDatas {
+    labels: string[];
+    datasets: {
+        data: number[];
+        backgroundColor: string[];
+        hoverBackgroundColor: string[];
+    }[]
 }
