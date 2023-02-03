@@ -1,13 +1,11 @@
 <section class="flex home-container">
-    <h2>Medals per Country</h2>
+    <telesport-h2-container [value]="'Medals per Country'"></telesport-h2-container>
     <div class="flex info-container">
         <telesport-data-block [label]="'Number of JOs'" [value]="nbJo"></telesport-data-block>
         <telesport-data-block [label]="'Number of Countries'" [value]="nbCountries"></telesport-data-block>
     </div>
-
     <div class="chart-container">
         <p-chart *ngIf="countries && countries.length" (onDataSelect)="selectData($event)" type="pie"
-            [data]="chartDatas" height="50%"></p-chart>
+            [data]="chartDatas" height="50%" ></p-chart>
     </div>
-
 </section>

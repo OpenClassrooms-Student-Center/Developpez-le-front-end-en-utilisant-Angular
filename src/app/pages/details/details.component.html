@@ -1,7 +1,5 @@
 <section class="flex home-container">
-    <div class="flex contry-name-container">
-        <h2>{{ countryName }}</h2>
-    </div>
+    <telesport-h2-container [value]="countryName"></telesport-h2-container>
     <div class="flex info-container">
         <telesport-data-block [label]="'Number of entries'" [value]="nbEntries"></telesport-data-block>
         <telesport-data-block [label]="'Number of medalss'" [value]="nbMedals"></telesport-data-block>
