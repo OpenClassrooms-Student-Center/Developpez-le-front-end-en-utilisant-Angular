@@ -17,6 +17,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public nbEntries: number;
   public nbMedals: number;
   public nbAtheletes: number;
+  public  countryName: string;
 
   constructor(
     private olympicService: OlympicService,
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.nbEntries = 0;
     this.nbMedals = 0;
     this.nbAtheletes = 0;
+    this.countryName = '';
   }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         })
       )
         .subscribe(country => {
+          this.countryName = country?.country as string; 
           this.nbEntries = country?.participations.length as number
           this.nbMedals = country?.participations.reduce((prev: number, current) => prev + current.medalsCount, 0) as number
           this.nbAtheletes = country?.participations.reduce((prev: number, current) => prev + current.athleteCount, 0) as number

@@ -1,0 +1,14 @@
+@import '../../../styles.scss';
+
+.contry-name-container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    >h2 {
+        border-radius: 20px;
+        background-color: $main-color;
+        color: white;
+        min-width: 170px;
+        padding: 12px 12px;
+    }
+}
