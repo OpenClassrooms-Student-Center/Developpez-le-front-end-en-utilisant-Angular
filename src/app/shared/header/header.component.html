@@ -1,9 +1,6 @@
 <div class="header-container">
-    
-    <a [routerLink]="['/']">
-        Go Back
+    <a *ngIf="(displayGoBack$ | async)" [routerLink]="['/']">
+        Go Back 
     </a>
-    <div class="heading-container">
-        <h1>Olympics Datas</h1>
-    </div>
+    <h1>Olympics Datas</h1>
 </div>
