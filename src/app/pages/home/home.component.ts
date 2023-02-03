@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { distinctUntilChanged, filter, Observable, of, Subscription } from 'rxjs';
 import { OlympicChartDatas, OlympicDTO, OlympicParticipationDTO } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -16,10 +17,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public nbJo: number;
   public nbCountries: number;
   public countries: OlympicDTO[];
-  @ViewChild('chart') chart: any;
 
-
-  constructor(private olympicService: OlympicService, private chartService: ChartService) {
+  constructor(
+    private olympicService: OlympicService,
+    private chartService: ChartService,
+    private router: Router
+  ) {
     this.subscription$ = new Subscription();
     this.olympics$ = of([]);
     this.nbJo = 0;
@@ -41,7 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.countries = datas;
         this.nbCountries = this.countries.length;
         this.getChartDatas();
-        this.chart.refresh();
       })
   }
 
@@ -73,6 +75,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public selectData($event: any) {
     const selectedCountry = this.countries[$event.element.index];
-    console.log(selectedCountry);
+    this.router.navigate([`country/${selectedCountry.id}`])
   }
 }
