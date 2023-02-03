@@ -25,6 +25,7 @@ app-root,
 }
 
 .info-container {
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 50px;
+    gap: 20px;
 }

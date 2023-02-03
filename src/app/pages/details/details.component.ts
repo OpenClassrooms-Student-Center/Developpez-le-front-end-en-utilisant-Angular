@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter, map, Observable, of, Subscription } from 'rxjs';
 import { OlympicDTO } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { ChartService } from 'src/app/shared/chart.service';
 
 @Component({
   selector: 'app-details',
@@ -21,7 +20,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private olympicService: OlympicService,
-    private chartService: ChartService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -60,7 +58,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
               borderColor: '#42A5F5',
             }]
           };
-          console.log(this.basicData);
         })
     })
   }
