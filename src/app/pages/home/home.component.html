@@ -1,3 +1,48 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<!-- <h3>Implementation with olympics$</h3>
+<ul>
+    <li  *ngFor="let olympic of olympics$ | async">{{ olympic.country + " [id=" + olympic.id + "] " + getMedalsCount(olympic.participations) + " médailles " + getAthleteCount(olympic.participations) + " athlètes"}}</li>
+</ul>
+
+<h3>Implementation with subscription</h3>
+<ul>
+    <li *ngFor="let country of countryList;let i = index">{{ country }} {{ medalsPerCountry[i] }}
+    </li>
+</ul> -->
+
+
+
+<!-- <div *ngIf="!hasError; else errorTemplate"> -->
+  <div class="container">
+      <div class="card title">
+          <p>Medals per Country</p>
+      </div>
+  </div>
+  <div class="container">
+      <div class="card subtitle">
+          <p>Number of JOs<br><span style="font-weight: bold;">{{ joCount }}</span></p>
+      </div>
+      <div class="card subtitle">
+        <p>Number of countries<br><span style="font-weight: bold;">{{ countryCount }}</span></p>
+      </div>
+      <div class="card subtitle">
+        <p>Number of countries<br><span style="font-weight: bold;">{{ countryCount }}</span></p>
+      </div>
+  </div>
+  <div>
+      <!-- <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false"
+          (select)="onSelect($event)">
+          <ng-template #tooltipTemplate let-model="model">
+              <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
+              <br>
+              <fa-icon [icon]="faMedal" class="p-2" style="font-size: large;"></fa-icon>
+              <span style="font-weight: bold; font-size: large;">{{model.value}}</span>
+          </ng-template>
+      </ngx-charts-pie-chart> -->
+  </div>
+<!-- </div>
+
+<ng-template #errorTemplate>
+  <div class="center">
+      <h2>Something wrong happened</h2>
+  </div>
+</ng-template> -->
