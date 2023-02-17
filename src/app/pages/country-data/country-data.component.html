@@ -1,0 +1,12 @@
+<h1>Olympic games app</h1>
+<hr />
+<h2>Country detail [ {{ countryName }} ]</h2>
+<p>Number of entries : {{ countryEntries }}</p>
+<p>Total number medals : {{ countryMedalsCount }}</p>
+<p>Total number of athletes : {{ countryAthletesCount }}</p>
+<h3>Medals per JO</h3>
+<ul>
+  <li *ngFor="let year of countryJoYears;let i = index">
+    {{ year }} {{ countryMedalsPerJo[i] }}
+  </li>
+</ul>
