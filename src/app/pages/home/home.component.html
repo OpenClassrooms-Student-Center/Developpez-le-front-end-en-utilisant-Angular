@@ -2,7 +2,6 @@
 <ul>
     <li  *ngFor="let olympic of olympics$ | async">{{ olympic.country + " [id=" + olympic.id + "] " + getMedalsCount(olympic.participations) + " médailles " + getAthleteCount(olympic.participations) + " athlètes"}}</li>
 </ul>
-
 <h3>Implementation with subscription</h3>
 <ul>
     <li *ngFor="let country of countryList;let i = index">{{ country }} {{ medalsPerCountry[i] }}
@@ -21,11 +20,24 @@
       <div class="card subtitle">
         <p>Number of countries<br><span style="font-weight: bold;">{{ countryCount }}</span></p>
       </div>
-      <div class="card subtitle">
-        <p>Number of countries<br><span style="font-weight: bold;">{{ countryCount }}</span></p>
-      </div>
   </div>
+
   <div>
-      <!-- PIE CHART -->
+      <!-- PIE CHART
+        gradient: boolean = true;
+        showLegend: boolean = true;
+        showLabels: boolean = true;
+        isDoughnut: boolean = false;
+        legendPosition: string = 'below';-->
+        <ngx-charts-pie-chart
+          [results]="single"
+          [gradient]="true"
+          [legend]="false"
+          [labels]="true"
+          [labelFormatting]="labelFormat"
+          [doughnut]="false"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-pie-chart>
   </div>
 

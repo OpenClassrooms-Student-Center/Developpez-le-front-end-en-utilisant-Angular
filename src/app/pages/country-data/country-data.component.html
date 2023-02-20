@@ -1,4 +1,5 @@
 <h1>Olympic games app</h1>
+<a routerLink="">Back</a>
 <hr />
 <h2>Country detail [ {{ countryName }} ]</h2>
 <p>Number of entries : {{ countryEntries }}</p>
@@ -10,3 +11,21 @@
     {{ year }} {{ countryMedalsPerJo[i] }}
   </li>
 </ul>
+<div>
+// Linear CHART
+<ngx-charts-line-chart
+
+  [results]="data"
+  >
+ </ngx-charts-line-chart>
+</div>
+  <!-- [view]="view"
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline" -->

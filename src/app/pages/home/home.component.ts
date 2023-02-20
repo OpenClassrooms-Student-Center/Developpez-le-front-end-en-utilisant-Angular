@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +24,12 @@ export class HomeComponent implements OnInit {
 
   public olympics$: Observable<Olympic[]> = of([]);
 
-  constructor(private olympicService: OlympicService) {}
+  single : any[] = [];
+
+  constructor(private olympicService: OlympicService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
 
     // vowels$.subscribe({
     //   next: x => console.log('The next vowel is: ', x),
@@ -46,16 +50,20 @@ export class HomeComponent implements OnInit {
             if (this.joCount <= olympicItem.participations.length) {
               this.joCount = olympicItem.participations.length;
             }
+            // use the extra chart-property to store the countryId value, id needed for accessing country-data page.
+            let infoChart =  {"name": olympicItem.country, "value": this.getMedalsCount(olympicItem.participations), "extra": olympicItem.id};
+            this.single.push(infoChart);
           });
           this.countryCount = countryList.length;
           this.countryList = countryList;
           this.medalsPerCountry = medalsPerCountry;
+          // push doesn't refresh chart data, this line needed to force this.single to be actualised
+          this.single = [...this.single];
           },
           error: err => console.error('An error occurend', err),
           complete: () => console.log('Completed')
       }
   )
-
   }
 
   ngOnDestroy(): void {
@@ -72,5 +80,13 @@ export class HomeComponent implements OnInit {
 
   }
 
+  labelFormat(labelName: string): string{
+    return labelName.toUpperCase();
+}
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    this.router.navigateByUrl(`country/${data.extra}`);
+  }
 
 }

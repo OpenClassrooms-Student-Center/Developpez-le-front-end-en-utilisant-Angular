@@ -21,6 +21,26 @@ export class CountryDataComponent implements OnInit {
 
   countryDataSubscription!: Subscription;
 
+  data: any[] = [
+    {
+      "name": "Germany",
+      "series": [
+        {
+          "name": "1990",
+          "value": 62000000
+        },
+        {
+          "name": "2010",
+          "value": 73000000
+        },
+        {
+          "name": "2011",
+          "value": 89400000
+        }
+      ]
+    }
+  ];
+
   constructor(private OlympicService: OlympicService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
