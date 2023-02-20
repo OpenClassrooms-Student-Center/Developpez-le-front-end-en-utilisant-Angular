@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { OlympicService } from './../../core/services/olympic.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @Component({
@@ -21,25 +22,22 @@ export class CountryDataComponent implements OnInit {
 
   countryDataSubscription!: Subscription;
 
-  data: any[] = [
-    {
-      "name": "Germany",
-      "series": [
-        {
-          "name": "1990",
-          "value": 62000000
-        },
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        }
-      ]
-    }
-  ];
+  seriesChart : any[] = [];
+  data : any[] = [];
+  view: any[] = [700, 300];
+  // options
+  legend: boolean = false;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = false;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Dates';
+  yAxisLabel: string = 'Medals';
+  timeline: boolean = true;
+
+
 
   constructor(private OlympicService: OlympicService, private route: ActivatedRoute) { }
 
@@ -65,11 +63,18 @@ export class CountryDataComponent implements OnInit {
                           this.countryJoYears.push(participation.year);
                           this.countryMedalsPerJo.push(participation.medalsCount);
 
+                          let serie =  {"name": participation.year, "value": participation.medalsCount};
+                          this.seriesChart.push(serie);
+
                         } )
+          // push doesn't refresh chart data, this line needed to force this.single to be actualised
+          this.data = [{ "name": this.countryName, "series": this.seriesChart }];
         },
           error: err => console.error('An error occurend', err),
           complete: () => console.log('Completed')
       }
+
+
 
 
     )

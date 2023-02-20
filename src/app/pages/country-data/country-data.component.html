@@ -1,26 +1,25 @@
-<h1>Olympic games app</h1>
 <a routerLink="">Back</a>
 <hr />
-<h2>Country detail [ {{ countryName }} ]</h2>
-<p>Number of entries : {{ countryEntries }}</p>
-<p>Total number medals : {{ countryMedalsCount }}</p>
-<p>Total number of athletes : {{ countryAthletesCount }}</p>
-<h3>Medals per JO</h3>
-<ul>
-  <li *ngFor="let year of countryJoYears;let i = index">
-    {{ year }} {{ countryMedalsPerJo[i] }}
-  </li>
-</ul>
-<div>
-// Linear CHART
-<ngx-charts-line-chart
-
-  [results]="data"
-  >
- </ngx-charts-line-chart>
+<div class="container">
+  <div class="card title">
+      <p>{{ countryName }}</p>
+  </div>
 </div>
-  <!-- [view]="view"
-  [scheme]="colorScheme"
+<div class="container">
+  <div class="card subtitle">
+      <p>Number of entries<br><span style="font-weight: bold;">{{ countryEntries }}</span></p>
+  </div>
+  <div class="card subtitle">
+    <p>Total number medals<br><span style="font-weight: bold;">{{ countryMedalsCount }}</span></p>
+  </div>
+  <div class="card subtitle">
+    <p>Total number of athletes<br><span style="font-weight: bold;">{{ countryAthletesCount }}</span></p>
+  </div>
+</div>
+
+<div class="container">
+  <ngx-charts-line-chart
+  [view]='[700,300]'
   [legend]="legend"
   [showXAxisLabel]="showXAxisLabel"
   [showYAxisLabel]="showYAxisLabel"
@@ -28,4 +27,10 @@
   [yAxis]="yAxis"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
-  [timeline]="timeline" -->
+  [timeline]="timeline"
+  [results]="data"
+  >
+  </ngx-charts-line-chart>
+</div>
+
+

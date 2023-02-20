@@ -4,7 +4,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @Component({
   selector: 'app-home',
