@@ -1,28 +1,15 @@
-  <div class="container">
-      <div class="card title">
-          <p>Medals per Country</p>
-      </div>
-  </div>
-  <div class="container">
-      <div class="card subtitle">
-          <p>Number of JOs<br><span style="font-weight: bold;">{{ joCount }}</span></p>
-      </div>
-      <div class="card subtitle">
-        <p>Number of countries<br><span style="font-weight: bold;">{{ countryCount }}</span></p>
-      </div>
-  </div>
+<app-statistic-card-list
+    [titleCard]="'Medals per Country'"
+    [statisticCards]="stats">
+</app-statistic-card-list>
 
-  <div>
-        <ngx-charts-pie-chart
-          [results]="dataChart"
-          [gradient]="true"
-          [legend]="false"
-          [labels]="true"
-          [doughnut]="false"
-          (select)="onSelect($event)"
-          [trimLabels]="false"
-          [animations]="false"
-        >
-        </ngx-charts-pie-chart>
-  </div>
-
+<div #containerRef class="chart">
+  <ngx-charts-pie-chart
+            [view]="[containerRef.offsetWidth > 600 ? 600 : containerRef.offsetWidth * 0.8, containerRef.offsetWidth > 600 ? 600 : containerRef.offsetWidth * 0.8]"
+            [results]="dataChart"
+            [labels]="true"
+            [trimLabels]="false"
+            (select)="onSelect($event)"
+      >
+  </ngx-charts-pie-chart>
+</div>

@@ -29,13 +29,13 @@ export class OlympicService {
   }
 
   // Return country data from countryId number
- getOlympicByCountryId({ countryId }: { countryId: number; }): Observable<Olympic | undefined> {
+ getOlympicByCountryId(countryId: number): Observable<Olympic> {
 
       const countryData = this.olympics$.pipe(
         map(olympics => (olympics.find(
             olympic => olympic.id === countryId))
             )
-        );
+        ) as Observable<Olympic>;
 
     if (!countryData) {
         throw new Error('Country data not found!');

@@ -1,39 +1,25 @@
+<app-statistic-card-list
+    [titleCard]= 'countryName'
+    [statisticCards]="stats">
+</app-statistic-card-list>
 
-<div class="container">
-  <div class="card title">
-      <p>{{ countryName }}</p>
-  </div>
-</div>
-<div class="container">
-  <div class="card subtitle">
-      <p>Number of entries<br><span style="font-weight: bold;">{{ countryEntries }}</span></p>
-  </div>
-  <div class="card subtitle">
-    <p>Total number medals<br><span style="font-weight: bold;">{{ countryMedalsCount }}</span></p>
-  </div>
-  <div class="card subtitle">
-    <p>Total number of athletes<br><span style="font-weight: bold;">{{ countryAthletesCount }}</span></p>
-  </div>
-</div>
-
-<div #containerRef class="container">
+<div #containerRef class="chart">
   <ngx-charts-line-chart
-    [view]="[700, 300]"
-    [legend]="legend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [timeline]="timeline"
-    [results]="data"
+    [view]="[containerRef.offsetWidth * 0.8, 300]"
+    [legend]="false"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [xAxisLabel]="'Dates'"
+    [yAxisLabel]="'Medals'"
+    [timeline]="false"
+    [results]="dataChart"
     >
   </ngx-charts-line-chart>
 </div>
 
 <div class="container">
-  <!-- <button (click)="onContinue()">Go back</button> -->
   <a routerLink="">Go back</a>
 </div>
 
