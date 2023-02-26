@@ -22,8 +22,7 @@ As you can see, an architecture has already been defined for the project. It is 
 - `core` folder: contains the business logic (`services` and `models` folders)
   - `models` folder: contains every reusable interfaces for dataset
     - `DataLineChart` & `DataPiChart` : interfaces for data chart.
-    - `Olympic` & `Participation` interfaces for data from the mock ([label](src/assets/mock/olympic.json))
-  - `components` folder: contains every reusable components used to rendering the dashboard.
+    - `Olympic` & `Participation` interfaces for data from the mock `[olympic.json](src/assets/mock/olympic.json)`
 
 - `pages` folder: contains components used for routing
   - `home`
