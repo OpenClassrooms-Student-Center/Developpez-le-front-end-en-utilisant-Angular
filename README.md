@@ -1,11 +1,10 @@
 <p align="center">
   <img src="src\assets\img\telesport_logo.png" title="Telesport">
 </p>
-<p align="center">
 
 # OlympicGamesStarter 
 ![Angular](https://img.shields.io/static/v1?label=&message=ANGULAR&color=red)![TypeScript](https://img.shields.io/static/v1?label=&message=TypeScript&color=blue)![JavaScript](https://img.shields.io/static/v1?label=&message=JavaScript&color=yellow)![HTML](https://img.shields.io/static/v1?label=&message=HTML&color=green)
-</p>
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6, Node version 18.14.0, Package Manager version npm 9.3.1.
 
@@ -18,6 +17,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Preview
+<p align="center">
+  <img src="src\assets\img\preview.png" title="Preview">
+</p>
 
 ## Project architecture
 
