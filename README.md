@@ -1,8 +1,11 @@
 <p align="center">
   <img src="src\assets\img\telesport_logo.png" title="Telesport">
 </p>
+<p align="center">
 
-# OlympicGamesStarter ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+# OlympicGamesStarter 
+![Angular](https://img.shields.io/static/v1?label=&message=ANGULAR&color=red)![TypeScript](https://img.shields.io/static/v1?label=&message=TypeScript&color=blue)![JavaScript](https://img.shields.io/static/v1?label=&message=JavaScript&color=yellow)![HTML](https://img.shields.io/static/v1?label=&message=HTML&color=green)
+</p>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6, Node version 18.14.0, Package Manager version npm 9.3.1.
 
