@@ -1,26 +1,37 @@
-<app-statistic-card-list
-    [titleCard]= 'countryName'
-    [statisticCards]="stats">
-</app-statistic-card-list>
-
-<div #containerRef class="chart">
-  <ngx-charts-line-chart
-    [view]="[containerRef.offsetWidth * 0.8, 300]"
-    [legend]="false"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [xAxisLabel]="'Dates'"
-    [yAxisLabel]="'Medals'"
-    [timeline]="false"
-    [results]="dataChart"
-    >
-  </ngx-charts-line-chart>
+<div class="container" *ngIf="(hasError$ | async) || (countryName ===''); else elseBlock">
+  <h2>Error loading data! <hr> Please try again later...</h2>
 </div>
+<ng-template #elseBlock>
+  <app-statistic-card-list
+      [titleCard]= 'countryName'
+      [statisticCards]= 'stats'>
+  </app-statistic-card-list>
 
+  <div #containerRef class="chart">
+    <ngx-charts-line-chart
+      [view]="[containerRef.offsetWidth * 0.8, 300]"
+      [legend]="false"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [xAxisLabel]="'Dates'"
+      [yAxisLabel]="'Medals'"
+      [timeline]="false"
+      [results]="dataChart"
+      >
+      <!-- custom -->
+        <ng-template #tooltipTemplate let-model="model">
+          <div class="tooltip">
+              <span>{{ model.name }}</span>
+              <br>
+              <span>🎖{{ model.value }}</span>
+          </div>
+       </ng-template>
+      </ngx-charts-line-chart>
+
+  </div>
+</ng-template>
 <div class="container">
   <a routerLink="">Go back</a>
 </div>
-
-

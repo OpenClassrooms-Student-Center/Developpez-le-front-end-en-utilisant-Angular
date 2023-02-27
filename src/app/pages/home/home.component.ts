@@ -2,7 +2,7 @@ import { DataPieChart } from './../../core/models/DataPieChart';
 import { StatisticCardComponent } from './../../core/components/statistic-card/statistic-card.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
@@ -15,46 +15,47 @@ import { Participation } from 'src/app/core/models/Participation';
 })
 export class HomeComponent implements OnInit {
 
-  stats!: StatisticCardComponent[];
+  public stats!: StatisticCardComponent[];
 
-  joCount: number = 0;
-  countryCount: number = 0;
+  public dataChart : DataPieChart[] = [];
 
-  olympicSubscription!: Subscription;
+  public hasError$: Observable<boolean> = of(false); // to manage error from get http service
 
-  dataChart : DataPieChart[] = [];
+  private olympicSubscription$!: Subscription;
 
   constructor(private olympicService: OlympicService,
               private router: Router) { }
 
   ngOnInit(): void {
 
-    this.olympicSubscription = this.olympicService.getOlympics().subscribe(
+    // Get information from service and affects the data to the front components
+    this.olympicSubscription$ = this.olympicService.getOlympics().subscribe(
       {
         next: (olympics: Olympic[]) => {
-          this.joCount =  this.getJOsCount(olympics);
-          this.countryCount = olympics.length;
           this.dataChart = this.getDataPieChart(olympics);
           this.stats = [
             {
               label: "Number of JOs",
-              value: this.joCount
+              value: this.getJOsCount(olympics)
             },
             {
               label: "Number of countries",
-              value: this.countryCount
+              value: olympics.length
             }];
           },
           error: err => console.error('An error occurend', err),
           complete: () => console.log('Completed')
       }
     )
+    // retrieve the boolean `hasError$` from the service in order to manage the display on the front
+    this.hasError$ = this.olympicService.getError();
   }
 
   ngOnDestroy(): void {
-    this.olympicSubscription.unsubscribe();
+    this.olympicSubscription$.unsubscribe();
   }
 
+  // Map country data to fit the DataPieChart interface
   private getDataPieChart(olympics: Olympic[]): DataPieChart[] {
     const data = olympics.map((olympic) => {
       return {
@@ -65,6 +66,10 @@ export class HomeComponent implements OnInit {
     return data;
   }
 
+  /**
+  * Return the total number of JO by getting all JO years
+  * from participations and filter the duplicated value.
+  */
   private getJOsCount(olympics: Olympic[]): number {
       const yearsJO = olympics.flatMap((olympic) => olympic.participations.map((participation) => participation.year));
       // yearsJO contains duplicate, remove duplicate
@@ -73,6 +78,7 @@ export class HomeComponent implements OnInit {
       return yearsJOFiltered.length;
   }
 
+    // Return the total number of Medals from a country
   private getMedalsCount(participations: Participation[]): number {
       return participations.filter(
         value => value.medalsCount !== 0
@@ -82,6 +88,10 @@ export class HomeComponent implements OnInit {
 
   }
 
+  /**
+  * Get the country selected id from extra data on the chart
+  * and navigate to the country data of this selected country
+  */
   onSelect(data: any): void {
     this.router.navigateByUrl(`country/${data.extra}`);
   }

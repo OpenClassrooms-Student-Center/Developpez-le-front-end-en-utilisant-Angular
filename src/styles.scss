@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+$mainColor : #296666;
+
 * {
   font-family: 'Roboto', sans-serif;
   font-size: 1em;
@@ -15,17 +17,16 @@
 
 
 .card {
-  box-sizing: border-box;
   border-radius: 1em;
   border-style: solid;
-  border-color: #127d98f3;
+  border-color: $mainColor;
   text-align: center;
   padding: 0 10px;
   margin: 0 10px;
 }
 
 .title {
-  background-color: #127d98f3;
+  background-color: $mainColor;
   color: white;
   font-size: 1.5em;
   min-width: 150px;
@@ -46,7 +47,19 @@
 }
 
 .pie-label {
-  font-size: 1em !important;
+  font-size: 1.2em !important;
 }
 
+ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+  .tooltip-caret.position-top {
+    border-top-color: $mainColor;
+  }
+
+  background-color: $mainColor;
+  padding: 5px 15px;
+
+  .tooltip {
+    font-size: 1.5em;
+  }
+}
 
