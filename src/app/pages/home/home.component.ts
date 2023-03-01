@@ -1,12 +1,12 @@
+
 import { DataPieChart } from './../../core/models/DataPieChart';
-import { StatisticCardComponent } from './../../core/components/statistic-card/statistic-card.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
-
+import { StatisticCardListComponent } from 'src/app/core/components/statistic-card-list/statistic-card-list.component';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +15,9 @@ import { Participation } from 'src/app/core/models/Participation';
 })
 export class HomeComponent implements OnInit {
 
-  public stats!: StatisticCardComponent[];
+  public stats: StatisticCardListComponent = new StatisticCardListComponent();
 
   public dataChart : DataPieChart[] = [];
-
-  public hasError$: Observable<boolean> = of(false); // to manage error from get http service
-
   private olympicSubscription$!: Subscription;
 
   constructor(private olympicService: OlympicService,
@@ -28,27 +25,27 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Get information from service and affects the data to the front components
+    // Get information from service and affects the data to template
     this.olympicSubscription$ = this.olympicService.getOlympics().subscribe(
       {
         next: (olympics: Olympic[]) => {
           this.dataChart = this.getDataPieChart(olympics);
-          this.stats = [
-            {
-              label: "Number of JOs",
-              value: this.getJOsCount(olympics)
-            },
-            {
-              label: "Number of countries",
-              value: olympics.length
-            }];
+          this.stats = {
+                        titleCard : "Medals per country",
+                        statisticCards : [{
+                                            label: "Number of JOs",
+                                            value: this.getJOsCount(olympics)
+                                          },
+                                          {
+                                            label: "Number of countries",
+                                            value: olympics.length
+                                          }]
+                        };
           },
           error: err => console.error('An error occurend', err),
           complete: () => console.log('Completed')
       }
     )
-    // retrieve the boolean `hasError$` from the service in order to manage the display on the front
-    this.hasError$ = this.olympicService.getError();
   }
 
   ngOnDestroy(): void {

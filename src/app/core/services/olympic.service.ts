@@ -13,8 +13,6 @@ export class OlympicService {
 
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
-  private hasError$ = new BehaviorSubject<boolean>(false);
-
   constructor(private http: HttpClient) {}
 
   /**
@@ -26,11 +24,6 @@ export class OlympicService {
       tap((value) => this.olympics$.next(value)),
       catchError((this.handleError<Olympic[]>('loadInitialData', [])))
     );
-  }
-
- /** Return true if an error occured when retrieving data from server */
-  public getError(): Observable<boolean> {
-    return this.hasError$.asObservable();
   }
 
   /** Return all countries */
@@ -48,7 +41,6 @@ export class OlympicService {
         ) as Observable<Olympic>;
 
       if (!countryData) {
-        this.hasError$.next(true);
         throw new Error('Country data not found!');
       } else {
         return countryData;
@@ -64,9 +56,7 @@ export class OlympicService {
  */
 private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
-
     console.error(error); // log to console
-    this.hasError$.next(true);
     // Let the app keep running by returning an empty result.
     return of(result as T);
   };

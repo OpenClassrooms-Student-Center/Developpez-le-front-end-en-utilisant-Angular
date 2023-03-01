@@ -1,27 +1,22 @@
-<div class="container" *ngIf="hasError$ | async; else elseBlock">
-  <h2>Error loading data! <hr> Please try again later...</h2>
+<app-statistic-card-list
+    [titleCard]="stats.titleCard"
+    [statisticCards]="stats.statisticCards">
+</app-statistic-card-list>
+<div #containerRef class="chart">
+  <ngx-charts-pie-chart
+    [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+    [results]="dataChart"
+    [labels]="true"
+    [trimLabels]="false"
+    (select)="onSelect($event)"
+    >
+    <!-- custom tooltip -->
+    <ng-template #tooltipTemplate let-model="model">
+      <div class="tooltip">
+        <span>{{ model.name }}</span>
+        <br>
+        <span>🎖{{ model.value }}</span>
+      </div>
+    </ng-template>
+  </ngx-charts-pie-chart>
 </div>
-<ng-template #elseBlock>
-    <app-statistic-card-list
-      [titleCard]="'Medals per Country'"
-      [statisticCards]="stats">
-    </app-statistic-card-list>
-    <div #containerRef class="chart">
-      <ngx-charts-pie-chart
-                [view]="[containerRef.offsetWidth > 600 ? 600 : containerRef.offsetWidth * 0.8, containerRef.offsetWidth > 600 ? 600 : containerRef.offsetWidth * 0.8]"
-                [results]="dataChart"
-                [labels]="true"
-                [trimLabels]="false"
-                (select)="onSelect($event)"
-          >
-          <!-- custom tooltip -->
-          <ng-template #tooltipTemplate let-model="model">
-            <div class="tooltip">
-                 <span>{{ model.name }}</span>
-                 <br>
-                 <span>🎖{{ model.value }}</span>
-            </div>
-           </ng-template>
-      </ngx-charts-pie-chart>
-    </div>
-</ng-template>

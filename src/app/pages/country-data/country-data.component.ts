@@ -5,7 +5,7 @@ import { OlympicService } from './../../core/services/olympic.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { StatisticCardComponent } from 'src/app/core/components/statistic-card/statistic-card.component';
+import { StatisticCardListComponent } from 'src/app/core/components/statistic-card-list/statistic-card-list.component';
 
 
 @Component({
@@ -15,15 +15,11 @@ import { StatisticCardComponent } from 'src/app/core/components/statistic-card/s
 })
 export class CountryDataComponent implements OnInit {
 
-  public countryName: string = '';
-
-  public stats!: StatisticCardComponent[];
+  public stats: StatisticCardListComponent = new StatisticCardListComponent();
 
   public dataChart : DataLineChart[] = [];
 
-  public hasError$: Observable<boolean> = of(false);
-
-  private countryDataSubscription$!: Subscription;
+   private countryDataSubscription$!: Subscription;
 
   constructor(private OlympicService: OlympicService,
               private route: ActivatedRoute,
@@ -34,33 +30,32 @@ export class CountryDataComponent implements OnInit {
     // get country Id from URL
     const countryId = +(this.route.snapshot.params['id']);
 
-    // Get information from service and affects the data to the front components
+    // Get information from service and affects the data to template
     this.countryDataSubscription$ = this.OlympicService.getOlympicByCountryId(countryId).subscribe(
       {
         next: (Olympic) => {
-          this.countryName = Olympic.country;
           this.dataChart = [this.getDataLineChart(Olympic)];
-          this.stats = [
-            {
-              label: "Number of entries",
-              value: Olympic.participations.length
-            },
-            {
-              label: "Total number medals",
-              value: this.getMedalsCount(Olympic.participations)
-            },
-            {
-              label: "Total number of athletes",
-              value: this.getAthleteCount(Olympic.participations)
-            }];
+          this.stats = {
+                          titleCard : Olympic.country,
+                          statisticCards : [
+                              {
+                                label: "Number of entries",
+                                value: Olympic.participations.length
+                              },
+                              {
+                                label: "Total number medals",
+                                value: this.getMedalsCount(Olympic.participations)
+                              },
+                              {
+                                label: "Total number of athletes",
+                                value: this.getAthleteCount(Olympic.participations)
+                              }]
+                        };
         },
           error: err => console.error('An error occurend', err),
           complete: () => console.log('Completed')
       }
     )
-
-    // retrieve the "hasError$" from the service in order to manage the display on the front
-    this.hasError$ = this.OlympicService.getError();
   }
 
   ngOnDestroy(): void {

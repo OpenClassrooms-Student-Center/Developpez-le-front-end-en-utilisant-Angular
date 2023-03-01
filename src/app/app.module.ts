@@ -10,13 +10,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatisticCardComponent } from './core/components/statistic-card/statistic-card.component';
 import { StatisticCardListComponent } from './core/components/statistic-card-list/statistic-card-list.component';
-import { TitleCardComponent } from './core/components/title-card/title-card.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, CountryDataComponent, StatisticCardComponent, StatisticCardListComponent, TitleCardComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, CountryDataComponent, StatisticCardComponent, StatisticCardListComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {}

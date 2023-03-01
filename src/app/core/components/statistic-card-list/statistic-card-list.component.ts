@@ -1,4 +1,3 @@
-import { TitleCardComponent } from './../title-card/title-card.component';
 import { Component, Input } from '@angular/core';
 import { StatisticCardComponent } from '../statistic-card/statistic-card.component';
 
@@ -13,7 +12,10 @@ export class StatisticCardListComponent {
 
   @Input() statisticCards!: StatisticCardComponent[];
 
-  constructor() { }
+  constructor() {
+    this.titleCard = '';
+    this.statisticCards = [];
+  }
 
   }
 

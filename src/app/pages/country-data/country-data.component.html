@@ -1,15 +1,15 @@
-<div class="container" *ngIf="(hasError$ | async) || (countryName ===''); else elseBlock">
+<div class="container" *ngIf="(stats.titleCard ===''); else elseBlock">
   <h2>Error loading data! <hr> Please try again later...</h2>
 </div>
 <ng-template #elseBlock>
   <app-statistic-card-list
-      [titleCard]= 'countryName'
-      [statisticCards]= 'stats'>
+    [titleCard]="stats.titleCard"
+    [statisticCards]="stats.statisticCards">
   </app-statistic-card-list>
 
   <div #containerRef class="chart">
     <ngx-charts-line-chart
-      [view]="[containerRef.offsetWidth * 0.8, 300]"
+      [view]="[containerRef.offsetWidth * 0.9, 350]"
       [legend]="false"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
