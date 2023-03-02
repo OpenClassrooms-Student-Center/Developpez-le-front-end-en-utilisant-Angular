@@ -1,6 +1,6 @@
 import { DataLineChart } from 'src/app/core/models/DataLineChart';
 import { Participation } from 'src/app/core/models/Participation';
-import { Observable, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { OlympicService } from './../../core/services/olympic.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
