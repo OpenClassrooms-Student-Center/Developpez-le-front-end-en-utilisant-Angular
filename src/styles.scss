@@ -30,18 +30,36 @@ body {
   flex-direction: column;
   justify-content: center;
   margin: auto;
+  text-align: center;
 }
 
 .chart {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  margin: auto;
-  height: 400px;
+  vertical-align: top;
+  margin: 10px auto;
+  height: 350px;
 }
 
 .pie-label {
   font-size: 1.2em !important;
+}
+
+@media screen and (max-width: 450px) {
+  .chart {
+    height: 300px;
+  }
+  .pie-label {
+    font-size: 0.8em !important;
+  }
+}
+
+.ngx-charts {
+  text{
+      font-size: 0.9em;
+      fill: var(--subtitle-color) !important;
+  }
 }
 
 ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
@@ -57,3 +75,17 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   }
 }
 
+button {
+  background-color: var(--primary-color);
+  color: var(--title-color);
+  font-size: 1em;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: var(--secondary-color);
+  color: var(--subtitle-color);
+  box-shadow: var(--primary-color) 0px 20px 30px -10px;
+  cursor: pointer;
+}
