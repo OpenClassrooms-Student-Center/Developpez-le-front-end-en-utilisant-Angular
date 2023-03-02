@@ -2,7 +2,7 @@ button {
   background-color: var(--primary-color);
   color: var(--title-color);
   font-size: 1em;
-  min-width: 100px;
+  margin: auto;
   padding: 5px;
   border-radius: 5px;
 }

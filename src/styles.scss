@@ -23,9 +23,6 @@ body {
   height: 100vh;
   margin: auto;
   padding: auto;
-  overflow: hidden;
-
-
 }
 
 .container {
@@ -33,13 +30,19 @@ body {
   flex-direction: column;
   justify-content: center;
   margin: auto;
-  min-width: 250px;
 }
 
-  .pie-label {
-    font-size: 1.2em !important;
-  }
+.chart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  height: 400px;
+}
 
+.pie-label {
+  font-size: 1.2em !important;
+}
 
 ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   .tooltip-caret.position-top {
