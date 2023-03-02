@@ -2,7 +2,7 @@
     [titleCard]="stats.titleCard"
     [statisticCards]="stats.statisticCards">
 </app-statistic-card-list>
-<div #containerRef class="chart">
+<div #containerRef class="container">
   <ngx-charts-pie-chart
     [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
     [results]="dataChart"

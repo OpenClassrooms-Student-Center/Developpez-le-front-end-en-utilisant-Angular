@@ -90,4 +90,11 @@ export class CountryDataComponent implements OnInit {
         ).reduce((previousValue, currentValue) => previousValue + currentValue.athleteCount, 0
         );
   }
+
+  goBack(): void {
+    this.router.navigateByUrl('');
+  }
+
 }
+
+

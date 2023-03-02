@@ -1,4 +1,14 @@
-.button {
-  width: 100%;
-  text-align: center;
+button {
+  background-color: var(--primary-color);
+  color: var(--title-color);
+  font-size: 1em;
+  min-width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: var(--secondary-color);
+  color: var(--subtitle-color);
+  box-shadow: var(--primary-color) 0px 20px 30px -10px;
 }

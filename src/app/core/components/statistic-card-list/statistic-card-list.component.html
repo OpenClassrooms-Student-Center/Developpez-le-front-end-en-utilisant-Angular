@@ -1,10 +1,7 @@
-<app-title-card [titleCard]="titleCard"></app-title-card>
-<div class="container">
-  <app-statistic-card
-      *ngFor="let statisticCard of statisticCards"
-      [label]="statisticCard.label"
-      [value]="statisticCard.value"
-  >
-  </app-statistic-card>
+<div class="card-title">
+        <p class="title">{{ titleCard }}</p>
+</div>
+<div class="stat-list">
+    <app-statistic-card *ngFor="let statisticCard of statisticCards" [label]="statisticCard.label" [value]="statisticCard.value"> </app-statistic-card>
 </div>
 

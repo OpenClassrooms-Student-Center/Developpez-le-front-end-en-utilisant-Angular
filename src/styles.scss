@@ -1,61 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-$mainColor : #296666;
+:root {
+  --primary-color: #296666;
+  --secondary-color: #98b4b4;
+  --title-color: white;
+  --title-background-color: var(--primary-color);
+  --subtitle-color: black;
+  --subtitle-background-color: white;
+}
 
-* {
+html * {
   font-family: 'Roboto', sans-serif;
   font-size: 1em;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  padding: auto;
+  overflow: hidden;
+
+
+}
+
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  margin: 10px auto;
-  min-width: 300px;
+  margin: auto;
+  min-width: 250px;
 }
 
+  .pie-label {
+    font-size: 1.2em !important;
+  }
 
-.card {
-  border-radius: 1em;
-  border-style: solid;
-  border-color: $mainColor;
-  text-align: center;
-  padding: 0 10px;
-  margin: 0 10px;
-}
-
-.title {
-  background-color: $mainColor;
-  color: white;
-  font-size: 1.5em;
-  min-width: 150px;
-}
-
-.subtitle {
-  font-size: 1em;
-  color: black;
-}
-
-.chart {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  vertical-align: top;
-
-}
-
-.pie-label {
-  font-size: 1.2em !important;
-}
 
 ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   .tooltip-caret.position-top {
-    border-top-color: $mainColor;
+    border-top-color: #296666;
   }
 
-  background-color: $mainColor;
+  background-color: #296666;
   padding: 5px 15px;
 
   .tooltip {

@@ -1,0 +1,26 @@
+.card-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  background-color: var(--title-background-color);
+  color: var(--title-color);
+  font-size: 1.5em;
+  min-width: 150px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: var(--primary-color);
+  text-align: center;
+  padding: 10px 10px;
+  margin: 10px 10px;
+}
+
+.stat-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

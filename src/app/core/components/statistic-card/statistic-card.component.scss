@@ -1,0 +1,19 @@
+.card-subtitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.subtitle {
+  background-color: var(--subtitle-background-color);
+  color: var(--subtitle-color);
+  font-size: 1em;
+  min-width: 100px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: var(--primary-color);
+  text-align: center;
+  padding: 5px 5px;
+
+}
