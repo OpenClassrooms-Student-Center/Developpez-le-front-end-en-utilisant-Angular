@@ -2,7 +2,7 @@
 import { DataPieChart } from './../../core/models/DataPieChart';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
@@ -15,7 +15,7 @@ import { StatisticCardListComponent } from 'src/app/core/components/statistic-ca
 })
 export class HomeComponent implements OnInit {
 
-  public stats: StatisticCardListComponent = new StatisticCardListComponent();
+  public stats!: StatisticCardListComponent;
 
   public dataChart : DataPieChart[] = [];
   private olympicSubscription$!: Subscription;

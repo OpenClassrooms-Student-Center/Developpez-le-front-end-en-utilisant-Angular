@@ -8,12 +8,7 @@ import { Component, Input } from '@angular/core';
 
 export class StatisticCardComponent {
 
-  @Input('label') label: string;
-  @Input('value') value: number;
-
-  constructor() {
-    this.label = '';
-    this.value = 0;
-  }
+  @Input('label') label!: string;
+  @Input('value') value!: number;
 
 }

@@ -9,13 +9,7 @@ import { StatisticCardComponent } from '../statistic-card/statistic-card.compone
 export class StatisticCardListComponent {
 
   @Input() titleCard!: string;
-
   @Input() statisticCards!: StatisticCardComponent[];
-
-  constructor() {
-    this.titleCard = '';
-    this.statisticCards = [];
-  }
 
   }
 
