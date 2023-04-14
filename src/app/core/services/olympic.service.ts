@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, concatMap, delay, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -27,6 +27,6 @@ export class OlympicService {
   }
 
   getOlympics() {
-    return this.olympics$.asObservable();
+    return this.olympics$.asObservable().pipe(delay(5000));
   }
 }

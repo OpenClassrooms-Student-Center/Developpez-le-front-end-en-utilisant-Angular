@@ -1,3 +1,25 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="page-header">
+    <h1>Télésport</h1>
+    <h2>Olympic games app</h2>
+    <hr />
+</div>
+<div class="chart-container">
+    <div *ngIf="dataLoaded">
+        <div *ngIf="olympics?.length != 0">
+            <canvas baseChart class="chart"
+                [data]="pieChartData"
+                [type]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins">
+            </canvas>
+        </div>
+        <div *ngIf="olympics?.length == 0">
+            <p class="dialog-warning">No data available.</p>
+        </div>
+    </div>
+    <div *ngIf="!dataLoaded">
+        <p class="dialog-warning">Data Loading</p>
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
+
