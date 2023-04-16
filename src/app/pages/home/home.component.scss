@@ -1,37 +1,89 @@
-.page-header {
-    width: calc(100% - 1em);
-    padding: 1em 0.5em;
-    background-color: lavender;
-    color: rgb(54, 54, 79);
-    h1 {
-        width: calc(100% - 4em);
-        padding-left: 4em;
-    }
-    h2 {
-        width: calc(100% - 5em);
-        padding-left: 5em;
-    }
-    hr {
-        margin-top: 2em;
-    }
+.page-container {
+    position: relative;
+    z-index: 2;
 }
+
+.statistics {
+    width: calc(100% - 16em);
+    padding: 1em 8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statistics-title {
+    padding: 0.5em 2em;
+    margin: 1em 0 0;
+    background-color: #1A2361;
+    border: 1px solid white;
+    border-radius: 1em;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.statistics-content {
+    padding: 0.5em 2em;
+    margin: 1em 0 0;
+    background-color: rgba(250, 250, 255, 0.8);
+    border: 1px solid #1A2361;
+    border-radius: 1em;
+    color: #1A2361;
+}
+
+.statistics-span {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .chart-container {
-    width: 1200px;
+    position: relative;
+    width: 600px;
     height: 600px;
-    margin: 1em auto;
+    margin: 0.5em auto 1em;
+    background-color: rgba(250, 250, 255, 0.6);
+    border-radius: 50%;
 }
 
 .chart {
     margin: 1em 0;
     padding: 1em;
     width: 900px;
-    height: 600px;
+    height: 900px;
+    position: relative;
+    z-index: 5;
+}
+
+.absolute-flex-center {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.central-logo {
+    width: 200px;
+    height: 200px;
+    opacity: 0.5;
+    background-image: url('../../../assets/images/telesport-logo-200x200-blanc.png');
 }
 
 .dialog-warning {
+    width: fit-content;
+    margin: 2em auto;
     padding: 1em 2em;
     background-color: wheat;
     border-radius: 0.5em;
     border: 1px solid orange;
     color: rgb(159, 89, 4);
 }
+
+.mat-icon {
+    vertical-align: middle;
+} 

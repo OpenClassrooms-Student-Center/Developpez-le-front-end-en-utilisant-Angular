@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: aliceblue;
+    padding: 1.5em 4em 0.5em;
+    position: relative;
+    z-index: 2;
+}
+
+.logo, .title, .nav {
+    width: 200px;
+}
+
+.logo {
+    img {
+        width: 200px;
+        height: auto;
+        cursor: pointer;
+    }
+}
+
+.title {
+    text-align: center;
+}
+
+.nav {
+    text-align: right;
+}

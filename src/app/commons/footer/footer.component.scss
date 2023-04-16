@@ -1,0 +1,36 @@
+.footer {
+    width: calc(100% - 8em);
+    position: fixed;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    padding: 1.5em 4em 2.5em;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    background-color: #3a3650;
+    color: #7770a4;
+    a {
+        text-decoration: none;
+        color: #a19acc;
+        font-weight: bold;
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.mat-icon {
+    vertical-align: middle;
+} 
+
+.crimson {
+    color: crimson;
+    line-height: 5px;
+    font-size: 16px;
+}
+
+.emphasis {
+    color: #a19acc;
+    font-weight: bold;
+}
