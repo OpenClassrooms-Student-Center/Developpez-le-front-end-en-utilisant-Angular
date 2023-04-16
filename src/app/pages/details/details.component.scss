@@ -1,0 +1,62 @@
+@import url('../../../styles-common.scss');
+
+.absolute-flex-center {
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    top: calc(50vh - 250px);
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    position: fixed;
+    z-index: 3;
+    bottom: 8em;
+    right: 8em;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.error-message {
+    display: block;
+    width: fit-content;
+    text-align: right;
+    margin-top: 2px;
+    padding: 0.1em 0.5em 0.1em 0;
+    list-style-type: none;
+    background-color: rgb(233, 108, 133);
+    color: rgb(157, 11, 40);
+    border: 1px solid rgb(157, 11, 40);
+    border-radius: 1em;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.line-chart-container {
+    margin: 1em auto;
+    width: fit-content;
+    height: fit-content;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: #fff, $alpha: 0.8);
+    border-radius: 2em;
+}
+
+.line-chart {
+    h2 {
+        width: calc(100% - 4em);
+        padding: 0.5em 2em;
+        background-color: #5c659f;
+        border: 1px solid white;
+        border-radius: 1em;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+}

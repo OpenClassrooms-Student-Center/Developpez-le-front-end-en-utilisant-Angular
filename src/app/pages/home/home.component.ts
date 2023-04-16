@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartData } from 'chart.js';
+import { Router } from '@angular/router';
+import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { backgrounds, colors } from 'src/app/utils/data-utils';
 import { wording } from 'src/app/utils/wording';
 
 @Component({
@@ -17,7 +19,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public wording = wording;
-  public participations: number = 0;
+  public participations:number = 0;
   public countries:string[] = [];
   private _medalsPerCountry: number[] = [];
   public chartType: ChartConfiguration<'doughnut'>['type'] = 'doughnut';
@@ -50,10 +52,11 @@ export class HomeComponent implements OnInit {
   public olympics: Olympic[] = [];
   public dataLoaded:boolean = false;
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService,
+              private router:Router) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
+    this.olympics$ = this.olympicService.getAsyncOlympics();
     this.olympics$.subscribe((data)=> {
       this.olympics = data;
       this.olympics.forEach((olympic)=> { 
@@ -69,32 +72,22 @@ export class HomeComponent implements OnInit {
         datasets: [ {
           data: this._medalsPerCountry,
           datalabels: {
-            color: [
-              '#1B8A44',
-              '#711313',
-              '#A0811C',
-              '#1a0f0f',
-              '#324F8C'
-            ]
+            color: colors
           },
-          backgroundColor: [
-            '#52D683',
-            '#D66363',
-            '#FAD45A',
-            '#463E3E',
-            '#6E96EB'
-          ],
-          hoverBorderColor: [
-            '#1B8A44',
-            '#711313',
-            '#A0811C',
-            '#1a0f0f',
-            '#324F8C'
-          ]
+          backgroundColor: backgrounds,
+          hoverBorderColor: colors
         } ],
       }
       this.participations = this.olympics[0]?.participations.length;
+      if (isNaN(this.participations)) {
+        this.participations = 0;
+      }
       this.dataLoaded = true;
     });
+  }
+
+  chartClicked(event:any):void {
+    let routeId = event.active[0]?.index + 1;
+    this.router.navigateByUrl('/details/' + routeId);
   }
 }

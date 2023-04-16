@@ -1,41 +1,4 @@
-.page-container {
-    position: relative;
-    z-index: 2;
-}
-
-.statistics {
-    width: calc(100% - 16em);
-    padding: 1em 8em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.statistics-title {
-    padding: 0.5em 2em;
-    margin: 1em 0 0;
-    background-color: #1A2361;
-    border: 1px solid white;
-    border-radius: 1em;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.statistics-content {
-    padding: 0.5em 2em;
-    margin: 1em 0 0;
-    background-color: rgba(250, 250, 255, 0.8);
-    border: 1px solid #1A2361;
-    border-radius: 1em;
-    color: #1A2361;
-}
-
-.statistics-span {
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-}
+@import url('../../../styles-common.scss');
 
 .chart-container {
     position: relative;
@@ -83,7 +46,3 @@
     border: 1px solid orange;
     color: rgb(159, 89, 4);
 }
-
-.mat-icon {
-    vertical-align: middle;
-} 

@@ -11,9 +11,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HeaderComponent } from './commons/header/header.component';
 import { FooterComponent } from './commons/footer/footer.component';
+import { DetailsComponent } from './pages/details/details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, HeaderComponent, FooterComponent, DetailsComponent],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, NgChartsModule, MatProgressSpinnerModule, MatIconModule],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,32 @@
+<div class="page-container">
+    <div class="statistics">
+        <div class="page-title">
+            {{olympic.country}}
+        </div>
+        <div class="statistics-content">
+            {{wording.page.details.entriesCount}}: <span class="statistics-span">{{olympic.participations.length}}</span>
+        </div>
+        <div class="statistics-content">
+            {{wording.page.details.totalMedalsCount}}: <span class="statistics-span">{{totalMedals}}</span>
+        </div>
+        <div class="statistics-content">
+            {{wording.page.details.totalAthletesCount}}: <span class="statistics-span">{{totalAthletes}}</span>
+        </div>
+    </div>
+    <div *ngIf="dataLoaded" class="line-chart-container">
+        <div class="line-chart">
+            <h2>{{wording.page.details.medalsPerParticipation}}</h2>
+            <canvas baseChart width="760" height="380" class="chart"
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [type]="lineChartType"></canvas>
+            <a routerLink="" class="back-button">{{wording.page.notFound.back}}</a>
+        </div>
+        <ul class="error" *ngIf="errors.length != 0 && error">
+            <li  class="error-message" *ngFor="let errorMessage of errors"><mat-icon>error</mat-icon> {{errorMessage}}</li>
+        </ul>
+    </div>
+    <div class="absolute-flex-center" *ngIf="!dataLoaded">
+        <mat-spinner [diameter]="200"></mat-spinner>
+    </div>
+</div>

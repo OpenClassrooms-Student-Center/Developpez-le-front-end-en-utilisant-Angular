@@ -3,7 +3,7 @@
         <div class="statistics-content">
             {{wording.page.home.olympicsCount}}: <span class="statistics-span">{{participations}}</span>
         </div>
-        <div class="statistics-title">
+        <div class="page-title">
             {{wording.page.home.subtitle}}
         </div>
         <div class="statistics-content">
@@ -16,7 +16,8 @@
                 [data]="chartData"
                 [type]="chartType"
                 [options]="chartOptions"
-                [plugins]="chartPlugins">
+                [plugins]="chartPlugins"
+                (chartClick)="chartClicked($event)">
             </canvas>
             <div class="absolute-flex-center">
                 <div class="central-logo"></div>

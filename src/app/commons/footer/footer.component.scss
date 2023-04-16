@@ -1,3 +1,5 @@
+@import url('../../../styles-common.scss');
+
 .footer {
     width: calc(100% - 8em);
     position: fixed;
@@ -8,11 +10,11 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    background-color: #3a3650;
-    color: #7770a4;
+    background-color: #1A2361;
+    color: #454f92;
     a {
         text-decoration: none;
-        color: #a19acc;
+        color: #7982c0;
         font-weight: bold;
         &:hover {
             color: white;
@@ -20,17 +22,13 @@
     }
 }
 
-.mat-icon {
-    vertical-align: middle;
-} 
-
 .crimson {
-    color: crimson;
+    color: rgb(196, 81, 104);
     line-height: 5px;
     font-size: 16px;
 }
 
 .emphasis {
-    color: #a19acc;
+    color: #7982c0;
     font-weight: bold;
 }
