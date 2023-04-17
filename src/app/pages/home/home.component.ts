@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
+import { ChartConfiguration, ChartData } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { Observable, of } from 'rxjs';
@@ -52,11 +52,12 @@ export class HomeComponent implements OnInit {
   public olympics: Olympic[] = [];
   public dataLoaded:boolean = false;
 
-  constructor(private olympicService: OlympicService,
-              private router:Router) {}
+  constructor(
+    private _olympicService: OlympicService,
+    private _router:Router) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getAsyncOlympics();
+    this.olympics$ = this._olympicService.getAsyncOlympics();
     this.olympics$.subscribe((data)=> {
       this.olympics = data;
       this.olympics.forEach((olympic)=> { 
@@ -88,6 +89,6 @@ export class HomeComponent implements OnInit {
 
   chartClicked(event:any):void {
     let routeId = event.active[0]?.index + 1;
-    this.router.navigateByUrl('/details/' + routeId);
+    this._router.navigateByUrl('/details/' + routeId);
   }
 }

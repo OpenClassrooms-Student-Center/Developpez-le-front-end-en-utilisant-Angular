@@ -1,4 +1,4 @@
-<div class="header">
+<div [ngClass]="{'header': true,'landscape': !screen.isPortrait, 'portrait': screen.isPortrait}">
     <div class="logo"><a routerLink=""><img src="../../../assets/images/telesport-logo-200-noir.png" alt="Logo Télésport"></a></div>
     <div class="title">{{wording.title}}</div>
     <div class="description">

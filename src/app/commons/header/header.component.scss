@@ -2,10 +2,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: aliceblue;
     padding: 1.5em 4em 0.5em;
     position: relative;
     z-index: 2;
+}
+
+.landscape {
+    background-color: red;
+}
+
+.portrait {
+    background-color: blue;
 }
 
 .logo, .title, .description {
