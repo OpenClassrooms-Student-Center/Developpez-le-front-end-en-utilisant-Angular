@@ -2,7 +2,8 @@
 
 .footer {
     width: calc(100% - 8em);
-    position: fixed;
+    height: calc(75px - 4em);
+    position: relative;
     z-index: 3;
     bottom: 0;
     left: 0;

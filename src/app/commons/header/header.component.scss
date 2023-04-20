@@ -2,32 +2,52 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5em 4em 0.5em;
     position: relative;
     z-index: 2;
+    padding: 1.5em 4em 0.5em;
 }
 
-.landscape {
-    background-color: red;
-}
-
-.portrait {
+.small {
     background-color: blue;
+    height: calc(100px - 2em);
 }
 
-.logo, .title, .description {
+.medium {
+    background-color: green;
+    height: calc(75px - 2em);
+}
+
+.large {
+    background-color: red;
+    height: calc(75px - 2em);
+}
+
+.title, .description {
     width: 200px;
 }
 
 .logo {
     img {
-        width: 200px;
         height: auto;
         border-radius: 1em;
         cursor: pointer;
         &:hover {
             background-color: crimson;
         }
+    }
+}
+
+.smallLogo {
+    width: 96px;
+    img {
+        width: 96px;
+    }
+}
+
+.fullLogo {
+    width: 200px;
+    img {
+        width: 200px;
     }
 }
 

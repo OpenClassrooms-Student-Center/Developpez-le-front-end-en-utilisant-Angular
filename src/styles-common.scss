@@ -1,6 +1,7 @@
 .page-container {
     position: relative;
     z-index: 2;
+    height: calc(100% - 150px);
 }
 
 .statistics {
