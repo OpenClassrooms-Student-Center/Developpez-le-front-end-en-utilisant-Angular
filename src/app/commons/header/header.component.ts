@@ -1,25 +1,51 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit,  } from '@angular/core';
 import { wording } from 'src/app/utils/wording';
 import { Screen } from 'src/app/core/models/Screen';
+import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { Subject, takeUntil } from 'rxjs';
+import { screenSizes } from 'src/app/utils/data-utils';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnChanges {
+export class HeaderComponent implements OnInit, OnDestroy {
   
-  @Input() size:string = 'Unknown';
+  private _destroyed = new Subject<void>();
+  
+  public size:string = 'Unknown';
+  public isPortrait:boolean = true;
+  private _screenSizes = screenSizes;
 
   public screen!:Screen;
-  public isMobile!:boolean;
   public wording = wording;
 
-  constructor() {}
+  constructor(private _responsive: ResponsiveService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.screen = new Screen(this.size, false);
-    this.isMobile = this.screen.isSmall;
+  ngOnInit(): void {
+    this._responsive.observeScreenSize()
+    .pipe(takeUntil(this._destroyed))
+    .subscribe(result => {
+      for (const query of Object.keys(result.breakpoints)) {
+        if (result.breakpoints[query]) {
+          this.size = this._screenSizes.get(query) ?? 'Unknown';
+          this.screen = new Screen(this.size, this.isPortrait);
+        }
+      }
+    });
+    this._responsive.observeOrientation()
+    .pipe(takeUntil(this._destroyed))
+    .subscribe(result => { 
+      this.isPortrait = result.matches;
+      this.screen = new Screen(this.size, this.isPortrait);
+    });
+    console.log(this.screen)
+  }
+
+  ngOnDestroy() {
+    this._destroyed.next();
+    this._destroyed.complete();
   }
 
   get header() {

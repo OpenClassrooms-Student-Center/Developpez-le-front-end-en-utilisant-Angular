@@ -1,3 +1,4 @@
+import { Breakpoints } from "@angular/cdk/layout";
 import { Olympic } from "../core/models/Olympic";
 
 export function getTotalMedals(olympic: Olympic): number {
@@ -28,3 +29,11 @@ export const colors = [
     '#665D5D',
     '#6E96EB'
   ];
+
+  export const screenSizes = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ]);
