@@ -11,16 +11,17 @@ import { screenSizes } from 'src/app/utils/data-utils';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  public wording = wording;
   
   private _destroyed = new Subject<void>();
-  
-  public size:string = 'Unknown';
-  public isPortrait:boolean = true;
+  private _size:string = 'Unknown';
+  private _isPortrait:boolean = true;
   private _screenSizes = screenSizes;
-
   public screen!:Screen;
-  public wording = wording;
-
+  public alt:string = "Logo Télésport";
+  public logoPath!:string;
+  
   constructor(private _responsive: ResponsiveService) {}
 
   ngOnInit(): void {
@@ -29,18 +30,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .subscribe(result => {
       for (const query of Object.keys(result.breakpoints)) {
         if (result.breakpoints[query]) {
-          this.size = this._screenSizes.get(query) ?? 'Unknown';
-          this.screen = new Screen(this.size, this.isPortrait);
+          this._size = this._screenSizes.get(query) ?? 'Unknown';
+          this.screen = new Screen(this._size, this._isPortrait);
         }
       }
     });
     this._responsive.observeOrientation()
     .pipe(takeUntil(this._destroyed))
     .subscribe(result => { 
-      this.isPortrait = result.matches;
-      this.screen = new Screen(this.size, this.isPortrait);
+      this._isPortrait = result.matches;
+      this.screen = new Screen(this._size, this._isPortrait);
+      this.logoPath = this.screen?.isPortrait ?  "./assets/images/telesport-logo-38-noir.png" : "./assets/images/telesport-logo-200-noir.png";
     });
-    console.log(this.screen)
   }
 
   ngOnDestroy() {
@@ -53,6 +54,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   get logo() {
-    return {'logo': true, 'smallLogo': this.screen.isSmall, 'fullLogo': this.screen.isMedium || this.screen.isLarge}
+    return {'logo': true, 'small-logo': this.screen?.isSmall, 'full-logo': this.screen?.isMedium || this.screen?.isLarge }
   }
 }

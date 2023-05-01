@@ -4,22 +4,17 @@
     justify-content: space-between;
     position: relative;
     z-index: 2;
-    padding: 1.5em 4em 0.5em;
+    background-color: white;
 }
 
 .small {
-    background-color: blue;
-    height: calc(100px - 2em);
+    height: calc(60px - 2em);
+    padding: 1.5em 2em 0.5em;
 }
 
-.medium {
-    background-color: green;
-    height: calc(75px - 2em);
-}
-
-.large {
-    background-color: red;
-    height: calc(75px - 2em);
+.medium, .large {
+    height: calc(75px - 3em);
+    padding: 2em 4em 1em;
 }
 
 .title, .description {
@@ -29,7 +24,6 @@
 .logo {
     img {
         height: auto;
-        border-radius: 1em;
         cursor: pointer;
         &:hover {
             background-color: crimson;
@@ -37,17 +31,19 @@
     }
 }
 
-.smallLogo {
-    width: 96px;
+.small-logo {
+    width: 60px;
     img {
-        width: 96px;
+        width: 60px;
+        border-radius: 0.5em;
     }
 }
 
-.fullLogo {
+.full-logo {
     width: 200px;
     img {
         width: 200px;
+        border-radius: 1em;
     }
 }
 

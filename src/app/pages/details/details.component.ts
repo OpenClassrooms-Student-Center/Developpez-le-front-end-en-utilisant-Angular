@@ -1,20 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { wording } from 'src/app/utils/wording';
-import { getTotalMedals, getTotalAthletes, colors, backgrounds } from 'src/app/utils/data-utils';
+import { getTotalMedals, getTotalAthletes, colors, backgrounds, screenSizes } from 'src/app/utils/data-utils';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { Subject, takeUntil } from 'rxjs';
+import { Screen } from 'src/app/core/models/Screen';
+import { ResponsiveService } from 'src/app/core/services/responsive.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
   public wording = wording;
+  private _destroyed = new Subject<void>();
+  private _size:string = 'Unknown';
+  private _isPortrait:boolean = true;
+  private _screenSizes = screenSizes;
+  public screen!:Screen;
   public olympic!:Olympic;
   public totalMedals:number = 0;
   public totalAthletes:number = 0;
@@ -53,7 +61,6 @@ export class DetailsComponent implements OnInit {
       }
     },
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       y: {
         beginAtZero: true,
         max: 100,
@@ -75,13 +82,29 @@ export class DetailsComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   constructor(private olympicService:OlympicService,
-              private router:Router,
+              private _responsive: ResponsiveService,
               private activeRoute:ActivatedRoute) {}
 
   ngOnInit():void {
     this.olympic = { id: 0, country: "Data loading...", participations: []};
     const routeId:number = this.activeRoute.snapshot.params['id'];
     let numberOfOlympics = 0;
+    this._responsive.observeScreenSize()
+    .pipe(takeUntil(this._destroyed))
+    .subscribe(result => {
+      for (const query of Object.keys(result.breakpoints)) {
+        if (result.breakpoints[query]) {
+          this._size = this._screenSizes.get(query) ?? 'Unknown';
+          this.screen = new Screen(this._size, this._isPortrait);
+        }
+      }
+    });
+    this._responsive.observeOrientation()
+    .pipe(takeUntil(this._destroyed))
+    .subscribe(result => { 
+      this._isPortrait = result.matches;
+      this.screen = new Screen(this._size, this._isPortrait);
+    });
     this.olympicService.getDataLength().subscribe(data => numberOfOlympics = data);
     if (isNaN(routeId) || routeId <=0 || routeId > numberOfOlympics) {
       if (isNaN(routeId)) {
@@ -110,6 +133,11 @@ export class DetailsComponent implements OnInit {
     
   }
 
+  ngOnDestroy() {
+    this._destroyed.next();
+    this._destroyed.complete();
+  }
+
   loadChartData(olympic: Olympic) {
     this.color = colors[olympic.id - 1];
     this.background = backgrounds[olympic.id - 1];
@@ -120,7 +148,7 @@ export class DetailsComponent implements OnInit {
       }
       this._max = max +15;
       this.data.push(participation.medalsCount);
-      this.labels.push(participation.city + " " + participation.year.toString());
+      this.labels.push(participation.year.toString());
     });
     this.lineChartData = {
       datasets: [
@@ -139,13 +167,13 @@ export class DetailsComponent implements OnInit {
       labels: this.labels
     };
     this.lineChartOptions = {
+      responsive: true,
       elements: {
         line: {
           tension: 0.3
         }
       },
       scales: {
-        // We use this empty structure as a placeholder for dynamic theming.
         y: {
           beginAtZero: true,
           max: this._max,
@@ -164,4 +192,33 @@ export class DetailsComponent implements OnInit {
       } 
     }
   }
+
+  get pageContainer() {
+    return { 'page-container':true, 'small-page-container': this.screen?.isSmall, 'medium-page-container': this.screen?.isMedium, 'large-page-container': this.screen?.isLarge }
+  }
+
+  get statistics() {
+    return { 'statistics': true, 'small-statistics': this.screen?.isSmall, 'medium-statistics': this.screen?.isMedium, 'large-statistics': this.screen?.isLarge }
+  }
+
+  get statisticsContent() {
+    return { 'statistics-content':true, 'small-stat-content': this.screen?.isSmall, 'medium-stat-content': this.screen?.isMedium, 'large-stat-content': this.screen?.isLarge }
+  }
+
+  get pageTitle() {
+    return { 'page-title':true, 'small-page-title': this.screen?.isSmall, 'medium-page-title': this.screen?.isMedium, 'large-page-title': this.screen?.isLarge }
+  }
+
+  get chartBox() {
+    return { 'chart-box':true, 'small-chart-box': this.screen?.isSmall, 'medium-chart-box': this.screen?.isMedium, 'large-chart-box': this.screen?.isLarge }
+  }
+
+  get canvas() {
+    return { 'small-chart': this.screen?.isSmall, 'medium-chart': this.screen?.isMedium, 'large-chart': this.screen?.isLarge }
+  }
+
+  get errorClass() {
+    return { 'error': true, 'small-error': this.screen?.isSmall }
+  }
+  
 }
