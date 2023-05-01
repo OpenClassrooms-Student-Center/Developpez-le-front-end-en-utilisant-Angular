@@ -7,10 +7,12 @@ import { OlympicService } from './core/services/olympic.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  constructor(private olympicService: OlympicService) {}
+export class ResponsiveAppComponent implements OnInit {
+  
+  constructor(
+    private _olympicService: OlympicService) { }
 
   ngOnInit(): void {
-    this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+    this._olympicService.loadInitialData().pipe(take(1)).subscribe();
   }
 }

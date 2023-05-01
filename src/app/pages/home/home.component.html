@@ -1,17 +1,17 @@
-<div class="page-container">
-    <div class="statistics">
-        <div class="statistics-content">
+<div [ngClass]="pageContainer">
+    <div [ngClass]="statistics">
+        <div [ngClass]="statisticsContent">
             {{wording.page.home.olympicsCount}}: <span class="statistics-span">{{participations}}</span>
         </div>
-        <div class="page-title">
+        <div [ngClass]="pageTitle">
             {{wording.page.home.subtitle}}
         </div>
-        <div class="statistics-content">
+        <div [ngClass]="statisticsContent">
             {{wording.page.home.countriesCount}}: <span class="statistics-span">{{countries.length}}</span>
         </div>
     </div>
     <div *ngIf="dataLoaded">
-        <div *ngIf="olympics.length != 0" class="chart-container">
+        <div *ngIf="olympics.length != 0" [ngClass]="chartStyle">
             <canvas baseChart class="chart"
                 [data]="chartData"
                 [type]="chartType"
@@ -27,7 +27,7 @@
             <p class="dialog-warning"><mat-icon>warning</mat-icon> {{wording.page.home.noDataLoaded}}</p>
         </div>
     </div>
-    <div *ngIf="!dataLoaded" class="chart-container">
+    <div *ngIf="!dataLoaded" [ngClass]="chartStyle">
         <div class="absolute-flex-center">
             <mat-spinner [diameter]="200"></mat-spinner>
         </div>

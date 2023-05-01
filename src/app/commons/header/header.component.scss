@@ -2,25 +2,48 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: aliceblue;
-    padding: 1.5em 4em 0.5em;
     position: relative;
     z-index: 2;
+    background-color: white;
 }
 
-.logo, .title, .description {
+.small {
+    height: calc(60px - 2em);
+    padding: 1.5em 2em 0.5em;
+}
+
+.medium, .large {
+    height: calc(75px - 3em);
+    padding: 2em 4em 1em;
+}
+
+.title, .description {
     width: 200px;
 }
 
 .logo {
     img {
-        width: 200px;
         height: auto;
-        border-radius: 1em;
         cursor: pointer;
         &:hover {
             background-color: crimson;
         }
+    }
+}
+
+.small-logo {
+    width: 60px;
+    img {
+        width: 60px;
+        border-radius: 0.5em;
+    }
+}
+
+.full-logo {
+    width: 200px;
+    img {
+        width: 200px;
+        border-radius: 1em;
     }
 }
 

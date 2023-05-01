@@ -1,7 +1,9 @@
-<div class="header">
-    <div class="logo"><a routerLink=""><img src="../../../assets/images/telesport-logo-200-noir.png" alt="Logo Télésport"></a></div>
+<div [ngClass]="header" >
+    <div [ngClass]="logo"><a routerLink="">
+        <img [src]="logoPath" [alt]="alt">
+    </a></div>
     <div class="title">{{wording.title}}</div>
-    <div class="description">
+    <div class="description" *ngIf="!screen?.isPortrait">
         {{wording.page.home.descriptionStart}}<br>
         {{wording.page.home.descriptionEnd}}
     </div>
