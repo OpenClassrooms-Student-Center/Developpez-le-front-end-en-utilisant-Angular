@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
-import { Observable, Subject, of, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public participations:number = 0;
   public countries:string[] = [];
   private _medalsPerCountry: number[] = [];
+  public olympics: Olympic[] = [];
+  public dataLoaded:boolean = false;
   public chartType: ChartConfiguration<'doughnut'>['type'] = 'doughnut';
   public chartPlugins = [ DatalabelsPlugin ];
   public chartData: ChartData<'doughnut', number[], string | string[]> | undefined = undefined;
@@ -39,6 +41,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       legend: {
         display: false,
         position: 'left',
+      },
+      tooltip: {
+        usePointStyle: true,
+        callbacks: {
+          label: (context) => {
+            let label = wording.page.details.medals + ": " + context.formattedValue;
+            return label;
+          },
+          labelPointStyle: (context) => { 
+            const icon = new Image(15, 15);
+            icon.src = '../../../../assets/images/medal-icon.png';
+            return { pointStyle: icon, rotation: 0 }
+          }
+        }
       },
       datalabels: {
         formatter: (_value, ctx) => {
@@ -55,17 +71,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     cutout: '35%'
   };
 
-  public olympics$: Observable<Olympic[]> = of([]);
-  public olympics: Olympic[] = [];
-  public dataLoaded:boolean = false;
-
   constructor(
     private _responsive: ResponsiveService,
     private _olympicService: OlympicService,
     private _router:Router) {}
 
   ngOnInit(): void {
-    this.olympics$ = this._olympicService.getAsyncOlympics();
     this._responsive.observeScreenSize()
     .pipe(takeUntil(this._destroyed))
     .subscribe(result => {
@@ -82,7 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       this._isPortrait = result.matches;
       this.screen = new Screen(this._size, this._isPortrait);
     });
-    this.olympics$.subscribe((data)=> {
+    this._olympicService.getAsyncOlympics()
+    .pipe(takeUntil(this._destroyed))
+    .subscribe((data)=> {
       this.olympics = data;
       this.olympics.forEach((olympic)=> { 
         this.countries.push(olympic.country);

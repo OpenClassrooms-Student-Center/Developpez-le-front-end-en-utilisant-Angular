@@ -6,9 +6,10 @@ import { wording } from 'src/app/utils/wording';
 import { getTotalMedals, getTotalAthletes, colors, backgrounds, screenSizes } from 'src/app/utils/data-utils';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Observer, Subject, takeUntil } from 'rxjs';
 import { Screen } from 'src/app/core/models/Screen';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-details',
@@ -122,7 +123,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.dataLoaded = true;
       return;
     }
-    this.olympicService.getOlympicById(routeId).subscribe((data)=> {
+    this.olympicService.getOlympicById(routeId)
+    .pipe(takeUntil(this._destroyed))
+    .subscribe((data)=> {
       this.olympic = data;
       this.olympicService.getErrorMessages().forEach(errorMessage => this.errors.push(errorMessage));
       this.totalMedals = getTotalMedals(data);
@@ -188,7 +191,21 @@ export class DetailsComponent implements OnInit, OnDestroy {
         }
       },
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          usePointStyle: true,
+          callbacks: {
+            title: (context) => {
+              let title = this.olympic.participations[context[0]?.dataIndex].city + " " + context[0]?.label;
+              return title;
+            },
+            labelPointStyle: (context) => { 
+              const icon = new Image(15, 15);
+              icon.src = '../../../../assets/images/medal-icon.png';
+              return { pointStyle: icon, rotation: 0 }
+            }
+          }
+        }
       } 
     }
   }
