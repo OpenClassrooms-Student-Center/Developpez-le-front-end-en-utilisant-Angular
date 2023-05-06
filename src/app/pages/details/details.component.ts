@@ -6,10 +6,9 @@ import { wording } from 'src/app/utils/wording';
 import { getTotalMedals, getTotalAthletes, colors, backgrounds, screenSizes } from 'src/app/utils/data-utils';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Observable, Observer, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Screen } from 'src/app/core/models/Screen';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
-import { BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-details',

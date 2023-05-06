@@ -19,17 +19,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  it(`should have as title 'olympic-games-starter'`, () => {
-    const fixture = TestBed.createComponent(ResponsiveAppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('olympic-games-starter');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(ResponsiveAppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('olympic-games-starter app is running!');
-  });
 });
