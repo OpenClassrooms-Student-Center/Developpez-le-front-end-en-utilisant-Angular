@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { wording } from 'src/app/utils/wording';
@@ -81,14 +81,46 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  constructor(private olympicService:OlympicService,
+  constructor(private _olympicService:OlympicService,
               private _responsive: ResponsiveService,
-              private activeRoute:ActivatedRoute) {}
+              private _activeRoute:ActivatedRoute,
+              private _router:Router) {
+                this._activeRoute.params.subscribe(params => {
+                  let routeId = params['id'];
+                  this.olympic = { id: 0, country: "Data loading...", participations: []};
+                  let numberOfOlympics = 0;
+                  this._olympicService.getDataLength().subscribe(data => numberOfOlympics = data);
+                  if (isNaN(routeId) || routeId <=0 || routeId > numberOfOlympics) {
+                    if (isNaN(routeId)) {
+                      let errorMessage = "Id: " + routeId + " is Not a Number!";
+                      if (!this.errors.includes(errorMessage)) {
+                        this.errors.push(errorMessage);
+                      }
+                    }
+                    let errorMessage = wording.page.details.notFound('id', routeId);
+                    if (!this.errors.includes(errorMessage)) {
+                      this.errors.push(errorMessage);
+                    }
+                    this.olympic = { id: -1, country: "Error!", participations: []};
+                    this.error = true;
+                    this.dataLoaded = true;
+                    return;
+                  }
+                  this._olympicService.getOlympicById(routeId)
+                  .pipe(takeUntil(this._destroyed))
+                  .subscribe((data)=> {
+                    this.olympic = data;
+                    this._olympicService.getErrorMessages().forEach(errorMessage => this.errors.push(errorMessage));
+                    this.totalMedals = getTotalMedals(data);
+                    this.totalAthletes = getTotalAthletes(data);
+                    this.loadChartData(data);
+                    this.error = false;
+                    this.dataLoaded = true;
+                  });
+                });
+              }
 
   ngOnInit():void {
-    this.olympic = { id: 0, country: "Data loading...", participations: []};
-    const routeId:number = this.activeRoute.snapshot.params['id'];
-    let numberOfOlympics = 0;
     this._responsive.observeScreenSize()
     .pipe(takeUntil(this._destroyed))
     .subscribe(result => {
@@ -105,34 +137,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this._isPortrait = result.matches;
       this.screen = new Screen(this._size, this._isPortrait);
     });
-    this.olympicService.getDataLength().subscribe(data => numberOfOlympics = data);
-    if (isNaN(routeId) || routeId <=0 || routeId > numberOfOlympics) {
-      if (isNaN(routeId)) {
-        let errorMessage = "Id: " + routeId + " is Not a Number!";
-        if (!this.errors.includes(errorMessage)) {
-          this.errors.push(errorMessage);
-        }
-      }
-      let errorMessage = wording.page.details.notFound('id', routeId);
-      if (!this.errors.includes(errorMessage)) {
-        this.errors.push(errorMessage);
-      }
-      this.olympic = { id: -1, country: "Error!", participations: []};
-      this.error = true;
-      this.dataLoaded = true;
-      return;
-    }
-    this.olympicService.getOlympicById(routeId)
-    .pipe(takeUntil(this._destroyed))
-    .subscribe((data)=> {
-      this.olympic = data;
-      this.olympicService.getErrorMessages().forEach(errorMessage => this.errors.push(errorMessage));
-      this.totalMedals = getTotalMedals(data);
-      this.totalAthletes = getTotalAthletes(data);
-      this.loadChartData(data);
-      this.dataLoaded = true;
-    });
-    
   }
 
   ngOnDestroy() {
@@ -140,7 +144,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this._destroyed.complete();
   }
 
-  loadChartData(olympic: Olympic) {
+  loadChartData(olympic: Olympic):void {
     this.color = colors[olympic.id - 1];
     this.background = backgrounds[olympic.id - 1];
     let max = 0;
@@ -209,6 +213,29 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  resetChartData():void {
+    this.data = [];
+    this.labels = [];
+  }
+
+  previous():void {
+    let previousId = +this._activeRoute.snapshot.params['id'] - 1;
+    if (previousId < 1) {
+      previousId = 5;
+    }
+    this.resetChartData();
+    this._router.navigate(['/details', `${previousId}`]);
+  }
+
+  next():void {
+    let nextId = +this._activeRoute.snapshot.params['id'] + 1;
+    if (nextId > 5) {
+      nextId = 1;
+    }
+    this.resetChartData();
+    this._router.navigate(['/details', `${nextId}`]);
+  }
+
   get pageContainer() {
     return { 'page-container':true, 'small-page-container': this.screen?.isSmall, 'medium-page-container': this.screen?.isMedium, 'large-page-container': this.screen?.isLarge }
   }
@@ -231,6 +258,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   get canvas() {
     return { 'small-chart': this.screen?.isSmall, 'medium-chart': this.screen?.isMedium, 'large-chart': this.screen?.isLarge }
+  }
+
+  get actions() {
+    return { 'actions-container': true }
   }
 
   get errorClass() {

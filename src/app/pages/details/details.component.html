@@ -20,7 +20,11 @@
                 [data]="lineChartData"
                 [options]="lineChartOptions"
                 [type]="lineChartType"></canvas>
-            <a routerLink="" class="back-button">{{wording.page.notFound.back}}</a>
+            <div [ngClass]="actions">
+                <button class="back-button" (click)="previous()"><mat-icon>navigate_before</mat-icon></button>
+                <a routerLink="" class="back-button">{{wording.page.notFound.back}}</a>
+                <button class="back-button" (click)="next()"><mat-icon>navigate_next</mat-icon></button>
+            </div>
         </div>
         <ul [ngClass]="errorClass" *ngIf="errors.length != 0 && error">
             <li  class="error-message" *ngFor="let errorMessage of errors"><mat-icon>error</mat-icon> {{errorMessage}}</li>

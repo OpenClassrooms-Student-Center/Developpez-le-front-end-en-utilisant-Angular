@@ -2,9 +2,17 @@
     <div [ngClass]="logo"><a routerLink="">
         <img [src]="logoPath" [alt]="alt">
     </a></div>
-    <div class="title">{{wording.title}}</div>
+    <div class="middle-header-container">
+        <div class="title" *ngIf="!screen?.isPortrait">{{wording.title}}</div>
+         <div [ngClass]="rings">
+            <img [src]="ringsSrc" [alt]="ringsAlt">
+        </div>
+    </div>
     <div class="description" *ngIf="!screen?.isPortrait">
         {{wording.page.home.descriptionStart}}<br>
         {{wording.page.home.descriptionEnd}}
     </div>
+</div>
+<div [ngClass]="rainbow">
+    <!-- empty div for gradient header bottom border -->
 </div>
