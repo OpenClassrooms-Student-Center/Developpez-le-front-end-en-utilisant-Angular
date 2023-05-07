@@ -18,4 +18,10 @@ export class HomeComponent implements OnInit {
     this.olympics$ = this.olympicService.getOlympics();
     console.log(this.olympics$);
   }
+
+
+
+
+
+
 }
