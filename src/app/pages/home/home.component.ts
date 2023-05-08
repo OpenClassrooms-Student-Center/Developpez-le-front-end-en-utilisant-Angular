@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { Color, NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-home',
@@ -12,20 +12,32 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 })
 export class HomeComponent implements OnInit {
   public olympics$: Observable<Olympic[]> = of();
+  public olympic$: Observable<Olympic> | undefined;
   // public olympics$: Observable<any> = of(null);
-  // view: any[] = [700, 400];
+  view: [number, number] = [700, 400];
   results: any[] = [];
+
+  colorScheme: any = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
 
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
+
+    // .pipe(subscribe(
+    //   response: any => {
+    //     for (const item of response) {
+    //       this.results.push(item);
+    //     }
+    //     this.results = [...this.results];
+    //   }
+    // );
+    // )
     console.log(this.olympics$);
   }
 
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
 
   // options
 
