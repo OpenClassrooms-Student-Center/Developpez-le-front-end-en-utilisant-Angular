@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Function responsible for navigating to the wanted Details page. 
    * @param event the click event to get the route id through the active event index.
    */
-  chartClicked(event:any):void {
+  public chartClicked(event:any):void {
     let routeId = event.active[0]?.index + 1;
     this._router.navigateByUrl('/details/' + routeId);
   }

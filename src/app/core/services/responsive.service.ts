@@ -17,7 +17,7 @@ export class ResponsiveService {
    * Function to observe the width of the browser window.
    * @returns an Observable of BreakpointState.
    */
-  observeScreenSize(): Observable<BreakpointState> {
+  public observeScreenSize(): Observable<BreakpointState> {
     return this._responsive.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -31,7 +31,7 @@ export class ResponsiveService {
    * Function to observe the orientation of the browser window.
    * @returns an Observable of BreakpointState.
    */
-  observeOrientation() : Observable<BreakpointState> {
+  public observeOrientation() : Observable<BreakpointState> {
     return this._responsive.observe('(orientation: portrait)');
   }
 }
