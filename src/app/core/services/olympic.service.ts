@@ -23,7 +23,7 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData(): Observable<Olympic[]> {
+  public loadInitialData(): Observable<Olympic[]> {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
@@ -43,7 +43,7 @@ export class OlympicService {
    * The original function to get static data.
    * @returns an Obsrvable with an Array of Olympic model.
    */
-  getOlympics():Observable<Olympic[]> {
+  public getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
 
@@ -53,7 +53,7 @@ export class OlympicService {
    * in this case, by adding a mat progress spinner to the related components template.
    * @returns an Obsrvable of an Array of Olympic model.
    */
-  getAsyncOlympics():Observable<Olympic[]>  {
+  public getAsyncOlympics(): Observable<Olympic[]>  {
     return this.olympics$.asObservable().pipe(delay(2000));
   }
 
@@ -62,7 +62,7 @@ export class OlympicService {
    * @param lookupId the id of the Olympic we want to fetch.
    * @returns an Observable of an Olympic model.
    */
-  getOlympicById(lookupId:number):Observable<Olympic> {
+  public getOlympicById(lookupId:number): Observable<Olympic> {
     return this.getAsyncOlympics().pipe(map(olympics => olympics.filter(olympic => olympic.id == lookupId)[0])) as Observable<Olympic>;
   }
 
@@ -70,7 +70,7 @@ export class OlympicService {
    * Function to know how many Olympics are present in the olympics Subject.
    * @returns an Observable of number (representing th number of Olympics)
    */
-  getDataLength():Observable<number> {
+  getDataLength(): Observable<number> {
     return this.getOlympics().pipe(map(olympics => olympics.length));
   }
 

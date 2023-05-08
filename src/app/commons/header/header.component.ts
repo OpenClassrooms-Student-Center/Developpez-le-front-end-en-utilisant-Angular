@@ -5,6 +5,9 @@ import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Subject, takeUntil } from 'rxjs';
 import { screenSizes } from 'src/app/utils/data-utils';
 
+/**
+ * Shared Header.
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,20 +15,29 @@ import { screenSizes } from 'src/app/utils/data-utils';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public wording = wording;
-  
+  // private properties used only in the component.
   private _destroyed = new Subject<void>();
   private _size:string = 'Unknown';
   private _isPortrait:boolean = true;
   private _screenSizes = screenSizes;
+
+  // public properties binded to the html template.
+  public wording = wording;
   public screen!:Screen;
   public alt:string = "Logo Télésport";
   public logoPath!:string;
   public ringsSrc:string = "../../../assets/images/olympic-rings.png";
   public ringsAlt: string = "Olympic Rings";
   
+  /**
+   * Dependency injection.
+   * @param _responsive Responsive service to observe screen size changes.
+   */
   constructor(private _responsive: ResponsiveService) {}
 
+  /**
+   * Intialization of the component with subscription to the responsive service.
+   */  
   ngOnInit(): void {
     this._responsive.observeScreenSize()
     .pipe(takeUntil(this._destroyed))
@@ -46,11 +58,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Component destroyed with notifier unsubscription.
+   */
   ngOnDestroy() {
     this._destroyed.next();
     this._destroyed.complete();
   }
 
+  /**
+   * getters for style classes.
+   */
   get header() {
     return { 'header': true,'small': this.screen.isSmall, 'medium': this.screen.isMedium, 'large': this.screen.isLarge}
   }

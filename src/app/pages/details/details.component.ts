@@ -175,7 +175,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
    * Function responsible for loading th data in the chart.
    * @param olympic the olympic model to load.
    */
-  loadChartData(olympic: Olympic):void {
+  private loadChartData(olympic: Olympic):void {
     this.color = colors[olympic.id - 1];
     this.background = backgrounds[olympic.id - 1];
     let max = 0;
@@ -248,7 +248,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
    * Reseting the content of the data and labels Arrays on previous/nxt buttons click.
    * Needed as otherwis the data and the lablels are pushed with duplicates.
    */
-  resetChartData():void {
+  private resetChartData():void {
     this.data = [];
     this.labels = [];
   }
@@ -256,7 +256,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   /**
    * click function to navigate to the previous route id.
    */
-  previous():void {
+  public previous():void {
     let previousId = +this._activeRoute.snapshot.params['id'] - 1;
     if (previousId < 1) {
       previousId = 5;
@@ -268,7 +268,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   /**
    * click function to navigate to the next route id.
    */
-  next():void {
+  public next():void {
     let nextId = +this._activeRoute.snapshot.params['id'] + 1;
     if (nextId > 5) {
       nextId = 1;

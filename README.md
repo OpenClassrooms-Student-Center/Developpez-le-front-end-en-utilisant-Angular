@@ -83,6 +83,7 @@ I recommand to follow [KISS](https://fr.wikipedia.org/wiki/Principe_KISS) and [D
 
 ## Versions:
 
+- **v1.3** since 08/05/2023, Final version: Added missing comments annd access modifiers.
 - **v1.2** since 08/05/2023, Exam version: Fixed some tests and added comments and readme.
 - **v1.1** since 05/05/2023, Responsive version: Implemented responsive design and further enhancements.
 - **v1.0** since 16/04/2023, first MVP: fonctional web application with the required features. (not responsive)
