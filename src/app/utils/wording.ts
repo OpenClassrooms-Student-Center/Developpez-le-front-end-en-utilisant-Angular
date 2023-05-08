@@ -1,3 +1,4 @@
+// Utility class to bind all the wording from in the different html templates.
 export const wording = {
     title: "Olympic Games",
     page: {

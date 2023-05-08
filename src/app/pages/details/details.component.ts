@@ -10,6 +10,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { Screen } from 'src/app/core/models/Screen';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 
+/**
+ * Component for Details pages.
+ */
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -17,11 +20,22 @@ import { ResponsiveService } from 'src/app/core/services/responsive.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
-  public wording = wording;
+  /**
+   * Property decorator that configures a view query. 
+   * The change detector looks for the first element or the directive matching the selector in the view DOM. 
+   * If the view DOM changes, and a new child matches the selector, the property is updated.
+   */
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  // private properties used by the component.
   private _destroyed = new Subject<void>();
   private _size:string = 'Unknown';
   private _isPortrait:boolean = true;
   private _screenSizes = screenSizes;
+  private _max:number = 100;
+
+  // public properties binded to the html template.
+  public wording = wording;
   public screen!:Screen;
   public olympic!:Olympic;
   public totalMedals:number = 0;
@@ -29,14 +43,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public dataLoaded:boolean = false;
   public error:boolean = false;
   public errors:string[] = [];
-
   public color:string = '#000';
   public background:string = '#fff';
-
-  public lineChartType: ChartType = 'line';
   public data:number[] = [];
   public labels:string[] = [];
-  private _max:number = 100;
+  // Chart properties.
+  public lineChartType: ChartType = 'line';
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -79,17 +91,25 @@ export class DetailsComponent implements OnInit, OnDestroy {
     } 
   };
 
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
+  /**
+   * Dependencies injections on constructor.
+   * The constructor is also responsible for data subscriptions so that the component reload the data on previous/next click.
+   * @param _olympicService Data service to retrieve th olympics info.
+   * @param _responsive Responsive service for observing the screen's size changes.
+   * @param _activeRoute Activated Route for retrieving current route id.
+   * @param _router Router to redirect on the Details pages on slice's click.
+   */
   constructor(private _olympicService:OlympicService,
               private _responsive: ResponsiveService,
               private _activeRoute:ActivatedRoute,
               private _router:Router) {
                 this._activeRoute.params.subscribe(params => {
                   let routeId = params['id'];
+                  // Display info when data is loading.
                   this.olympic = { id: 0, country: "Data loading...", participations: []};
                   let numberOfOlympics = 0;
                   this._olympicService.getDataLength().subscribe(data => numberOfOlympics = data);
+                  // Handling error when wrong route id is manually set.
                   if (isNaN(routeId) || routeId <=0 || routeId > numberOfOlympics) {
                     if (isNaN(routeId)) {
                       let errorMessage = "Id: " + routeId + " is Not a Number!";
@@ -110,6 +130,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
                   .pipe(takeUntil(this._destroyed))
                   .subscribe((data)=> {
                     this.olympic = data;
+                    // Retrieveing error messages from OlympicService.
                     this._olympicService.getErrorMessages().forEach(errorMessage => this.errors.push(errorMessage));
                     this.totalMedals = getTotalMedals(data);
                     this.totalAthletes = getTotalAthletes(data);
@@ -120,6 +141,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
                 });
               }
 
+  /**
+   * Intialization of the component with subscription to the responsive service.
+   */  
   ngOnInit():void {
     this._responsive.observeScreenSize()
     .pipe(takeUntil(this._destroyed))
@@ -139,11 +163,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Component destroyed with notifier unsubscription.
+   */
   ngOnDestroy() {
     this._destroyed.next();
     this._destroyed.complete();
   }
 
+  /**
+   * Function responsible for loading th data in the chart.
+   * @param olympic the olympic model to load.
+   */
   loadChartData(olympic: Olympic):void {
     this.color = colors[olympic.id - 1];
     this.background = backgrounds[olympic.id - 1];
@@ -213,11 +244,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Reseting the content of the data and labels Arrays on previous/nxt buttons click.
+   * Needed as otherwis the data and the lablels are pushed with duplicates.
+   */
   resetChartData():void {
     this.data = [];
     this.labels = [];
   }
 
+  /**
+   * click function to navigate to the previous route id.
+   */
   previous():void {
     let previousId = +this._activeRoute.snapshot.params['id'] - 1;
     if (previousId < 1) {
@@ -227,6 +265,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this._router.navigate(['/details', `${previousId}`]);
   }
 
+  /**
+   * click function to navigate to the next route id.
+   */
   next():void {
     let nextId = +this._activeRoute.snapshot.params['id'] + 1;
     if (nextId > 5) {
@@ -236,6 +277,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this._router.navigate(['/details', `${nextId}`]);
   }
 
+  /**
+   * getters for style classes.
+   */
   get pageContainer() {
     return { 'page-container':true, 'small-page-container': this.screen?.isSmall, 'medium-page-container': this.screen?.isMedium, 'large-page-container': this.screen?.isLarge }
   }

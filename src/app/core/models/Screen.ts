@@ -1,3 +1,8 @@
+/**
+ * This class represents the states of the screen size and orientation.
+ * It is used in the different pages components to use the correct scss class depending on the screen attributes.
+ */
+
 export class Screen {
     isSmall:boolean;
     isMedium:boolean;

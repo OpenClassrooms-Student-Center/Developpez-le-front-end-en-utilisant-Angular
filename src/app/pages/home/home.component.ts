@@ -11,6 +11,9 @@ import { backgrounds, colors, screenSizes } from 'src/app/utils/data-utils';
 import { Screen } from 'src/app/core/models/Screen';
 import { wording } from 'src/app/utils/wording';
 
+/**
+ * Component for Home page.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,19 +21,27 @@ import { wording } from 'src/app/utils/wording';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+  /**
+   * Property decorator that configures a view query. 
+   * The change detector looks for the first element or the directive matching the selector in the view DOM. 
+   * If the view DOM changes, and a new child matches the selector, the property is updated.
+   */
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  public wording = wording;
+  // private properties used by the component.
   private _destroyed = new Subject<void>();
   private _size:string = 'Unknown';
   private _isPortrait:boolean = true;
   private _screenSizes = screenSizes;
+  private _medalsPerCountry: number[] = [];
+  // public properties binded to the html template.
+  public wording = wording;
   public screen!:Screen;
   public participations:number = 0;
   public countries:string[] = [];
-  private _medalsPerCountry: number[] = [];
   public olympics: Olympic[] = [];
   public dataLoaded:boolean = false;
+  // Chart properties.
   public chartType: ChartConfiguration<'doughnut'>['type'] = 'doughnut';
   public chartPlugins = [ DatalabelsPlugin ];
   public chartData: ChartData<'doughnut', number[], string | string[]> | undefined = undefined;
@@ -71,11 +82,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     cutout: '35%'
   };
 
+  /**
+   * Dependencies injections on constructor.
+   * @param _responsive Responsive service for observing the screen's size changes.
+   * @param _olympicService Data service to retrieve th olympics info.
+   * @param _router Router to redirect on the Details pages on slice's click.
+   */
   constructor(
     private _responsive: ResponsiveService,
     private _olympicService: OlympicService,
     private _router:Router) {}
-
+  
+  /**
+   * Intialization of the component with subscription to the different services.
+   */  
   ngOnInit(): void {
     this._responsive.observeScreenSize()
     .pipe(takeUntil(this._destroyed))
@@ -93,6 +113,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this._isPortrait = result.matches;
       this.screen = new Screen(this._size, this._isPortrait);
     });
+    // getting delayed data to mock an asynchronous API's call.
     this._olympicService.getAsyncOlympics()
     .pipe(takeUntil(this._destroyed))
     .subscribe((data)=> {
@@ -124,16 +145,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Component destroyed with notifier unsubscription.
+   */
   ngOnDestroy() {
     this._destroyed.next();
     this._destroyed.complete();
   }
 
+  /**
+   * Function responsible for navigating to the wanted Details page. 
+   * @param event the click event to get the route id through the active event index.
+   */
   chartClicked(event:any):void {
     let routeId = event.active[0]?.index + 1;
     this._router.navigateByUrl('/details/' + routeId);
   }
 
+  /**
+   * getters for style classes.
+   */
   get pageContainer() {
     return { 'page-container':true, 'small-page-container': this.screen?.isSmall, 'medium-page-container': this.screen?.isMedium, 'large-page-container': this.screen?.isLarge }
   }
