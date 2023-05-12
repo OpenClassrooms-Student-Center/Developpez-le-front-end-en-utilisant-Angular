@@ -11,20 +11,30 @@ import { Color, NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
   public olympics$: Observable<Olympic[]> = of([]);
   public olympic$: Observable<Olympic> | undefined;
-  // public olympics$: Observable<any> = of(null);
 
-  public view: any[] = [700, 400];
-  public colorScheme = {
+
+  public view: any = [700, 400];
+  public colorScheme: any = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
+  // options
+  showLegend: boolean = true;
+  showLabels: boolean = true;
 
-  constructor(private olympicService: OlympicService) {}
+  gradient: boolean = false;
+  isDoughnut: boolean = false;
+
+
+  constructor(private olympicService: OlympicService) {
+    Object.assign(this, this.olympics$) }
+
 
   ngOnInit(): void {
-    // this.olympics$ = this.olympicService.getOlympics();
+    this.olympics$ = this.olympicService.getOlympics();
 
     // .pipe(subscribe(
     //   response: any => {
@@ -36,31 +46,25 @@ export class HomeComponent implements OnInit {
     // );
     // )
     // console.log(this.olympics$);
-    this.olympics$ = this.olympicService.getOlympics().subscribe(
-      (olympics) => {
-        this.olympics$ = of(olympics);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    //------------------------------------------------
+    // this.olympics$ = this.olympicService.getOlympics().subscribe(
+    //   (olympics) => {
+    //     this.olympics$ = of(olympics);
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    }
 
+
+    onActivate(data: any): void {
+      console.log('Activate', JSON.parse(JSON.stringify(data)));
+    }
+
+    onDeactivate(data: any): void {
+      console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    }
+
+    onSelect(data: any): void {
+      console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    }
   }
-
-
-  // options
-
-    // showLabels: boolean = true;
-    // isDoughnut: boolean = false;
-
-
-
-
-
-
-
-
-  // onSelect(): void {
-  // }
-
-}

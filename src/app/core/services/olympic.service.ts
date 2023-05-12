@@ -43,7 +43,7 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
   private loading = false;
-  // private olympic$ =
+  private olympic$ = Observable<Olympic>;
 
   constructor(private http: HttpClient) {}
 
@@ -56,7 +56,7 @@ export class OlympicService {
       }),
       catchError((error, caught) => {
         console.error("Une erreur s'est produite lors du chargement des données olympiques :", error);
-        this.olympics$.next(Olympic);
+        // this.olympics$.next(value);
         this.endLoadingState();
         return caught;
       })
