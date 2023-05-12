@@ -3,9 +3,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { Subscription } from 'rxjs';
-import { Observable } from 'rxjs';
-import { of } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-detail',
@@ -47,5 +45,9 @@ export class DetailComponent implements OnInit{
   // ngOnDestroy(): void {
   //    this.subscription.unsubscribe();
   // }
+
+  public backToDashboard():void {
+    // this.router.navigate(['/'])
+  }
 
 }

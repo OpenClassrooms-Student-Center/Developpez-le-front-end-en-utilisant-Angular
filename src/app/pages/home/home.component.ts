@@ -11,20 +11,20 @@ import { Color, NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<Olympic[]> = of();
+  public olympics$: Observable<Olympic[]> = of([]);
   public olympic$: Observable<Olympic> | undefined;
   // public olympics$: Observable<any> = of(null);
-  view: [number, number] = [700, 400];
-  results: any[] = [];
 
-  colorScheme: any = {
+  public view: any[] = [700, 400];
+  public colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
+
 
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
+    // this.olympics$ = this.olympicService.getOlympics();
 
     // .pipe(subscribe(
     //   response: any => {
@@ -35,14 +35,23 @@ export class HomeComponent implements OnInit {
     //   }
     // );
     // )
-    console.log(this.olympics$);
+    // console.log(this.olympics$);
+    this.olympics$ = this.olympicService.getOlympics().subscribe(
+      (olympics) => {
+        this.olympics$ = of(olympics);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
   }
 
 
   // options
 
-    showLabels: boolean = true;
-    isDoughnut: boolean = false;
+    // showLabels: boolean = true;
+    // isDoughnut: boolean = false;
 
 
 
