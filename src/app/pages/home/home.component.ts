@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { Color, NgxChartsModule } from '@swimlane/ngx-charts';
+// import { BrowserModule } from '@angular/platform-browser';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { Participations } from 'src/app/core/models/Participation';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,8 @@ export class HomeComponent implements OnInit {
 
   public olympics$: Observable<Olympic[]> = of([]);
   public olympic$: Observable<Olympic> | undefined;
+
+
 
 
   public view: any = [700, 400];
@@ -34,25 +37,11 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-
-    // .pipe(subscribe(
-    //   response: any => {
-    //     for (const item of response) {
-    //       this.results.push(item);
-    //     }
-    //     this.results = [...this.results];
-    //   }
-    // );
-    // )
+    this.olympics$ = this.olympicService.getOlympics().pipe(
+      // Je pense qu'il faut ici filtrer les données que l'on veut afficher
+      )
+      console.log(this.olympics$)
     // console.log(this.olympics$);
-    //------------------------------------------------
-    // this.olympics$ = this.olympicService.getOlympics().subscribe(
-    //   (olympics) => {
-    //     this.olympics$ = of(olympics);
-    //   },
-    //   (error) => {
-    //     console.error(error);
     }
 
 
