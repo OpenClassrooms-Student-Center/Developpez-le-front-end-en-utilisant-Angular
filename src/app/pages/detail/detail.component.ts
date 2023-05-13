@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Subscription, Observable, of } from 'rxjs';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-detail',
@@ -21,11 +22,12 @@ export class DetailComponent implements OnInit{
   ngOnInit(): void {
     const id: number = +this.route.snapshot.params['id'];
 
-    this.olympic$ = this.olympicService.getOlympics()
-      .pipe(
-        map((olympics: Olympic[]) => olympics.find(olympic => olympic.id == id)),
-        tap((value: any) => console.log(value))
-      )
+    // this.olympic$ =
+    this.olympicService.getOlympics();
+    // .pipe(
+    //     map((olympics: Olympic[]) => olympics.find(olympic => olympic.id == id)),
+    //     tap((value: any) => console.log(value))
+    //   )
 
     // this.subscription.add(this.olympicService.getOlympics()
     //   .pipe(
