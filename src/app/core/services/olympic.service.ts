@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
@@ -23,25 +23,31 @@ export class OlympicService {
         console.error(error);
         // can be useful to end loading state and let the user know something went wrong
         // declarer un objet de type olympic
-        this.olympics$.next(this.olympicObjet); // je ne sais pas ce que j'ai fat ici
+        // this.olympics$.next(this.olympicObjet); // je ne sais pas ce que j'ai fat ici
         return caught;
       })
     );
   }
 
   getOlympics() {
-    return this.olympics$.asObservable() // BehaviorSubject(=observateur) que l'on tranforme en observable
+    return this.olympics$.asObservable();
   }
 
-
+  getOlympicById(id: number): Observable<Olympic> {
+    const olympic = this.olympics$.value.find((o) => o.id === id);
+    if (olympic) {
+      return of(olympic);
+    }
+    return throwError(() => new Error(`Olympic with id ${id} not found`));
+  }
 }
 
-// @Injectable({
-//   providedIn: 'root',
-// })
+
+
+
+
 // export class OlympicService {
-//   private olympicUrl = './assets/mock/olympic.json';
-//   private olympics$ = new BehaviorSubject<Olympic[]>([]);
+
 //   private loading = false;
 //   private olympic$ = Observable<Olympic>;
 
@@ -66,11 +72,3 @@ export class OlympicService {
 //   private endLoadingState() {
 //     this.loading = false;
 //   }
-
-//   getOlympics() {
-//     return this.olympics$.asObservable();
-//   }
-//   getOlympic(olympicId: number): Observable<Olympic> {
-
-//   }
-// }

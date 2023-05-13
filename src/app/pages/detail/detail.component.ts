@@ -1,29 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { OlympicService } from 'src/app/core/services/olympic.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
-import { Olympic } from 'src/app/core/models/Olympic';
 import { Subscription, Observable, of } from 'rxjs';
-import { pipe } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
-  selector: 'app-detail',
+  selector: 'app-olympic-details',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit{
-  // pour lier mon observable au template. J'initialise ma séquence d'observable avec un objet vide
-  public olympic$: Observable<Olympic> = of(<Olympic>{});
+export class DetailComponent implements OnInit, OnDestroy {
+
+  public olympic$!: Observable<Olympic>;
   public subscription: Subscription = new Subscription();
+  public errorMessage!: string;
 
   constructor(private olympicService: OlympicService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const id: number = +this.route.snapshot.params['id'];
+    const id = +this.route.snapshot.params['id'];
+    this.subscription = this.olympicService.getOlympicById(id)
+      .pipe(
+        catchError(error => {
+          this.errorMessage = error.message;
+          return of(error);
+        })
+      )
+      .subscribe(olympic => {
+        if (olympic) {
+          this.olympic$ = of(olympic);
+          console.log('olympic:', this.olympic$)
+        }
+      });
+  }
 
-    // this.olympic$ =
-    this.olympicService.getOlympics();
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+}
+
+
+
+
+  // this.olympic$ =
+    // this.olympicService.getOlympics();
     // .pipe(
     //     map((olympics: Olympic[]) => olympics.find(olympic => olympic.id == id)),
     //     tap((value: any) => console.log(value))
@@ -42,14 +65,10 @@ export class DetailComponent implements OnInit{
       //   console.log('olympic:', this.olympic)
       // }
       // ));
-  }
 
   // ngOnDestroy(): void {
   //    this.subscription.unsubscribe();
   // }
 
-  public backToDashboard():void {
+  //public backToDashbo:ard():void {
     // this.router.navigate(['/'])
-  }
-
-}
