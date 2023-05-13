@@ -1,4 +1,4 @@
-// Utility class to centralize usfull constants and functions.
+// Utility class to centralize usefull constants and functions.
 import { Breakpoints } from "@angular/cdk/layout";
 import { Olympic } from "../core/models/Olympic";
 
@@ -14,7 +14,7 @@ export function getTotalMedals(olympic: Olympic): number {
 }
 
 /**
- * utils function to get the total numbr of athletes from an Olympic model.
+ * utils function to get the total number of athletes from an Olympic model.
  * @param olympic the wanted Olympic model.
  * @returns the total number of athletes.
  */

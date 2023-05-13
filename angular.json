@@ -95,6 +95,9 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/app/commons"]
+            },
             "assets": [
               "src/favicon.ico",
               "src/assets"

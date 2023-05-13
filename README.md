@@ -17,7 +17,7 @@ The project has 2 features:
 1. The ability to display on the Home page a dougnut shape chart with the name of the participating countries (from a static dataset) and their total number of medals.
 2. The ability to display on the Details pages a line chart representing the total number of medals per particaption.
 
-**N.B.:** Not really a feature, on the Home page there are informations about the number of Olympics and the number of countries. On th Details pages, there are informations about the number of participations (entries) and athletes per country.
+**N.B.:** Not really a feature, on the Home page there are informations about the number of Olympics and the number of countries. On the Details pages, there are informations about the number of participations (entries) and athletes per country.
 
 ---
 
@@ -62,7 +62,7 @@ Run `ng serve` for a dev server. Navigate to [http://localhost:4200/](http://loc
 Run `ng test` to start the components and services tests. It will open a browser on your machine and run the tests. (*.spec.ts files)
 All **8 provided tests** should pass. If not, research on the internet with the error message displayed.
 
-### Buildig the application: 
+### Building the application: 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 

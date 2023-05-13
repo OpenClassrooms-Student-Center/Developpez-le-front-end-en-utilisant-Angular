@@ -94,7 +94,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   /**
    * Dependencies injections on constructor.
    * The constructor is also responsible for data subscriptions so that the component reload the data on previous/next click.
-   * @param _olympicService Data service to retrieve th olympics info.
+   * @param _olympicService Data service to retrieve the olympics info.
    * @param _responsive Responsive service for observing the screen's size changes.
    * @param _activeRoute Activated Route for retrieving current route id.
    * @param _router Router to redirect on the Details pages on slice's click.
@@ -130,7 +130,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
                   .pipe(takeUntil(this._destroyed))
                   .subscribe((data)=> {
                     this.olympic = data;
-                    // Retrieveing error messages from OlympicService.
+                    // Retrieving error messages from OlympicService.
                     this._olympicService.getErrorMessages().forEach(errorMessage => this.errors.push(errorMessage));
                     this.totalMedals = getTotalMedals(data);
                     this.totalAthletes = getTotalAthletes(data);
@@ -172,7 +172,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function responsible for loading th data in the chart.
+   * Function responsible for loading the data in the chart.
    * @param olympic the olympic model to load.
    */
   private loadChartData(olympic: Olympic):void {
@@ -245,8 +245,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Reseting the content of the data and labels Arrays on previous/nxt buttons click.
-   * Needed as otherwis the data and the lablels are pushed with duplicates.
+   * Reseting the content of the data and labels Arrays on previous/next buttons click.
+   * Needed as otherwise the data and the lablels are pushed with duplicates.
    */
   private resetChartData():void {
     this.data = [];

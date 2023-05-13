@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   /**
    * Dependencies injections on constructor.
    * @param _responsive Responsive service for observing the screen's size changes.
-   * @param _olympicService Data service to retrieve th olympics info.
+   * @param _olympicService Data service to retrieve the olympics info.
    * @param _router Router to redirect on the Details pages on slice's click.
    */
   constructor(

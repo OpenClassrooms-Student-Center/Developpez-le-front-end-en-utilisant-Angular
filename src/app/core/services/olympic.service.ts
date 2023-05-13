@@ -14,7 +14,7 @@ import { Olympic } from '../models/Olympic';
 export class OlympicService {
 
   /**
-   * Here, the dataset ius a static json file.
+   * Here, the dataset is a static json file.
    * But changing the url to an API that returns the same JSON objects guarranty that this application will still works.
    */
   private olympicUrl:string = './assets/mock/olympic.json';
@@ -49,9 +49,9 @@ export class OlympicService {
 
   /**
    * This function is usefull to simulate an asynchronous call to an API to get the data.
-   * The idea is to force me to manage the delay between the call and thee result
+   * The idea is to force me to manage the delay between the call and the result
    * in this case, by adding a mat progress spinner to the related components template.
-   * @returns an Obsrvable of an Array of Olympic model.
+   * @returns an Observable of an Array of Olympic model.
    */
   public getAsyncOlympics(): Observable<Olympic[]>  {
     return this.olympics$.asObservable().pipe(delay(2000));
@@ -68,7 +68,7 @@ export class OlympicService {
 
   /**
    * Function to know how many Olympics are present in the olympics Subject.
-   * @returns an Observable of number (representing th number of Olympics)
+   * @returns an Observable of number (representing the number of Olympics)
    */
   getDataLength(): Observable<number> {
     return this.getOlympics().pipe(map(olympics => olympics.length));

@@ -11,8 +11,7 @@ export class ResponsiveAppComponent implements OnInit, OnDestroy {
 
   private _destroyed = new Subject<void>();
   
-  constructor(
-    private _olympicService: OlympicService) { }
+  constructor(private _olympicService: OlympicService) { }
 
   ngOnInit(): void {
     this._olympicService.loadInitialData().pipe(takeUntil(this._destroyed)).subscribe();
