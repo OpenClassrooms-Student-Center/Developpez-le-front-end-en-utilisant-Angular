@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, pipe } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Participations } from 'src/app/core/models/Participation';
-import { map, tap } from 'rxjs/operators';
+import { map, tap} from 'rxjs/operators';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 @Component({
   selector: 'app-home',
@@ -16,11 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class HomeComponent implements OnInit {
 
-  // public olympics$: Observable<Olympic[]> = of([]);
   public olympics$: Observable<Olympic[]> = of([]);
-  // public olympic$: Observable<Olympic> | undefined;
-
-
 
   public view: any = [700, 400];
   public colorScheme: any = {
@@ -28,38 +23,38 @@ export class HomeComponent implements OnInit {
   };
 
   // options
+  gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
-
-  gradient: boolean = false;
   isDoughnut: boolean = false;
+  legendPosition: string = 'below';
 
 
   constructor(private olympicService: OlympicService) {
-    Object.assign(this, this.olympics$) }
+    (Object.assign(this, this.olympics$)) }
 
 
     ngOnInit()  {
+      console.log("bonjour", this.olympics$ ),
       this.olympics$ = this.olympicService.getOlympics()
-      .pipe(
-        // result =>
-        // for(const i of result) {
-          //   this.olympics$.push(i);
-          // }
-          // this.olympics$ = [... this.olympics$];
+          .pipe(
+            tap(value => console.log(`mon observable avant map ${value}`)),
+            map((olympics: Olympic[]) => {
+              olympics.map((olympic: Olympic) => ({
+                country: olympic.country,
+                // participations: olympic.participations.find((TotalmedalsCount: number) => TotalmedalsCount += Participations.medalsCount )
+                participations: olympic.participations.forEach((participation) => {
+                  let TotalmedalsCount = 0;
+                  TotalmedalsCount += participation.medalsCount;
+                }),
+              }))
+              return olympics
+            }),
+            tap(value => console.log(`mon observable après map ${value}`))
           )
+          console.log(this.olympics$)
+      }
 
-          //     map((olympics: Olympic[]) => {
-            //       olympics.map(olympic => ({
-              //         country: olympic.country,
-              //         participations: olympic.participations[0].medalsCount
-              //       }))
-              //     })
-              //     ),
-              //     tap(olympics => console.log("mon observation dans home ngonini", olympics));
-
-              console.log(this.olympics$);
-            }
 
     public data: Observable<Olympic[]> =this.olympics$;
 
