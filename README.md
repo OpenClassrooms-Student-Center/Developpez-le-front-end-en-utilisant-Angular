@@ -83,6 +83,7 @@ I recommand to follow [KISS](https://fr.wikipedia.org/wiki/Principe_KISS) and [D
 
 ## Versions:
 
+- **v1.5** since 13/05/2023, Corrected version: corrected typo everywhere and fixed tests issues.
 - **v1.4** since 11/05/2023, Revised version: fixed issue with style import in not found component.
 - **v1.3** since 08/05/2023, Final version: Added missing comments annd access modifiers.
 - **v1.2** since 08/05/2023, Exam version: Fixed some tests and added comments and readme.
