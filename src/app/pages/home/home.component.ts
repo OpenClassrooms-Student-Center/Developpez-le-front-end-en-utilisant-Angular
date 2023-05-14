@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class HomeComponent implements OnInit {
 
   public olympics$: Observable<Olympic[]> = of([]);
+  public olympic!: Olympic;
+  public olympics!: Olympic[];
+  // public participations!: Participations[];
 
   public view: any = [700, 400];
   public colorScheme: any = {
@@ -37,23 +40,35 @@ export class HomeComponent implements OnInit {
     ngOnInit()  {
       console.log("bonjour", this.olympics$ ),
       this.olympics$ = this.olympicService.getOlympics()
-          .pipe(
-            tap(value => console.log(`mon observable avant map ${value}`)),
-            map((olympics: Olympic[]) => {
+        .pipe(
+          tap(value => console.log(`mon observable avant map: ${value}`)),
+          map((olympics: Olympic[]) => {
               olympics.map((olympic: Olympic) => ({
                 country: olympic.country,
-                // participations: olympic.participations.find((TotalmedalsCount: number) => TotalmedalsCount += Participations.medalsCount )
-                participations: olympic.participations.forEach((participation) => {
-                  let TotalmedalsCount = 0;
-                  TotalmedalsCount += participation.medalsCount;
-                }),
+                participations: this.totalMedalsCount()
               }))
               return olympics
             }),
-            tap(value => console.log(`mon observable après map ${value}`))
+          tap(value => console.log(`mon observable après map: ${value}`))
           )
-          console.log(this.olympics$)
       }
+
+
+    totalMedalsCount(): number {
+      let totalMedals = 0
+      for(let i = 0; i < this.olympic.participations.length; i++) {
+        totalMedals += this.olympic.participations[i].medalsCount;
+      }
+      return totalMedals;
+    }
+
+    // filterOlympic() {
+    //   this.olympics.map((olympic: Olympic) => ({
+    //     country: olympic.country,
+    //     participations: this.totalMedalsCount()
+    //   }))
+    //   return this.olympics;
+    // }
 
 
     public data: Observable<Olympic[]> =this.olympics$;

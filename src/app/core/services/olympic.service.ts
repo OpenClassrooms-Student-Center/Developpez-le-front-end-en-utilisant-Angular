@@ -12,6 +12,7 @@ export class OlympicService {
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
   // private olympics$ = new BehaviorSubject<any>(undefined);
   private olympicObjet = <any>Olympic; // je ne sais pas ce que j'ai fat ici
+  public olympic!: Olympic;
 
   constructor(private http: HttpClient) {}
 
@@ -30,8 +31,9 @@ export class OlympicService {
   }
 
   getOlympics() {
-    return this.olympics$.asObservable();
+    return this.olympics$.asObservable()
   }
+
 
   getOlympicById(id: number): Observable<Olympic> {
     const olympic = this.olympics$.value.find((o) => o.id === id);
