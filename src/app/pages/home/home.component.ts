@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService) { Object.assign(this, this.olympics$)}
 
   ngOnInit() {
     this.olympicService.getOlympics().pipe(
@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
     ).subscribe(
       (value) => this.olympics$.next(value),
     );
+    console.log("fin ngoninit home", this.olympics$)
   }
 
 

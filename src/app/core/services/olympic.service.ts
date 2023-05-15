@@ -38,7 +38,9 @@ export class OlympicService {
     );
   }
 
-
+  // getOlympics(): Observable<Olympic[]> {
+  //   return this.olympics$.asObservable();
+  // }
 
 
 
