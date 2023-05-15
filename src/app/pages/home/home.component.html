@@ -1,20 +1,19 @@
 <h2>Olympic games app</h2>
 <hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
- <div *ngFor="let olympic of olympics$ | async">
-  <p>{{olympic.country}}</p>
-  <p>{{olympic.id}}</p>
-  <p>{{olympic.participations[0].medalsCount}}</div>
 
-          <ngx-charts-pie-chart
-          [results]="olympics$ | async"
-          [view]="view"
-          [scheme]="colorScheme"
-          [gradient]="gradient"
-          [legend]="showLegend"
-          [labels]="showLabels"
-          [doughnut]="isDoughnut"
-          (select)="onSelect($event)"
-          (activate)="onActivate($event)"
-          (deactivate)="onDeactivate($event)">
-          </ngx-charts-pie-chart>
+
+
+    <ngx-charts-pie-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="olympics$ |async"
+    [gradient]="gradient"
+    [legend]="showLegend"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+    >
+  </ngx-charts-pie-chart>
