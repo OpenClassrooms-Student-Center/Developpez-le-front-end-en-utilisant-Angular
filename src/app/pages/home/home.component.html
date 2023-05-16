@@ -2,16 +2,15 @@
 <hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
 <div *ngFor="let olympic of olympics$ |async" as olympic>
-  <p>{{olympic.country}}</p>
-  <p>{{olympic.medalsCount}}</p>
+  <p>{{olympic.name}}</p>
+  <p>{{olympic.value}}</p>
 </div>
-
 
 
     <ngx-charts-pie-chart
     [view]="view"
     [scheme]="colorScheme"
-    [results]="olympics$ |async"
+    [results]="olympicData"
     [gradient]="gradient"
     [legend]="showLegend"
     [labels]="showLabels"

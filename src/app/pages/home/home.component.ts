@@ -1,26 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, forkJoin, of, pipe, BehaviorSubject} from 'rxjs';
-import { Olympic } from 'src/app/core/models/Olympic';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, of, pipe, Subscription} from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Participations } from 'src/app/core/models/Participation';
 import { catchError, map, tap} from 'rxjs/operators';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { single } from './data';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  // public olympics$: Observable<Olympic[]> = of([]);
-  public olympics$ = new BehaviorSubject<{ country: string; medalsCount: number; }[]>([]);
 
-  totalMedals: number = 0;
-  public olympic!: Olympic;
+  public olympics$ = new Observable<{ name: string; value: number }[]>;
+  public olympicData!:{ name: string; value: number }[];
+  public subscription!: Subscription;
+
 
   public view: any = [700, 400];
   public colorScheme: any = {
@@ -38,19 +33,19 @@ export class HomeComponent implements OnInit {
   constructor(private olympicService: OlympicService) { Object.assign(this, this.olympics$)}
 
   ngOnInit() {
-    this.olympicService.getOlympics().pipe(
-      tap((value) => console.log(value)), // pour le débogage
+    this.subscription = this.olympicService.getOlympics().pipe(
       catchError((error) => {
         console.error(error);
         return of([]); // retourne un observable qui émet un tableau vide en cas d'erreur
       }),
     ).subscribe(
-      (value) => this.olympics$.next(value),
+      (value) => {this.olympicData = value}
     );
-    console.log("fin ngoninit home", this.olympics$)
   }
 
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
     onActivate(data: any): void {
       console.log('Activate', JSON.parse(JSON.stringify(data)));
