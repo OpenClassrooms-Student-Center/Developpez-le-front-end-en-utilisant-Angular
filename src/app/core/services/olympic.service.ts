@@ -11,9 +11,9 @@ export class OlympicService {
 
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
-  public olympic!: Olympic;
-  public dataParticipation: {"name": number, "value": number}[]  = [];
-  public olympicData!: {"name": string, "series": {"name": number, "value": number}[]};
+  public olympicsObs$!: Observable<Olympic[]>;
+  public dataParticipation: {"name": string, "value": number}[]  = [];
+  public olympicData!: {"name": string, "series": {"name": string, "value": number}[]};
 
 
 
@@ -41,61 +41,28 @@ export class OlympicService {
     );
   }
 
-  getOlympicById(id: number): Observable<{"name": string, "series": {"name": number, "value": number}[]}> {
-    const olympic = this.olympics$.value.find((o) => o.id === id);
+  getOlympicById(id: number): Observable<{"name": string, "series": {"name": string, "value": number}[]}> {
+    const olympic = this.olympics$.value.find((olympic) => olympic.id === id);
       if (!olympic) {
-        return throwError(() => new Error(`Olympic with id ${id} not found`));
-      } else
+        return throwError(() => new Error(`Olympic with id ${id} not found
+          + verification recherche by id: ${this.olympics$.value.find((olympic) => olympic.id === id)}`));
+
+      } else {
+        this.dataParticipation = []; // Reset dataParticipation array
+
         olympic.participations.forEach((participation) => {
           this.dataParticipation.push({
-            "name": participation.year,
+            "name": participation.year.toString(),
             "value": participation.medalsCount,
           });
-          return this.olympicData = {"name": olympic.country, "series": this.dataParticipation};
         });
+
+        this.olympicData = {
+          "name": olympic.country,
+          "series": this.dataParticipation
+        };
+
         return of(this.olympicData);
-
-  }
+      }
+    }
 }
-
-  //--------------------------------------------------------------------------------------------------------------
-  // // return of(olympic);
-  // const olympicData = [{
-  //   name: olympic.country,
-  //   series: olympic.participations.map((participation) => ({
-  //     name: participation.year,
-  //     value: participation.medalsCount,
-  //   }))
-  // }];
-
-
-
-  // getOlympicById(id: number): Observable<Olympic> {
-  //   return this.olympics$.asObservable().pipe(
-  //     map(this.olympics$.value.find((o) => o.id === id) )
-  //   )
-  //   const olympic =
-  //   if (olympic) {
-  //     return of(olympic);
-  //   }
-  //   return throwError(() => new Error(`Olympic with id ${id} not found`));
-  //   }
-
-
-
-
-
-  //   const olympic = this.olympics$.value.find((o) => o.id === id);
-  //   if (olympic) {
-  //     return of(olympic);
-  //   }
-  //   return throwError(() => new Error(`Olympic with id ${id} not found`));
-  // }
-
-
-
-
-  // (participationData: Array<{value: number, name: number}>) => {
-  //       value: participationData[0].medalsCount,
-  //       name: participationData[0].year
-  //     }

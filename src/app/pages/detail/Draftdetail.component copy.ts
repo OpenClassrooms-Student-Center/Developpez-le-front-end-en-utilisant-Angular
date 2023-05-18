@@ -38,19 +38,20 @@ export class DetailComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) { }
 
 
-  ngOnInit() {
-    const olympicId: number | undefined = +this.route.snapshot.params['id'];
+  ngOnInit(){
+    const olympicId: number = +this.route.snapshot.params['id'];
     console.log(olympicId)
-    // if (olympicId ==! undefined) {
+    if (!olympicId) {
       this.subscription = this.olympicService.getOlympicById(olympicId).pipe(
       catchError((error) => {
         console.error(error);
-        return of();
+        return of(); // retourne un observable qui émet un tableau vide en cas d'erreur
       }),
       tap((value) => console.log(value)),
     ).subscribe(
     (value) => {this.olympicData = value})
-    }
+  }
+}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -71,26 +72,6 @@ export class DetailComponent implements OnInit, OnDestroy {
 
 }
 
-// ngOnInit() {
-  // if (dataLineChart$) {
-  //    this.subscription = dataLineChart$.subscribe((olympic) => {
-  //     if (olympic) {
-  //       this.olympicData = [];
-  //       this.dataParticipation = [];
-
-  //       olympic.participations.forEach((participation) => {
-  //         this.dataParticipation.push({
-  //           name: participation.year,
-  //           value: participation.medalsCount,
-  //         });
-  //       });
-
-  //       this.olympicData.push({
-  //         name: olympic.country,
-  //         series: this.dataParticipation,
-  //       });
-  //       return this.olympicData;
-  //     }
 
 
 
@@ -158,19 +139,10 @@ export class DetailComponent implements OnInit, OnDestroy {
 //   //public backToDashbo:ard():void {
 //     // this.router.navigate(['/'])
 
-// import { Component, OnInit, OnDestroy } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-// import { Subscription, Observable, of, Observer } from 'rxjs';
-// import { catchError } from 'rxjs/operators';
-// import { Olympic } from 'src/app/core/models/Olympic';
-// import { Participations } from 'src/app/core/models/Participation';
-// import { OlympicService } from 'src/app/core/services/olympic.service';
 
-// @Component({
-//   selector: 'app-olympic-details',
-//   templateUrl: './detail.component.html',
-//   styleUrls: ['./detail.component.scss']
-// })
+
+
+
 // export class DetailComponent implements OnInit, OnDestroy {
 
 //   public olympic$ = new Observable<{name: string, series: {name: number, value: number}[] }[]>;
@@ -181,29 +153,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 //   public dataParticipation!:{name: number, value: number }[];
 //   public participations!: Participations[];
 
-//   view: any = [700, 300];
-
-//   // options
-//   legend: boolean = true;
-//   showLabels: boolean = true;
-//   animations: boolean = true;
-//   xAxis: boolean = true;
-//   yAxis: boolean = true;
-//   showYAxisLabel: boolean = true;
-//   showXAxisLabel: boolean = true;
-//   xAxisLabel: string = 'Year';
-//   yAxisLabel: string = 'Medals';
-//   timeline: boolean = true;
-
-//   colorScheme: any = {
-//     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-//   };
-
-
-//   constructor(private olympicService: OlympicService, private route: ActivatedRoute) {
-//     Object.assign(this, this.olympicData)
-//   }
-
+//....
 //   ngOnInit() {
 //     const id = +this.route.snapshot.params['id'];
 
@@ -238,21 +188,5 @@ export class DetailComponent implements OnInit, OnDestroy {
 //       // (value) => {this.olympicData = value})
 //   }
 
-
-//   ngOnDestroy(): void {
-//     this.subscription.unsubscribe();
-//   }
-
-//   onSelect(data: any): void {
-//     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-//   }
-
-//   onActivate(data: any): void {
-//     console.log('Activate', JSON.parse(JSON.stringify(data)));
-//   }
-
-//   onDeactivate(data:any): void {
-//     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-//   }
 
 // }
