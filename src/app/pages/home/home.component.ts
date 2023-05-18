@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   // public olympics$ = new Observable<{ name: string; value: number }[]>;
-  public olympicData!:{ name: string; value: number }[];
+  public olympicData!:{ "name": string; "value": number }[];
   public subscription!: Subscription;
 
 

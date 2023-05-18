@@ -15,7 +15,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   public olympic$!: Observable<Olympic>;
   public subscription: Subscription = new Subscription();
-  public olympicData!: {name: string, series: {name: number, value: number}[]};
+  public olympicData!: {"name": string, "series": {"name": number, "value": number}[]};
 
   view: any = [700, 300];
 
@@ -39,16 +39,16 @@ export class DetailComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    let olympicId: any = this.route.snapshot.paramMap.get('id');
-    if (olympicId == !undefined) {
-      this.subscription = this.olympicService.getOlympicById(+olympicId).pipe(
+    const olympicId: number = +this.route.snapshot.params['id'];
+    // if (olympicId == !undefined) {
+      this.subscription = this.olympicService.getOlympicById(olympicId).pipe(
       catchError((error) => {
         console.error(error);
         return of(); // retourne un observable qui émet un tableau vide en cas d'erreur
       }),
       tap((value) => console.log(value)),
     ).subscribe((value) => {this.olympicData = value})
-    }
+    // }
 
   }
 

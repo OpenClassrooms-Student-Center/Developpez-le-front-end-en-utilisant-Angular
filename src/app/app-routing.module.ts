@@ -5,10 +5,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/detail/detail.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
   { path: ':id', component: DetailComponent},
+  { path: '', component: HomeComponent},
   // wildcard
-  { path: '**', component: NotFoundComponent},
+  // { path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({
