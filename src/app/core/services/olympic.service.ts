@@ -13,6 +13,8 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
   public olympic!: Olympic;
+  public olympicData!: {name: string, series: {name: number, value: number}[]};
+  public dataParticipation: {name: number, value: number}[]  = [];
 
 
 
@@ -40,13 +42,32 @@ export class OlympicService {
     );
   }
 
-  getOlympicById(id: number): Observable<Olympic> {
+  getOlympicById(id: number): Observable<{name: string, series: {name: number, value: number}[]}> {
     const olympic = this.olympics$.value.find((o) => o.id === id);
-    if (olympic) {
-      return of(olympic);
+      if (!olympic) {
+        return throwError(() => new Error(`Olympic with id ${id} not found`));
+      } else
+        olympic.participations.forEach((participation) => {
+          this.dataParticipation.push({
+            name: participation.year,
+            value: participation.medalsCount,
+          });
+          return this.olympicData = {name: olympic.country, series: this.dataParticipation};
+        });
+        return of(this.olympicData);
+
     }
-    return throwError(() => new Error(`Olympic with id ${id} not found`));
   }
+
+  //--------------------------------------------------------------------------------------------------------------
+  // // return of(olympic);
+  // const olympicData = [{
+  //   name: olympic.country,
+  //   series: olympic.participations.map((participation) => ({
+  //     name: participation.year,
+  //     value: participation.medalsCount,
+  //   }))
+  // }];
 
 
 
@@ -61,7 +82,7 @@ export class OlympicService {
   //   return throwError(() => new Error(`Olympic with id ${id} not found`));
   //   }
 
-}
+
 
 
 
