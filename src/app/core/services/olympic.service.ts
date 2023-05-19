@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError, pipe, switchMap} from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map, filter } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -11,9 +11,10 @@ export class OlympicService {
 
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
-  public olympicsObs$!: Observable<Olympic[]>;
+  // for searching by id
   public dataParticipation: {"name": string, "value": number}[]  = [];
   public olympicData!: {"name": string, "series": {"name": string, "value": number}[]};
+
 
 
 
@@ -28,8 +29,11 @@ export class OlympicService {
       })
     );
   }
+  getOlympics() {
+    return this.olympics$.asObservable();
+  }
 
-  getOlympics(): Observable<{ "name": string; "value": number; }[]> {
+  getDataPieChart(): Observable<{ "name": string; "value": number; }[]> {
     return this.olympics$.asObservable().pipe(
       switchMap((olympics) => {
         const updatedOlympics = olympics.map((olympic: Olympic) => {
@@ -40,6 +44,11 @@ export class OlympicService {
       })
     );
   }
+  // getOlympicById(id: number): Observable<Olympic | undefined> {
+  //   return this.getOlympics().pipe(
+  //     map((olympics: Olympic[]) => olympics.find((olympic) => olympic.id === id))
+  //   );
+  // }
 
   getOlympicById(id: number): Observable<{"name": string, "series": {"name": string, "value": number}[]}> {
     const olympic = this.olympics$.value.find((olympic) => olympic.id === id);
@@ -65,4 +74,38 @@ export class OlympicService {
         return of(this.olympicData);
       }
     }
+
+
+
+  getNumberOfJo(): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        const numberJos =  olympics.reduce((total, olympic) => total + olympic.participations.length, 0);
+        return numberJos;
+      }),
+      catchError((error) => {
+        console.error(error);
+        return of(0);
+      })
+    );
+  }
+
+  getNumberOfCountry(): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        const countries: string[] = olympics.reduce((acc: string[], olympic) => {
+          if (!acc.includes(olympic.country)) {
+            acc.push(olympic.country);
+          }
+          return acc;
+        }, []);
+        return countries.length;
+      }),
+      catchError((error) => {
+        console.error(error);
+        return of(0);
+      })
+    );
+  }
+
 }

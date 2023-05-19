@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of,throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -16,6 +16,9 @@ export class DetailComponent implements OnInit, OnDestroy {
   public olympic$!: Observable<Olympic>;
   public subscription: Subscription = new Subscription();
   public olympicData!: {"name": string, "series": {"name": string, "value": number}[]};
+
+  public dataParticipation: {"name": string, "value": number}[]  = [];
+
 
   view: any = [700, 300];
 
@@ -37,6 +40,30 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) { }
 
+  // ngOnInit() {
+  //   const id = 4; // Remplacez par l'ID de l'Olympic que vous souhaitez charger
+
+  //   this.olympicService.getOlympicById(id).subscribe(
+  //     (olympic) => {
+  //       if (olympic) {
+  //         this.olympicData = {
+  //           name: olympic.country,
+  //           series: olympic.participations.map((participation) => {
+  //             return {
+  //               name: participation.year.toString(),
+  //               value: participation.medalsCount
+  //             };
+  //           })
+  //         };
+  //       } else {
+  //         console.error(`Olympic with id ${id} not found`);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
   ngOnInit() {
     const olympicId: number | undefined = +this.route.snapshot.params['id'];
@@ -51,6 +78,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     ).subscribe(
     (value) => {this.olympicData = value})
     }
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
