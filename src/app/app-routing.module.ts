@@ -5,7 +5,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/detail/detail.component';
 
 const routes: Routes = [
-  { path: ':id', component: DetailComponent},
+  { path: ':name', component: DetailComponent},
   { path: '', component: HomeComponent},
 ];
 // wildcard

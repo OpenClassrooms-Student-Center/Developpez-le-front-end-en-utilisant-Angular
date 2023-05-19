@@ -1,11 +1,5 @@
 <p>detail works!</p>
-<!-- <div *ngIf="(olympic$ | async) as olympic">
-  <p>{{olympic.participations[0].year}}</p>
-  <p>{{olympic.participations[0].athleteCount}}</p>
-  <p>{{olympic.participations[0].medalsCount}}</p>
-  <p>{{olympic.participations[0].city}}</p>
 
-</div> -->
 <ngx-charts-line-chart
   [view]="view"
   [scheme]="colorScheme"
@@ -18,7 +12,6 @@
   [yAxisLabel]="yAxisLabel"
   [timeline]="timeline"
   [results]="olympicData"
-  (select)="onSelect($event)"
   (activate)="onActivate($event)"
   (deactivate)="onDeactivate($event)"
   >

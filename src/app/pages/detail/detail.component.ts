@@ -20,6 +20,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   public dataParticipation: {"name": string, "value": number}[]  = [];
 
 
+
   view: any = [700, 300];
 
   // options
@@ -40,52 +41,37 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) { }
 
-  // ngOnInit() {
-  //   const id = 4; // Remplacez par l'ID de l'Olympic que vous souhaitez charger
-
-  //   this.olympicService.getOlympicById(id).subscribe(
-  //     (olympic) => {
-  //       if (olympic) {
-  //         this.olympicData = {
-  //           name: olympic.country,
-  //           series: olympic.participations.map((participation) => {
-  //             return {
-  //               name: participation.year.toString(),
-  //               value: participation.medalsCount
-  //             };
-  //           })
-  //         };
-  //       } else {
-  //         console.error(`Olympic with id ${id} not found`);
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
 
   ngOnInit() {
-    const olympicId: number | undefined = +this.route.snapshot.params['id'];
-    console.log(olympicId)
-    // if (olympicId ==! undefined) {
-      this.subscription = this.olympicService.getOlympicById(olympicId).pipe(
-      catchError((error) => {
-        console.error(error);
-        return of();
-      }),
-      tap((value) => console.log(value)),
-    ).subscribe(
-    (value) => {this.olympicData = value})
-    }
+    const olympicName = this.route.snapshot.params['name'];
+    this.subscription = this.olympicService.getOlympics().subscribe(
+      countriesData => {
+        countriesData.find((country) => {
+          if(country.country == olympicName ) {
 
+            this.dataParticipation = [];
+
+            country.participations.forEach((participation) => {
+              this.dataParticipation.push({
+                "name": participation.year.toString(),
+                "value": participation.medalsCount,
+              });
+            });
+
+            this.olympicData = {
+            "name": country.country,
+            "series": this.dataParticipation
+            };
+          } else {
+          console.log(`${country.country}is not found`)
+          }
+        })
+      }
+    )
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data: any): void {

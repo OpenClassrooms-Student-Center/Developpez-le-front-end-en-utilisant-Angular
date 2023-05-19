@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<Olympic[]>;
 
 
-
   public view: any = [700, 400];
   public colorScheme: any = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -41,30 +40,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) { }
 
   ngOnInit() {
-    // for the pie chart
-    this.subscription = this.olympicService.getDataPieChart().pipe(
-      catchError((error) => {
-        console.error(error);
-        return of([]); // retourne un observable qui émet un tableau vide en cas d'erreur
-      }),
-    ).subscribe(
-      (value) => {this.olympicData = value}
-    );
+    this.subscription = this.olympicService.getOlympics().subscribe(
+      countriesData => {
+        this.numberOfCountries = countriesData?.length;
+        this.numberOfJos = countriesData?.[0].participations.length
 
-    this.subscription2 = this.olympicService.getNumberOfJo().subscribe((number) => {
-      this.numberOfJos = number;
-    });
-
-    this.subscription3 = this.olympicService.getNumberOfCountry().subscribe((number) => {
-      this.numberOfCountries = number;
-    });
-
+        this.olympicData = [];
+        countriesData.forEach((country) => {
+          this.olympicData.push(
+            {
+              name: country.country,
+              value: country.participations.reduce((totalMedals, participation) => totalMedals + participation.medalsCount, 0)
+            }
+          )
+        })
+      },
+    )
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.subscription2.unsubscribe();
-    this.subscription3.unsubscribe();
   }
 
     onActivate(data: any): void {
@@ -77,20 +72,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       console.log(`data ondeactivate : ${data}`)
     }
 
-    onSelect(data: any): void {
+    onSelect(data: {name: string, value: number}): void {
       console.log('Item clicked', JSON.parse(JSON.stringify(data)));
       console.log(`data onselect : ${data}`);
 
-
-      const olympicCountry = data.name; // Remplacez "name" par la propriété réelle de votre objet olympique
-
-      this.olympicService.getOlympics().subscribe((olympics: Olympic[]) => {
-        const olympic = olympics.find((o) => o.country === olympicCountry);
-        if (olympic) {
-          const olympicId = olympic.id;
-          this.router.navigate([olympicId]);
-        }
-      });
+      const olympicCountry = data.name;
+      this.router.navigateByUrl(`/${olympicCountry}`);
+    }
 
   }
-}
