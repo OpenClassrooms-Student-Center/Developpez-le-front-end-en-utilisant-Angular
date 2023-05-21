@@ -13,21 +13,4 @@ export class Olympic {
   id!: number;
   country!: string;
   participations!: Participations[]
-
-  // public data: any;
-
-    // /**
-    //  * constructor
-    //  * @param id
-    //  * @param country
-    //  * @param participations
-    //  */
-    // constructor(
-    //     public id: number,
-    //     public country :string,
-    //     public participations: Array<Participations>
-    // ){
-    //     alert('it works'); // just a check
-    // }
 }
-// }

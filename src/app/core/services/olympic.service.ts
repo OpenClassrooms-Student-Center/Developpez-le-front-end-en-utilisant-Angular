@@ -11,12 +11,6 @@ export class OlympicService {
 
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
-  // for searching by id
-  public dataParticipation: {"name": string, "value": number}[]  = [];
-  public olympicData!: {"name": string, "series": {"name": string, "value": number}[]};
-
-
-
 
   constructor(private http: HttpClient) {}
 
@@ -34,5 +28,9 @@ export class OlympicService {
     return this.olympics$.asObservable();
   }
 
-
+  getOlympicByCountry(name: string): Observable<Olympic | undefined> {
+    return this.olympics$.asObservable().pipe(
+      map((olympics) => olympics.find((olympic) => olympic.country === name))
+    )
+  }
 }
