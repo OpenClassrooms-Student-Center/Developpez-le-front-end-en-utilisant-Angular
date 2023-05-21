@@ -24,14 +24,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<Olympic[]>;
 
 
-  public view: any = [700, 400];
+  public view: any = [800, 500];
   public colorScheme: any = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#d1e4f0','#5F264A','#850E35', '#a48da6','#93BFCF' ]
   };
 
   // options
   gradient: boolean = true;
-  showLegend: boolean = true;
+  showLegend: boolean = false;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
