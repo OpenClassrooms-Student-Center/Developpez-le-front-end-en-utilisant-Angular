@@ -4,5 +4,60 @@
 
 .main-container{
   font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .home-title {
+    margin-top: 80px ;
+    background-color: #088395;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    color: white;
+  }
+
+  .cards-numbers {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .card {
+      border: #088395 3px solid;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: center;
+      padding: 0px 5px;
+      align-items: center;
+      margin: 20px;
+    }
+
+    p{
+      margin: 10px;
+    }
+  }
+
+
+
+
+    a {
+      color: #088395;
+      text-decoration: none;
+      font-size: medium;
+      background-color: white;
+      text-align: center;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: #088395 1px solid;
+
+      &:hover {
+        box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+        font-weight: bold;
+       }
+
+  }
+
+
 
 }

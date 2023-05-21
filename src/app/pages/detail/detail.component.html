@@ -1,19 +1,42 @@
-<p>detail works!</p>
+<div class="main-container">
+  <h2 class="home-title">{{nameOfCountry}}</h2>
 
-<ngx-charts-line-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [legend]="legend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxis]="xAxis"
-  [yAxis]="yAxis"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [timeline]="timeline"
-  [results]="olympicData"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
-  >
-</ngx-charts-line-chart>
+  <div class="cards-numbers">
+    <div class="card">
+      <p class="title">Number of entries</p>
+      <p><strong>{{numberOfEntries}}</strong></p>
+    </div>
+    <div class="card">
+      <p class="title">Total number medals</p>
+      <p><strong>{{numberOfMedals}}</strong></p>
+    </div>
+    <div class="card">
+      <p class="title">Total number of athletes</p>
+      <p><strong>{{numberOfAthletes}}</strong></p>
+    </div>
+  </div>
+
+  <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [legend]="legend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [timeline]="timeline"
+    [results]="olympicData"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+    >
+  </ngx-charts-line-chart>
+
+
+  <a routerLink="">Go Back</a>
+
+
+
+</div>
