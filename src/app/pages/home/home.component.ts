@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<Olympic[]>;
 
 
-  public view: any = [800, 500];
+  public view: any = [650, 350];
   public colorScheme: any = {
     domain: ['#d1e4f0','#5F264A','#850E35', '#a48da6','#93BFCF' ]
   };

@@ -26,7 +26,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
 
 
-  view: any = [750, 350];
+  view: any = [400, 300];
 
   // options
   legend: boolean = false;
