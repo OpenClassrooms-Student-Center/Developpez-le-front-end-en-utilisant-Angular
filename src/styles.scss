@@ -58,23 +58,22 @@
 }
 
 /* Responsive*/
-
-@media only screen and (max-width: 400px){
-  .main-container {
-    .cards-numbers {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      margin-bottom: 20px;
-      .card {
-        border: #088395 3px solid;
-        border-radius: 10px;
-        display: inline-block;
-        text-align: center;
-        padding: 0px 5px;
-        align-items: center;
-        margin: 20px;
-      }
+  @media only screen and (max-width: 400px){
+    .main-container {
+      .cards-numbers {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-bottom: 20px;
+        .card {
+          border: #088395 3px solid;
+          border-radius: 10px;
+          display: inline-block;
+          text-align: center;
+          padding: 0px 5px;
+          align-items: center;
+          margin: 20px;
+        }
+    }
   }
-}
 }

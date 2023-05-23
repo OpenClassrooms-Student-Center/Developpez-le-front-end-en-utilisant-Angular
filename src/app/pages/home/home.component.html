@@ -1,6 +1,7 @@
 <div class="main-container">
   <h2 class="home-title">Medals per Country</h2>
 
+   <!-- Data card-->
   <div class="cards-numbers">
     <div class="card">
       <p class="title">Number of JOs</p>
@@ -12,19 +13,17 @@
     </div>
   </div>
 
-  <div class="pie-chart">
-    <ngx-charts-pie-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="olympicData"
-      [gradient]="gradient"
-      [legend]="showLegend"
-      [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)">
-    </ngx-charts-pie-chart>
-  </div>
-
+  <!-- Pie chart configuration -->
+  <ngx-charts-pie-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="olympicData"
+    [gradient]="gradient"
+    [legend]="showLegend"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)">
+  </ngx-charts-pie-chart>
 </div>

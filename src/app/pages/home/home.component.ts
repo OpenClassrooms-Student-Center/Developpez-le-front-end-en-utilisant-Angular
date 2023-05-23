@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, pipe, Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { catchError, map, tap, mergeMap} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Olympic } from 'src/app/core/models/Olympic';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 
 @Component({
@@ -13,38 +12,36 @@ import { Olympic } from 'src/app/core/models/Olympic';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-
-  // public olympics$ = new Observable<{ name: string; value: number }[]>;
-  public olympicData!:{ "name": string; "value": number }[];
+  public olympicData!:{name: string; value: number }[];
   public subscription!: Subscription;
-  public subscription2!: Subscription;
-  public subscription3!: Subscription;
   public numberOfJos!: number;
   public numberOfCountries!: number;
-  public olympics$!: Observable<Olympic[]>;
 
-
-  public view: any = [650, 350];
-  public colorScheme: any = {
-    domain: ['#d1e4f0','#5F264A','#850E35', '#a48da6','#93BFCF' ]
+  // Pie chart configuration
+  public view: [number, number] = [650, 350];
+  public colorScheme: Color = {
+    name: 'myColorScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#d1e4f0', '#5F264A', '#850E35', '#a48da6', '#93BFCF']
   };
 
-  // options
+  // Pie chart options
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
-
-  constructor(private olympicService: OlympicService, private router: Router) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.olympicService.getOlympics().subscribe(
       countriesData => {
+        // for display card of some data
         this.numberOfCountries = countriesData?.length;
         this.numberOfJos = countriesData?.[0].participations.length
 
+        // To transform data for the pie chart
         this.olympicData = [];
         countriesData.forEach((country) => {
           this.olympicData.push(
@@ -54,30 +51,32 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
           )
         })
-      },
+      }
     )
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-    onActivate(data: any): void {
-      console.log('Activate', JSON.parse(JSON.stringify(data)));
-      console.log(`data activate : ${data}`)
-    }
-
-    onDeactivate(data: any): void {
-      console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-      console.log(`data ondeactivate : ${data}`)
-    }
-
-    onSelect(data: {name: string, value: number}): void {
-      console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-      console.log(`data onselect : ${data}`);
-
-      const olympicCountry = data.name;
-      this.router.navigateByUrl(`/${olympicCountry}`);
-    }
-
+  // Methods onActivate/onDeactivate to display data when the user hover the country in the chart
+  onActivate(data: {name: string, value: number}): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    console.log(`data activate : ${data}`)
   }
+
+  onDeactivate(data: {name: string, value: number}): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    console.log(`data ondeactivate : ${data}`)
+  }
+
+  onSelect(data: {name: string, value: number}): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    console.log(`data onselect : ${data}`);
+
+    // To redirect on the detailComponent when the user click on a country in the chart
+    const olympicCountry: string = data.name;
+    this.router.navigateByUrl(`/${olympicCountry}`);
+  }
+
+}

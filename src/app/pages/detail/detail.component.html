@@ -1,6 +1,7 @@
 <div class="main-container">
   <h2 class="home-title">{{nameOfCountry}}</h2>
 
+  <!-- Data card-->
   <div class="cards-numbers">
     <div class="card">
       <p class="title">Number of entries</p>
@@ -16,6 +17,7 @@
     </div>
   </div>
 
+  <!-- Line chart configuration -->
   <ngx-charts-line-chart
     [view]="view"
     [scheme]="colorScheme"
@@ -34,7 +36,7 @@
     >
   </ngx-charts-line-chart>
 
-
+  <!-- button to go back on homeComponent -->
   <a routerLink="">Go Back</a>
 
 

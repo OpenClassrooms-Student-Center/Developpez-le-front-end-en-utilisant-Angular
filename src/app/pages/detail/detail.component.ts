@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, Observable, of,throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Olympic } from 'src/app/core/models/Olympic';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Subscription, Observable } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { multi } from '../home/data';
 
 @Component({
   selector: 'app-olympic-details',
@@ -13,8 +11,6 @@ import { multi } from '../home/data';
 })
 export class DetailComponent implements OnInit, OnDestroy {
 
-
-  public olympic$!: Observable<Olympic>;
   public subscription: Subscription = new Subscription();
   public olympicData!: {"name": string, "series": {"name": string, "value": number}[]} [];
   public series: {"name": string, "value": number}[]  = [];
@@ -23,12 +19,16 @@ export class DetailComponent implements OnInit, OnDestroy {
   public numberOfMedals!: number;
   public numberOfEntries!: number;
 
+  // Line chart configuration
+  view: [number, number] = [400, 300];
+  colorScheme: Color = {
+    name: 'myColorScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#5F264A', '#850E35', '#a48da6', '#93BFCF']
+  };
 
-
-
-  view: any = [400, 300];
-
-  // options
+  // Line chart options
   legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
@@ -40,27 +40,21 @@ export class DetailComponent implements OnInit, OnDestroy {
   yAxisLabel: string = 'Medals';
   timeline: boolean = true;
 
-  colorScheme: any = {
-    domain: ['#5F264A','#850E35', '#a48da6','#93BFCF' ]
-  };
-
   constructor(private olympicService: OlympicService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
 
     const olympicCountry = this.route.snapshot.params['name'];
-    console.log('Olympic Country:', olympicCountry);
 
     this.subscription = this.olympicService.getOlympics().subscribe(
       olympics => {
 
-
+        // To find olympic by country name compared on the Url
         const olympicFound = olympics.find((olympic) => olympic.country === olympicCountry)
-        console.log('Olympic found dans avant le if:', olympicFound);
-
 
         if (olympicFound !== undefined) {
-          // title with name of country
+
+          // title with name of the country
           this.nameOfCountry = olympicFound.country;
           //Total number of athletes
           this.numberOfAthletes = olympicFound.participations.reduce((totalAthletes, participation) => totalAthletes + participation.athleteCount, 0);
@@ -69,51 +63,44 @@ export class DetailComponent implements OnInit, OnDestroy {
           // Total number of entries
           this.numberOfEntries = olympicFound.participations.length
 
-          //line Chart
-           this.series = [];
+          //line Chart data
+          this.series = [];
 
-            olympicFound.participations.forEach((participation) => {
-              this.series.push(
-                {
-                name: participation.year.toString(),
-                value: participation.medalsCount,
-                }
-              );
-              console.log('series:', this.series)
-            });
+          olympicFound.participations.forEach((participation) => {
+            this.series.push(
+              {
+              name: participation.year.toString(),
+              value: participation.medalsCount,
+              }
+            );
+          });
 
-            this.olympicData = [{
+          this.olympicData = [{
             name: olympicFound.country,
             series: this.series
-            }];
-
-            console.log('fin du if, données finales: ',this.olympicData)
+          }];
 
         } else {
+          // To redirect in the previous page (homeComponent)
           this.router.navigateByUrl(`/${olympicCountry}/not-found`)
-          console.log(`Olympic ${olympicFound} is not found`);
         }
-
-
       }
     )
   }
 
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  onSelect(data:any): void {
+  onSelect(data: {"name": string, "series": {"name": string, "value": number}[]} []): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data: any): void {
+  onActivate(data: {"name": string, "series": {"name": string, "value": number}[]} []): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data:any): void {
+  onDeactivate(data: {"name": string, "series": {"name": string, "value": number}[]} []): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-
 
 }
