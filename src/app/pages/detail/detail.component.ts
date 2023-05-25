@@ -54,13 +54,10 @@ export class DetailComponent implements OnInit, OnDestroy {
 
         if (olympicFound !== undefined) {
 
-          // title with name of the country
+           // to display data cards
           this.nameOfCountry = olympicFound.country;
-          //Total number of athletes
           this.numberOfAthletes = olympicFound.participations.reduce((totalAthletes, participation) => totalAthletes + participation.athleteCount, 0);
-          // Total number of medals
           this.numberOfMedals = olympicFound.participations.reduce((totalMedals, participation) => totalMedals + participation.medalsCount, 0)
-          // Total number of entries
           this.numberOfEntries = olympicFound.participations.length
 
           //line Chart data

@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.olympicService.getOlympics().subscribe(
       countriesData => {
-        // for display card of some data
+         // to display data cards
         this.numberOfCountries = countriesData?.length;
         this.numberOfJos = countriesData?.[0].participations.length
 
