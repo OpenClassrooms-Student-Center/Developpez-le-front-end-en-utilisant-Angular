@@ -25,5 +25,16 @@
     (select)="onSelect($event)"
     (activate)="onActivate($event)"
     (deactivate)="onDeactivate($event)">
+
+    <ng-template #tooltipTemplate let-model="model">
+      {{model.name}}
+      <div class="tooltip-icon-container">
+        <img src="assets/images/icons8-badge-64.png" class="tooltip-icon" alt="Icon">
+        {{model.value}}
+      </div>
+    </ng-template>
+
+
+
   </ngx-charts-pie-chart>
 </div>
