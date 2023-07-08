@@ -1,7 +1,7 @@
 import { Participation } from "./Participation"
 
-export interface Country {
+export interface Olympic {
     id: number,
     country: string,
-    participations: Array<Participation>,
+    participations: Participation[],
 }
