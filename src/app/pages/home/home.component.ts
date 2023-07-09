@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 
@@ -17,11 +17,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics$()
 
-    this.olympicService.getOlympics().subscribe((data) => {
-      this.olympics=data.map((olympic) => {
+    this.olympicService.getOlympics().subscribe((olympicData) => {
+      this.olympics=olympicData.map((olympic) => {
         return olympic
       })
-      //console.log(this.olympics);
     });
     
     
