@@ -21,7 +21,9 @@ export class HomeComponent implements OnInit {
       this.olympics=data.map((olympic) => {
         return olympic
       })
+      //console.log(this.olympics);
     });
+    
     
   }
 
