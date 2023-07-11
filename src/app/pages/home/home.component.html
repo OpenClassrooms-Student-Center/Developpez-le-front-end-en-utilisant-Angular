@@ -1,5 +1,16 @@
-<h2>Olympic games app</h2>
-<hr />
-<!--<p>{{ (olympics$ | async)?.length }} data loaded</p>-->
-<!--<p *ngFor="let a of olympics$ | async"> {{olympics$ | async}} </p>-->
-<!--<p *ngFor="let olympic of olympics ">{{ olympic.country }} </p>-->
+<main>
+    <section class="home_section">
+        <article style="height: 400px;width: 400px;">
+            <canvas baseChart
+             [type]="'pie'"
+             [datasets]="pieChartDatasets" 
+             [labels]="pieChartCountries"
+             [options]="pieChartOptions" 
+             [plugins]="pieChartPlugins" 
+             [legend]="pieChartLegend"
+             >
+            </canvas>
+        </article>
+    </section>
+
+</main>
