@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
-import { ChartOptions } from 'chart.js';
+import { ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +16,26 @@ export class HomeComponent implements OnInit {
   public olympics: Olympic[] = [];
 
 
-  public pieChartOptions: ChartOptions<'pie'> = {
+  public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
     responsive: true,
+    plugins:{
+      tooltip:{
+        backgroundColor: "#04838F",
+        padding:{x:20, y:5},
+        bodyFont:{weight:"300",family:"system-ui", size:22},
+        bodyAlign:"center",
+        titleFont:{size:22, weight:"200"},
+        usePointStyle:true,
+        callbacks:{
+          labelPointStyle: () => {
+            // get icon image
+            const medalIcon = new Image(30,30);
+            medalIcon.src="../../../../assets/icons/medal-icon.png";
+            return {pointStyle: medalIcon, rotation:0}
+          }
+        }
+      },
+    }
   }
   public pieChartCountries: Array<string> = [];
   public countriesMedals: Array<number> = [];
