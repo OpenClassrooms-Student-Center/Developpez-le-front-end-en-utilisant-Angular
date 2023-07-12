@@ -1,16 +1,38 @@
-<main>
-    <section class="home_section">
-        <article style="height: 400px;width: 400px;">
-            <canvas baseChart
-             [type]="'pie'"
-             [datasets]="pieChartDatasets" 
-             [labels]="pieChartCountries"
-             [options]="pieChartOptions" 
-             [plugins]="pieChartPlugins" 
-             [legend]="pieChartLegend"
-             >
-            </canvas>
-        </article>
-    </section>
+<main class="home">
+    
+    <div *ngIf="olympics.length==0">
+        <p>chargement</p>
+    </div>
+
+    <div *ngIf="olympics.length>0">
+        <section class="home__dashboard">
+            <div class="home__dashboard__details">
+                <article class="home__dashboard__details__medals">
+                    <p class="home__dashboard__details__medals__title">Medals per Country</p>
+                </article>
+                <div class="home__dashboard__details__data">
+                    <article class="home__dashboard__details__data__text">
+                        <p class="home__dashboard__details__data__text__title">Number of JOs</p>
+                        <strong class="home__dashboard__details__data__text__value">10</strong>
+                    </article>
+                    <article class="home__dashboard__details__data__text">
+                        <p class="home__dashboard__details__data__text__title">Number of countries</p>
+                        <strong class="home__dashboard__details__data__text__value"> {{olympics.length}} </strong>
+                    </article>
+                </div>
+            </div>
+            <article style="height: 400px;width: 400px;">
+                <canvas baseChart
+                 [type]="'pie'"
+                 [datasets]="pieChartDatasets" 
+                 [labels]="pieChartCountries"
+                 [options]="pieChartOptions" 
+                 [plugins]="pieChartPlugins" 
+                 [legend]="pieChartLegend"
+                 >
+                </canvas>
+            </article>
+        </section>
+    </div>
 
 </main>
