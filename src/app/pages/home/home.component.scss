@@ -1,4 +1,45 @@
-.home_section{
+.home{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    font-family: system-ui;
+    &__dashboard{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 5rem;
+        &__details{
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            &__medals{
+                background-color: #04838f;
+                border-radius: 1rem;
+                &__title{
+                    color: white;
+                    text-align: center;
+                }
+            }
+            &__data{
+                display: flex;
+                flex-direction: row;
+                column-gap: 2rem;
+                &__text{
+                    display: flex;
+                    flex-direction: column;
+                    border: 2px solid #04838F;
+                    border-radius: 1rem;
+                    padding: 2px 7px;
+                    &__title{
+                        color: grey;
+                        margin: 6px 0;
+                    }
+                    &__value{
+                        text-align: center;
+                        margin: 6px 0;
+                    }
+                }
+            }
+        }
+    }
 }
