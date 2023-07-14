@@ -14,8 +14,10 @@ export class HomeComponent implements OnInit {
 
   public olympics$: Observable<Olympic[]> = of([]);
   public olympics: Olympic[] = [];
+  public maxParticipations: number = 0;
+  public olympicsResult: Array<{name:string,value:number,extra:{id:number}}> = [];
 
-
+  /*
   public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
     responsive: true,
     plugins:{
@@ -35,22 +37,36 @@ export class HomeComponent implements OnInit {
           }
         }
       },
-    }
+    },
   }
+
   public pieChartCountries: Array<string> = [];
   public countriesMedals: Array<number> = [];
   public pieChartDatasets : Array<{data: Array<number>}>= [];
-  public pieChartLegend = false;
-  public pieChartPlugins = [];
+  //public pieChartLegend = true;
+  public pieChartPlugins = [];*/
 
   currentBreakpoint:"desktop" | "tablet" | "phone" | undefined;
 
+  
+
+  // options
+  showLegend: boolean = false;
+  showLabels: boolean = true;
+
+  gradient: boolean = false;
+  isDoughnut: boolean = false;
+
+
+  
 
 
   constructor(
      private olympicService: OlympicService,
      private responsiveService: ResponsiveService
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics$()
@@ -61,15 +77,31 @@ export class HomeComponent implements OnInit {
       })
       
       if(this.olympics.length>0) {
-        this.pieChartCountries = this.olympics.map((country) => { return country.country })
-        this.olympics.map((medals) => {
-          const medalsParticipations = medals.participations.map((participations) => {
+       /* this.pieChartCountries = this.olympics.map((country) => { return country.country })
+        this.olympics.map((olympic) => {
+          if(olympic.participations.length>this.maxParticipations) this.maxParticipations = olympic.participations.length
+          const medalsParticipations = olympic.participations.map((participations) => {
             return participations.medalsCount;
           }).reduce((prev,curr) => prev+curr);
           this.countriesMedals.push(medalsParticipations)
         })
-        this.pieChartDatasets = [{ data: this.countriesMedals }]
+        this.pieChartDatasets = [{ data: this.countriesMedals }]*/
       }
+      this.olympics.map((olympic) => {
+        if(olympic.participations.length>this.maxParticipations) this.maxParticipations = olympic.participations.length
+        const medalsParticipations = olympic.participations.map((participations) => {
+          return participations.medalsCount;
+        }).reduce((prev,curr) => prev+curr);
+        const { country, id } = olympic;
+        const res = {
+          name: country,
+          value: medalsParticipations,
+          extra:{
+            id
+          }
+        };        
+        this.olympicsResult.push(res)
+      })
     });
 
     /**
