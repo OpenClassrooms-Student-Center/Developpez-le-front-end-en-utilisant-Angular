@@ -1,4 +1,4 @@
-// TODO: create here a typescript interface for a participation
+// It's a typescript interface for a participation
 /*
 example of participation:
 {
@@ -12,7 +12,7 @@ example of participation:
 
 export class Participation {
 
-    id?: number;
+    id!: number;
     year!: number;
     city!: number;
     medalsCount!: number;

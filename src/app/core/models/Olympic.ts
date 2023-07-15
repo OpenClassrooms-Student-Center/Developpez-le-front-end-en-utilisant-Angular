@@ -1,4 +1,4 @@
-// TODO: create here a typescript interface for an olympic country
+// It's a typescript interface for an olympic country
 /*
 example of an olympic country:
 {
@@ -11,7 +11,7 @@ import { Participation } from "./Participation";
 
 export class Olympic {
 
-    id?: number;
+    id!: number;
     country!: number;
     participations!: Participation[]; 
 
