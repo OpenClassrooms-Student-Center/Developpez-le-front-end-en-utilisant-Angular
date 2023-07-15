@@ -34,14 +34,12 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-
-    this.olympics$.subscribe((value) => { 
-      this.ngxChartsData = this.CreateDataToNgxCharts(value)
+    this.olympicService.getOlympics().subscribe((value) => { 
+      this.ngxChartsData = this.createDataToNgxCharts(value)
     })
   }
 
-  CreateDataToNgxCharts(data: any): Object[] {
+  createDataToNgxCharts(data: any): Object[] {
     for (let index in data) {
       let medalsTotal: Number = data[index].participations.reduce(
         (sum: any, val: any) => {
