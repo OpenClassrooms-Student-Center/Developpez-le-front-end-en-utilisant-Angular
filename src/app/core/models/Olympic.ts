@@ -10,10 +10,8 @@ example of an olympic country:
 */
 
 export class Olympic {
-
     id!: number;
-    country!: number;
+    country!: string;
     participations!: Participation[]; 
-
 
 }

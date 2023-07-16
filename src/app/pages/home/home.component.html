@@ -1,17 +1,18 @@
-<h2>Olympic games app</h2>
-<hr />
-<div *ngFor="let olympic of olympics$ | async">
-    <p>{{olympic.id}}</p>
-    <p>{{olympic.country}}</p>
-    <ul *ngFor="let participation of olympic.participations">
-        <li>{{ participation.id }}</li>
-        <li>{{ participation.year }}</li>
-        <li>{{ participation.city }}</li>
-        <li>{{ participation.medalsCount }}</li>
-        <li>{{ participation.athleteCount }}</li>
-    </ul>
-</div> 
-
-<div class="chart-container">
-    <canvas id="TestChart">{{chart}}</canvas>
+<div class="container">
+    <h1>Medals per Country</h1>
+    <div class="medal">
+        <p>
+            Number of JOs
+            <span>{{ olympicsNumber }}</span>
+        </p>
+        <p>
+            Number of countries
+            <span>{{ olympicsNumber}}</span>
+        </p>
+    </div>
+    <div class="pieChart">
+        <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions"
+           (chartClick)="detailCountry()">
+        </canvas>
+    </div>
 </div>

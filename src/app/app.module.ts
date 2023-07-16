@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/detail/detail.component';
+import { NgChartsModule } from 'ng2-charts';
+import 'chart.js';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, DetailComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgChartsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

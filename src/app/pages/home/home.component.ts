@@ -1,43 +1,91 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core'; 
+import { combineLatest, map, Observable, of, Subscription } from 'rxjs';
 import { Olympic } from 'app/core/models/Olympic';
 import { OlympicService } from 'app/core/services/olympic.service';
-import { Chart } from 'chart.js/auto';
+import { Router } from '@angular/router';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  public olympics$: Observable<Olympic[]> = of([]);
-  public chart: any;
-
-  constructor(private olympicService: OlympicService) {}
+export class HomeComponent implements OnInit, OnDestroy {
+  public olympics$: Observable<Olympic[]> = of([]); 
+  private subscriptions: Subscription[] = []; 
+  public olympicsNumber!: number;
+  public pieChartData: ChartData<'pie', number[], string> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: [],
+      },
+    ],
+  };
+  public pieChartType: ChartType = 'pie';
+  public pieChartOptions: ChartConfiguration['options'] = {
+    responsive: true, 
+    plugins: {
+      legend: {
+        display: true, 
+        position: 'bottom', 
+        reverse: true, 
+        align: 'center', 
+      },
+    },
+  }; 
+  
+ 
+  constructor(private olympicService: OlympicService, private router: Router) {} 
+  
+  detailCountry() {
+    this.router.navigateByUrl('detail');
+  }
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.createChart();
+    const olympicCountries$ = this.olympics$.pipe(
+      map((olympics: Olympic[]) => olympics.map((o: Olympic) => o.country))
+    );
+
+    const olympicMedalCount$ = this.olympics$.pipe(
+      map((olympics: Olympic[]) =>
+        olympics.map((o: Olympic) =>
+          o.participations.reduce((accumulator, current) => accumulator + current.medalsCount, 0)
+        )
+      )
+    );
+
+    const subscription = combineLatest([
+      olympicCountries$,
+      olympicMedalCount$,
+    ]).subscribe(([country, medalCounts]) => {
+
+      this.olympicsNumber = country.length;
+
+      this.pieChartData = {
+        labels: country, 
+        datasets: [
+          {
+            data: medalCounts, 
+            backgroundColor: [
+              'rgb(149, 96, 101)',
+              'rgb(184, 203, 231)',
+              'rgb(137, 161, 219)',
+              'rgb(121, 61, 82)',
+              'rgb(151, 128, 161)',
+            ],
+            hoverOffset : 5
+          },
+        ],
+      };
+    });
+ 
+    this.subscriptions.push(subscription);
   }
-  createChart() {
-    this.chart = new Chart("TestChart", {
-      type : 'pie',
-      data: {
-        labels : ['Red', 'Pink', 'Green', 'Yellow', 'Orange', 'Blue',],
-        datasets : [{
-          label: 'Test Dataset',
-          data : [300, 240, 100, 432, 253, 34],
-          backgroundColor : [
-            'red', 
-            'pink', 
-            'green', 
-            'yellow', 
-            'orange', 
-            'blue',
-          ],
-          hoverOffset : 4
-        }],
-      }, options : {aspectRatio: 2.5}
-    })
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }
