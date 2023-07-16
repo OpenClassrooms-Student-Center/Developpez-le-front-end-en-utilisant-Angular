@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+    .tooltip-caret.position-top {
+        border-top-color: green !important;
+    }
+
+    .tooltip-caret.position-bottom {
+        border-bottom-color: green !important;
+    }
+
+    background-color: green;
+}
+
+.pie-label {
+    font-size: 15px !important;
+  }

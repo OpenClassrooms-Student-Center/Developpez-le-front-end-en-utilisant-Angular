@@ -13,15 +13,16 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   public olympics$: Observable<any> = of(null);
   ngxChartsData: Object[] = [];
+  numberOfOlympics!: number;
+  public numberOfCountries: Observable<any> = of(null)
 
   // ngx-charts options
-  view: [number,number] = [700, 400];
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
-  isDoughnut: boolean = false;
   trimLabels: boolean = false;
-  legendPosition: string = 'below';
+  tooltipDisabled: boolean = true;
+  
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#C7B42C']
@@ -34,9 +35,19 @@ export class DashboardComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.numberOfCountries = this.olympicService.getOlympics();
     this.olympicService.getOlympics().subscribe((value) => { 
       this.ngxChartsData = this.createDataToNgxCharts(value)
+      this.numberOfOlympics = this.getNumberOfOlympics(value);
     })
+  }
+
+  getNumberOfOlympics(data: any): number {
+    let count = 0
+    for (let index in data) { 
+      count = data[index].participations.length
+    }
+    return count;
   }
 
   createDataToNgxCharts(data: any): Object[] {

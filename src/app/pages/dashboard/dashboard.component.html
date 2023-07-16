@@ -1,18 +1,40 @@
+<br><br><br>
+<hr>
 <div class="ngx-charts-pie">
+  <p class="title">Medals per Country</p>
+
+  <div class="total-jo-country" >
+    <p>
+      Number of JOs<br>
+      <span>{{ numberOfOlympics }}</span>
+    </p>
+    <p>
+      Number of countries<br>
+      <span>{{ (numberOfCountries | async)?.length }}</span></p>
+  </div>
+
   <ngx-charts-pie-chart
-  [view]="view"
   [scheme]="colorScheme"
   [gradient]="gradient"
   [trimLabels]="trimLabels"
   [legend]="showLegend"
-  [legendPosition]="legendPosition"
   [labels]="showLabels"
-  [doughnut]="isDoughnut"
   [results]="ngxChartsData"
   (select)="onSelect($event)"
   (activate)="onActivate($event)"
   (deactivate)="onDeactivate($event)"
   >
+    <ng-template #tooltipTemplate let-model="model">
+      <div class="tooltip-ngx">
+        <p>{{ model.name }}</p>
+        <p>
+          <i-bs 
+          name="award-fill"
+          width="12px" 
+          height="12px"
+          ></i-bs>
+          {{model.value}}</p>
+      </div>
+    </ng-template>
   </ngx-charts-pie-chart>
 </div>
- 

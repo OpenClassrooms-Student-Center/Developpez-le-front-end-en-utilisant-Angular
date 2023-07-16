@@ -9,6 +9,13 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
+import { awardFill } from 'ngx-bootstrap-icons';
+
+// Select some icons from bootstrap
+const icons = {
+  awardFill,
+};
 
 @NgModule({
   declarations: [
@@ -23,7 +30,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     AppRoutingModule, 
     HttpClientModule,
     NgxChartsModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule,
+    NgxBootstrapIconsModule.pick(icons)
   ],
   providers: [],
   bootstrap: [AppComponent],
