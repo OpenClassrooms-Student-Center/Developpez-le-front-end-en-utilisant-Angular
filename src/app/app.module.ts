@@ -9,9 +9,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DetailsComponent } from './pages/details/details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, HeaderComponent, FooterComponent, DetailsComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgChartsModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],
