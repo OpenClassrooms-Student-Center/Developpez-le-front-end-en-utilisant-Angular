@@ -3,6 +3,7 @@
     font-family: Roboto, Helvetica, sans-serif;
 }
 
+/* ------ Begin css global ngx-charts ----- */
 ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
     .tooltip-caret.position-top {
         border-top-color: green !important;
@@ -12,9 +13,18 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
         border-bottom-color: green !important;
     }
 
+    .tooltip-caret.position-left {
+        border-left-color: green !important;
+    }
+
+    .tooltip-caret.position-right {
+        border-right-color: green !important;
+    }
+
     background-color: green;
 }
 
 .pie-label {
     font-size: 15px !important;
-  }
+}
+/* ------ End css global ngx-charts ----- */

@@ -1,25 +1,29 @@
-<br><br><br>
+<button (click)="onViewFaceSnap()" class="button-back">
+  <i-bs 
+    name="arrow-bar-left"
+    width="14px" 
+    height="14px"
+  ></i-bs>
+  Back to Dashboard
+</button>
 
-<div style="width: 900px;margin: auto;">
-
+<div class="ngx-charts-pie">
   <p class="title">Name of the country</p>
-
   <div class="total-jo-country" >
     <p>
       Number of entries<br>
-      <span>??</span>
+      <span>{{ (numberOfEntries | async)?.length }}</span>
     </p>
     <p>
       Total number medals<br>
-      <span>??</span>
+      <span>{{ totalNumberMedals }}</span>
     </p>
     <p>
       Total number of athletes<br>
-      <span>??</span>
+      <span>{{ totalNumberOfAthletes }}</span>
     </p>
   </div>
-
-  <div class="ngx-charts-pie">
+  <div style="width: 700px; height: 300px;">
     <ngx-charts-line-chart
     [scheme]="colorScheme"
     [showXAxisLabel]="showXAxisLabel"
@@ -29,10 +33,7 @@
     [xAxisLabel]="xAxisLabel"
     [timeline]="timeline"
     [results]="ngxChartsData"
-  
     >
     </ngx-charts-line-chart>
-  
-    <button (click)="onViewFaceSnap()">Back</button>
   </div>
 </div>

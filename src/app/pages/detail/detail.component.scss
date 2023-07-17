@@ -1,3 +1,12 @@
+.button-back {
+    border: solid 2px #000080;
+    color: #000080;
+    border-radius: 4px;
+    padding: 3px 9px 3px 9px;
+    background: ghostwhite;
+    font-size: 15px;
+}
+
 .ngx-charts-pie {
     display: flex;
     flex-flow: column;
@@ -5,27 +14,23 @@
     /*width: 700px;*/
 }
 
-:host {
-    // insert your styles here
-   
-    .title {
-        background: navy;
-        padding: 3px 6px 3px 6px;
-        border-radius: 6px;
-        color: white;
-        font-size: 19px;
-    }
+.title {
+    background: navy;
+    padding: 3px 6px 3px 6px;
+    border-radius: 6px;
+    color: white;
+    font-size: 19px;
+}
 
-    .total-jo-country {
-        display: flex;
-        p {
-            margin: 0px 15px 10px 15px;
-            border: solid 2px #000080;
-            border-radius: 5px;
-            padding: 15px;
-            font-size: 13px;
-            color: #5a5a5a;
-            text-align: center;
-        }
+.total-jo-country {
+    display: flex;
+    p {
+        margin: 0px 15px 10px 15px;
+        border: solid 2px #000080;
+        border-radius: 5px;
+        padding: 15px;
+        font-size: 13px;
+        color: #5a5a5a;
+        text-align: center;
     }
 }

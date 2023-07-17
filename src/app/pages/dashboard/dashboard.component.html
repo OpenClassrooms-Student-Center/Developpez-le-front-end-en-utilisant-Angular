@@ -1,8 +1,5 @@
-<br><br><br>
-<hr>
 <div class="ngx-charts-pie">
   <p class="title">Medals per Country</p>
-
   <div class="total-jo-country" >
     <p>
       Number of JOs<br>
@@ -12,17 +9,13 @@
       Number of countries<br>
       <span>{{ (numberOfCountries | async)?.length }}</span></p>
   </div>
-
   <ngx-charts-pie-chart
   [scheme]="colorScheme"
   [gradient]="gradient"
   [trimLabels]="trimLabels"
-  [legend]="showLegend"
   [labels]="showLabels"
   [results]="ngxChartsData"
   (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
   >
     <ng-template #tooltipTemplate let-model="model">
       <div class="tooltip-ngx">

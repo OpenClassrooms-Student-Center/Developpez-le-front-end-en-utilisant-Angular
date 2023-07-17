@@ -10,11 +10,12 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
-import { awardFill } from 'ngx-bootstrap-icons';
+import { awardFill, arrowBarLeft } from 'ngx-bootstrap-icons';
 
 // Select some icons from bootstrap
 const icons = {
   awardFill,
+  arrowBarLeft
 };
 
 @NgModule({
