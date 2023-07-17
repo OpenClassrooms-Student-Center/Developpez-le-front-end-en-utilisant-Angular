@@ -26,21 +26,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   public pieChartType: ChartType = 'pie';
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true, 
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true, 
         position: 'bottom', 
-        reverse: true, 
-        align: 'center', 
+        reverse: true,  
       },
     },
   }; 
   
- 
   constructor(private olympicService: OlympicService, private router: Router) {} 
   
-  detailCountry() {
-    this.router.navigateByUrl('detail');
+  
+    detailCountry(event: any) {
+      const { index } = event.active[0];
+      let id = 1 + index;
+      this.router.navigate([`detail/${id}`]);
+  }
+
+  backgroundMedal(){
+    
   }
 
   ngOnInit(): void {
@@ -76,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
               'rgb(121, 61, 82)',
               'rgb(151, 128, 161)',
             ],
-            hoverOffset : 5
+            hoverOffset : 10
           },
         ],
       };

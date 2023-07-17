@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
@@ -8,7 +8,7 @@ import { Olympic } from '../models/Olympic';
   providedIn: 'root',
 })
 export class OlympicService {
-  private olympicUrl = './assets/mock/olympic.json';
+ private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
   id!: number;
 
@@ -28,5 +28,15 @@ export class OlympicService {
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getOlympicsById(id: number): Observable<Olympic[]> {
+    return this.olympics$
+      .asObservable()
+      .pipe(
+        map((olympics: Olympic[]) =>
+          olympics.filter((o: Olympic) => o.id === id)
+        )
+      );
   }
 }

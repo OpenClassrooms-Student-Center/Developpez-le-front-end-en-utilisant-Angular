@@ -1,1 +1,22 @@
-<p>detail works!</p>
+<div class="container" *ngIf="olympic">
+    <h1>{{ olympic.country }}</h1>
+    <div class="medal">
+        <p>
+            Number of entries
+            <span>{{ olympic.participations.length }}</span>
+        </p>
+        <p>
+            Total Number Medals
+            <span>{{ totalMedals }}</span>
+        </p>
+        <p>
+            Total Number of athletes
+            <span>{{ totalAthletes }}</span>
+        </p>
+    </div>
+    <div class="lineChart">
+        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions"
+            [type]="lineChartType"></canvas>
+    </div>
+    <button (click)="returnToHomePage()">Return to the Home Page</button>
+</div>

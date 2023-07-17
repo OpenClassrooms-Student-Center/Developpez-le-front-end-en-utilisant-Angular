@@ -11,8 +11,9 @@
         </p>
     </div>
     <div class="pieChart">
+        
         <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions"
-           (chartClick)="detailCountry()">
+           (chartClick)="detailCountry($event)" (chartHover)="backgroundMedal()"> 
         </canvas>
     </div>
 </div>
