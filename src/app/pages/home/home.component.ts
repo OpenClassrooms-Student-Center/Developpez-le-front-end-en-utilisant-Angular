@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
-import { ChartConfiguration } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
   // options
   showLegend: boolean = false;
   showLabels: boolean = true;
+  trimLabels:boolean=false;
 
   gradient: boolean = false;
   isDoughnut: boolean = false;
@@ -63,7 +64,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
      private olympicService: OlympicService,
-     private responsiveService: ResponsiveService
+     private responsiveService: ResponsiveService,
+     private router: Router
   ) {
     
    }
@@ -112,4 +114,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onMouseClick(e:any) {
+    const id = e.extra.id;
+    this.router.navigateByUrl('/details/'+id)
+  }
 }
