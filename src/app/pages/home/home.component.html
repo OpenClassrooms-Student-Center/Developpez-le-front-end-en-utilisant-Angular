@@ -21,7 +21,7 @@
                     </article>
                 </div>
             </div>
-            <article style="height: 500px;width: 500px;">
+            <article class="home__dashboard__pie" style="height: 600px;width: 800px;">
                <!-- <canvas baseChart
                  [type]="'pie'"
                  [datasets]="pieChartDatasets" 
@@ -36,8 +36,19 @@
                     [legend]="showLegend"
                     [maxLabelLength]="10"
                     [labels]="showLabels"
+                    [trimLabels]="trimLabels"
                     [doughnut]="isDoughnut"
+                    (select)="onMouseClick($event)"
                 >
+                <ng-template class="home__dashboard__pie__tooltip"  #tooltipTemplate let-model="model">
+                    <p class="home__dashboard__pie__tooltip__name">
+                        {{model.name}}
+                   </p> 
+                    <pre class="home__dashboard__pie__tooltip__pre"> 
+                        <img class="home__dashboard__pie__tooltip__pre__icon-img" src="../../../assets/icons/medal-icon.png" alt="medal-icon">
+                        <p class="home__dashboard__pie__tooltip__pre__value">{{model.value}}</p>  
+                    </pre>
+                </ng-template>
             </ngx-charts-pie-chart>
             </article>
         </section>
