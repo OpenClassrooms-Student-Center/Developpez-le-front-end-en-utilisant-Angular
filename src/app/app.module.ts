@@ -12,7 +12,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 import { awardFill, arrowBarLeft } from 'ngx-bootstrap-icons';
 
-// Select some icons from bootstrap
+/**
+ * Select some icons from bootstrap
+ */
 const icons = {
   awardFill,
   arrowBarLeft
