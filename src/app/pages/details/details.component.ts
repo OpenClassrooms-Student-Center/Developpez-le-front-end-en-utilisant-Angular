@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
   
@@ -17,6 +16,8 @@ export class DetailsComponent implements OnInit {
   public country!: Olympic | undefined;
   public medals: number | undefined = 0;
   public athletes: number | undefined = 0;
+  public loaded:boolean=false;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private olympicService: OlympicService){
 
@@ -27,6 +28,10 @@ export class DetailsComponent implements OnInit {
       this.olympicService.getOlympics().subscribe((olympicData) => {
         if(olympicData.length>0){
           this.country = olympicData.find(country => country.id==id);
+          this.loaded=true;
+          // If no country found, redirect to error page
+          if(this.country==undefined) this.router.navigateByUrl('**')
+          
           this.medals= this.country?.participations.map((participation) => {
             return participation.medalsCount
           }).reduce((prev,curr) => prev+curr);
