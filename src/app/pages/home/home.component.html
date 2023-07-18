@@ -1,8 +1,6 @@
 <main class="home">
     
-    <div *ngIf="olympics.length==0">
-        <p>chargement</p>
-    </div>
+    <div *ngIf="!loaded" class="loader"></div>
 
     <div *ngIf="olympics.length>0">
         <section class="home__dashboard">
