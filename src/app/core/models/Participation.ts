@@ -1,16 +1,5 @@
 export class Participation {
-    // Définition de la classe Participation avec les propriétés suivantes : 
-/*
-exemple de participation:
-{
-    id: 1,
-    year: 2012,
-    city: "Londres",
-    medalsCount: 28,
-    athleteCount: 372
-}
-*/
-
+ // Définition de la classe Participation avec les propriétés suivantes : 
 
     id!: number;
     year!: number;

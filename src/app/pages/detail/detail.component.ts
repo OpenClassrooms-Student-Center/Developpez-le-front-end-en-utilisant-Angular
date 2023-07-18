@@ -49,17 +49,13 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   constructor(private olymmpicService: OlympicService, private route: ActivatedRoute, private router: Router) {}
 
-  // Cette fonction permet de retourner à la page d'accueil via l'URL
+  // Retour à la page d'accueil via l'URL
   returnToHomePage() {
     this.router.navigateByUrl('');
   }
 
-  /* La méthode ngOnInit est une méthode de cycle de vie du composant DetailcComponent.
-  Au sein de cette méthode on récupère l'id depuis la route, utilisé pour récupérer les données détaillées de chaque pays participant au JO via le service.
-  Si la variable "olympics" existe et si sa longueur est supérieur à 0 alors on accède au premier élément du tableau, sinon on retourne à la page d'accueil.
-  Par la suite, on ajoute avec le push un abonnement au tableau Subscription. Si la variable olympic est vrai, alors on accède à la pro^riété lineChartData 
-  et le graphique commence à se mettre en place. 
-  Ensuite, Le nombres de médailles et d'athlètes sont calculées en additonant les propriétes de chaque élément du tableau participation de l'objet Olympic. 
+  /* 
+  Méthodes executées lors de l'initialisation du component
   */
   ngOnInit(): void {
     const olympicCountry = +this.route.snapshot.params['id'];
@@ -102,10 +98,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     }
   }
 
-/* La méthode ngOnDestroy est utilisée pour effectuer des tâches de nettoyage avant que le composant soit détruit 
-comme annuler des abonnements à des observables.
-On utilise le unsubscribe afin de libérer de la mémoire et éviter la consommation inutle du processeur.
-*/
+// Désabonnement avant la destruction du component
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

@@ -11,6 +11,10 @@ import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  /* Initialisation des données à stocker 
+  et à retourner sous forme de graphique de type pie.
+  */
   
   public olympics$: Observable<Olympic[]> = of([]); 
   private subscriptions: Subscription[] = []; 
@@ -39,14 +43,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   constructor(private olympicService: OlympicService, private router: Router) {} 
   
-  
+
+  /* Crée l'évenement lors du clique
+  * param event - any
+  */
+
     detailCountry(event: any) {
-      const { index } = event.active[0];
-      let id = 1 + index;
+      const index  = event.active[0].index;
+      const id = index + 1 ;
       this.router.navigate([`detail/${id}`]);
   }
 
 
+  /* 
+  Méthodes executées lors de l'initialisation du component
+  */
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
     const olympicCountries$ = this.olympics$.pipe(
@@ -89,10 +100,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  /* La méthode ngOnDestroy est utilisée pour effectuer des tâches de nettoyage avant que le composant soit détruit 
-comme annuler des abonnements à des observables.
-On utilise le unsubscribe afin de libérer de la mémoire et éviter la consommation inutle du processeur.
-*/
+  //Désabonnement avant la destruction du component
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
