@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
   public maxParticipations: number = 0;
   public olympicsResult: Array<{name:string,value:number,extra:{id:number}}> = [];
 
+  public loaded:boolean=false;
+
   /*
   public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
     responsive: true,
@@ -79,6 +81,7 @@ export class HomeComponent implements OnInit {
       })
       
       if(this.olympics.length>0) {
+        this.loaded=true
        /* this.pieChartCountries = this.olympics.map((country) => { return country.country })
         this.olympics.map((olympic) => {
           if(olympic.participations.length>this.maxParticipations) this.maxParticipations = olympic.participations.length
