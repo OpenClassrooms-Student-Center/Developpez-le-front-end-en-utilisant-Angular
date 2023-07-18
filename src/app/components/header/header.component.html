@@ -1,4 +1,7 @@
 <header>
-    <h2>Olympic games app</h2>
+    <div class="arrow-title">
+        <span *ngIf="showBackArrow" (click)="navigateBack()" class="arrow-back">&#60;</span>
+        <h2>Olympic games app</h2>
+    </div>
     <hr />
 </header>
