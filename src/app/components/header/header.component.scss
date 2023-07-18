@@ -1,3 +1,19 @@
 header{
     font-family: system-ui;
 }
+
+.arrow-back{
+    font-size: 28px;
+}
+
+.arrow-back:hover{
+    cursor: pointer;
+    opacity: .7;
+}
+
+.arrow-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 2rem;
+}
