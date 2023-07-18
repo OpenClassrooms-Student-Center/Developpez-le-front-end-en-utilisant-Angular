@@ -1,4 +1,5 @@
 <main class="country">
+    <div *ngIf="!loaded" class="loader"></div>
     <section *ngIf="country" class="country__detail">
         <div class="country__detail__info">
             <article class="country__detail__info__title">
