@@ -1,6 +1,7 @@
-// It's a typescript interface for a participation
+export class Participation {
+    // Définition de la classe Participation avec les propriétés suivantes : 
 /*
-example of participation:
+exemple de participation:
 {
     id: 1,
     year: 2012,
@@ -10,7 +11,6 @@ example of participation:
 }
 */
 
-export class Participation {
 
     id!: number;
     year!: number;

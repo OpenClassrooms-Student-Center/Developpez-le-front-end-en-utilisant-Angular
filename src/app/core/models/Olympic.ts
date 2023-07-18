@@ -1,15 +1,17 @@
+
 import { Participation } from "./Participation";
-// It's a typescript interface for an olympic country
+// La classe Participation est importée dans la classe Olympic afin de l'utiliser danS une de ces propriétés
+export class Olympic {
+
+    // Définition de la classe Olympic avec les propriété suivantes : 
 /*
-example of an olympic country:
+exemple pour un pays olympique:
 {
     id: 1,
     country: "Italy",
     participations: []
 }
 */
-
-export class Olympic {
     id!: number;
     country!: string;
     participations!: Participation[]; 
