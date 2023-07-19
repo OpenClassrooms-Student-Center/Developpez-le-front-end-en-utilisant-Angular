@@ -5,16 +5,16 @@ import { OlympicService } from 'app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
+/**
+ * Initialize data to be stored 
+  and to be returned as a pie chart.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  /* Initialisation des données à stocker 
-  et à retourner sous forme de graphique de type pie.
-  */
-
   public olympics$: Observable<Olympic[]> = of([]);
   private subscriptions: Subscription[] = [];
   public olympicsNumber!: number;
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   /**
-   * This event allows to go at country's detail page with an index
+   * This event allows to go at country's detail page with an id
    * @param any
    */
   public detailCountry(event: any) {
@@ -55,14 +55,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   /* 
   Méthodes executées lors de l'initialisation du component
   */
+
   ngOnInit(): void {
-    const olympicCountries$ = this.olympicService
+    this.updateChartData();
+  }
+
+  
+  public getOlympicCountries(): Observable<string[]> {
+    return this.olympicService
       .getOlympics()
       .pipe(
         map((olympics: Olympic[]) => olympics.map((o: Olympic) => o.country))
       );
+  }
 
-    const olympicMedalCount$ = this.olympicService
+  public getOlympicMedalCount(): Observable<number[]> {
+    return this.olympicService
       .getOlympics()
       .pipe(
         map((olympics: Olympic[]) =>
@@ -74,13 +82,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           )
         )
       );
+  }
 
+  public updateChartData(): void {
     const subscription = combineLatest([
-      olympicCountries$,
-      olympicMedalCount$,
+      this.getOlympicCountries(),
+      this.getOlympicMedalCount(),
     ]).subscribe(([country, medalCounts]) => {
       this.olympicsNumber = country.length;
-
       this.pieChartData = {
         labels: country,
         datasets: [
@@ -98,7 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         ],
       };
     });
-
     this.subscriptions.push(subscription);
   }
 
