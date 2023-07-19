@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'app/core/services/olympic.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { Participation } from 'app/core/models/Participation';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 
 /**
  * Represents the data to be stored
@@ -59,50 +59,61 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   /* 
-  Méthodes executées lors de l'initialisation du component
+  Method executed on component initialization
   */
+
   ngOnInit(): void {
+    this.updateChartData();
+  }
+
+  getOlympicsById(olympicCountry: number): Observable<Olympic> {
+    return this.olymmpicService.getOlympicsById(olympicCountry)
+      .pipe(
+        map((olympics: Olympic[]) => olympics[0])
+      );
+  }
+
+
+  updateChartData(): void {
     const olympicCountry = +this.route.snapshot.params['id'];
-    const subscription = this.olymmpicService
-      .getOlympicsById(olympicCountry)
-      .subscribe((olympics: Olympic[]) => {
-        if (olympics && olympics.length) {
-          this.olympic = olympics[0];
+    const subscription = this.getOlympicsById(olympicCountry)
+      .subscribe((olympic: Olympic) => {
+        if (olympic) {
+          this.olympic = olympic;
+          this.lineChartData = {
+            datasets: [
+              {
+                data: this.olympic.participations.map((p) => {
+                  return p.medalsCount;
+                }),
+                label: 'Nombre de médailles obtenues par année',
+                backgroundColor: 'yellow',
+                borderColor: 'rgba(4, 131, 143, 1)',
+                pointBackgroundColor: 'rgba(4, 131, 143, 1)',
+                pointBorderColor: 'yellow',
+                pointHoverBackgroundColor: 'yellow',
+                pointHoverBorderColor: 'rgba(4, 131, 143, 1)',
+              },
+            ],
+            labels: this.olympic.participations.map((p: Participation) => {
+              return p.year;
+            }),
+          };
+          this.totalMedals = this.olympic.participations.reduce(
+            (accumulator, current) => accumulator + current.medalsCount,
+            0
+          );
+          this.totalAthletes = this.olympic.participations.reduce(
+            (accumulator, current) => accumulator + current.athleteCount,
+            0
+          );
         } else {
           this.returnToHomePage();
         }
       });
     this.subscriptions.push(subscription);
-    if (this.olympic) {
-      this.lineChartData = {
-        datasets: [
-          {
-            data: this.olympic.participations.map((p) => {
-              return p.medalsCount;
-            }),
-            label: 'Nombre de médailles obtenues par année',
-            backgroundColor: 'yellow',
-            borderColor: 'rgba(4, 131, 143, 1)',
-            pointBackgroundColor: 'rgba(4, 131, 143, 1)',
-            pointBorderColor: 'yellow',
-            pointHoverBackgroundColor: 'yellow',
-            pointHoverBorderColor: 'rgba(4, 131, 143, 1)',
-          },
-        ],
-        labels: this.olympic.participations.map((p: Participation) => {
-          return p.year;
-        }),
-      };
-      this.totalMedals = this.olympic.participations.reduce(
-        (accumulator, current) => accumulator + current.medalsCount,
-        0
-      );
-      this.totalAthletes = this.olympic.participations.reduce(
-        (accumulator, current) => accumulator + current.athleteCount,
-        0
-      );
-    }
   }
+  
 
   /**
    * Unsubscribe before component destruction

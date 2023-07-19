@@ -52,15 +52,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate([`detail/${id}`]);
   }
 
-  /* 
-  Méthodes executées lors de l'initialisation du component
-  */
-
+  /**
+   * Method executed on component initialization
+   */
   ngOnInit(): void {
     this.updateChartData();
   }
 
-  
+/**
+ * 
+ * @returns 
+ */
   public getOlympicCountries(): Observable<string[]> {
     return this.olympicService
       .getOlympics()
@@ -69,6 +71,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
+  /**
+   * 
+   * @returns 
+   */
   public getOlympicMedalCount(): Observable<number[]> {
     return this.olympicService
       .getOlympics()
@@ -84,6 +90,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
+  /**
+   * 
+   */
   public updateChartData(): void {
     const subscription = combineLatest([
       this.getOlympicCountries(),
