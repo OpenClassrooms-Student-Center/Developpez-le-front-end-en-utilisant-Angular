@@ -1,12 +1,9 @@
-
-import { Participation } from "./Participation";
-
+import { Participation } from './Participation';
+/**
+ * Definition of the Olympic class with the following properties:
+ */
 export class Olympic {
-
-// Définition de la classe Olympic avec les propriété suivantes : 
-
-    id!: number;
-    country!: string;
-    participations!: Participation[]; 
-
+  id!: number;
+  country!: string;
+  participations!: Participation[];
 }

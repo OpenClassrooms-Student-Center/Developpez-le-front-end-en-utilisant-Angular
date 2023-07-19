@@ -4,22 +4,24 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
+/**
+ * The OlympicService class retrieves data
+ * and share them between components.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
-/* La classe OlympicService permet de récupérer les données 
-* et de les partager entre les différents components.
-*/
-
-private olympicUrl = './assets/mock/olympic.json';
-private olympics$ = new BehaviorSubject<Olympic[]>([]);
-id!: number;
+  private olympicUrl = './assets/mock/olympic.json';
+  private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
-
-  // Initialisation des données lors du lancement de l'application
-    loadInitialData() {
+  /**
+   * Return loading data from Olympic
+   *
+   * @returns The data inside olympic.json's file
+   */
+  public loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       map((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
@@ -31,15 +33,23 @@ id!: number;
     );
   }
 
-  // Récupère la liste Olympics
-  getOlympics() {
+  /**
+   * Return list of Olympics
+   *
+   * @returns An Observable about Olympic
+   */
+  public getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
 
-  /* Récupère la liste Olympics par l'id.
-  * param id - Olympic
-  */
-  getOlympicsById(id: number): Observable<Olympic[]> {
+  /**
+   * Return list of Olympics by Id
+   *
+   * @param id
+   *
+   * @returns An Observable about Olympic filtered by ib
+   */
+  public getOlympicsById(id: number): Observable<Olympic[]> {
     return this.olympics$
       .asObservable()
       .pipe(

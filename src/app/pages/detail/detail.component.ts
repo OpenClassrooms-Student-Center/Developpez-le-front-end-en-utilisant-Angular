@@ -4,29 +4,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'app/core/services/olympic.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { Participation } from 'app/core/models/Participation';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
+/**
+ * Represents the data to be stored
+ * and return for each country, in the form of a line graph.
+ */
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit, OnDestroy {
-
-  /* La classe DetailComponent permet d'initilaiser les données à stocker 
-  et à retourner pour chaque pays, sous forme de graphique de type line.
-  */ 
-  olympic!: Olympic;
-  totalMedals!: number;
-  totalAthletes!: number;
+  public olympic!: Olympic;
+  public totalMedals!: number;
+  public totalAthletes!: number;
   private subscriptions: Subscription[] = [];
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [],
     labels: [],
   };
-
-  
- public lineChartOptions: ChartConfiguration['options'] = {
+  public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
         tension: 0,
@@ -34,23 +32,29 @@ export class DetailComponent implements OnInit, OnDestroy {
     },
     scales: {
       y: {
-        position: 'left', 
+        position: 'left',
         suggestedMin: 0,
         suggestedMax: 140,
       },
     },
 
     plugins: {
-      legend: { display: true }, 
+      legend: { display: true },
     },
   };
 
-  public lineChartType: ChartType = 'line'; 
+  public lineChartType: ChartType = 'line';
 
-  constructor(private olymmpicService: OlympicService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private olymmpicService: OlympicService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  // Retour à la page d'accueil via l'URL
-  returnToHomePage() {
+  /**
+   * This event allows to go back at home page
+   */
+  public returnToHomePage() {
     this.router.navigateByUrl('');
   }
 
@@ -63,7 +67,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       .getOlympicsById(olympicCountry)
       .subscribe((olympics: Olympic[]) => {
         if (olympics && olympics.length) {
-          this.olympic = olympics[0]; 
+          this.olympic = olympics[0];
         } else {
           this.returnToHomePage();
         }
@@ -90,18 +94,20 @@ export class DetailComponent implements OnInit, OnDestroy {
         }),
       };
       this.totalMedals = this.olympic.participations.reduce(
-        (accumulator, current) => accumulator + current.medalsCount,0
+        (accumulator, current) => accumulator + current.medalsCount,
+        0
       );
       this.totalAthletes = this.olympic.participations.reduce(
-        (accumulator, current) => accumulator + current.athleteCount,0
+        (accumulator, current) => accumulator + current.athleteCount,
+        0
       );
     }
   }
 
-// Désabonnement avant la destruction du component
+  /**
+   * Unsubscribe before component destruction
+   */
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }
-
-
