@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
 
   /*
   * Used to navigate to page detail when country is clicked on
-  * charts, used too to store color to use the same in detail page 
+  * charts, also used to store color to use the same in detail page 
   */
   onSelectCountry(data: {extra: number}): void {
     let color: string = ""
@@ -96,14 +96,14 @@ export class DashboardComponent implements OnInit {
   }
 
   /*
-  * Delete name country on title when no element is hoverd
+  * Delete name country on title when no element is hovered
   */
   onDeactivate(data: {extra: number}): void {
     this.totalMedalsPerCountry = undefined;
   }
 
   /*
-  * Dynamique gerate color to charts Pie each relaod
+  * Dynamic generation color to charts Pie for each relaod
   */
   generateColors(data: Array<object>) {
     let domain: Array<string> = [];
