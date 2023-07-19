@@ -38,7 +38,7 @@ export class DetailComponent implements OnInit {
     this.olympicService.getOlympics().pipe(
       map((value) => {
         if (typeof value === 'object') {
-          this.getgetOlympicById(value);
+          this.getOlympicById(value);
           if (this.currentOlympicCountry != undefined) {
             this.ngxChartsData = 
               this.createDataToNgxCharts(this.currentOlympicCountry);
@@ -58,9 +58,9 @@ export class DetailComponent implements OnInit {
   }
 
   /*
-  * Get data slected olympic country
+  * Get the data of a slected olympic country
   */
-  getgetOlympicById(data: []): void {
+  getOlympicById(data: []): void {
     let selectedCountry: string = this.route.snapshot.params['id'];    
     data.map((val: Country) => {
          val.id == parseInt(selectedCountry) 
@@ -119,7 +119,7 @@ export class DetailComponent implements OnInit {
   }
 
   /*
-  * get color chart frome session storage
+  * get color chart from session storage
   */
   getColorCharts(): void {
     let colorItem: string | null = sessionStorage.getItem('colorItem');
