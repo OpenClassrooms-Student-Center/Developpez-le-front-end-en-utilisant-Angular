@@ -2,7 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
 
-Don't forget to install your node_modules before starting (`npm install` or `npm install --force`).
+Don't forget to install your node_modules before starting (`npm install`) if npm install not working try
+ (`npm install --save --legacy-peer-deps` or `npm install --force`).
 
 ## Development server
 
