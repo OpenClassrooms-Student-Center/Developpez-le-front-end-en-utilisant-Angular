@@ -4,6 +4,10 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import { Country } from 'src/app/core/models/Country';
 import { Participation } from 'src/app/core/models/Participation';
+import {
+  floor, number, random
+} from 'mathjs'
+import { type } from 'ngx-bootstrap-icons';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +17,7 @@ import { Participation } from 'src/app/core/models/Participation';
 export class DashboardComponent implements OnInit {
   ngxChartsData!: Array<object>;
   numberOfOlympics!: number;
+  totalMedalsPerCountry: number | string = ''
   numberOfCountries!: Observable<Array<object>>;
 
   // ngx-charts options
@@ -20,11 +25,7 @@ export class DashboardComponent implements OnInit {
   showLabels: boolean = true;
   trimLabels: boolean = false;
   tooltipDisabled: boolean = true;
-
-  // TODO MR Generate auto color ajouter dans une session pour envoyer  
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#C7B42C']
-  };
+  colorScheme: Record<string, Array<string>> = {domain: []};
 
   constructor(
     private olympicService: OlympicService,
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit {
         if (typeof value === 'object') {
           this.ngxChartsData = this.createDataToNgxChartss(value)
           this.numberOfOlympics = this.getNumberOfOlympics(value)
+          this.generateColors(value)
         }
       })
     ).subscribe()
@@ -68,6 +70,32 @@ export class DashboardComponent implements OnInit {
   }
 
   onSelect(data: {extra: number}): void {
+    let color: string = '#5AA454'
+    for (let idx in this.ngxChartsData) {
+      let dataNgx: { extra?: number } = this.ngxChartsData[idx];
+      if (dataNgx.extra == data.extra) {
+        color = this.colorScheme['domain'][idx];
+      }
+    }
+    sessionStorage.setItem('colorItem', color);
     this.router.navigateByUrl(`detail/${data.extra}`);
+  }
+
+  onActivate(data: {value: {value: number}}): void {
+    this.totalMedalsPerCountry = data.value.value
+  }
+
+  onDeactivate(data: {extra: number}): void {
+    this.totalMedalsPerCountry = ''
+  }
+
+  generateColors(data: Array<object>) {
+    let domain: Array<string> = [];
+    data.forEach(function (value) {
+      domain.push(
+        `#${floor(random()*16777215).toString(16)}`
+        )
+    });
+    this.colorScheme['domain'] = domain
   }
 }

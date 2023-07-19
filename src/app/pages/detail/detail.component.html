@@ -8,11 +8,11 @@
 </button>
 
 <div class="ngx-charts-pie">
-  <p class="title">Name of the country</p>
+  <p class="title">{{ countryName }}</p>
   <div class="total-jo-country" >
     <p>
       Number of entries<br>
-      <span>{{ (numberOfEntries | async)?.length }}</span>
+      <span>{{ numberOfEntries }}</span>
     </p>
     <p>
       Total number medals<br>
