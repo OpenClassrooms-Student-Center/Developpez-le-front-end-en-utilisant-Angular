@@ -3,6 +3,11 @@
     font-family: Roboto, Helvetica, sans-serif;
 }
 
+body {
+    display: block;
+    margin: 0px;
+}
+
 /* ------ Begin css global ngx-charts ----- */
 ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
     .tooltip-caret.position-top {

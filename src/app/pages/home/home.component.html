@@ -1,3 +1,11 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="container">
+    <h2>Olympic games app</h2>
+    <hr />
+    <p>
+        <a routerLink="dashboard">
+            {{ (olympics$ | async)?.length }} data loaded
+        </a>
+    </p>
+    <img src="assets/images/olympia.jpg">
+</div>
+
