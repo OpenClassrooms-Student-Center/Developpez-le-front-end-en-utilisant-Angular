@@ -17,7 +17,7 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
   /**
-   * Return loading data from Olympic
+   * Return a loading data from Olympic
    *
    * @returns The data inside olympic.json's file
    */
@@ -34,7 +34,7 @@ export class OlympicService {
   }
 
   /**
-   * Return list of Olympics
+   * Return a list of Olympics
    *
    * @returns An Observable about Olympic
    */
@@ -43,7 +43,7 @@ export class OlympicService {
   }
 
   /**
-   * Return list of Olympics by Id
+   * Return a list of Olympics by Id
    *
    * @param id
    *

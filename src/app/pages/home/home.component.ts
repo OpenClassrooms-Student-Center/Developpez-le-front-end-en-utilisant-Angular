@@ -56,14 +56,15 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Method executed on component initialization
    */
   ngOnInit(): void {
-    this.updateChartData();
+    this.combineCountryAndMedal();
   }
 
-/**
- * 
- * @returns 
- */
-  public getOlympicCountries(): Observable<string[]> {
+  /**
+   * Return a list about countries at Olympic Games
+   *
+   * @returns A list of country participating in the Olympics Games with an observable
+   */
+  private getOlympicCountries(): Observable<string[]> {
     return this.olympicService
       .getOlympics()
       .pipe(
@@ -72,10 +73,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
-   * @returns 
+   * Return a list about medals at Olympic Games
+   *
+   * @returns An observable result by calculating the total number of medals for each Olympic game
    */
-  public getOlympicMedalCount(): Observable<number[]> {
+  private getOlympicMedalCount(): Observable<number[]> {
     return this.olympicService
       .getOlympics()
       .pipe(
@@ -91,9 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 
+   * Represents the combined subscription of countries and medals in a pie chart
    */
-  public updateChartData(): void {
+  private combineCountryAndMedal(): void {
     const subscription = combineLatest([
       this.getOlympicCountries(),
       this.getOlympicMedalCount(),

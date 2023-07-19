@@ -61,25 +61,20 @@ export class DetailComponent implements OnInit, OnDestroy {
   /* 
   Method executed on component initialization
   */
-
   ngOnInit(): void {
-    this.updateChartData();
+    this.detailCountrytData();
   }
 
-  getOlympicsById(olympicCountry: number): Observable<Olympic> {
-    return this.olymmpicService.getOlympicsById(olympicCountry)
-      .pipe(
-        map((olympics: Olympic[]) => olympics[0])
-      );
-  }
-
-
-  updateChartData(): void {
-    const olympicCountry = +this.route.snapshot.params['id'];
-    const subscription = this.getOlympicsById(olympicCountry)
-      .subscribe((olympic: Olympic) => {
-        if (olympic) {
-          this.olympic = olympic;
+  /**
+   * Represents a subscription of detail country with element totalMedals and totalAthletes in a line chart
+   */
+  private detailCountrytData(): void {
+    const olympicCountry = +this.route.snapshot.paramMap.get('id')!;
+    const subscription = this.olymmpicService
+      .getOlympicsById(olympicCountry)
+      .subscribe((olympics: Olympic[]) => {
+        if (olympics && olympics.length) {
+          this.olympic = olympics[0];
           this.lineChartData = {
             datasets: [
               {
@@ -113,7 +108,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       });
     this.subscriptions.push(subscription);
   }
-  
 
   /**
    * Unsubscribe before component destruction
