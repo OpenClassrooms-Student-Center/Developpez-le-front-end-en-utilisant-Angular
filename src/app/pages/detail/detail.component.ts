@@ -12,13 +12,12 @@ import { Participation } from 'src/app/core/models/Participation';
 })
 export class DetailComponent implements OnInit {
   currentOlympicCountry!: Country
-  ngxChartsData!: Array<object>;
   numberOfEntries!: number
   totalNumberMedals!: number;
   totalNumberOfAthletes!: number;
   countryName!: string;
-
   // ngx-charts options
+  ngxChartsData!: Array<object>;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -35,23 +34,22 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.countryName = "Data doesn't exist"
     this.olympicService.getOlympics().pipe(
       map((value) => {
         if (typeof value === 'object') {
           this.getgetOlympicById(value);
-
           if (this.currentOlympicCountry != undefined) {
             this.ngxChartsData = 
               this.createDataToNgxCharts(this.currentOlympicCountry);
             this.totalNumberMedals = 
-              this.getTotalBumberMedals(this.currentOlympicCountry);
+              this.getTotalNumberMedals(this.currentOlympicCountry);
             this.totalNumberOfAthletes = 
               this.getTotalNumberAthletes(this.currentOlympicCountry);
             this.numberOfEntries = 
               this.currentOlympicCountry.participations.length;
             this.countryName = 
               this.currentOlympicCountry.country;
-  
           } 
         }
       })
@@ -59,6 +57,9 @@ export class DetailComponent implements OnInit {
     this.getColorCharts()
   }
 
+  /*
+  * Get data slected olympic country
+  */
   getgetOlympicById(data: []): void {
     let selectedCountry: string = this.route.snapshot.params['id'];    
     data.map((val: Country) => {
@@ -68,6 +69,9 @@ export class DetailComponent implements OnInit {
       });
   }
 
+  /* 
+  * Create formated object to use it in ngx-charts
+  */
   createDataToNgxCharts(olympic: Country) {
     let chartsData: Array<object> = [];
     let listYearMedals: Array<object>= []; 
@@ -85,13 +89,20 @@ export class DetailComponent implements OnInit {
     return [...chartsData];
   }
 
-  getTotalBumberMedals(data: Country): number {
+  /*
+  * get total number of medals for current country
+  */
+  getTotalNumberMedals(data: Country): number {
     return data.participations.reduce(
       (sum: number, val: Participation) => {
         sum += val.medalsCount;
         return sum;
       }, 0);
   }
+
+  /*
+  * get total number of athletes for current country
+  */
   getTotalNumberAthletes(data: Country): number {
     return data.participations.reduce(
       (sum: number, val: Participation) => {
@@ -100,14 +111,20 @@ export class DetailComponent implements OnInit {
       }, 0);
   }
 
-  onViewFaceSnap(): void {
+  /*
+  * navigation to go back dashboard
+  */
+  goBackDashbord(): void {
     this.router.navigateByUrl(`dashboard`);
   }
 
+  /*
+  * get color chart frome session storage
+  */
   getColorCharts(): void {
     let colorItem: string | null = sessionStorage.getItem('colorItem');
     if (colorItem != null) {
-      this.colorScheme.domain = [colorItem]
+      this.colorScheme.domain = [colorItem];
     } 
   }
 }

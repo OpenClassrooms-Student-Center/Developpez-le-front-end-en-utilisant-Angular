@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, concatWith, of, pipe, map, find } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import { Country } from 'src/app/core/models/Country';
 import { Participation } from 'src/app/core/models/Participation';
-import {
-  floor, number, random
-} from 'mathjs'
-import { type } from 'ngx-bootstrap-icons';
+import { floor, random } from 'mathjs'
 
 @Component({
   selector: 'app-dashboard',
@@ -15,12 +12,11 @@ import { type } from 'ngx-bootstrap-icons';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  ngxChartsData!: Array<object>;
   numberOfOlympics!: number;
-  totalMedalsPerCountry: number | string = ''
+  totalMedalsPerCountry: number | undefined;
   numberOfCountries!: Observable<Array<object>>;
-
   // ngx-charts options
+  ngxChartsData!: Array<object>;
   gradient: boolean = true;
   showLabels: boolean = true;
   trimLabels: boolean = false;
@@ -36,26 +32,22 @@ export class DashboardComponent implements OnInit {
     this.olympicService.getOlympics().pipe(
       map((value) => {
         if (typeof value === 'object') {
-          this.ngxChartsData = this.createDataToNgxChartss(value)
-          this.numberOfOlympics = this.getNumberOfOlympics(value)
-          this.generateColors(value)
+          this.ngxChartsData = this.createDataToNgxChartss(value);
+          this.numberOfOlympics = this.getNumberOfOlympics(value);
+          this.generateColors(value);
         }
       })
-    ).subscribe()
+    ).subscribe();
     this.numberOfCountries = this.olympicService.getOlympics();
   }
 
-  getNumberOfOlympics(data: []): number {
-    let country: Country = Object.values(data)[0];
-    return country != undefined ? 
-      country.participations.length : 0 ;
-  };
-
+  /* 
+  * Create formated object to use it in ngx-charts
+  */
   createDataToNgxChartss(data: []): Object[] {
     let chartsData: Array<object> = [];
     data.find((val: Country) => {
-      chartsData.push(
-        {
+      chartsData.push({
           "extra": val.id,
           "name": val.country,
           "value": val.participations.reduce(
@@ -69,33 +61,59 @@ export class DashboardComponent implements OnInit {
     return [...chartsData];
   }
 
-  onSelect(data: {extra: number}): void {
-    let color: string = '#5AA454'
+  /* 
+  * get number of olympics to show in page
+  */
+  getNumberOfOlympics(data: []): number {
+    let country: Country = Object.values(data)[0];
+    return country != undefined ? 
+      country.participations.length : 0 ;
+  };
+
+  /*
+  * Used to navigate to page detail when country is clicked on
+  * charts, used too to store color to use the same in detail page 
+  */
+  onSelectCountry(data: {extra: number}): void {
+    let color: string = ""
     for (let idx in this.ngxChartsData) {
       let dataNgx: { extra?: number } = this.ngxChartsData[idx];
       if (dataNgx.extra == data.extra) {
         color = this.colorScheme['domain'][idx];
       }
     }
-    sessionStorage.setItem('colorItem', color);
+    color !== "" 
+      ? sessionStorage.setItem('colorItem', color) 
+      : sessionStorage.setItem('colorItem', '#5AA454');
     this.router.navigateByUrl(`detail/${data.extra}`);
   }
 
+  /*
+  * Change name of country on title when hover
+  */
   onActivate(data: {value: {value: number}}): void {
-    this.totalMedalsPerCountry = data.value.value
+    this.totalMedalsPerCountry = data.value.value;
   }
 
+  /*
+  * Delete name country on title when no element is hoverd
+  */
   onDeactivate(data: {extra: number}): void {
-    this.totalMedalsPerCountry = ''
+    this.totalMedalsPerCountry = undefined;
   }
 
+  /*
+  * Dynamique gerate color to charts Pie each relaod
+  */
   generateColors(data: Array<object>) {
     let domain: Array<string> = [];
     data.forEach(function (value) {
       domain.push(
-        `#${floor(random()*16777215).toString(16)}`
+        `#${floor(random()*16777215)
+          .toString(16)
+          .padStart(6, '0')}` // in case the number is too small to fill 6 hex digits
         )
     });
-    this.colorScheme['domain'] = domain
+    this.colorScheme['domain'] = domain;
   }
 }

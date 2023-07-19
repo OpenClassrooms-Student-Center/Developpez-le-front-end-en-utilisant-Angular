@@ -1,4 +1,4 @@
-<button (click)="onViewFaceSnap()" class="button-back">
+<button (click)="goBackDashbord()" class="button-back">
   <i-bs 
     name="arrow-bar-left"
     width="14px" 
@@ -6,7 +6,6 @@
   ></i-bs>
   Back to Dashboard
 </button>
-
 <div class="ngx-charts-pie">
   <p class="title">{{ countryName }}</p>
   <div class="total-jo-country" >
@@ -23,16 +22,16 @@
       <span>{{ totalNumberOfAthletes }}</span>
     </p>
   </div>
-  <div style="width: 700px; height: 300px;">
+  <div class="div-container-ngx-charts">
     <ngx-charts-line-chart
-    [scheme]="colorScheme"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [timeline]="timeline"
-    [results]="ngxChartsData"
+      [scheme]="colorScheme"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [timeline]="timeline"
+      [results]="ngxChartsData"
     >
     </ngx-charts-line-chart>
   </div>
