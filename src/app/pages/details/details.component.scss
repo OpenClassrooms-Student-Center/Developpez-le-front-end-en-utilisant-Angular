@@ -63,8 +63,7 @@
 
             &__numbers {
                 display: flex;
-                flex-direction: row;
-                column-gap: 2rem;
+
 
                 &__text {
                     display: flex;
@@ -74,6 +73,7 @@
                     padding: 2px 7px;
 
                     &__title {
+                        text-align: center;
                         color: grey;
                         margin: 6px 0;
                     }
@@ -86,4 +86,16 @@
             }
         }
     }
+}
+
+.desktop_numbers,.tablet_numbers{
+    flex-direction: row;
+    column-gap: 2rem;
+}
+
+.phone_numbers{
+    row-gap: 1rem;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    justify-content: center;
 }
