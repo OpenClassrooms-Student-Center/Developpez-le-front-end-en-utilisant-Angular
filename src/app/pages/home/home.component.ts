@@ -16,43 +16,10 @@ export class HomeComponent implements OnInit {
   public olympics: Olympic[] = [];
   public maxParticipations: number = 0;
   public olympicsResult: Array<{name:string,value:number,extra:{id:number}}> = [];
-
   public loaded:boolean=false;
-
-  /*
-  public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
-    responsive: true,
-    plugins:{
-      tooltip:{
-        backgroundColor: "#04838F",
-        padding:{x:20, y:5},
-        bodyFont:{weight:"300",family:"system-ui", size:22},
-        bodyAlign:"center",
-        titleFont:{size:22, weight:"200"},
-        usePointStyle:true,
-        callbacks:{
-          labelPointStyle: () => {
-            // get icon image
-            const medalIcon = new Image(30,30);
-            medalIcon.src="../../../../assets/icons/medal-icon.png";
-            return {pointStyle: medalIcon, rotation:0}
-          }
-        }
-      },
-    },
-  }
-
-  public pieChartCountries: Array<string> = [];
-  public countriesMedals: Array<number> = [];
-  public pieChartDatasets : Array<{data: Array<number>}>= [];
-  //public pieChartLegend = true;
-  public pieChartPlugins = [];*/
-
   currentBreakpoint:"desktop" | "tablet" | "phone" | undefined;
-
   
-
-  // options
+  // pie chart attributes
   showLegend: boolean = false;
   showLabels: boolean = true;
   trimLabels:boolean=false;
@@ -60,21 +27,29 @@ export class HomeComponent implements OnInit {
   gradient: boolean = false;
   isDoughnut: boolean = false;
 
-
-  
-
+  width:number=800;
+  height:number=600;
+  view:[number,number]=[this.width,this.height]
 
   constructor(
      private olympicService: OlympicService,
      private responsiveService: ResponsiveService,
      private router: Router
   ) {
-    
+    /**
+     * Get width and height values to set the line chart dimensions (this.view variable) 
+     */
+    this.width= innerWidth / 1.35;
+    this.height=this.width/1.3;
+    if(this.width>800) this.width=800
+    if(this.height>600) this.height=600
+    this.view = [this.width, this.height];
    }
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics$()
 
+    // get all countries
     this.olympicService.getOlympics().subscribe((olympicData) => {
       this.olympics = olympicData.map((olympic) => {
         return olympic;
@@ -82,30 +57,32 @@ export class HomeComponent implements OnInit {
       
       if(this.olympics.length>0) {
         this.loaded=true
-       /* this.pieChartCountries = this.olympics.map((country) => { return country.country })
-        this.olympics.map((olympic) => {
-          if(olympic.participations.length>this.maxParticipations) this.maxParticipations = olympic.participations.length
-          const medalsParticipations = olympic.participations.map((participations) => {
-            return participations.medalsCount;
-          }).reduce((prev,curr) => prev+curr);
-          this.countriesMedals.push(medalsParticipations)
-        })
-        this.pieChartDatasets = [{ data: this.countriesMedals }]*/
       }
       this.olympics.map((olympic) => {
         if(olympic.participations.length>this.maxParticipations) this.maxParticipations = olympic.participations.length
+        
+        // count all medals for every countries
         const medalsParticipations = olympic.participations.map((participations) => {
           return participations.medalsCount;
         }).reduce((prev,curr) => prev+curr);
+        
         const { country, id } = olympic;
-        const res = {
+
+
+        /**
+         * Expected countries data format: object
+         * name key : string (name of the country)
+         * value key : number (total of country medals won)
+         * extra key : object (others optionnals keys)
+         */
+        const countries = {
           name: country,
           value: medalsParticipations,
           extra:{
             id
           }
         };        
-        this.olympicsResult.push(res)
+        this.olympicsResult.push(countries)
       })
     });
 
@@ -117,8 +94,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Navigate to country details page by id
+   * @param e 
+   */
   onMouseClick(e:any) {
     const id = e.extra.id;
     this.router.navigateByUrl('/details/'+id)
+  }
+
+  /**
+   * Get width and height values to resize the line chart dimensions (this.view variable)
+   * @param event 
+   */
+  onResize(event: any) {
+    this.width = event.target.innerWidth / 1.35;
+    this.height = this.width/1.3;
+    if(this.width>800) this.width=800
+    if(this.height>600) this.height=600
+    this.view = [this.width, this.height];
   }
 }
