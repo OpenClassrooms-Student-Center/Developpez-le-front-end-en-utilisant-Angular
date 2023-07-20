@@ -1,9 +1,11 @@
 header{
     font-family: system-ui;
+    margin: auto;
 }
 
 .arrow-back{
     font-size: 28px;
+    padding-left: 8px;
 }
 
 .arrow-back:hover{
@@ -16,4 +18,20 @@ header{
     flex-direction: row;
     align-items: center;
     column-gap: 2rem;
+}
+
+h2{
+    padding-left: 1rem;
+}
+
+.desktop{
+    width: 85%;
+}
+
+.tablet{
+    width: 95%;
+}
+
+.phone{
+    width: 100%;
 }
