@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResponsiveService {
 
-  currentBreakpoint: any= '';
+  currentBreakpoint: string = '';
 
   constructor(private responsive: BreakpointObserver) { }
 
