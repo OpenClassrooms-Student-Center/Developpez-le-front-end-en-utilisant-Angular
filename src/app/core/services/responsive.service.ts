@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,20 @@ export class ResponsiveService {
 
   constructor(private responsive: BreakpointObserver) { }
 
-  observeBreakpoint() {
+  /**
+   * Observe the current breakpoint
+   * @returns Observable<BreakpointState>
+   */
+  observeBreakpoint(): Observable<BreakpointState> {
     const {  Web,  Tablet,  Handset } = Breakpoints;
     return this.responsive.observe([Web,  Tablet,  Handset ])
   }
 
+
+  /**
+   * Checks if the BreakpointObserver matches either Web | Tablet | Handset
+   * @returns "desktop" | "tablet" | "phone" | undefined
+   */
   breakpointChanged() : "desktop" | "tablet" | "phone" | undefined {
     if (this.responsive.isMatched(Breakpoints.Web)) {
       return this.currentBreakpoint = "desktop";
