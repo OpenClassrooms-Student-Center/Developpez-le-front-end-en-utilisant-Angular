@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
+  destroyed = new Subject<void>()
   public olympics$: Observable<Olympic[]> = of([]);
   public olympics: Olympic[] = [];
   public maxParticipations: number = 0;
@@ -93,6 +93,11 @@ export class HomeComponent implements OnInit {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });
   }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete()
+}
 
   /**
    * Navigate to country details page by id
