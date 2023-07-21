@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, delay, of, takeUntil } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
@@ -10,8 +10,9 @@ import { ResponsiveService } from 'src/app/core/services/responsive.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
+  destroyed = new Subject<void>()
   public olympics$: Observable<Olympic[]> = of([]);
   public olympics: Olympic[] = [];
   public country: Olympic | undefined;
@@ -64,6 +65,7 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
     // get the params id
     let id = parseInt(this.route.snapshot.params['id']);
+
     // get all countries 
     this.olympicService.getOlympics().subscribe((olympicData) => {
       if (olympicData.length > 0) {
@@ -123,12 +125,23 @@ export class DetailsComponent implements OnInit {
         }
       }
     })
+
+
+
     /**
      * Observe current window format : "desktop" | "tablet" | "phone" | undefined
      */
     this.responsiveService.observeBreakpoint().subscribe(() => {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });    
+
+
+    
+  }
+
+  ngOnDestroy(): void {
+      this.destroyed.next();
+      this.destroyed.complete()
   }
 
   /**
