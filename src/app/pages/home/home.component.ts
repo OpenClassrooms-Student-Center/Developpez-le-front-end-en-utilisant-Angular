@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, takeUntil } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.olympics$ = this.olympicService.getOlympics$()
 
     // get all countries
-    this.olympicService.getOlympics().subscribe((olympicData) => {
+    this.olympicService.getOlympics().pipe(takeUntil(this.destroyed)).subscribe((olympicData) => {
       this.olympics = olympicData.map((olympic) => {
         return olympic;
       })
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
     /**
      * Observe current window format : "desktop" | "tablet" | "phone" | undefined
      */
-    this.responsiveService.observeBreakpoint().subscribe(() => {
+    this.responsiveService.observeBreakpoint().pipe(takeUntil(this.destroyed)).subscribe(() => {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });
   }

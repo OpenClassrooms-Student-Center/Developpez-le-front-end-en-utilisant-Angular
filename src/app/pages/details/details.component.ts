@@ -67,7 +67,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     let id = parseInt(this.route.snapshot.params['id']);
 
     // get all countries 
-    this.olympicService.getOlympics().subscribe((olympicData) => {
+    this.olympicService.getOlympics().pipe(takeUntil(this.destroyed)).subscribe((olympicData) => {
       if (olympicData.length > 0) {
         // find country by id
         this.country = olympicData.find(country => country.id == id);
@@ -131,7 +131,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     /**
      * Observe current window format : "desktop" | "tablet" | "phone" | undefined
      */
-    this.responsiveService.observeBreakpoint().subscribe(() => {
+    this.responsiveService.observeBreakpoint().pipe(takeUntil(this.destroyed)).subscribe(() => {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });    
 
