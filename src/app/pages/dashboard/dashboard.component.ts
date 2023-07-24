@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
         if (typeof value === 'object') {
           this.ngxChartsData = this.createDataToNgxChartss(value);
           this.numberOfOlympics = this.getNumberOfOlympics(value);
-          this.generateColors(value);
+          this.colorScheme['domain'] = this.getListColor(value);
         }
       })
     ).subscribe();
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
         }
       )
     })
-    return [...chartsData];
+    return chartsData;
   }
 
   /* 
@@ -103,7 +103,20 @@ export class DashboardComponent implements OnInit {
   }
 
   /*
-  * Dynamic generation color to charts Pie for each relaod
+  * Get color from session storage or function generate
+  */
+  getListColor(data: Array<object>) { 
+    let listColor: string | null = sessionStorage.getItem('listColor')
+    
+    if (listColor != null) {
+      return JSON.parse(listColor)
+    } 
+    
+    return this.generateColors(data);
+  }
+
+  /*
+  * Dynamic generation color to charts Pie
   */
   generateColors(data: Array<object>) {
     let domain: Array<string> = [];
@@ -114,6 +127,9 @@ export class DashboardComponent implements OnInit {
           .padStart(6, '0')}` // in case the number is too small to fill 6 hex digits
         )
     });
-    this.colorScheme['domain'] = domain;
+    sessionStorage.setItem(
+      'listColor', JSON.stringify(domain)
+      );
+    return domain;
   }
 }

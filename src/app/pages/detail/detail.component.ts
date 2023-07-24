@@ -86,7 +86,7 @@ export class DetailComponent implements OnInit {
       "series": listYearMedals
     });
     
-    return [...chartsData];
+    return chartsData;
   }
 
   /*
