@@ -14,7 +14,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   public countryDataSubscription!: Subscription;
   public countryCheckSubscription!: Subscription;
-  public lineChartSubscription!:Subscription
+  public responsiveSubscription!:Subscription
   public medals: number | undefined = 0;
   public athletes: number | undefined = 0;
   public loaded: boolean = false;
@@ -61,7 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.view = [this.width, this.height];
   }
 
-  ngOnInit() {
+  ngOnInit() : void {
     // get the params id
     let id = parseInt(this.route.snapshot.params['id']);
 
@@ -127,14 +127,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
     /**
      * Observe current window format : "desktop" | "tablet" | "phone" | undefined
      */
-    this.lineChartSubscription= this.responsiveService.observeBreakpoint().subscribe(() => {
+    this.responsiveSubscription = this.responsiveService.observeBreakpoint().subscribe(() => {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });
   }
 
 
-  ngOnDestroy() {
-    this.lineChartSubscription.unsubscribe();
+  ngOnDestroy() : void {
+    this.responsiveSubscription.unsubscribe();
     this.countryDataSubscription.unsubscribe();
     this.countryCheckSubscription.unsubscribe();
   }
@@ -143,7 +143,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
    * Get width and height values to resize the line chart dimensions (this.view variable)
    * @param event 
    */
-  onResize(event: any) {
+  onResize(event:any) : void {
     this.width = event.target.innerWidth / 1.35;
     this.height = this.width / 1.3;
     if (this.width > 800) this.width = 800

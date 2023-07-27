@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, of, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  destroyed = new Subject<void>()
-  public olympics$: Observable<Olympic[]> = of([]);
+  public responsiveSubscription! : Subscription;
+  public olympicsSubscription! : Subscription;
   public olympics: Olympic[] = [];
   public maxParticipations: number = 0;
   public olympicsResult: Array<{name:string,value:number,extra:{id:number}}> = [];
@@ -47,10 +47,9 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics$()
 
     // get all countries
-    this.olympicService.getOlympics().pipe(takeUntil(this.destroyed)).subscribe((olympicData) => {
+    this.olympicsSubscription = this.olympicService.getOlympics().subscribe((olympicData) => {
       this.olympics = olympicData.map((olympic) => {
         return olympic;
       })
@@ -89,21 +88,21 @@ export class HomeComponent implements OnInit {
     /**
      * Observe current window format : "desktop" | "tablet" | "phone" | undefined
      */
-    this.responsiveService.observeBreakpoint().pipe(takeUntil(this.destroyed)).subscribe(() => {
+    this.responsiveSubscription = this.responsiveService.observeBreakpoint().subscribe(() => {
       this.currentBreakpoint = this.responsiveService.breakpointChanged();
     });
   }
 
   ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete()
-}
+    this.responsiveSubscription.unsubscribe();
+    this.olympicsSubscription.unsubscribe();
+  }
 
   /**
    * Navigate to country details page by id
    * @param e 
    */
-  onMouseClick(e:any) {
+  onMouseClick(e:any) : void {
     const id = e.extra.id;
     this.router.navigateByUrl('/details/'+id)
   }
@@ -112,7 +111,7 @@ export class HomeComponent implements OnInit {
    * Get width and height values to resize the line chart dimensions (this.view variable)
    * @param event 
    */
-  onResize(event: any) {
+  onResize(event: any) : void {
     this.width = event.target.innerWidth / 1.35;
     this.height = this.width/1.3;
     if(this.width>800) this.width=800
