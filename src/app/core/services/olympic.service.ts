@@ -53,6 +53,19 @@ export class OlympicService {
     }))
   }
 
+    /**
+   * Check if the country exists
+   * @param id the id of the country
+   * @returns Observable<Olympic | "not_found" | undefined>
+   */
+    checkCountry(id:number) : Observable<Olympic | "not_found" | undefined> {
+      return this.olympics$.asObservable().pipe(map((countries) => {
+        if(countries.length>0)
+          return countries.find((country) => country.id==id) || "not_found";
+        return undefined;
+      }))
+    }
+
   /**
    * Get errors from loadInitialData method
    * @returns Array of string
