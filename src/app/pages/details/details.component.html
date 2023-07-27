@@ -23,9 +23,20 @@
         </div>
 
         <article>
-            <ngx-charts-line-chart [view]="view" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
-                 [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel" [yScaleMin]="yScaleMin"
-                 [yScaleMax]="yScaleMax" [timeline]="timeline" [autoScale]="autoScale" [results]="countryInfo" (window:resize)="onResize($event)">
+            <ngx-charts-line-chart 
+                [view]="view" 
+                [legend]="legend" 
+                [showXAxisLabel]="showXAxisLabel"
+                [xAxis]="xAxis" 
+                [yAxis]="yAxis" 
+                [xAxisLabel]="xAxisLabel" 
+                [yScaleMin]="yScaleMin"
+                [yScaleMax]="yScaleMax" 
+                [timeline]="timeline" 
+                [autoScale]="autoScale" 
+                [results]="countryInfo" 
+                (window:resize)="onResize($event)"
+                >
             </ngx-charts-line-chart>
         </article>
 
