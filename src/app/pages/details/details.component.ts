@@ -12,7 +12,6 @@ import { ResponsiveService } from 'src/app/core/services/responsive.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
-  public countryDataSubscription!: Subscription;
   public countryCheckSubscription!: Subscription;
   public responsiveSubscription!:Subscription
   public medals: number | undefined = 0;
@@ -73,7 +72,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       }
       // Country found, get data
       else if (res != undefined) {
-       this.countryDataSubscription= this.olympicService.getCountry(id).subscribe((country) => {
+        this.olympicService.getCountry(id).subscribe((country) => {
           this.loaded=true;
           this.country=country;
           // count all country medals
@@ -135,7 +134,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() : void {
     this.responsiveSubscription.unsubscribe();
-    this.countryDataSubscription.unsubscribe();
     this.countryCheckSubscription.unsubscribe();
   }
 
