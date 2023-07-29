@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { Observable, of, pipe, map, count } from 'rxjs';
+import { Observable, of, pipe, map, Subscription } from 'rxjs';
 import { Country, Participation } from 'src/app/core/models/olympic';
 import { ChartsLine, ChartsLineSeries} from 'src/app/core/models/charts';
 
@@ -11,12 +11,13 @@ import { ChartsLine, ChartsLineSeries} from 'src/app/core/models/charts';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
   currentOlympicCountry!: Country
   numberOfEntries!: number
   totalNumberMedals!: number;
   totalNumberOfAthletes!: number;
   countryName!: string;
+  subscription$!: Subscription;
   // ngx-charts options
   ngxChartsData!: Array<ChartsLine>;
   showLabels: boolean = true;
@@ -56,6 +57,10 @@ export class DetailComponent implements OnInit {
       })
     ).subscribe();
     this.getColorCharts()
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 
   /*

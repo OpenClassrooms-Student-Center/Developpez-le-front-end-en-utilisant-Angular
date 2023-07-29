@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, map, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import { Country, Participation } from 'src/app/core/models/olympic';
@@ -11,10 +11,12 @@ import { floor, random } from 'mathjs'
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy{
   numberOfOlympics!: number;
   totalMedalsPerCountry: number | undefined;
-  olympics$!: Observable<Array<Country>>;
+  numberOfCountries$!: Observable<Array<Country>>;
+  subscription$!: Subscription;
+
   // ngx-charts options
   ngxChartsData!: Array<ChartsPie>;
   gradient: boolean = true;
@@ -29,8 +31,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.olympics$ = this.olympicService.getOlympics()
-      this.olympics$.pipe(
+      this.numberOfCountries$ = this.olympicService.getOlympics()
+      this.subscription$ = this.olympicService.getOlympics().pipe(
         map((value) => {
           if (typeof value === 'object') {
             this.ngxChartsData = this.createDataToNgxCharts(value);
@@ -39,6 +41,10 @@ export class DashboardComponent implements OnInit {
           }
         })
     ).subscribe();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 
   /* 
