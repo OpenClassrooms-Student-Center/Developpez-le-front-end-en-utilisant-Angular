@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
-import { Country } from 'src/app/core/models/Country';
-import { Participation } from 'src/app/core/models/Participation';
+import { Country, Participation } from 'src/app/core/models/olympic';
+import { ChartsPie} from 'src/app/core/models/charts';
 import { floor, random } from 'mathjs'
 
 @Component({
@@ -14,14 +14,14 @@ import { floor, random } from 'mathjs'
 export class DashboardComponent implements OnInit {
   numberOfOlympics!: number;
   totalMedalsPerCountry: number | undefined;
-  numberOfCountries!: Observable<Array<object>>;
+  olympics$!: Observable<Array<Country>>;
   // ngx-charts options
-  ngxChartsData!: Array<object>;
+  ngxChartsData!: Array<ChartsPie>;
   gradient: boolean = true;
   showLabels: boolean = true;
   trimLabels: boolean = false;
   tooltipDisabled: boolean = true;
-  colorScheme: Record<string, Array<string>> = {domain: []};
+  colorScheme: {domain: Array<string>} = {domain: []};
 
   constructor(
     private olympicService: OlympicService,
@@ -29,7 +29,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.olympicService.getOlympics().pipe(
+    this.olympics$ = this.olympicService.getOlympics()
+    this.olympics$.pipe(
       map((value) => {
         if (typeof value === 'object') {
           this.ngxChartsData = this.createDataToNgxChartss(value);
@@ -38,14 +39,13 @@ export class DashboardComponent implements OnInit {
         }
       })
     ).subscribe();
-    this.numberOfCountries = this.olympicService.getOlympics();
   }
 
   /* 
   * Create formated object to use it in ngx-charts
   */
-  createDataToNgxChartss(data: []): Object[] {
-    let chartsData: Array<object> = [];
+  createDataToNgxChartss(data: Array<Country>): Array<ChartsPie> {
+    let chartsData: Array<ChartsPie> = [];
     data.find((val: Country) => {
       chartsData.push({
           "extra": val.id,
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   /* 
   * get number of olympics to show in page
   */
-  getNumberOfOlympics(data: []): number {
+  getNumberOfOlympics(data: Array<Country>): number {
     let country: Country = Object.values(data)[0];
     return country != undefined ? 
       country.participations.length : 0 ;
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
   * Used to navigate to page detail when country is clicked on
   * charts, also used to store color to use the same in detail page 
   */
-  onSelectCountry(data: {extra: number}): void {
+  onSelectCountry(data: ChartsPie): void {
     let color: string = ""
     for (let idx in this.ngxChartsData) {
       let dataNgx: { extra?: number } = this.ngxChartsData[idx];
@@ -91,21 +91,21 @@ export class DashboardComponent implements OnInit {
   /*
   * Change name of country on title when hover
   */
-  onActivate(data: {value: {value: number}}): void {
+  onActivate(data: {value: ChartsPie}): void {
     this.totalMedalsPerCountry = data.value.value;
   }
 
   /*
   * Delete name country on title when no element is hovered
   */
-  onDeactivate(data: {extra: number}): void {
+  onDeactivate(data: ChartsPie): void {
     this.totalMedalsPerCountry = undefined;
   }
 
   /*
   * Get color from session storage or function generate
   */
-  getListColor(data: Array<object>) { 
+  getListColor(data: Array<Country>): Array<string> { 
     let listColor: string | null = sessionStorage.getItem('listColor')
     
     if (listColor != null) {
@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit {
   /*
   * Dynamic generation color to charts Pie
   */
-  generateColors(data: Array<object>) {
+  generateColors(data: Array<Country>): Array<string> {
     let domain: Array<string> = [];
     data.forEach(function (value) {
       domain.push(
