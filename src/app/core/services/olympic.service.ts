@@ -1,31 +1,61 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Olympic } from '../models/Olympic';
 
+/**
+ * The OlympicService class retrieves data
+ * and share them between components.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
-
-  loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
+  /**
+   * Return a loading data from Olympic
+   *
+   * @returns The data inside olympic.json's file
+   */
+  public loadInitialData() {
+    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+      map((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
-        // TODO: improve error handling
+        alert('An occured error');
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.olympics$.next([]);
         return caught;
       })
     );
   }
 
-  getOlympics() {
+  /**
+   * Return a list of Olympics
+   *
+   * @returns An Observable about Olympic
+   */
+  public getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
+  }
+
+  /**
+   * Return a list of Olympics by Id
+   *
+   * @param id
+   *
+   * @returns An Observable about Olympic filtered by ib
+   */
+  public getOlympicsById(id: number): Observable<Olympic[]> {
+    return this.olympics$
+      .asObservable()
+      .pipe(
+        map((olympics: Olympic[]) =>
+          olympics.filter((o: Olympic) => o.id === id)
+        )
+      );
   }
 }
