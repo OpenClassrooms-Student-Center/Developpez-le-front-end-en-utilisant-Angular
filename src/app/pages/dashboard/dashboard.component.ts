@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
     this.olympicService.getOlympics().pipe(
       map((value) => {
         if (typeof value === 'object') {
-          this.ngxChartsData = this.createDataToNgxChartss(value);
+          this.ngxChartsData = this.createDataToNgxCharts(value);
           this.numberOfOlympics = this.getNumberOfOlympics(value);
           this.colorScheme['domain'] = this.getListColor(value);
         }
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   /* 
   * Create formated object to use it in ngx-charts
   */
-  createDataToNgxChartss(data: []): Object[] {
+  createDataToNgxCharts(data: []): Object[] {
     let chartsData: Array<object> = [];
     data.find((val: Country) => {
       chartsData.push({
