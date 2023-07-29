@@ -48,9 +48,9 @@ export class DashboardComponent implements OnInit {
     let chartsData: Array<ChartsPie> = [];
     data.find((val: Country) => {
       chartsData.push({
-          "extra": val.id,
-          "name": val.country,
-          "value": val.participations.reduce(
+          extra: val.id,
+          name: val.country,
+          value: val.participations.reduce(
             (sum: number, val: Participation) => {
               sum += val.medalsCount;
               return sum;

@@ -5,6 +5,11 @@ export interface ChartsPie {
 }
 
 export interface ChartsLine {
-    "name": string,
-    "series": Array<number>
+    name: string,
+    series: Array<ChartsLineSeries>
+}
+
+export interface ChartsLineSeries {
+    name: string,
+    value: number
 }
