@@ -27,7 +27,7 @@ export class DetailComponent implements OnInit {
   showXAxisLabel: boolean = true;
   xAxisLabel: string = 'Dates';
   timeline: boolean = false;
-  colorScheme: {domain: Array<string>} = { domain: ['#5AA454']};
+  colorScheme: {domain: Array<string>} = { domain: []};
 
   constructor(
     private olympicService: OlympicService,
@@ -61,7 +61,7 @@ export class DetailComponent implements OnInit {
   /*
   * Get the data of a slected olympic country
   */
-  getOlympicById(data: []): void {
+  getOlympicById(data: Array<Country>): void {
     let selectedCountry: string = this.route.snapshot.params['id'];    
     data.map((val: Country) => {
          val.id == parseInt(selectedCountry) 
