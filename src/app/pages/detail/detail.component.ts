@@ -37,7 +37,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.countryName = "Data doesn't exist"
-    this.olympicService.getOlympics().pipe(
+    this.subscription$ = this.olympicService.getOlympics().pipe(
       map((value) => {
         if (typeof value === 'object') {
           this.getOlympicById(value);
@@ -60,7 +60,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+      this.subscription$.unsubscribe();
   }
 
   /*
