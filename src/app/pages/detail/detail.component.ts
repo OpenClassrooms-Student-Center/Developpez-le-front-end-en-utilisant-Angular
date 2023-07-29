@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Observable, of, pipe, map, count } from 'rxjs';
-import { Country } from 'src/app/core/models/Country';
-import { Participation } from 'src/app/core/models/Participation';
+import { Country, Participation } from 'src/app/core/models/olympic';
+import { ChartsLine, ChartsLineSeries} from 'src/app/core/models/charts';
+
 
 @Component({
   selector: 'app-detail',
@@ -17,7 +18,7 @@ export class DetailComponent implements OnInit {
   totalNumberOfAthletes!: number;
   countryName!: string;
   // ngx-charts options
-  ngxChartsData!: Array<object>;
+  ngxChartsData!: Array<ChartsLine>;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -26,7 +27,7 @@ export class DetailComponent implements OnInit {
   showXAxisLabel: boolean = true;
   xAxisLabel: string = 'Dates';
   timeline: boolean = false;
-  colorScheme = { domain: ['#5AA454']};
+  colorScheme: {domain: Array<string>} = { domain: ['#5AA454']};
 
   constructor(
     private olympicService: OlympicService,
@@ -72,9 +73,9 @@ export class DetailComponent implements OnInit {
   /* 
   * Create formated object to use it in ngx-charts
   */
-  createDataToNgxCharts(olympic: Country) {
-    let chartsData: Array<object> = [];
-    let listYearMedals: Array<object>= []; 
+  createDataToNgxCharts(olympic: Country): Array<ChartsLine>  {
+    let chartsData: Array<ChartsLine> = [];
+    let listYearMedals: Array<ChartsLineSeries>= []; 
     olympic.participations.map((val: Participation) => { 
       return listYearMedals.push({
         name: String(val.year),
@@ -82,8 +83,8 @@ export class DetailComponent implements OnInit {
       })
     });
     chartsData.push({
-      "name": olympic.country,
-      "series": listYearMedals
+      name: olympic.country,
+      series: listYearMedals
     });
     
     return chartsData;
@@ -115,7 +116,7 @@ export class DetailComponent implements OnInit {
   * navigation to go back dashboard
   */
   goBackDashbord(): void {
-    this.router.navigateByUrl(`dashboard`);
+    this.router.navigateByUrl('dashboard');
   }
 
   /*
