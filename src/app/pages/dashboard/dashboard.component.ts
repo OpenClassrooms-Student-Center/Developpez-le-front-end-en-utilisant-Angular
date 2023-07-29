@@ -31,13 +31,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
       this.olympics$ = this.olympicService.getOlympics()
       this.olympics$.pipe(
-      map((value) => {
-        if (typeof value === 'object') {
-          this.ngxChartsData = this.createDataToNgxCharts(value);
-          this.numberOfOlympics = this.getNumberOfOlympics(value);
-          this.colorScheme['domain'] = this.getListColor(value);
-        }
-      })
+        map((value) => {
+          if (typeof value === 'object') {
+            this.ngxChartsData = this.createDataToNgxCharts(value);
+            this.numberOfOlympics = this.getNumberOfOlympics(value);
+            this.colorScheme.domain = this.getListColor(value);
+          }
+        })
     ).subscribe();
   }
 
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
     for (let idx in this.ngxChartsData) {
       let dataNgx: { extra?: number } = this.ngxChartsData[idx];
       if (dataNgx.extra == data.extra) {
-        color = this.colorScheme['domain'][idx];
+        color = this.colorScheme.domain[idx];
       }
     }
     color !== "" 
