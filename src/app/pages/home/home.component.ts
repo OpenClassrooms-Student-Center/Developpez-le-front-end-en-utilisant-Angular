@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Router } from '@angular/router';
+import { PieSlice } from 'src/app/core/models/PieSlice';
 
 @Component({
   selector: 'app-home',
@@ -102,8 +103,8 @@ export class HomeComponent implements OnInit {
    * Navigate to country details page by id
    * @param e 
    */
-  onMouseClick(e:any) : void {
-    const id = e.extra.id;
+  onMouseClick(e:PieSlice) : void {
+    const id = e.extra.id;    
     this.router.navigateByUrl('/details/'+id)
   }
 
@@ -113,6 +114,7 @@ export class HomeComponent implements OnInit {
    */
   onResize(event: any) : void {
     this.width = event.target.innerWidth / 1.35;
+    
     this.height = this.width/1.3;
     if(this.width>800) this.width=800
     if(this.height>600) this.height=600
