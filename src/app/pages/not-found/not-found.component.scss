@@ -1,8 +1,13 @@
 .center {
-  width: 100vw;
+  //width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: system-ui;
+}
+
+h2{
+  text-align: center;
 }

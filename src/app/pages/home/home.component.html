@@ -1,3 +1,49 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<main class="home {{currentBreakpoint}}_home" >
+    
+    <div *ngIf="!loaded" class="loader"></div>
+
+    <div *ngIf="olympics.length>0">
+        <section class="home__dashboard {{currentBreakpoint}}_dashboard">
+            <div class="home__dashboard__details">
+                <article class="home__dashboard__details__medals">
+                    <p class="home__dashboard__details__medals__title">Medals per Country</p>
+                </article>
+                <div class="home__dashboard__details__data {{currentBreakpoint}}_data">
+                    <article class="home__dashboard__details__data__text">
+                        <p class="home__dashboard__details__data__text__title">Number of JOs</p>
+                        <strong class="home__dashboard__details__data__text__value"> {{ maxParticipations }} </strong>
+                    </article>
+                    <article class="home__dashboard__details__data__text">
+                        <p class="home__dashboard__details__data__text__title">Number of countries</p>
+                        <strong class="home__dashboard__details__data__text__value"> {{ olympics.length }} </strong>
+                    </article>
+                </div>
+            </div>
+            <article class="home__dashboard__pie">
+                <ngx-charts-pie-chart 
+                    [results]="olympicsResult"
+                    [gradient]="gradient"
+                    [legend]="showLegend"
+                    [maxLabelLength]="10"
+                    [labels]="showLabels"
+                    [trimLabels]="trimLabels"
+                    [doughnut]="isDoughnut"
+                    [view]="view"
+                    (select)="onMouseClick($event)"
+                    (window:resize)="onResize($event)"
+                >
+                <ng-template class="home__dashboard__pie__tooltip"  #tooltipTemplate let-model="model">
+                    <p class="home__dashboard__pie__tooltip__name">
+                        {{model.name}}
+                   </p> 
+                    <pre class="home__dashboard__pie__tooltip__pre"> 
+                        <img class="home__dashboard__pie__tooltip__pre__icon-img" src="../../../assets/icons/medal-icon.png" alt="medal-icon">
+                        <p class="home__dashboard__pie__tooltip__pre__value">{{model.value}}</p>  
+                    </pre>
+                </ng-template>
+            </ngx-charts-pie-chart>
+            </article>
+        </section>
+    </div>
+
+</main>

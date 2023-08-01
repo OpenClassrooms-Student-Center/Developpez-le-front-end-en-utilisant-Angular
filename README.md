@@ -1,8 +1,25 @@
-# OlympicGamesStarter
+# Telesport Olympic Games
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
 
 Don't forget to install your node_modules before starting (`npm install`).
+
+## How to install this project ?
+
+### Pre-requisites :
+
+Install on your machine : 
+[Node.JS](https://nodejs.org/en) 
+[Git](https://git-scm.com/)
+
+### Cloning the project : 
+
+Place yourself in your working directory, run the following command :
+
+`git clone https://github.com/rayanadir/Developpez-le-front-end-en-utilisant-Angular.git`
+
+The project will appear in your directory
+
 
 ## Development server
 
@@ -12,18 +29,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+## Features : 
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+### Home page : 
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+Home page shows a pie chart representing countries by olympics medals won over the three lasts editions of olympics games. A tooltip appears when you hover a country showing its total medals won. Click on a country part to get redirected to the details page.
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+### Details page : 
 
-You're now ready to implement the requested features.
-
-Good luck!
+Details page shows a line chart representing the selected country by medals won for every editions of olympic games. Additional data as number of entires (participations), total number medals and total number of athletes. Back navigation feature to home page.

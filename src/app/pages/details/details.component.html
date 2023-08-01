@@ -1,0 +1,44 @@
+<main class="country">
+    <div *ngIf="!loaded" class="loader"></div>
+    <section *ngIf="country" class="country__detail">
+        <div class="country__detail__info">
+            <article class="country__detail__info__title">
+                <p class="country__detail__info__title__name"> {{country.country}} </p>
+            </article>
+            <div class="country__detail__info__numbers {{currentBreakpoint}}_numbers">
+                <article class="country__detail__info__numbers__text">
+                    <p class="country__detail__info__numbers__text__title">Number of entries</p>
+                    <strong class="country__detail__info__numbers__text__value"> {{country.participations.length}}
+                    </strong>
+                </article>
+                <article class="country__detail__info__numbers__text">
+                    <p class="country__detail__info__numbers__text__title">Total number medals</p>
+                    <strong class="country__detail__info__numbers__text__value"> {{medals}} </strong>
+                </article>
+                <article class="country__detail__info__numbers__text">
+                    <p class="country__detail__info__numbers__text__title">Total number of athletes</p>
+                    <strong class="country__detail__info__numbers__text__value"> {{athletes}} </strong>
+                </article>
+            </div>
+        </div>
+
+        <article>
+            <ngx-charts-line-chart 
+                [view]="view" 
+                [legend]="legend" 
+                [showXAxisLabel]="showXAxisLabel"
+                [xAxis]="xAxis" 
+                [yAxis]="yAxis" 
+                [xAxisLabel]="xAxisLabel" 
+                [yScaleMin]="yScaleMin"
+                [yScaleMax]="yScaleMax" 
+                [timeline]="timeline" 
+                [autoScale]="autoScale" 
+                [results]="countryInfo" 
+                (window:resize)="onResize($event)"
+                >
+            </ngx-charts-line-chart>
+        </article>
+
+    </section>
+</main>
