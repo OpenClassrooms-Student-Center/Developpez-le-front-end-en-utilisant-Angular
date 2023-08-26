@@ -1,3 +1,24 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="main">
+  <div class="titleMedalPerCounty">
+    <h2>Medals per Country</h2>
+  </div>
+  <div class="informationJo">
+    <div class="informationFrame">
+      <p>Number of JOs <span>10</span></p>
+    </div>
+    <div class="informationFrame">
+      <p>Number of Countries <span>1000</span></p>
+    </div>
+  </div>
+  <ngx-charts-pie-chart
+    [ngStyle]="{ fontSize: '200px' }"
+    (window:resize)="onResize($event)"
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="tabChartOlympics"
+    [labels]="showLabels"
+    [labelFormatting]="myLabelFormatter"
+    (select)="onSelect($event)"
+  >
+  </ngx-charts-pie-chart>
+</div>
