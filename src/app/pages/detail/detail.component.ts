@@ -20,21 +20,19 @@ export class DetailComponent implements OnInit {
    // options
    legend: boolean = true;
    showLabels: boolean = true;
-  // animations: boolean = false;
+   animations: boolean = false;
    xAxis: boolean = true;
    yAxis: boolean = true;
    showYAxisLabel: boolean = true;
    showXAxisLabel: boolean = true;
    xAxisLabel: string = 'Dates';
    yAxisLabel: string = 'Medals';
-   timeline: boolean = true;
- 
+   timeline: boolean = false;
    colorScheme = {
      domain: this.colorService.getNbColorRandom(1)
    };
   tabDataOlympicParticipations : Array<{name: string, series: Array<{name: string, value : number}>}> = []
-  
-  view: any[] = [700, 300];
+  view: number[] = [700, 300];
 
   constructor(private router: Router,
       private route: ActivatedRoute,
@@ -54,10 +52,10 @@ export class DetailComponent implements OnInit {
 
   getdataOlympics() {
     this.olympicService.getDataOlympicsCountry(this.country).pipe(
-      take(1),
+      take(2),
       tap(
         (dataCountry) => {
-          dataCountry.forEach((participation : Participation) =>{
+          dataCountry && dataCountry.forEach((participation : Participation) =>{
                 this.numOfEntries++
                 this.numOfMedals+= participation.medalsCount
                 this.numOfAthletes += participation.athleteCount
@@ -76,8 +74,10 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  onResize(event : any): void {
-    this.view = [event.target.innerWidth , 400 ]
+  onResize(event : Event): void {
+    const target = event.target as Window
+    const width = target.innerWidth
+    this.view = [width , 400 ]
   }
 
   onClick(){

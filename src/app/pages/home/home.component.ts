@@ -13,16 +13,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+  public olympics$: Observable<OlympicCountry[]> = of([]);
   numberOfJO: number = 0;
-  view: any = [700, 400];
+  view: number[] = [700, 400];
   tabChartOlympics! : object[]
-  gradient!: boolean;
-  showLegend!: boolean;
-  showLabels!: boolean;
-  isDoughnut!: boolean;
-  legendPosition!: LegendPosition;
+  gradient: boolean = true;
+  showLegend: boolean = false;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+  legendPosition: LegendPosition = LegendPosition.Right;
   colorScheme! : Color;
+          
 
   constructor(private olympicService: OlympicService,
      private colorService : ColorService,
@@ -48,34 +49,25 @@ export class HomeComponent implements OnInit {
               value : nb,
             }
             tabObjectOlympics.push(olympicsChart)
-            
           })
           this.tabChartOlympics = tabObjectOlympics;
+          this.colorScheme = {
+            domain: this.colorService.getNbColorRandom(this.tabChartOlympics?.length)
+          };
         }
-        // Pie Configuration
-        this.gradient = true;
-        this.showLegend = false;
-        this.showLabels = true;
-        this.isDoughnut = false;
-        this.legendPosition = LegendPosition.Right;
-        this.colorScheme = {
-          domain: this.colorService.getNbColorRandom(this.tabChartOlympics?.length)
-        };
       })
-      ).subscribe()
-      
-        
+      ).subscribe()  
   }
-
-  
-  onSelect(data : any): void {
+  onSelect(data : {name: string} ): void {
     this.router.navigateByUrl(`/detail/${data.name}`)
   }
 
-  onResize(event : any): void {
-    this.view = [event.target.innerWidth , 400 ]
+  onResize(event : Event): void {
+    const target = event.target as Window
+    const width = target.innerWidth
+    this.view = [width , 400 ]
   }
-  public myLabelFormatter(label: string ) {
+  public myLabelFormatter(label: string ) : string {
     return label.toUpperCase();
  }
 }

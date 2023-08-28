@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map, tap, take, filter } from 'rxjs/operators';
+import { catchError, map, tap} from 'rxjs/operators';
 import { OlympicCountry } from '../models/Olympic';
 import { Participation } from '../models/Participation';
 import { ErrorService } from './error.service';
@@ -11,7 +11,7 @@ import { ErrorService } from './error.service';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympics$ = new BehaviorSubject<OlympicCountry[]>([]);
 
   constructor(private http: HttpClient, private errorService: ErrorService) {}
 
@@ -22,7 +22,7 @@ export class OlympicService {
         // TODO: improve error handling
         
         // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.olympics$.next([]);
         return throwError(() =>  this.errorService.setMessageError())
        // return caught;
       })
@@ -34,13 +34,13 @@ export class OlympicService {
   }
 
   getDataOlympicsCountry(country : string): Observable<Participation[]> {
-    return this.http.get<OlympicCountry[]>(this.olympicUrl).pipe(
-      take(1),
-      map((tabOlympicCountry) => tabOlympicCountry.filter(olympicCountry => olympicCountry.country === country)),
-      map(tabOlympicCountry => tabOlympicCountry[0].participations),
+    return this.getOlympics().pipe(
+      map((tabOlympicCountry : OlympicCountry[]) => tabOlympicCountry && tabOlympicCountry.filter(olympicCountry => olympicCountry.country === country)),
+      map((tabOlympicCountry : OlympicCountry[]) => tabOlympicCountry && tabOlympicCountry[0].participations),
       catchError((error) => {
         return throwError(() =>  error.message)
       }))
+    
   }
 
   getNumberOfJO(tabOlympicCountry : OlympicCountry[]): number {

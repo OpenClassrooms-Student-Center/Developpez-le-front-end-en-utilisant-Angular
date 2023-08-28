@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="tabChartOlympics">
   <div class="titleMedalPerCounty">
     <h2>Medals per Country</h2>
   </div>
@@ -27,3 +27,4 @@
   >
   </ngx-charts-pie-chart>
 </div>
+<div *ngIf="!tabChartOlympics">Loading ...</div>

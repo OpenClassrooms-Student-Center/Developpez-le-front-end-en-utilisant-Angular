@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'detail/:name',
-    component: DetailComponent,
+    loadChildren : () => import('./pages/detail/detail.module').then(m => m.DetailModule)
   },
   {
     path: '',

@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="tabDataOlympicParticipations">
   <div class="titleMedalPerCounty">
     <h2>{{ country }}</h2>
   </div>
@@ -30,10 +30,12 @@
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
+    [animations]="animations"
     [results]="tabDataOlympicParticipations"
     (window:resize)="onResize($event)"
   >
   </ngx-charts-line-chart>
+
   <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <p
     (click)="onClick()"
@@ -47,3 +49,4 @@
     &larr; Back
   </p>
 </div>
+<div *ngIf="!tabDataOlympicParticipations">Loading ...</div>
