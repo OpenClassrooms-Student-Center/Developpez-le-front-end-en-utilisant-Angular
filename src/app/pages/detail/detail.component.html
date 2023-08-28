@@ -2,7 +2,7 @@
   <div class="titleMedalPerCounty">
     <h2>{{ country }}</h2>
   </div>
-  <div class="informationJo">
+  <div *ngIf="!errorMessage" class="informationJo">
     <div class="informationFrame">
       <p>
         Number of entries <span>{{ numOfEntries }}</span>
@@ -20,6 +20,7 @@
     </div>
   </div>
   <ngx-charts-line-chart
+    *ngIf="!errorMessage"
     [view]="view"
     [scheme]="colorScheme"
     [showXAxisLabel]="showXAxisLabel"
@@ -33,6 +34,7 @@
     (window:resize)="onResize($event)"
   >
   </ngx-charts-line-chart>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <p
     (click)="onClick()"
     [ngStyle]="{

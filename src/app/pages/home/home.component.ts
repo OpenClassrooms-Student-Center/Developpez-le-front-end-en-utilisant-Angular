@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   public olympics$: Observable<any> = of(null);
+  numberOfJO: number = 0;
   view: any = [700, 400];
   tabChartOlympics! : object[]
   gradient!: boolean;
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
       take(2),
       tap(tabOlympics => {
         if (tabOlympics){
+          this.numberOfJO = this.olympicService.getNumberOfJO(tabOlympics)
           let tabObjectOlympics : Object[] = []
           tabOlympics.forEach((olympicCountry : OlympicCountry) => {
             let nb = 0;

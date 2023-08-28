@@ -4,10 +4,16 @@
   </div>
   <div class="informationJo">
     <div class="informationFrame">
-      <p>Number of JOs <span>10</span></p>
+      <p>
+        Number of JOs
+        <span>{{ numberOfJO }}</span>
+      </p>
     </div>
     <div class="informationFrame">
-      <p>Number of Countries <span>1000</span></p>
+      <p>
+        Number of Countries
+        <span *ngIf="tabChartOlympics">{{ tabChartOlympics.length }}</span>
+      </p>
     </div>
   </div>
   <ngx-charts-pie-chart

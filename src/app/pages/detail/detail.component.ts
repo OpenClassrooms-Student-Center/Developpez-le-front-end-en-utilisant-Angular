@@ -12,7 +12,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  
+  errorMessage! : string;
   country! : string;
   numOfEntries : number = 0
   numOfMedals: number = 0;
@@ -20,7 +20,7 @@ export class DetailComponent implements OnInit {
    // options
    legend: boolean = true;
    showLabels: boolean = true;
-   animations: boolean = true;
+  // animations: boolean = false;
    xAxis: boolean = true;
    yAxis: boolean = true;
    showYAxisLabel: boolean = true;
@@ -69,7 +69,11 @@ export class DetailComponent implements OnInit {
               this.tabDataOlympicParticipations = [...this.tabDataOlympicParticipations]       
         }
       )
-    ).subscribe();
+    ).subscribe({
+      error : () => {
+        this.errorMessage = "An error occurred please try again"
+      }
+    });
   }
 
   onResize(event : any): void {
