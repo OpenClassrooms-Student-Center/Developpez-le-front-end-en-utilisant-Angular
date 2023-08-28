@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map, tap, take, filter } from 'rxjs/operators';
 import { OlympicCountry } from '../models/Olympic';
+import { Participation } from '../models/Participation';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,22 +13,31 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<any>(undefined);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private errorService: ErrorService) {}
 
   loadInitialData() {
     return this.http.get<OlympicCountry>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
-        console.error(error);
+        
         // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next(null);
-        return caught;
+        return throwError(() =>  this.errorService.setMessageError())
+       // return caught;
       })
     );
   }
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getDataOlympicsCountry(country : string): Observable<Participation[]> {
+    return this.http.get<OlympicCountry[]>(this.olympicUrl).pipe(
+      take(1),
+      map((tabOlympicCountry) => tabOlympicCountry.filter(olympicCountry => olympicCountry.country === country)),
+      map(tabOlympicCountry => tabOlympicCountry[0].participations)
+    )
   }
 }

@@ -1,0 +1,16 @@
+.center {
+    & h2 {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        display: inline-block;
+    }
+
+    & p {
+        padding: 20px;
+    }
+
+    & a {
+        padding: 20px;
+    }
+}

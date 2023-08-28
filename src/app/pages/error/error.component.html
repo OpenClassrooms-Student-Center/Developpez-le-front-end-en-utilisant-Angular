@@ -1,0 +1,9 @@
+<div class="center">
+  <h2 *ngIf="errorMessage">{{ errorMessage }}</h2>
+  <h2 *ngIf="!errorMessage">An error has occurred</h2>
+  <p>
+    Please go back, refresh the page and if it still doesn't work, come back in
+    a few minutes
+  </p>
+  <a routerLink="/">Go back</a>
+</div>

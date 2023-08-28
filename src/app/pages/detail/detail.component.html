@@ -1,0 +1,47 @@
+<div class="main">
+  <div class="titleMedalPerCounty">
+    <h2>{{ country }}</h2>
+  </div>
+  <div class="informationJo">
+    <div class="informationFrame">
+      <p>
+        Number of entries <span>{{ numOfEntries }}</span>
+      </p>
+    </div>
+    <div class="informationFrame">
+      <p>
+        Total number medals <span>{{ numOfMedals }}</span>
+      </p>
+    </div>
+    <div class="informationFrame">
+      <p>
+        Total number of athletes<span>{{ numOfAthletes }}</span>
+      </p>
+    </div>
+  </div>
+  <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [timeline]="timeline"
+    [results]="tabDataOlympicParticipations"
+    (window:resize)="onResize($event)"
+  >
+  </ngx-charts-line-chart>
+  <p
+    (click)="onClick()"
+    [ngStyle]="{
+      cursor: 'pointer',
+      fontSize: '33px',
+      color: '#06818f',
+      fontWeight: 'bold'
+    }"
+  >
+    &larr; Back
+  </p>
+</div>

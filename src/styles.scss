@@ -5,3 +5,58 @@
     margin: 0;
     padding: 0;
 }
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .titleMedalPerCounty {
+        background-color: #06818f;
+        color: white;
+        width: 210px;
+        text-align: center;
+        border-radius: 20px;
+        height: 44px;
+        padding: 0 10px;
+        margin: 40px 5px;
+
+        h2 {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .informationJo {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-right: 10px;
+
+
+
+        .informationFrame {
+
+            border: 2px solid #06818f;
+            border-radius: 10px;
+            height: 50px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            margin: 20px;
+
+
+            & p span {
+                display: block;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: bold;
+                text-align: center;
+
+            }
+        }
+    }
+}

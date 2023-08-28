@@ -28,7 +28,9 @@ export class HomeComponent implements OnInit {
      private router: Router) {}
 
   ngOnInit(): void {
+    this.view = [window.innerWidth, 400]
     this.olympics$ = this.olympicService.getOlympics();
+    
     this.olympics$.pipe(
       take(2),
       tap(tabOlympics => {
@@ -65,7 +67,7 @@ export class HomeComponent implements OnInit {
 
   
   onSelect(data : any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data.name)));
+    this.router.navigateByUrl(`/detail/${data.name}`)
   }
 
   onResize(event : any): void {
