@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { take, tap  } from 'rxjs/operators';;
-import { Participation } from 'src/app/core/models/Participation';
-import { ColorService } from 'src/app/core/services/colors.service';
-import { OlympicService } from 'src/app/core/services/olympic.service';
+import { Participation } from '../../../shared/models/participation.model'
+import { ColorService } from 'src/app/shared/services/colors.service';
+import { OlympicService } from 'src/app/shared/services/olympic.service';
 
 @Component({
   selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  templateUrl: './detail.component.html'
 })
 export class DetailComponent implements OnInit {
   errorMessage! : string;

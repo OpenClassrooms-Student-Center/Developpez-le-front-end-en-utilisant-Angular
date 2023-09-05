@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, map, of, take, tap } from 'rxjs';
-import { OlympicService } from 'src/app/core/services/olympic.service';
+import { OlympicService } from 'src/app/shared/services/olympic.service';
 import { LegendPosition} from '@swimlane/ngx-charts';
-import {Color} from 'src/app/core/models/Color'
-import { OlympicCountry } from 'src/app/core/models/Olympic';
-import { ColorService } from 'src/app/core/services/colors.service';
+import { Color } from '../../../shared/models/color.model';
+import { ColorService } from 'src/app/shared/services/colors.service';
 import { Router } from '@angular/router';
+import { OlympicCountry } from 'src/app/shared/models/olympic-country.model';
+
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   public olympics$: Observable<OlympicCountry[]> = of([]);

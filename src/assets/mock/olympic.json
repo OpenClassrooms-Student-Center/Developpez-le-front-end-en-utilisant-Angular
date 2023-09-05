@@ -3,7 +3,7 @@
     "id": 1,
     "country": "Italy",
     "participations": [
-       {
+      {
         "id": 1,
         "year": 2012,
         "city": "Londres",

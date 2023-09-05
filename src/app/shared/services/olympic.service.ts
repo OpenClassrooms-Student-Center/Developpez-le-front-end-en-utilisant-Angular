@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap} from 'rxjs/operators';
-import { OlympicCountry } from '../models/Olympic';
-import { Participation } from '../models/Participation';
+import { OlympicCountry } from '../models/olympic-country.model';
 import { ErrorService } from './error.service';
+import { Participation } from '../models/participation.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +20,12 @@ export class OlympicService {
     return this.http.get<OlympicCountry[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
-        // TODO: improve error handling
+        console.log(error);
         
         // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next([]);
         return throwError(() =>  this.errorService.setMessageError())
-       // return caught;
+
       })
     );
   }
