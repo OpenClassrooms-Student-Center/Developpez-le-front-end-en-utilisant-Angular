@@ -2,7 +2,10 @@
   <div class="titleMedalPerCounty">
     <h2>{{ country }}</h2>
   </div>
-  <div *ngIf="!errorMessage" class="informationJo">
+  <ng-template #error>
+    <p>{{ errorMessage }}</p>
+  </ng-template>
+  <div class="informationJo" *ngIf="!errorMessage; else error">
     <div class="informationFrame">
       <p>
         Number of entries <span>{{ numOfEntries }}</span>
@@ -18,25 +21,22 @@
         Total number of athletes<span>{{ numOfAthletes }}</span>
       </p>
     </div>
+    <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [animations]="animations"
+      [results]="tabDataOlympicParticipations"
+      (window:resize)="onResize($event)"
+    >
+    </ngx-charts-line-chart>
   </div>
-  <ngx-charts-line-chart
-    *ngIf="!errorMessage"
-    [view]="view"
-    [scheme]="colorScheme"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [timeline]="timeline"
-    [animations]="animations"
-    [results]="tabDataOlympicParticipations"
-    (window:resize)="onResize($event)"
-  >
-  </ngx-charts-line-chart>
-
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
   <p
     (click)="onClick()"
     [ngStyle]="{
