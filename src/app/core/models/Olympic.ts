@@ -1,7 +1,9 @@
+import {Participation} from "./Participation";
+
 export class Olympic {
   constructor(
-    id: number,
-    country: string,
-    participations: [],
+    public id: number,
+    public country: string,
+    public participations: Participation[],
   ) {}
 }
