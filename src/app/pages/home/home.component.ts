@@ -9,7 +9,7 @@ import {Olympic} from "../../core/models/Olympic";
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<Olympic> = of();
+  public olympics$: Observable<any> = of(null);
   public olympicsData: Olympic[] = [];
   public numberOfCountries: number = 0;
   public numberOfJOs: number = 0;
@@ -27,19 +27,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe(
-      data => this.olympicsData.push(data),
+
+
+    this.olympics$.subscribe((olympics) => {
+        for (let country of olympics) {
+          let tmp = new Olympic(country["id"], country["country"], country["participations"]);
+          this.olympicsData.push(tmp);
+        }
+        console.log(this.olympicsData[0]);
+        this.numberOfCountries = this.olympicsData.length;
+      }
     );
-    console.log(this.olympicsData);
-    for (let country of this.olympicsData) {
-      console.log(country.id);
+
+
+/*    for (let country of this.olympicsData) {
       let countryMedals = 0;
       let countryName = country.country;
       for (let jo of country.participations) {
         countryMedals += jo.medalsCount;
       }
       this.dataByCountry.push({name: countryName, value: countryMedals});
-    }
-    console.log(this.dataByCountry);
+    }*/
   }
 }
