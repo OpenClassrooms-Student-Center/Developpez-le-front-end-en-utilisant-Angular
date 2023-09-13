@@ -9,44 +9,55 @@ import {Olympic} from "../../core/models/Olympic";
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+  public olympics$: Observable<Olympic[]> = of();
   public olympicsData: Olympic[] = [];
   public numberOfCountries: number = 0;
   public numberOfJOs: number = 0;
   public dataByCountry: { name: string, value: number }[] = [];
-  data = [
-    {name: "Mobiles", value: 105000},
-    {name: "Laptop", value: 55000},
-    {name: "AC", value: 15000},
-    {name: "Headset", value: 150000},
-    {name: "Fridge", value: 20000}
-  ];
+  public finalData: any[] = [];
 
   constructor(private olympicService: OlympicService) {
   }
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
+    this.getOlympicsData();
+  }
 
-
-    this.olympics$.subscribe((olympics) => {
-        for (let country of olympics) {
-          let tmp = new Olympic(country["id"], country["country"], country["participations"]);
-          this.olympicsData.push(tmp);
+  public getOlympicsData(): void {
+    const subscription = this.olympics$.subscribe({
+      next: value => {
+        if (value !== null) {
+          this.finalData = value;
+          for (let country of this.finalData) {
+            this.olympicsData.push(new Olympic(country["id"], country["country"], country["participations"]));
+          }
+          this.numberOfCountries = this.olympicsData.length;
+          this.getDataOfCountry();
+          this.getNumberOfJOs();
         }
-        console.log(this.olympicsData[0]);
-        this.numberOfCountries = this.olympicsData.length;
+      },
+      error: err => console.error(err),
+      complete: () => {
+        subscription.unsubscribe();
       }
-    );
+    });
+  }
 
+  public getNumberOfJOs(): void {
+    for (let country of this.olympicsData) {
+      this.numberOfJOs = country.participations.length;
+    }
+  }
 
-/*    for (let country of this.olympicsData) {
+  public getDataOfCountry(): any {
+    this.dataByCountry = [];
+    for (let country of this.olympicsData) {
       let countryMedals = 0;
-      let countryName = country.country;
       for (let jo of country.participations) {
         countryMedals += jo.medalsCount;
       }
-      this.dataByCountry.push({name: countryName, value: countryMedals});
-    }*/
+      this.dataByCountry.push({name: country.country, value: countryMedals});
+    }
   }
 }
