@@ -15,12 +15,16 @@
   width: 25em;
   height: 25em;
   display: block;
-  margin: 0 auto 0 21em;
+  margin: 0 auto 0;
 }
 
 .chart_content {
   font-family: "Akira Expanded", sans-serif;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {

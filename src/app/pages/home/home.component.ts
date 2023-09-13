@@ -70,7 +70,6 @@ export class HomeComponent implements OnInit {
   }
 
   onSelect(event: any) {
-    console.log(event);
     this.router.navigate(['/country', event],
     );
   }
