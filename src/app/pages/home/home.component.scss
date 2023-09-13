@@ -12,24 +12,21 @@
 }
 
 .chart {
-  width: 25em;
-  height: 25em;
-  display: block;
-  margin: 0 auto 0;
+  width: 35vw;
+  height: 35vw;
+  display: flex;
 }
 
 .chart_content {
   font-family: "Akira Expanded", sans-serif;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 }
 
 h1 {
-  width: 8.7em;
-  height: 1.3em;
+  width: 19vw;
+  height: 2.5vw;
+  font-size: 2vw;
   border-radius: 10px;
   background: #04848c;
   color: #fff;
@@ -47,8 +44,8 @@ h1 {
 .informations {
   border: 2px solid #04848c;
   border-radius: 8px;
-  width: 10em;
-  height: 3.7em;
+  width: 9vw;
+  height: 3.5vw;
   font-family: "Corbel", sans-serif;
   margin: 1.8em;
   display: flex;
@@ -58,11 +55,12 @@ h1 {
 
 .informations label {
   color: dimgrey;
-  font-size: 1.1em;
+  font-size: 1vw;
 }
 
 .informations p {
   font-weight: 900;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9vw;
 }
 
