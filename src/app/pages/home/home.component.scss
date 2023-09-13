@@ -64,3 +64,76 @@ h1 {
   font-size: 0.9vw;
 }
 
+@media screen and (max-width: 600px) {
+  .chart {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .chart_content {
+    position: relative;
+  }
+  h1 {
+    width: 50vw;
+    height: 7vw;
+    font-size: 5vw;
+    border-radius: 10px;
+    background: #04848c;
+    color: #fff;
+    font-family: "Corbel Light", sans-serif;
+    font-weight: lighter;
+  }
+  .informations {
+    border: 2px solid #04848c;
+    border-radius: 8px;
+    width: 40vw;
+    height: 7vw;
+    font-family: "Corbel", sans-serif;
+  }
+  .informations label {
+    color: dimgrey;
+    font-size: 3vw;
+  }
+  .informations p {
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+  }
+}
+
+@media screen and (max-width: 913px) {
+  .chart {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .chart_content {
+    position: relative;
+  }
+  h1 {
+    width: 50vw;
+    height: 7vw;
+    font-size: 5vw;
+    border-radius: 10px;
+    background: #04848c;
+    color: #fff;
+    font-family: "Corbel Light", sans-serif;
+    font-weight: lighter;
+  }
+  .informations {
+    border: 2px solid #04848c;
+    border-radius: 8px;
+    width: 40vw;
+    height: 7vw;
+    font-family: "Corbel", sans-serif;
+  }
+  .informations label {
+    color: dimgrey;
+    font-size: 3vw;
+  }
+  .informations p {
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+  }
+}
