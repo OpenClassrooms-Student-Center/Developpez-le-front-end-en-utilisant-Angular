@@ -1,0 +1,144 @@
+* {
+  margin: 0 auto;
+}
+
+.center {
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  width: 19vw;
+  height: 2.5vw;
+  font-size: 2vw;
+  border-radius: 10px;
+  background: #04848c;
+  color: #fff;
+  font-family: "Corbel Light", sans-serif;
+  font-weight: lighter;
+  margin-top: 2em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.informations {
+  border: 2px solid #04848c;
+  border-radius: 8px;
+  width: 9vw;
+  height: 3.5vw;
+  font-family: "Corbel", sans-serif;
+  margin: 1.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.informations label {
+  color: dimgrey;
+  font-size: 0.9vw;
+}
+
+.informations p {
+  font-weight: 900;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9vw;
+}
+
+.chart {
+  width: 40vw;
+  height: 25vw;
+  display: flex;
+}
+
+.line_chart {
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  .chart {
+    width: 90%;
+    height: auto;
+    display: flex;
+    margin-right: 50vw;
+  }
+  .line_chart {
+    position: relative;
+  }
+  h1 {
+    width: 50vw;
+    height: 7vw;
+    font-size: 5vw;
+    border-radius: 10px;
+    background: #04848c;
+    color: #fff;
+    font-family: "Corbel Light", sans-serif;
+    font-weight: lighter;
+    margin-bottom: 4vw;
+  }
+  .informations {
+    border: 2px solid #04848c;
+    border-radius: 8px;
+    width: 30vw;
+    height: 7vw;
+    font-family: "Corbel", sans-serif;
+    margin: 2vw 2vw 8vw;
+  }
+  .informations label {
+    color: dimgrey;
+    font-size: 3vw;
+  }
+  .informations p {
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+  }
+}
+
+@media screen and (max-width: 913px) {
+  .chart {
+    width: 90%;
+    height: auto;
+    display: flex;
+    margin-right: 50vw;
+  }
+  .line_chart {
+    position: relative;
+  }
+  h1 {
+    width: 50vw;
+    height: 7vw;
+    font-size: 5vw;
+    border-radius: 10px;
+    background: #04848c;
+    color: #fff;
+    font-family: "Corbel Light", sans-serif;
+    font-weight: lighter;
+    margin-bottom: 4vw;
+  }
+  .informations {
+    border: 2px solid #04848c;
+    border-radius: 8px;
+    width: 30vw;
+    height: 7vw;
+    font-family: "Corbel", sans-serif;
+    margin: 2vw 2vw 8vw;
+  }
+  .informations label {
+    color: dimgrey;
+    font-size: 3vw;
+  }
+  .informations p {
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+  }
+}
+

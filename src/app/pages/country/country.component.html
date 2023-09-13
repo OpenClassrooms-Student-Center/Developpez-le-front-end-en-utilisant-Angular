@@ -1,0 +1,28 @@
+<div class="center">
+  <h1>{{ country }}</h1>
+  <div class="row">
+    <div class="informations">
+      <label>Number of entries</label>
+      <p>{{ getNumberOfJOs() }}</p>
+    </div>
+    <div class="informations">
+      <label>Total number medals</label>
+      <p>{{ getNumberOfMedals() }}</p>
+    </div>
+    <div class="informations">
+      <label>Total number athletes</label>
+      <p>{{ getNumberOfAthletes() }}</p>
+    </div>
+  </div>
+  <div class="chart">
+    <ngx-charts-line-chart class="line_chart"
+                           [results]="dataChart"
+                           [xAxis]="true"
+                           [yAxis]="true"
+                           [showXAxisLabel]="true"
+                           [showYAxisLabel]="true"
+                           [xAxisLabel]="'Dates'"
+    >
+    </ngx-charts-line-chart>
+  </div>
+</div>
