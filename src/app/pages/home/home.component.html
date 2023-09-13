@@ -1,20 +1,22 @@
-
-<hr/>
 <div class="center">
   <h1>Medals per Country</h1>
   <div class="row">
-  <div>
-    <label>Number of JOs</label>
-    <p>{{ numberOfJOs }}</p>
+    <div class="informations">
+      <label>Number of JOs</label>
+      <p>{{ numberOfJOs }}</p>
+    </div>
+    <div class="informations">
+      <label>Number of countries</label>
+      <p>{{ numberOfCountries }}</p>
+    </div>
   </div>
-  <div>
-    <label>Number of countries</label>
-    <p>{{ numberOfCountries }}</p>
+  <div class="chart">
+    <ngx-charts-pie-chart class="chart_content"
+      [results]="dataByCountry"
+      [view]="[1200,500]"
+      [labels]="true"
+      [tooltipText]="tooltipText"
+      (select)="onSelect($event.label)">
+    </ngx-charts-pie-chart>
   </div>
-  </div>
-  <ngx-charts-pie-chart
-    [results]="dataByCountry"
-    [view]="[1000,300]"
-    [labels]="true">
-  </ngx-charts-pie-chart>
 </div>

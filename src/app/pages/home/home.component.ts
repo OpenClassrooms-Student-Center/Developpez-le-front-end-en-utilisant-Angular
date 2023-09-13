@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {OlympicService} from 'src/app/core/services/olympic.service';
 import {Olympic} from "../../core/models/Olympic";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   public dataByCountry: { name: string, value: number }[] = [];
   public finalData: any[] = [];
 
-  constructor(private olympicService: OlympicService) {
+  constructor(private olympicService: OlympicService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -59,5 +60,18 @@ export class HomeComponent implements OnInit {
       }
       this.dataByCountry.push({name: country.country, value: countryMedals});
     }
+  }
+
+  tooltipText = (p: any) => {
+    return `
+      <span class="tooltip-label">${p.data.name}</span>
+      <span class="tooltip-val">🥇 ${p.data.value}</span>
+    `;
+  }
+
+  onSelect(event: any) {
+    console.log(event);
+    this.router.navigate(['/country', event],
+    );
   }
 }
