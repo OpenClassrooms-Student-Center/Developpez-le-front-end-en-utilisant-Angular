@@ -12,7 +12,7 @@
 This project is a starter code for the Angular course. It is a simple application that displays the olympic participations by country. 
 You can click on a country to display the olympic data corresponding to it.
 
-The data is stored inside a json file (`src/assets/olympic.json`) and is loaded using the `HttpClient` module.
+The data is stored inside a json file (`src/assets/mock/olympic.json`) and is loaded using the `HttpClient` module.
 
 ## Prerequisites
 
