@@ -6,3 +6,16 @@
         <p>{{ olympic?.country }}</p>
     </li>
 </ul>
+<div>
+    <ngx-charts-pie-chart
+        [view]="view"
+        [results]="data"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+    ></ngx-charts-pie-chart>
+</div>
