@@ -1,7 +1,9 @@
-import { Participation } from "./Participation";
+import { IParticipation } from "./Participation";
 
-export interface Olympic {
+export type Olympic = IOlympic | undefined | null;
+
+interface IOlympic {
     id : number,
     country : string,
-    participations : Array<Participation>
+    participations : Array<IParticipation>
 };
