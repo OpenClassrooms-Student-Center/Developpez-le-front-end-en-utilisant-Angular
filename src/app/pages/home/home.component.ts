@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, of, take, takeUntil } from 'rxjs';
-import { Olympic, Olympics } from 'src/app/core/models/Olympic';
+import { Observable, Subject, Subscription, of, take, takeUntil } from 'rxjs';
+import { DtrOlympic, Olympic, Olympics } from 'src/app/core/models/Olympic';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -11,9 +11,10 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$!: Subject<boolean>;
+  private olympicsSubscribe! : Subscription;
 
   public olympics$: Observable<Olympics> = of(null);
-  public olympics!: Olympics;
+  public olympics!: Array<Olympic>;
   public data!: Array<PieChartValue>;
 
   
@@ -48,22 +49,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.destroy$ = new Subject<boolean>();
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.pipe(
+    this.olympicsSubscribe = this.olympics$.pipe(
       takeUntil(this.destroy$)
     ).subscribe({
-      next: (value) => {
-        this.olympics = value
-        this.data = value!.map((olympic : Olympic) => {return {name: olympic!.country, value: olympic!.participations.map((participation) => participation.medalsCount).reduce((a,b) => a+b)}})
+      next: (olympics : Olympics) => {
+        if(!olympics) return
+        this.olympics = olympics.map((olympic) => new Olympic(olympic));
+        this.data = this.olympics.map((olympic : Olympic) => {return {name: olympic.country, value: olympic.getNbOfParticipation()}});
       },
       error : (error) => {
         console.error("Received an error: " + error);
+        // TODO Implement component to display an error occure to user
       }
-    })
-    
-    
+    })    
   }
 
   ngOnDestroy() : void {
     this.destroy$.next(true);
+    this.olympicsSubscribe.unsubscribe();
   }
 }
