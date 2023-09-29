@@ -24,5 +24,7 @@ export class Olympic {
         this.participations = $olympic!.participations.map((value : DtrParticipation) => new Participation(value));
     }
 
-
+    public getNbOfParticipation() : number {
+        return this.participations.map((participation) => participation.medalsCount).reduce((a,b) => a+b)
+    }
 }
