@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject, Subscription, of, take, takeUntil } from 'rxjs';
 import { DtrOlympic, Olympic, Olympics } from 'src/app/core/models/Olympic';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
@@ -22,29 +23,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   view: [number,number] = [700, 400];
 
   // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
+  gradient: boolean = false;
+  showLegend: boolean = false;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPosition: string = 'below';
 
-  colorScheme : {domain: string[]} = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data : any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data : any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-
-  constructor(private olympicService: OlympicService) {}
+  constructor(
+    private olympicService: OlympicService,
+    private router : Router
+  ) {}
 
   ngOnInit(): void {
     this.destroy$ = new Subject<boolean>();
@@ -61,11 +49,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.error("Received an error: " + error);
         // TODO Implement component to display an error occure to user
       }
-    })    
+    }); 
   }
 
   ngOnDestroy() : void {
     this.destroy$.next(true);
     this.olympicsSubscribe.unsubscribe();
+  }
+
+  colorScheme : {domain: string[]} = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  onSelect(data: PieChartValue): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    this.router.navigateByUrl(`country/${this.olympics.find((olympic) => olympic.country === data.name)?.id}`)
   }
 }
