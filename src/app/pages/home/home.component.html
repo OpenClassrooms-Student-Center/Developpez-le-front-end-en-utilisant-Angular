@@ -1,11 +1,6 @@
 <h2>Olympic games app</h2>
 <hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
-<ul>
-    <li *ngFor="let olympic of olympics">
-        <p>{{ olympic?.country }}</p>
-    </li>
-</ul>
 <div>
     <ngx-charts-pie-chart
         [view]="view"
@@ -15,7 +10,5 @@
         [labels]="showLabels"
         [doughnut]="isDoughnut"
         (select)="onSelect($event)"
-        (activate)="onActivate($event)"
-        (deactivate)="onDeactivate($event)"
     ></ngx-charts-pie-chart>
 </div>
