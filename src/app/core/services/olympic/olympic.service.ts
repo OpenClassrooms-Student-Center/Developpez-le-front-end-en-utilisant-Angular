@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { DtrOlympic, Olympic, Olympics } from '../models/Olympic';
+import { DtrOlympic, Olympic, Olympics } from '../../models/Olympic';
 
 @Injectable({
   providedIn: 'root',
