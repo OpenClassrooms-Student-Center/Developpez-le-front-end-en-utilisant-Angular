@@ -1,3 +1,21 @@
 <h2>Olympic games app</h2>
 <hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
+
+<div class=" container">
+  <h1>Survey Reports</h1>
+  <div>
+<h3>Pie Chart</h3>
+<ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="olympics$"
+  [gradient]="gradient"
+  [legend]="showLegend"
+  [legendPosition]="legendPosition"
+  [labels]="showLabels"
+  [doughnut]="isDoughnut"
+  >
+</ngx-charts-pie-chart>
+</div>
+</div>
