@@ -3,9 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DialogComponent } from '@components/shared/index.shared-components';
+import {
+  DetailsComponent,
+  HomeComponent,
+  NotFoundComponent,
+} from '@pages/index.pages';
 
 @NgModule({
   declarations: [
@@ -13,6 +16,7 @@ import { DialogComponent } from '@components/shared/index.shared-components';
     HomeComponent,
     NotFoundComponent,
     DialogComponent,
+    DetailsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
