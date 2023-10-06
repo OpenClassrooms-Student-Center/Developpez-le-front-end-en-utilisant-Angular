@@ -1,6 +1,6 @@
-<dialog className="dialog">
-    <div className="dialog__content-wrapper">
+<div class="dialog" #modalRef>
+    <div class="dialog__content-wrapper">
         <ng-content></ng-content>
-        <button className="dialog__close-button"></button>
+        <button class="dialog__close-button" (click)="closeDialog()">Close</button>
     </div>
-</dialog>
+</div>

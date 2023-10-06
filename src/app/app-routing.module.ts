@@ -6,8 +6,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
     component: HomeComponent,
   },
+  // { path: 'details/:country', component: CountryDetailsComponent },
   {
     path: '**', // wildcard
     component: NotFoundComponent,

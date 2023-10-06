@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -6,7 +12,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements OnInit, OnDestroy {
-  constructor() {}
+  @ViewChild('modalRef') modalRef!: ElementRef<HTMLDialogElement>;
+
+  constructor() {
+    //
+  }
 
   ngOnInit(): void {
     //
@@ -14,5 +24,11 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     //
+  }
+
+  closeDialog(): void {
+    const modalElement: HTMLDialogElement = this.modalRef?.nativeElement;
+
+    modalElement?.close();
   }
 }
