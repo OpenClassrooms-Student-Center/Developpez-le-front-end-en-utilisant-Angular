@@ -6,7 +6,7 @@
       {
         "id": 1,
         "year": 2012,
-        "city": "Londres",
+        "city": "London",
         "medalsCount": 28,
         "athleteCount": 372
       },
@@ -33,7 +33,7 @@
       {
         "id": 1,
         "year": 2012,
-        "city": "Londres",
+        "city": "London",
         "medalsCount": 20,
         "athleteCount": 315
       },
@@ -60,7 +60,7 @@
       {
         "id": 1,
         "year": 2012,
-        "city": "Londres",
+        "city": "London",
         "medalsCount": 109,
         "athleteCount": 610
       },
@@ -87,7 +87,7 @@
       {
         "id": 1,
         "year": 2012,
-        "city": "Londres",
+        "city": "London",
         "medalsCount": 44,
         "athleteCount": 425
       },
@@ -114,7 +114,7 @@
       {
         "id": 1,
         "year": 2012,
-        "city": "Londres",
+        "city": "London",
         "medalsCount": 35,
         "athleteCount": 423
       },
