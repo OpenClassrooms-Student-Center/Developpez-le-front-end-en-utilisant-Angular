@@ -148,10 +148,16 @@ legend {
 
 dialog {
     position: fixed;
+    inset: 0;
+
     border: transparent;
+
     margin: 0;
+
     padding: 0;
+
     z-index: 0;
+
     @include absolute-center;
 }
 

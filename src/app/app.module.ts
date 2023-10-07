@@ -9,6 +9,8 @@ import {
   HomeComponent,
   NotFoundComponent,
 } from '@pages/index.pages';
+import { HeaderComponent } from './components/common/layout/header/header.component';
+import { FooterComponent } from './components/common/layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import {
     NotFoundComponent,
     DialogComponent,
     DetailsComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
