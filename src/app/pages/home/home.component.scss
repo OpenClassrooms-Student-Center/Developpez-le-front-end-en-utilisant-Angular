@@ -1,0 +1,39 @@
+@use "../../utils/sass-utils/index" as *;
+
+.home {
+    &__banner {
+        background-image: url('/assets/images/png/telesport_banner.png');
+        background-position: center;
+        background-size: cover; // Use cover to maintain aspect ratio and cover the element
+        background-repeat: no-repeat;
+
+        height: min(500px, 40dvh); // Set a height to fill the viewport vertically
+        position: relative;
+
+        overflow: hidden;
+
+        &-content {
+            background-color: var(--bg-secondary);
+            @include center-flex-column(15px);
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            height: auto;
+            width: 75%;
+
+            translate: -50% -50%;
+            padding: 15px;
+
+            outline: 2px solid currentColor;
+        }
+
+        &-title {
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        &-description {}
+    }
+}
