@@ -1,22 +1,24 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { OlympicData } from '@core/interfaces/olympic-data.interface';
+import ApiService from '../api-service/api-service.service'; // Assuming you have the correct import path
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
-// TODO: Change every "unknown" generic type to be a type
-// ! MUST NOT BE OF TYPE "any"
-export class OlympicService {
-  private olympicUrl = './assets/mock/olympic.json';
+class OlympicService extends ApiService {
   private olympics$ = new BehaviorSubject<OlympicData | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(httpClient: HttpClient) {
+    super(httpClient); // Pass the HttpClient instance to the base class
+  }
 
+  // Change this method to use the inherited API service
   loadInitialData() {
-    return this.http.get<OlympicData>(this.olympicUrl).pipe(
+    this.baseUrl = './assets/mock/olympic.json';
+    return this.fetchGet<OlympicData>({ urlSegment: this.baseUrl }).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
@@ -34,3 +36,5 @@ export class OlympicService {
     return this.olympics$.asObservable();
   }
 }
+
+export default OlympicService;
