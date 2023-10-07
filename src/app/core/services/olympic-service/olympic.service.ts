@@ -26,7 +26,9 @@ class OlympicService extends ApiService {
       });
 
     return fetchedObservable.pipe(
-      tap((value) => this.olympics$.next(value)),
+      tap((value) => {
+        return this.olympics$.next(value);
+      }),
       catchError((error: string, caught: Observable<OlympicData>): never => {
         // TODO: improve error handling
         console.warn(error, caught);
