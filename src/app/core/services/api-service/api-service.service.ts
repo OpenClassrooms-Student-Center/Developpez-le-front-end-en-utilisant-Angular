@@ -26,12 +26,12 @@ class ApiService {
     const isRelativeUrl: boolean = !this.baseUrl.startsWith('https://');
     if (isRelativeUrl) {
       return this.baseUrl;
-    } else {
-      const constructedUrl: URL = new URL(this.baseUrl);
-      constructedUrl.pathname = urlSegment;
-
-      return constructedUrl.href;
     }
+
+    const constructedUrl: URL = new URL(this.baseUrl);
+    constructedUrl.pathname = urlSegment;
+
+    return constructedUrl.href;
   }
 
   /**

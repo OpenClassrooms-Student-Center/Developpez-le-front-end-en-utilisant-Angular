@@ -12,8 +12,7 @@
 </section>
 
 <section class="home__chart-container">
-    <h2>Olympic Games App</h2>
+    <h2 class="home__chart-title">Olympic Games App</h2>
 
     <p>{{ (olympics$ | async)?.length }} data loaded</p>
-    <p *ngIf="olympics$">Olympics data: {{olympics$|async}}</p>
 </section>
