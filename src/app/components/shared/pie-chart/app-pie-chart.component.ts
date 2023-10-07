@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { PieChartComponent } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-app-pie-chart',

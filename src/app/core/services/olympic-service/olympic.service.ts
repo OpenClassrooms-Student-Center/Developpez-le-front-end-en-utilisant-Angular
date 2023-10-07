@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { OlympicData } from '@core/interfaces/olympic-data.interface';
+import { OlympicData } from '@core/models/olympic-data.interface';
 import ApiService from '../api-service/api-service.service'; // Assuming you have the correct import path
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -16,7 +16,7 @@ class OlympicService extends ApiService {
   }
 
   // Change this method to use the inherited API service
-  loadInitialData() {
+  loadInitialData(): Observable<OlympicData> {
     this.baseUrl = './assets/mock/olympic.json';
 
     const fetchedObservable: Observable<OlympicData> =
@@ -40,7 +40,7 @@ class OlympicService extends ApiService {
   }
 
   getOlympics() {
-    return this.olympics$.asObservable();
+    return this.olympics$;
   }
 }
 
