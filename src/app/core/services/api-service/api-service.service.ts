@@ -23,14 +23,14 @@ class ApiService {
 
   // Construct a URL using the URL API
   private constructUrl(urlSegment: string): string {
-    try {
+    const isRelativeUrl: boolean = !this.baseUrl.startsWith('https://');
+    if (isRelativeUrl) {
+      return this.baseUrl;
+    } else {
       const constructedUrl: URL = new URL(this.baseUrl);
       constructedUrl.pathname = urlSegment;
 
       return constructedUrl.href;
-    } catch (error) {
-      log('Found an error while constructing the URL', error);
-      return '';
     }
   }
 
