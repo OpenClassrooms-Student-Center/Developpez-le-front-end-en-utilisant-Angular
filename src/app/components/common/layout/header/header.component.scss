@@ -2,11 +2,43 @@
 
 .header {
 
-    @include center-flex;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
-    &__title {}
+    gap: 25px;
 
-    &__image {
-        background-color: var(--bg-tertiary);
+    padding: 15px;
+
+    border-bottom: 2px solid currentColor;
+
+    @include mobile-only {
+        @include center-flex-column(15px);
     }
+
+    &__title {
+        text-wrap: balance;
+        text-align: center;
+
+        &--wide-screen {
+            @include mobile-only {
+                display: none;
+            }
+        }
+    }
+
+    &__image-container {
+        background-color: var(--semi-transparent-bg);
+        padding: 10px;
+        border-radius: 100vmax;
+
+        min-width: 180px;
+        max-width: 215px;
+
+        @include mobile-only {
+            order: 1;
+        }
+    }
+
+
 }
