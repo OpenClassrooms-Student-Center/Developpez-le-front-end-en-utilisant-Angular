@@ -18,32 +18,32 @@
  * console.log(str.length); // Outputs 22
  * console.log(getRealStringLength(str)); // Outputs 6
  */
-export function getRealStringLength(string: string): number {
-  const hasInvalidArgument: boolean = typeof string !== "string";
-  if (hasInvalidArgument) {
-    throw new TypeError(
-      `Invalid argument, expected a string but got ${typeof string}`
-    );
-  }
+// export function getRealStringLength(string: string): number {
+//   const hasInvalidArgument: boolean = typeof string !== 'string';
+//   if (hasInvalidArgument) {
+//     throw new TypeError(
+//       `Invalid argument, expected a string but got ${typeof string}`
+//     );
+//   }
 
-  const browserDoesNotSupportsTheAPI: boolean =
-    typeof Intl === "undefined" || typeof Intl.Segmenter !== "function";
-  if (browserDoesNotSupportsTheAPI) {
-    return string.length;
-  }
+//   const browserDoesNotSupportsTheAPI: boolean =
+//     typeof Intl === 'undefined' || typeof Intl.Segmenter !== 'function';
+//   if (browserDoesNotSupportsTheAPI) {
+//     return string.length;
+//   }
 
-  const segmenter: Intl.Segmenter = new Intl.Segmenter();
-  const arrayOfSegments: Intl.SegmentData[] = Array.from(
-    segmenter.segment(string)
-  );
-  return arrayOfSegments.length;
+//   const segmenter: Intl.Segmenter = new Intl.Segmenter();
+//   const arrayOfSegments: Intl.SegmentData[] = Array.from(
+//     segmenter.segment(string)
+//   );
+//   return arrayOfSegments.length;
 
-  /**
-   // Once fully supported, you can use the commented out code below for more accurate results:
-   const segmenter = new Intl.Segmenter();
-   const arrayOfSegments = Array.from(segmenter.segment(string));
-   return arrayOfSegments.length;  */
-}
+//   /**
+//    // Once fully supported, you can use the commented out code below for more accurate results:
+//    const segmenter = new Intl.Segmenter();
+//    const arrayOfSegments = Array.from(segmenter.segment(string));
+//    return arrayOfSegments.length;  */
+// }
 
 /**
  * Formats a number with a specified number of decimal places and a locale.
@@ -63,9 +63,9 @@ export function formatPrecisionNumber(
 ): string {
   // Validate the types of input arguments
   const hasInvalidTypes: boolean =
-    typeof number !== "number" ||
-    typeof minimumFractionDigits !== "number" ||
-    typeof maximumFractionDigits !== "number";
+    typeof number !== 'number' ||
+    typeof minimumFractionDigits !== 'number' ||
+    typeof maximumFractionDigits !== 'number';
   if (hasInvalidTypes) {
     throw new TypeError(
       `Invalid argument types: ${typeof number} ${typeof minimumFractionDigits} and ${typeof maximumFractionDigits}`
@@ -81,8 +81,8 @@ export function formatPrecisionNumber(
     throw new RangeError(
       `Invalid range of decimal places. \n minimumFractionDigits ${
         minimumFractionDigits < 0 || maximumFractionDigits < 0
-          ? "must be non-negative"
-          : "less than or equal to maximumFractionDigits"
+          ? 'must be non-negative'
+          : 'less than or equal to maximumFractionDigits'
       }.`
     );
   }
@@ -108,12 +108,12 @@ export function formatPrecisionNumber(
 export function formatCurrencyValueNumber(
   number: number,
   locale: string | undefined = undefined,
-  currencyType: string = "USD",
+  currencyType: string = 'USD',
   options?: Intl.NumberFormatOptions
 ): string {
   const formatter: Intl.NumberFormat = new Intl.NumberFormat(locale, {
     currency: currencyType,
-    style: "currency",
+    style: 'currency',
     maximumFractionDigits: 2,
     ...options,
   });
@@ -127,21 +127,21 @@ export function formatCurrencyValueNumber(
  * @param {Date | string} date - The date to format.
  * @returns {string} The formatted short date string.
  */
-export function formatShortDate(date: string | Date): string {
-  const dateInstance: Date = date instanceof Date ? date : new Date(date);
+// export function formatShortDate(date: string | Date): string {
+//   const dateInstance: Date = date instanceof Date ? date : new Date(date);
 
-  const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+//   const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat('en-US', {
+//     day: 'numeric',
+//     month: 'short',
+//     year: 'numeric',
+//   });
 
-  const formattedDate: string = formatter.format(dateInstance);
-  const [month, day, year] = formattedDate.replaceAll(",", "").split(" ");
-  const formattedDay: string = getOrdinalSuffix(Number(day));
+//   const formattedDate: string = formatter.format(dateInstance);
+//   const [month, day, year] = formattedDate.replaceAll(',', '').split(' ');
+//   const formattedDay: string = getOrdinalSuffix(Number(day));
 
-  return `${month} ${formattedDay} ${year}`;
-}
+//   return `${month} ${formattedDay} ${year}`;
+// }
 
 /**
  * Get the ordinal suffix for a given number.
@@ -155,7 +155,7 @@ export function formatShortDate(date: string | Date): string {
  * @returns {string} The ordinal suffix for the given number (e.g., "1st", "2nd", "3rd", "4th", etc.).
  */
 export function getOrdinalSuffix(number: number): string {
-  const argumentIsNotANumber: boolean = typeof number !== "number";
+  const argumentIsNotANumber: boolean = typeof number !== 'number';
 
   if (argumentIsNotANumber) {
     throw new TypeError(
@@ -170,20 +170,20 @@ export function getOrdinalSuffix(number: number): string {
     );
   }
 
-  const englishOrdinalRules: Intl.PluralRules = new Intl.PluralRules("en-US", {
-    type: "ordinal",
+  const englishOrdinalRules: Intl.PluralRules = new Intl.PluralRules('en-US', {
+    type: 'ordinal',
   });
 
   const ordinalText: Intl.LDMLPluralRule = englishOrdinalRules.select(number);
 
   switch (ordinalText) {
-    case "one": {
+    case 'one': {
       return `${number}st`;
     }
-    case "two": {
+    case 'two': {
       return `${number}nd`;
     }
-    case "few": {
+    case 'few': {
       return `${number}rd`;
     }
     default: {
@@ -217,9 +217,9 @@ export function formatRelativeTime(
   relativeDateInput: Date,
   locale?: string,
   options: Intl.RelativeTimeFormatOptions = {
-    localeMatcher: "best fit", // other values: "lookup"
-    numeric: "always", // other values: "auto"
-    style: "long", // other values: "short" or "narrow"
+    localeMatcher: 'best fit', // other values: "lookup"
+    numeric: 'always', // other values: "auto"
+    style: 'long', // other values: "short" or "narrow"
   }
 ): any {
   const formatter: Intl.RelativeTimeFormat = new Intl.RelativeTimeFormat(
@@ -310,30 +310,30 @@ export function getRelativeTimePeriod(dateInSeconds: number): {
     !isUnderAMonth && dateInSeconds < ONE_YEAR_IN_SECONDS;
 
   if (isUnderAMinute) {
-    return { value: dateInSeconds, unit: "seconds" };
+    return { value: dateInSeconds, unit: 'seconds' };
   } else if (isUnderAnHour) {
     //We get the amount of minutes
     const minutes: number = Math.floor(dateInSeconds / ONE_MINUTE_IN_SECONDS);
-    return { value: minutes, unit: "minutes" };
+    return { value: minutes, unit: 'minutes' };
   } else if (isUnderADay) {
     //We get the amount of hours
     const hours: number = Math.floor(dateInSeconds / ONE_HOUR_IN_SECONDS);
-    return { value: hours, unit: "hours" };
+    return { value: hours, unit: 'hours' };
   } else if (isUnderAWeek) {
     //We get the amount of days
     const days: number = Math.floor(dateInSeconds / ONE_DAY_IN_SECONDS);
-    return { value: days, unit: "days" };
+    return { value: days, unit: 'days' };
   } else if (isUnderAMonth) {
     //We get the amount of weeks
     const weeks: number = Math.floor(dateInSeconds / ONE_WEEK_IN_SECONDS);
-    return { value: weeks, unit: "weeks" };
+    return { value: weeks, unit: 'weeks' };
   } else if (isUnderAYear) {
     //We get the amount of months
     const months: number = Math.floor(dateInSeconds / ONE_MONTH_IN_SECONDS);
-    return { value: months, unit: "months" };
+    return { value: months, unit: 'months' };
   } else {
     //We get the amount of years
     const years: number = Math.floor(dateInSeconds / ONE_YEAR_IN_SECONDS);
-    return { value: years, unit: "years" };
+    return { value: years, unit: 'years' };
   }
 }

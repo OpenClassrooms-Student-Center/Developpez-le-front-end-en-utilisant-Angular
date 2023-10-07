@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { OlympicData } from '@core/interfaces/olympic-data.interface';
 import ApiService from '../api-service/api-service.service'; // Assuming you have the correct import path
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,18 @@ class OlympicService extends ApiService {
   // Change this method to use the inherited API service
   loadInitialData() {
     this.baseUrl = './assets/mock/olympic.json';
-    return this.fetchGet<OlympicData>({ urlSegment: this.baseUrl }).pipe(
+
+    const fetchedObservable: Observable<OlympicData> =
+      this.fetchGet<OlympicData>({
+        urlSegment: this.baseUrl,
+        options: { headers: new HttpHeaders() },
+      });
+
+    return fetchedObservable.pipe(
       tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
+      catchError((error: string, caught: Observable<OlympicData>) => {
         // TODO: improve error handling
-        console.error(error);
+        console.warn(error, caught);
         // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next(null);
         throw new Error(

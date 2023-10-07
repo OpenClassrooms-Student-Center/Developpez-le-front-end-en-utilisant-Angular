@@ -17,8 +17,6 @@ export const {
   groupCollapsed,
   groupEnd,
   trace,
-  profile,
-  profileEnd,
   warn,
   debug,
   info,

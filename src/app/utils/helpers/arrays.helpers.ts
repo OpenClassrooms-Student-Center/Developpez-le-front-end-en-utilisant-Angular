@@ -1,10 +1,9 @@
-import { typeofTypes } from "@utilities/types/typeof.types";
 import {
   areObjectsEqual,
   getPrototypeOf,
   isExactlyAnObject,
-} from "./objects.helpers";
-import { invertDayAndMonth } from "./string.helpers";
+} from './objects.helpers';
+import { invertDayAndMonth } from './string.helpers';
 
 /**
  * Creates a new deep copied array or set of the provided value using `Array.from()`
@@ -127,7 +126,7 @@ export function toSpliced<DataType>(
  */
 export function joinArrayOnChar<DataType>(
   array: DataType[],
-  char: string = ""
+  char: string = ''
 ): string {
   return array.join(char);
 }
@@ -145,162 +144,3 @@ export function joinArrayOnChar<DataType>(
  * "I Waited 15 Years For These New Array Methods" by Web Dev Simplified:
  * @link https://www.youtube.com/watch?v=3CBD5JZJJKw
  */
-
-/**
- * Function that can sort an array of objects by:
- * - Number
- * - String
- * - Boolean
- * - Date
- *
- * @param {any[]} array Array of objects
- * @param {string} prop Name of the property in the array should be sorted by
- * @param {boolean} reverse Boolean value to know if the array has to be reversed or not
- * @returns A new sorted array
- */
-export function sortArrayOfObjects<DataType>(
-  array: DataType[],
-  prop: string,
-  reverse: boolean = false
-) {
-  //To make it easier on the developer we remove any whitespace
-  prop = prop.trim();
-
-  //Makes a deep copy of the array
-  let newSortedArray: DataType[] = copyArray(array);
-
-  //We sort the array
-  newSortedArray = newSortedArray.sort((obj1: any, obj2: any) => {
-    //We take the first 2 objects
-    let propOfObj1: any = obj1[prop];
-
-    let propOfObj2: any = obj2[prop];
-
-    const typeOfObjectProperty: typeofTypes = typeof propOfObj1;
-    switch (typeOfObjectProperty) {
-      case "string": {
-        const dateStringREGEX: RegExp =
-          /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
-
-        const isDateAsString: boolean = dateStringREGEX.test(obj1[prop]);
-
-        if (isDateAsString) {
-          //We invert the day and month to make it work with the Date constructor
-          propOfObj1 = invertDayAndMonth(propOfObj1);
-          propOfObj1 = new Date(propOfObj1).toISOString();
-
-          propOfObj2 = invertDayAndMonth(propOfObj2);
-          propOfObj2 = new Date(propOfObj2).toISOString();
-        }
-        //We compare their locale
-        return propOfObj1.localeCompare(propOfObj2);
-      }
-      case "number": {
-        //ex: "10" → 10 in case one of them is a string
-        propOfObj1 = Number(propOfObj1);
-        propOfObj2 = Number(propOfObj2);
-
-        return propOfObj1 - propOfObj2;
-      }
-      case "boolean": {
-        //If true → 1, if false → 0
-        propOfObj1 = propOfObj1 ? 1 : 0;
-        propOfObj2 = propOfObj2 ? 1 : 0;
-
-        return propOfObj2 - propOfObj1;
-      }
-      case "object": {
-        //We check if the object was created with the `Date` class
-        const isDateAsObject: boolean = propOfObj1 instanceof Date;
-
-        if (isDateAsObject) {
-          return propOfObj1 - propOfObj2;
-        } else {
-          throw new TypeError(
-            "Object passed isn't a date, perhaps it's not an instance of Date or you entered an array?"
-          );
-        }
-      }
-
-      default: {
-        throw new TypeError(
-          "An error has occurred, the property is undefined or null"
-        );
-      }
-    }
-  });
-
-  //Reverse the order of the array if the dev wants to
-  if (reverse) {
-    return newSortedArray.reverse();
-  }
-
-  return newSortedArray;
-}
-
-/**
- * Function that filters an array by a string
- *
- * @param {array} arrayToFilter
- * @param {string} string
- * @returns
- */
-export function filterArrayByString<DataType>(
-  arrayToFilter: DataType[],
-  string: string,
-  isIntersection: boolean = false
-): DataType[] {
-  const typeofArrayOfFirstItem: typeofTypes = typeof arrayToFilter[0];
-
-  const isArrayOfObjects: boolean = typeofArrayOfFirstItem === "object";
-
-  //To make the filtering more efficient, we're going to use sets
-  const filteredSet: Set<DataType> = new Set();
-
-  const normalizedString = string.trim().toLowerCase();
-
-  if (isArrayOfObjects) {
-    //We iterate through every object in the array
-    arrayOfObjects: for (const object of arrayToFilter) {
-      //We iterate through every property in each object
-      objectProperties: for (const property in object) {
-        const valueOfObject: any = object[property]?.toString().toLowerCase();
-
-        const stringHasSpaces: boolean = normalizedString.includes(" ");
-
-        if (stringHasSpaces) {
-          const arrayOfStrings: string[] = string.split(" ");
-
-          //If the query contains multiple words, we iterate through each word
-          arrayOfStrings: for (const word of arrayOfStrings) {
-            const normalizedWord = (word as string).toLowerCase();
-
-            const includesQuery: boolean =
-              valueOfObject.includes(normalizedWord);
-
-            if (includesQuery) {
-              filteredSet.add(object);
-              continue;
-            }
-          }
-        } else {
-          const includesQuery = valueOfObject.includes(normalizedString);
-
-          if (includesQuery) {
-            filteredSet.add(object);
-          }
-        }
-      }
-    }
-  } else {
-    for (const word of arrayToFilter) {
-      const normalizedWord = (word as string).toLowerCase();
-      const includesQuery: boolean = normalizedWord.includes(normalizedString);
-      if (includesQuery) {
-        filteredSet.add(word);
-      }
-    }
-  }
-
-  return Array.from(filteredSet);
-}
