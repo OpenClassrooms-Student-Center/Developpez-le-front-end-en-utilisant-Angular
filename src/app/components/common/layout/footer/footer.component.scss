@@ -1,0 +1,10 @@
+@use "../../../../utils/sass-utils/index" as *;
+
+.footer {
+    border-top: 2px solid currentColor;
+
+    padding: 15px;
+
+
+    &__copyright {}
+}
