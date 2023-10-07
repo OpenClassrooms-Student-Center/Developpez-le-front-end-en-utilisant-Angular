@@ -4,7 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // Shared components
-import { DialogComponent } from '@components/shared/index.shared-components';
+import {
+  DialogComponent,
+  AppPieChartComponent,
+} from '@components/shared/index.shared-components';
 // Page components
 import {
   DetailsComponent,
@@ -27,6 +30,7 @@ import {
     DetailsComponent,
     HeaderComponent,
     FooterComponent,
+    AppPieChartComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
