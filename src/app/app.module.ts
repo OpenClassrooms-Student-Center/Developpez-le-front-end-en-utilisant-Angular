@@ -3,14 +3,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+// Shared components
 import { DialogComponent } from '@components/shared/index.shared-components';
+// Page components
 import {
   DetailsComponent,
   HomeComponent,
   NotFoundComponent,
 } from '@pages/index.pages';
-import { HeaderComponent } from './components/common/layout/header/header.component';
-import { FooterComponent } from './components/common/layout/footer/footer.component';
+// Common components
+// Layout components
+import {
+  HeaderComponent,
+  FooterComponent,
+} from '@components/common/layout/index.layout';
 
 @NgModule({
   declarations: [

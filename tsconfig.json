@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "paths": {
       "@assets/*": [
-        "src/app/assets/*"
+        "src/assets/*"
       ],
       "@components/*": [
         "src/app/components/*"
