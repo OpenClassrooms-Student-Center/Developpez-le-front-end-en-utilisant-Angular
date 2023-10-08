@@ -50,9 +50,8 @@ export type Country = {
  */
 export type OlympicData = Country[];
 
-export type MedalCountryItem = {
-  id: number;
+export type MedalCountryItem<TExtra = unknown> = {
   name: string;
   value: number;
-  extra?: Record<string, unknown>;
+  extra?: TExtra;
 };

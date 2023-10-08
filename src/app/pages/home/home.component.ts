@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { retryWhen, tap } from 'rxjs/operators';
 import { OlympicService, ThemeService } from '@core/services/index.services';
 import { OlympicData, MedalCountryItem } from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
+import { log } from '@utils/helpers/console.helpers';
 
 @Component({
   selector: 'app-home',
@@ -71,8 +72,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectCountryById(e: MedalCountryItem): void {
-    const { id, name, value } = e;
-    this.routerService.navigateByUrl(`/details/`);
+  selectCountryById(e: MedalCountryItem<{ id: string }>): void {
+    if (!e.extra) {
+      return;
+    }
+    const { id } = e.extra;
+    console.log(e);
+
+    this.routerService.navigateByUrl(`/details/${id}`);
   }
 }
