@@ -22,6 +22,7 @@ import {
   HeaderComponent,
   FooterComponent,
 } from '@components/common/layout/index.layout';
+import { InfoCardComponent } from './components/shared/info-card/info-card.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {
     HeaderComponent,
     FooterComponent,
     SpinLoaderComponent,
+    InfoCardComponent,
   ],
   imports: [
     BrowserModule,
