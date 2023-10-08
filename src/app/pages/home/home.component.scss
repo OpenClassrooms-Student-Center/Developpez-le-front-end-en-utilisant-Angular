@@ -39,6 +39,8 @@
     }
 
     &__chart-container {
-        @include center-flex-column(5px)
+        @include center-flex-column(5px);
+
+        min-height: 400px;
     }
 }

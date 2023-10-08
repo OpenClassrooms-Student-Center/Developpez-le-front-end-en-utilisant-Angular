@@ -24,10 +24,9 @@
     <ng-template #content>
         <ng-container *ngIf="(olympics$ | async) as olympicsData">
             <ng-container *ngIf="olympicsData.length > 0; else hasNoValues">
-                <ngx-charts-pie-chart [results]="olympicsData" [gradient]="false" [labels]="false" [trimLabels]="false"
+                <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="false" [trimLabels]="false"
                     (select)="selectCountryById($event)">
                 </ngx-charts-pie-chart>
-                <p>Data length: {{ olympicsData.length }}</p>
             </ng-container>
         </ng-container>
 

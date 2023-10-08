@@ -41,7 +41,7 @@ export type Country = {
   /**
    * @type {Participation[]} An array of participation records for the country.
    */
-  participationAmount: Participation[];
+  participations: Participation[];
 };
 
 /**
@@ -49,3 +49,9 @@ export type Country = {
  * @type
  */
 export type OlympicData = Country[];
+
+export type medalCountyItem = {
+  id: number;
+  name: string;
+  value: number;
+};
