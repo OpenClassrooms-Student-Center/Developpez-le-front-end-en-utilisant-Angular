@@ -1,16 +1,3 @@
-<section class="home__banner">
-    <div class="home__banner-content">
-        <h2 class="home__banner-title">Dive into the fascinating world of the Olympic Games</h2>
-        <p class="home__banner-description">Explore captivating stories of dedication, perseverance, and triumph.
-            <br />
-            Immerse yourself in a world where sports know no boundaries.
-            <br />
-            Our passion? Bringing you the very best in
-            olympic sports, 24 hours a day, 7 days a week!
-        </p>
-    </div>
-</section>
-
 <section class="home__chart-container">
     <h2 class="home__chart-title">Country performances</h2>
 
@@ -22,16 +9,15 @@
     </ng-container>
 
     <ng-template #content>
-        <ng-container *ngIf="(olympics$ | async) as olympicsData">
-            <ng-container *ngIf="olympicsData.length > 0; else hasNoValues">
-                <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="false" [trimLabels]="false"
-                    (select)="selectCountryById($event)">
-                </ngx-charts-pie-chart>
-            </ng-container>
+        <!-- Can't use optional?.chaining in this directive -->
+        <ng-container *ngIf="medalsArray && medalsArray.length > 0; else hasNoValues">
+            <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="true" [trimLabels]="false"
+                (select)="selectCountryById($event)">
+            </ngx-charts-pie-chart>
         </ng-container>
+    </ng-template>
 
-        <ng-template #hasNoValues>
-            <p>There are currently no countries</p>
-        </ng-template>
+    <ng-template #hasNoValues>
+        <p>There are currently no countries</p>
     </ng-template>
 </section>

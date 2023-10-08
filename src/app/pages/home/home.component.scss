@@ -42,5 +42,9 @@
         @include center-flex-column(5px);
 
         min-height: 400px;
+
+        & svg text {
+            fill: currentColor !important;
+        }
     }
 }

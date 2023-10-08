@@ -10,7 +10,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'details',
+    path: 'details/:id',
     component: DetailsComponent, // We'll need to change the page component here
   },
   // Add other route configurations as needed

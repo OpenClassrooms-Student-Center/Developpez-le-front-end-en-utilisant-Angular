@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { OlympicService } from '@core/services/index.services';
-import {
-  Country,
-  OlympicData,
-  medalCountyItem,
-} from '@core/models/olympic-data.types';
+import { OlympicData, MedalCountryItem } from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,10 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public olympics$: Observable<OlympicData> = this.olympicService.getOlympics();
-  public isLoading$ = this.olympicService.getIsLoading();
+  public olympics$!: Observable<OlympicData>;
+  public isLoading$!: Observable<boolean>;
+  public medalsArray!: MedalCountryItem[];
 
-  public medalsArray: medalCountyItem[] = [];
+  private olympicsSubscription: Subscription | undefined;
 
   constructor(
     private olympicService: OlympicService,
@@ -25,40 +23,49 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympics$.pipe(
-      tap((olympicCountryData) => {
-        const hasNoCountriesToDisplay: boolean = olympicCountryData.length < 1;
-        if (hasNoCountriesToDisplay) {
-          return;
-        }
+    this.olympics$ = this.olympicService.getOlympics();
+    this.isLoading$ = this.olympicService.getIsLoading();
 
-        this.setMedalsArray(olympicCountryData);
-      })
-    );
+    this.medalsArray = [];
+
+    this.olympicsSubscription = this.olympics$
+      .pipe(
+        tap((olympicCountryData) => {
+          const hasNoCountriesToDisplay: boolean =
+            olympicCountryData.length < 1;
+          if (hasNoCountriesToDisplay) {
+            return;
+          }
+          this.setMedalsArray(olympicCountryData);
+          console.log(this.medalsArray);
+        })
+      )
+      .subscribe();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.olympicsSubscription?.unsubscribe();
+  }
 
   setMedalsArray(olympicData: OlympicData) {
-    for (let i = 0; i < olympicData.length; i++) {
-      const { id, country, participations } = olympicData[i];
-
-      const earnedMedals: number = participations.reduce((acc, cur) => {
-        return acc + cur.medalsCount;
-      }, 0);
-
-      this.medalsArray.push({
-        id,
+    this.medalsArray = olympicData.map((countryOlympicData) => {
+      const { id, country, participations } = countryOlympicData;
+      return {
+        id: id,
         name: country,
-        value: earnedMedals,
-      });
-    }
+        value: participations.reduce((acc, cur) => {
+          return acc + cur.medalsCount;
+        }, 0),
 
-    console.log(this.medalsArray);
+        extra: {
+          id,
+        },
+      };
+    });
   }
 
-  selectCountryById(e: Event): void {
-    console.log(e);
-    this.routerService.navigateByUrl(`/details`);
+  selectCountryById(e: MedalCountryItem): void {
+    const { id, name, value } = e;
+    this.routerService.navigateByUrl(`/details/`);
   }
 }

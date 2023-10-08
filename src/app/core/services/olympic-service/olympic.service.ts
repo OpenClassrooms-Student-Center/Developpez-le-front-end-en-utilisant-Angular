@@ -29,7 +29,7 @@ class OlympicService extends ApiService {
       });
 
     return fetchedObservable.pipe(
-      delay(2_000),
+      // delay(2_000),
       tap((value) => {
         // Use tap to update isLoading when data arrives
         this.isLoading$.next(false);

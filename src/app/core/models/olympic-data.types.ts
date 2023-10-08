@@ -50,8 +50,9 @@ export type Country = {
  */
 export type OlympicData = Country[];
 
-export type medalCountyItem = {
+export type MedalCountryItem = {
   id: number;
   name: string;
   value: number;
+  extra?: Record<string, unknown>;
 };
