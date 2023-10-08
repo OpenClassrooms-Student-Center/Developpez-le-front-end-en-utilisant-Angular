@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<OlympicData>;
   public isLoading$!: Observable<boolean>;
   public medalsArray!: MedalCountryItem[];
-  public scheme$!: Observable<string>;
+  public colorScheme!: string;
 
   private olympicsSubscription: Subscription | undefined;
 
@@ -44,7 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.scheme$ = this.themeService.getColorScheme();
+    // Subscribe to the theme changes
+    this.themeService.getColorScheme().subscribe((theme) => {
+      this.colorScheme = theme;
+    });
   }
 
   ngOnDestroy(): void {
