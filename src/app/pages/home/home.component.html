@@ -12,15 +12,20 @@
 </section>
 
 <section class="home__chart-container">
-    <h2 class="home__chart-title">Olympic Games App</h2>
+    <h2 class="home__chart-title">Country performances</h2>
 
-    <!-- <ngx-charts-pie-chart></ngx-charts-pie-chart> -->
 
-    <ng-template [ngIf]="olympics$" [ngIfElse]="loading">
-        <p>{{ (olympics$ | async)?.length }} data loaded</p>
+    <ngx-charts-pie-chart [results]="olympics$" [gradient]="true" [labels]="true" [trimLabels]="false"
+        (select)="selectCountryById($event)">
+    </ngx-charts-pie-chart>
+
+
+    <ng-template [ngIf]="olympics$|async" [ngIfElse]="loading">
+        <p>{{ olympics$ }} data loaded</p>
     </ng-template>
 
     <ng-template #loading>
+        <p>Data is currently loading, please wait</p>
         <app-spin-loader></app-spin-loader>
     </ng-template>
 

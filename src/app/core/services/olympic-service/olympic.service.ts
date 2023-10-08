@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 class OlympicService extends ApiService {
-  private olympics$ = new BehaviorSubject<OlympicData | null>(null);
+  private olympics$ = new BehaviorSubject<OlympicData>([]);
 
   constructor(httpClient: HttpClient) {
     super(httpClient); // Pass the HttpClient instance to the base class
@@ -32,7 +32,7 @@ class OlympicService extends ApiService {
         // TODO: improve error handling
         console.warn(error, caught);
         // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.olympics$.next([]);
         throw new Error(
           `An error occurred while loading Olympic data: ${caught}`
         );

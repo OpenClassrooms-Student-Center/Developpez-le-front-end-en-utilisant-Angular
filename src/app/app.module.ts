@@ -40,7 +40,7 @@ import {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    //  NgxChartsModule // Will throw an error if uncommented
+    NgxChartsModule, // Will throw an error if uncommented
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
