@@ -1,8 +1,8 @@
 /**
  * Represents a participation record.
- * @interface
+ * @type
  */
-export interface Participation {
+export type Participation = {
   /**
    * @type {number} The unique identifier for the participation.
    */
@@ -23,13 +23,13 @@ export interface Participation {
    * @type {number} The count of athletes who participated.
    */
   athleteCount: number;
-}
+};
 
 /**
  * Represents a country's information.
- * @interface
+ * @type
  */
-export interface Country {
+export type Country = {
   /**
    * @type {number} The unique identifier for the country.
    */
@@ -42,10 +42,10 @@ export interface Country {
    * @type {Participation[]} An array of participation records for the country.
    */
   participationAmount: Participation[];
-}
+};
 
 /**
  * Represents an array of countries' data.
- * @interface
+ * @type
  */
-export interface OlympicData extends Array<Country> {}
+export type OlympicData = Country[];

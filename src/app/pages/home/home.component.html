@@ -14,19 +14,25 @@
 <section class="home__chart-container">
     <h2 class="home__chart-title">Country performances</h2>
 
+    <h3>Medals per country</h3>
 
-    <ngx-charts-pie-chart [results]="olympics$" [gradient]="true" [labels]="true" [trimLabels]="false"
-        (select)="selectCountryById($event)">
-    </ngx-charts-pie-chart>
-
-
-    <ng-template [ngIf]="olympics$|async" [ngIfElse]="loading">
-        <p>{{ olympics$ }} data loaded</p>
-    </ng-template>
-
-    <ng-template #loading>
-        <p>Data is currently loading, please wait</p>
+    <ng-container *ngIf="isLoading$ | async; else content">
+        <p>Loading countries pie chart...</p>
         <app-spin-loader></app-spin-loader>
-    </ng-template>
+    </ng-container>
 
+    <ng-template #content>
+        <ng-container *ngIf="(olympics$ | async) as olympicsData">
+            <ng-container *ngIf="olympicsData.length > 0; else hasNoValues">
+                <ngx-charts-pie-chart [results]="olympicsData" [gradient]="false" [labels]="false" [trimLabels]="false"
+                    (select)="selectCountryById($event)">
+                </ngx-charts-pie-chart>
+                <p>Data length: {{ olympicsData.length }}</p>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #hasNoValues>
+            <p>There are currently no countries</p>
+        </ng-template>
+    </ng-template>
 </section>

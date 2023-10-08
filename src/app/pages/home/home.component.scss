@@ -37,4 +37,8 @@
 
         &-description {}
     }
+
+    &__chart-container {
+        @include center-flex-column(5px)
+    }
 }
