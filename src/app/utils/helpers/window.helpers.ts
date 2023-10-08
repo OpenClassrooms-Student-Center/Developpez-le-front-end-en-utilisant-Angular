@@ -9,7 +9,7 @@
  * @throws {Error} Will throw an error if the window object is not available, likely due to server-side rendering (SSR).
  */
 export function checkIfWindowIsAvailable() {
-  const isNotAvailable: boolean = typeof window === "undefined";
+  const isNotAvailable: boolean = typeof window === 'undefined';
   if (isNotAvailable) {
     throw new Error(
       `Window object is not available, this is probably due to the fact that the app uses server-side rendering (SSR).`
@@ -25,7 +25,18 @@ export function checkIfWindowIsAvailable() {
 export function isMobileViewport(): boolean {
   checkIfWindowIsAvailable();
 
-  return window.matchMedia("(max-width: 768px)").matches;
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
+/**
+ * Check if the viewport matches a media query for a maximum width of 768 pixels (mobile viewport).
+ *
+ * @returns {boolean} - True if the viewport matches the mobile media query, false otherwise.
+ */
+export function isDarkMode(): boolean {
+  checkIfWindowIsAvailable();
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 /**
