@@ -8,7 +8,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Shared components
 import {
   DialogComponent,
-  AppPieChartComponent,
   SpinLoaderComponent,
 } from '@components/shared/index.shared-components';
 // Page components
@@ -33,7 +32,6 @@ import {
     DetailsComponent,
     HeaderComponent,
     FooterComponent,
-    AppPieChartComponent,
     SpinLoaderComponent,
   ],
   imports: [
