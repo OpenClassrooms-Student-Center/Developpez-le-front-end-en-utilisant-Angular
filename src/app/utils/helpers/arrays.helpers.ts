@@ -3,7 +3,6 @@ import {
   getPrototypeOf,
   isExactlyAnObject,
 } from './objects.helpers';
-import { invertDayAndMonth } from './string.helpers';
 
 /**
  * Creates a new deep copied array or set of the provided value using `Array.from()`

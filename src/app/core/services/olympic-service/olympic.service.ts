@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-class OlympicService extends ApiService {
+export class OlympicService extends ApiService {
   private olympics$ = new BehaviorSubject<OlympicData>([]);
   private isLoading$ = new BehaviorSubject<boolean>(false);
 
@@ -54,5 +54,3 @@ class OlympicService extends ApiService {
     return this.isLoading$.asObservable();
   }
 }
-
-export default OlympicService;

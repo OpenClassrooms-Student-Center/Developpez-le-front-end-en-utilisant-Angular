@@ -29,9 +29,9 @@ export function isMobileViewport(): boolean {
 }
 
 /**
- * Check if the viewport matches a media query for a maximum width of 768 pixels (mobile viewport).
+ * Check if the user's preferred color scheme is set to dark mode.
  *
- * @returns {boolean} - True if the viewport matches the mobile media query, false otherwise.
+ * @returns {boolean} - True if the user's preferred color scheme is dark, false otherwise.
  */
 export function isDarkMode(): boolean {
   checkIfWindowIsAvailable();

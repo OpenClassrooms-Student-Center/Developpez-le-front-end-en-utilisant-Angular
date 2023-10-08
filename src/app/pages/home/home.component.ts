@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { OlympicService } from '@core/services/index.services';
+import { OlympicService, ThemeService } from '@core/services/index.services';
 import { OlympicData, MedalCountryItem } from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
 
@@ -14,12 +14,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<OlympicData>;
   public isLoading$!: Observable<boolean>;
   public medalsArray!: MedalCountryItem[];
+  public scheme$!: Observable<string>;
 
   private olympicsSubscription: Subscription | undefined;
 
   constructor(
     private olympicService: OlympicService,
-    private routerService: Router
+    private routerService: Router,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+
+    this.scheme$ = this.themeService.getColorScheme();
   }
 
   ngOnDestroy(): void {

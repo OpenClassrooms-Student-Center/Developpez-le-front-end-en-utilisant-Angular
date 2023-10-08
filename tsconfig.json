@@ -17,7 +17,7 @@
         "src/app/pages/*"
       ],
       "@utils/*": [
-        "src/app/utilities/*"
+        "src/app/utils/*"
       ],
       "@sass/*": [
         "src/app/sass/*"
