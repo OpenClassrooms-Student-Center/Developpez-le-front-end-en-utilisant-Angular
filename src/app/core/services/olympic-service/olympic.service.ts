@@ -22,7 +22,6 @@ class OlympicService extends ApiService {
     const fetchedObservable: Observable<OlympicData> =
       this.fetchGet<OlympicData>({
         urlSegment: this.baseUrl,
-        options: { headers: new HttpHeaders() },
       });
 
     return fetchedObservable.pipe(

@@ -16,5 +16,12 @@
 
     <!-- <ngx-charts-pie-chart></ngx-charts-pie-chart> -->
 
-    <p>{{ (olympics$ | async)?.length }} data loaded</p>
+    <ng-template [ngIf]="olympics$" [ngIfElse]="loading">
+        <p>{{ (olympics$ | async)?.length }} data loaded</p>
+    </ng-template>
+
+    <ng-template #loading>
+        <app-spin-loader></app-spin-loader>
+    </ng-template>
+
 </section>
