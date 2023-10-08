@@ -44,6 +44,10 @@
         min-height: 400px;
     }
 
+    &__info-cards-container {
+        @include center-flex(25px)
+    }
+
     &__pie-chart {
         &--light {
             fill: black;

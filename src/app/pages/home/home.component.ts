@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { retryWhen, tap } from 'rxjs/operators';
 import { OlympicService, ThemeService } from '@core/services/index.services';
-import { OlympicData, MedalCountryItem } from '@core/models/olympic-data.types';
+import {
+  OlympicData,
+  MedalCountryItem,
+  Participation,
+} from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
 import { log } from '@utils/helpers/console.helpers';
 
@@ -13,11 +17,14 @@ import { log } from '@utils/helpers/console.helpers';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<OlympicData>;
+  private olympicsSubscription: Subscription | undefined;
+
   public isLoading$!: Observable<boolean>;
-  public medalsArray!: MedalCountryItem[];
   public colorScheme!: string;
 
-  private olympicsSubscription: Subscription | undefined;
+  public medalsArray!: MedalCountryItem[];
+  public totalParticipations: number = 0;
+  public numberOfCountries: number = 0;
 
   constructor(
     private olympicService: OlympicService,
@@ -40,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             return;
           }
           this.setMedalsArray(olympicCountryData);
+          this.setInfosCardValues(olympicCountryData);
           console.log(this.medalsArray);
         })
       )
@@ -61,7 +69,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       return {
         id: id,
         name: country,
-        value: participations.reduce((acc, cur) => {
+        value: participations.reduce((acc, cur: Participation) => {
+          /*
+type Participation = {
+    id: number;
+    year: number;
+    city: string;
+    medalsCount: number;
+    athleteCount: number;
+}
+          */
           return acc + cur.medalsCount;
         }, 0),
 
@@ -70,6 +87,17 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
       };
     });
+  }
+
+  setInfosCardValues(olympicData: OlympicData) {
+    // Calculate the total number of participations
+    this.totalParticipations = olympicData.reduce(
+      (acc, cur) => acc + cur.participations.length,
+      0
+    );
+
+    // Calculate the number of countries that participated
+    this.numberOfCountries = olympicData.length;
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {
