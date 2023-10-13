@@ -1,0 +1,55 @@
+@use "../../utils/sass-utils/index" as *;
+
+.details {
+    min-height: 50dvh;
+
+    @include center-flex-column(15px);
+
+    padding-block: 15px;
+
+    &__country-name {
+        @include olympic-card-style;
+
+
+
+    }
+
+    &__go-back-button {
+        @include olympic-card-style;
+
+        &:hover {
+            filter: contrast(75%);
+        }
+
+        &:active {
+            filter: contrast(50%) saturate(50%);
+        }
+    }
+
+    &__info-cards-container {
+        @include center-flex(25px);
+
+        @include mobile-only {
+            @include center-flex-column(25px);
+
+            &>* {
+                width: 100%;
+            }
+        }
+    }
+
+    &__line-chart {
+        &--light {}
+
+        &--dark {
+            fill: white;
+        }
+
+        &-container {
+            width: 80%;
+            min-height: inherit;
+
+            margin-left: -65px;
+        }
+    }
+}

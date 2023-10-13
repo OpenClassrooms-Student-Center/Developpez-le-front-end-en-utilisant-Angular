@@ -1,3 +1,51 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<section class="home__banner">
+    <div class="home__banner-content">
+        <h2 class="home__banner-title">
+            Dive into the fascinating world of the Olympic Games
+        </h2>
+        <p class="home__banner-description">
+            Explore captivating stories of dedication, perseverance, and triumph.
+            <br />
+            Immerse yourself in a world where sports know no boundaries.
+            <br />
+            Our passion? Bringing you the very best in olympic sports, 24 hours a day,
+            7 days a week!
+        </p>
+    </div>
+</section>
+
+<section class="home__chart-container">
+    <ng-container *ngIf="isLoading$ | async; else content">
+        <p>Loading countries pie chart...</p>
+        <app-spin-loader></app-spin-loader>
+    </ng-container>
+
+    <ng-template #content>
+        <h2 class="home__chart-title">Medals per country</h2>
+
+        <!-- Can't use optional?.chaining in this directive -->
+        <ng-container *ngIf="medalsArray && medalsArray.length > 0; else hasNoValues">
+            <div class="home__info-cards-container">
+                <!-- InfoCard for Total Participations -->
+                <app-info-card [title]="'Total Participations'" [numberValue]="totalParticipations"></app-info-card>
+
+                <!-- InfoCard for Number of Countries -->
+                <app-info-card [title]="'Number of Countries'" [numberValue]="numberOfCountries"></app-info-card>
+            </div>
+            <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="true" [trimLabels]="false"
+                [ngClass]="{
+          'home__pie-chart--light': colorScheme === 'light',
+          'home__pie-chart--dark': colorScheme === 'dark'
+        }" (select)="selectCountryById($event)">
+                <ng-template #tooltipTemplate let-model="model">
+                    <app-tooltip [country]="model.name" [earnedMedals]="model.value"></app-tooltip>
+                </ng-template>
+            </ngx-charts-pie-chart>
+        </ng-container>
+
+        <ng-template #hasNoValues>
+            <p>There are currently no countries</p>
+        </ng-template>
+    </ng-template>
+
+</section>
