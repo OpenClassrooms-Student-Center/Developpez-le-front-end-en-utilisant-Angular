@@ -15,7 +15,6 @@
 </section>
 
 <section class="home__chart-container">
-
     <ng-container *ngIf="isLoading$ | async; else content">
         <p>Loading countries pie chart...</p>
         <app-spin-loader></app-spin-loader>
@@ -34,10 +33,13 @@
         <!-- Can't use optional?.chaining in this directive -->
         <ng-container *ngIf="medalsArray && medalsArray.length > 0; else hasNoValues">
             <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="true" [trimLabels]="false"
-                [tooltipText]="generateTooltipText" [ngClass]="{
+                [ngClass]="{
           'home__pie-chart--light': colorScheme === 'light',
           'home__pie-chart--dark': colorScheme === 'dark'
         }" (select)="selectCountryById($event)">
+                <ng-template #tooltipTemplate let-model="model">
+                    <app-tooltip [country]="model.name" [earnedMedals]="model.value"></app-tooltip>
+                </ng-template>
             </ngx-charts-pie-chart>
         </ng-container>
     </ng-template>

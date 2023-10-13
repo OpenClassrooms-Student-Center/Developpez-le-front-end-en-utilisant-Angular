@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public medalsArray!: MedalCountryItem[];
   public totalParticipations: number = 0;
   public numberOfCountries: number = 0;
+  public themeSubscription$!: Subscription;
 
   constructor(
     private olympicService: OlympicService,
@@ -55,13 +56,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe();
 
     // Subscribe to the theme changes
-    this.themeService.getColorScheme().subscribe((theme) => {
-      this.colorScheme = theme;
-    });
+    this.themeSubscription$ = this.themeService
+      .getColorScheme()
+      .subscribe((theme) => {
+        this.colorScheme = theme;
+      });
   }
 
   ngOnDestroy(): void {
     this.olympicsSubscription?.unsubscribe();
+
+    this.themeSubscription$?.unsubscribe();
   }
 
   setMedalsArray(olympicData: OlympicData) {
@@ -99,13 +104,6 @@ type Participation = {
 
     // Calculate the number of countries that participated
     this.numberOfCountries = olympicData.length;
-  }
-
-  generateTooltipText(data: PieChartTooltipData): string {
-    console.log({ data });
-
-    // Customize the tooltip content based on your data
-    return `${data.data.name}: ${data.value}`;
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {

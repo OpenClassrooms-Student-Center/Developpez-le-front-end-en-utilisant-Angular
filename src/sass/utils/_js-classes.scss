@@ -88,3 +88,8 @@
         @include fade-out-animation-properties;
     }
 }
+
+.ngx-charts-tooltip-content.position-top.type-tooltip.animate {
+    background: none !important;
+    padding: 0 !important;
+}

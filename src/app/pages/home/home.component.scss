@@ -14,6 +14,7 @@
 
         &-content {
             background-color: var(--bg-secondary);
+
             @include center-flex-column(15px);
             align-items: unset;
 
