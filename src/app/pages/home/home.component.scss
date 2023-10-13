@@ -43,11 +43,7 @@
     }
 
     &__chart-title {
-        background-color: var(--bg-tertiary);
-        color: white;
-
-        padding: 10px;
-        border-radius: 5px;
+        @include olympic-card-style;
     }
 
     &__chart-container {

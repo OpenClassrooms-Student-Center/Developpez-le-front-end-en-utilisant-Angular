@@ -3,11 +3,7 @@
 .tooltip {
     &__container {
         width: 100%;
-        background-color: var(--bg-tertiary);
-        color: white;
-
-        padding: 10px;
-        border-radius: 5px;
+        @include olympic-card-style;
 
         min-width: 100px;
 

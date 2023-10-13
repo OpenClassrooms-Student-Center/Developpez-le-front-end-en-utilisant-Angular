@@ -128,3 +128,11 @@
 
     animation-direction: reverse;
 }
+
+@mixin olympic-card-style {
+    background-color: var(--bg-tertiary);
+    color: white;
+
+    padding: 10px;
+    border-radius: 5px;
+}

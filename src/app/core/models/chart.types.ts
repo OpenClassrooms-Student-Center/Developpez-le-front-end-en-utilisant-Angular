@@ -13,6 +13,7 @@ export type PieChartTooltipData<TExtra = unknown> = {
 export type SeriesData = {
   name: string;
   value: number;
+  extra: { athleteCount: number };
 };
 
 export type CountryData = {

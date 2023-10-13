@@ -22,16 +22,16 @@
 
     <ng-template #content>
         <h2 class="home__chart-title">Medals per country</h2>
-        <div class="home__info-cards-container">
-            <!-- InfoCard for Total Participations -->
-            <app-info-card [title]="'Total Participations'" [numberValue]="totalParticipations"></app-info-card>
-
-            <!-- InfoCard for Number of Countries -->
-            <app-info-card [title]="'Number of Countries'" [numberValue]="numberOfCountries"></app-info-card>
-        </div>
 
         <!-- Can't use optional?.chaining in this directive -->
         <ng-container *ngIf="medalsArray && medalsArray.length > 0; else hasNoValues">
+            <div class="home__info-cards-container">
+                <!-- InfoCard for Total Participations -->
+                <app-info-card [title]="'Total Participations'" [numberValue]="totalParticipations"></app-info-card>
+
+                <!-- InfoCard for Number of Countries -->
+                <app-info-card [title]="'Number of Countries'" [numberValue]="numberOfCountries"></app-info-card>
+            </div>
             <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="true" [trimLabels]="false"
                 [ngClass]="{
           'home__pie-chart--light': colorScheme === 'light',

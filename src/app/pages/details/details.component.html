@@ -5,13 +5,31 @@
     </ng-container>
 
     <ng-template #content>
-        <p>{{countryObject.country}}</p>
+        <h2 class="details__country-name">{{countryData[0].name}}</h2>
 
-        <ngx-charts-line-chart [ngClass]="{
-          'home__pie-chart--light': colorScheme === 'light',
-          'home__pie-chart--dark': colorScheme === 'dark'
-        }">
-        </ngx-charts-line-chart>
+        <div class="details__info-cards-container">
+            <app-info-card [title]="'Entries'" [numberValue]="entries"></app-info-card>
+            <app-info-card [title]="'Total number of earned medals'" [numberValue]="totalEarnedMedals"></app-info-card>
+            <app-info-card [title]="'Total number of athletes'" [numberValue]="totalAthletes"></app-info-card>
+        </div>
+        <div class="details__line-chart-container">
+            <ng-container *ngIf="countryData && countryData.length>0; else hasNoValues">
+
+                <ngx-charts-line-chart [results]="countryData" [ngClass]="{
+          'details__line-chart--light': colorScheme === 'light',
+          'details__line-chart--dark': colorScheme === 'dark'
+        }" [autoScale]="true" [xAxis]="true" [yAxis]="true" [legend]="false" [showXAxisLabel]="true"
+                    [tooltipDisabled]="true" [showYAxisLabel]="true" [xAxisLabel]="'Year'" [yAxisLabel]="'Medals'"
+                    [autoScale]="false">
+                </ngx-charts-line-chart>
+            </ng-container>
+
+        </div>
+        <ng-template #hasNoValues>
+            <p>There are no values to display</p>
+        </ng-template>
+
     </ng-template>
 
+    <button class="details__go-back-button" type="button" (click)="goBackToPreviousPage($event)">Go back</button>
 </section>

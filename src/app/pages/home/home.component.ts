@@ -74,15 +74,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         id: id,
         name: country,
         value: participations.reduce((acc, cur: Participation) => {
-          /*
-type Participation = {
-    id: number;
-    year: number;
-    city: string;
-    medalsCount: number;
-    athleteCount: number;
-}
-          */
           return acc + cur.medalsCount;
         }, 0),
 
