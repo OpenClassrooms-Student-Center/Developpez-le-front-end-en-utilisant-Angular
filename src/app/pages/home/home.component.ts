@@ -9,6 +9,7 @@ import {
 } from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
 import { log } from '@utils/helpers/console.helpers';
+import { PieChartTooltipData } from '@core/models/pie-chart-tooltip.types';
 
 @Component({
   selector: 'app-home',
@@ -98,6 +99,13 @@ type Participation = {
 
     // Calculate the number of countries that participated
     this.numberOfCountries = olympicData.length;
+  }
+
+  generateTooltipText(data: PieChartTooltipData): string {
+    console.log({ data });
+
+    // Customize the tooltip content based on your data
+    return `${data.data.name}: ${data.value}`;
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {

@@ -34,7 +34,7 @@
         <!-- Can't use optional?.chaining in this directive -->
         <ng-container *ngIf="medalsArray && medalsArray.length > 0; else hasNoValues">
             <ngx-charts-pie-chart [results]="medalsArray" [gradient]="true" [labels]="true" [trimLabels]="false"
-                [ngClass]="{
+                [tooltipText]="generateTooltipText" [ngClass]="{
           'home__pie-chart--light': colorScheme === 'light',
           'home__pie-chart--dark': colorScheme === 'dark'
         }" (select)="selectCountryById($event)">

@@ -23,6 +23,7 @@ import {
   FooterComponent,
 } from '@components/common/layout/index.layout';
 import { InfoCardComponent } from './components/shared/info-card/info-card.component';
+import { TooltipComponent } from './components/shared/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { InfoCardComponent } from './components/shared/info-card/info-card.compo
     FooterComponent,
     SpinLoaderComponent,
     InfoCardComponent,
+    TooltipComponent,
   ],
   imports: [
     BrowserModule,
