@@ -1,1 +1,17 @@
-<p>details works!</p>
+<section class="details">
+    <ng-container *ngIf="isLoading$ | async; else content">
+        <p>Loading country line chart...</p>
+        <app-spin-loader></app-spin-loader>
+    </ng-container>
+
+    <ng-template #content>
+        <p>{{countryObject.country}}</p>
+
+        <ngx-charts-line-chart [ngClass]="{
+          'home__pie-chart--light': colorScheme === 'light',
+          'home__pie-chart--dark': colorScheme === 'dark'
+        }">
+        </ngx-charts-line-chart>
+    </ng-template>
+
+</section>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, delay, tap } from 'rxjs/operators';
-import { OlympicData } from '@core/models/olympic-data.types';
+import { catchError, defaultIfEmpty, delay, map, tap } from 'rxjs/operators';
+import { Country, OlympicData } from '@core/models/olympic-data.types';
 import ApiService from '../api-service/api-service.service'; // Assuming you have the correct import path
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -29,7 +29,7 @@ export class OlympicService extends ApiService {
       });
 
     return fetchedObservable.pipe(
-      // delay(1_500),
+      delay(1_500),
       tap((value) => {
         // Use tap to update isLoading when data arrives
         this.isLoading$.next(false);
@@ -46,8 +46,19 @@ export class OlympicService extends ApiService {
     );
   }
 
-  getOlympics() {
+  getOlympics(): Observable<OlympicData> {
     return this.olympics$.asObservable();
+  }
+
+  getOlympicCountryById(id: number): Observable<Country | null | undefined> {
+    return this.olympics$.pipe(
+      map((olympics) =>
+        olympics.find((country: Country) => {
+          return country.id === id;
+        })
+      ),
+      defaultIfEmpty(null)
+    );
   }
 
   getIsLoading(): Observable<boolean> {

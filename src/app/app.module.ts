@@ -9,6 +9,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {
   DialogComponent,
   SpinLoaderComponent,
+  TooltipComponent,
+  InfoCardComponent,
 } from '@components/shared/index.shared-components';
 // Page components
 import {
@@ -22,8 +24,6 @@ import {
   HeaderComponent,
   FooterComponent,
 } from '@components/common/layout/index.layout';
-import { InfoCardComponent } from './components/shared/info-card/info-card.component';
-import { TooltipComponent } from './components/shared/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [

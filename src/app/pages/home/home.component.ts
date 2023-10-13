@@ -8,8 +8,6 @@ import {
   Participation,
 } from '@core/models/olympic-data.types';
 import { Router } from '@angular/router';
-import { log } from '@utils/helpers/console.helpers';
-import { PieChartTooltipData } from '@core/models/pie-chart-tooltip.types';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +16,7 @@ import { PieChartTooltipData } from '@core/models/pie-chart-tooltip.types';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public olympics$!: Observable<OlympicData>;
-  private olympicsSubscription: Subscription | undefined;
+  public olympicsSubscription$: Subscription | undefined;
 
   public isLoading$!: Observable<boolean>;
   public colorScheme!: string;
@@ -40,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.medalsArray = [];
 
-    this.olympicsSubscription = this.olympics$
+    this.olympicsSubscription$ = this.olympics$
       .pipe(
         tap((olympicCountryData) => {
           const hasNoCountriesToDisplay: boolean =
@@ -64,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.olympicsSubscription?.unsubscribe();
+    this.olympicsSubscription$?.unsubscribe();
 
     this.themeSubscription$?.unsubscribe();
   }
