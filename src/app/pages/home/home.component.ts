@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, last, map, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { pie, arc, Pie, Arc, DefaultArcObject, PieArcDatum } from 'd3-shape';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { BrowserModule } from '@angular/platform-browser';
-import { Color, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { Color, DataItem, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +14,11 @@ import { Color, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-   public olympics$: Observable<any> = of(null);
 
-   olympicData!: Olympic[];
+  public data$: Observable<DataItem[]> | undefined;
  
+  public numberOfJo$: Observable<number> | undefined;
+
    view: [number, number] = [400, 400];
 
    // options
@@ -33,20 +35,35 @@ export class HomeComponent implements OnInit {
   };
 
 
-  constructor(private olympicService: OlympicService) {
-    Object.assign(this, this.olympicData );
-    //Object.assign(this, { olympicData });
+  constructor(private olympicService: OlympicService, private router: Router) {
   }
 
 
   ngOnInit(): void {
-   this.olympics$ = this.olympicService.getOlympics();
-   //this.getOlympicData;
-    
+
+    //contient un observable
+    const olympicsData = this.olympicService.getOlympics();
+
+    // When data finished loading, map data to valid chart data
+    this.data$ = olympicsData.pipe(last(), map(olympics => {
+
+      return olympics.map(olympic => ({
+
+        name: olympic.country,
+
+        value: olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0)
+
+      }) as DataItem);
+
+    }));
+
+    this.numberOfJo$=olympicsData.pipe(last(), map(olympics => {
+      return olympics.reduce((acc,current) => current.participations.length> acc ? current.participations.length: acc,0)
+    }))
+
   }
-  //getOlympicData() {
-    //this.olympicService.showOlympic().subscribe((data: any) => {
-      //this.olympicData = data;
-   // });
- // }
+
+  public onSelect(selectedItem: DataItem) {
+    this.router.navigateByUrl(`country/${selectedItem.name}`);
+  }
 }

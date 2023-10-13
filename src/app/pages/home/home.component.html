@@ -1,20 +1,21 @@
-<h2>Olympic games app</h2>
+<h2></h2>
 <hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
 
 <div class=" container">
-  <h1>Survey Reports</h1>
+  <h1>Medals per Country</h1>
   <div>
-<h3>Pie Chart</h3>
+<h3>Number of countries {{ (data$ | async)?.length }}</h3>
+<h3>Number of JOs {{ numberOfJo$ | async }}</h3>
 <ngx-charts-pie-chart
   [view]="view"
   [scheme]="colorScheme"
-  [results]="olympics$"
+  [results]="data$ |async"
   [gradient]="gradient"
   [legend]="showLegend"
   [legendPosition]="legendPosition"
   [labels]="showLabels"
   [doughnut]="isDoughnut"
+  (select)="onSelect($event)"
   >
 </ngx-charts-pie-chart>
 </div>

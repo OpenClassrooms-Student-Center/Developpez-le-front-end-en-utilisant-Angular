@@ -9,34 +9,28 @@ import { Olympic } from '../models/Olympic';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympics$: Observable<Olympic[]> | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  showOlympic() : Observable<Olympic[]> {
-    return this.http.get<any>('http://localhost:4200')
-      .pipe(map((response: any) => response.olympicDatadata));
-  }
-  //{
-    //return this.http
-      //.get<Olympic[]>(this.olympicUrl)
-     // .pipe(map((response: any) => response.data));
- // }
-
-  loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
+  loadInitialData(): Observable<Olympic[]> {
+    //si deja chargé
+    if (!!this.olympics$) { return this.olympics$; }
+    //sinon on va lire le fichier json
+    this.olympics$ = this.http.get<any>(this.olympicUrl).pipe(
       catchError((error, caught) => {
-        // TODO: improve error handling
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
         return caught;
       })
     );
+    return this.olympics$;
   }
 
-  getOlympics() {
-    return this.olympics$.asObservable();
+  getOlympics(): Observable<Olympic[]> {
+    return this.loadInitialData();
   }
+
+ // getOlympicByName(name: String) : Observable<Olympic> {
+ //   return null;
+ // }
 }
