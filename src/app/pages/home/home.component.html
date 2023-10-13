@@ -15,9 +15,6 @@
 </section>
 
 <section class="home__chart-container">
-    <h2 class="home__chart-title">Country performances</h2>
-
-    <h3>Medals per country</h3>
 
     <ng-container *ngIf="isLoading$ | async; else content">
         <p>Loading countries pie chart...</p>
@@ -25,6 +22,7 @@
     </ng-container>
 
     <ng-template #content>
+        <h2 class="home__chart-title">Medals per country</h2>
         <div class="home__info-cards-container">
             <!-- InfoCard for Total Participations -->
             <app-info-card [title]="'Total Participations'" [numberValue]="totalParticipations"></app-info-card>

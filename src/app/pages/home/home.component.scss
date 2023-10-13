@@ -38,14 +38,32 @@
         &-description {}
     }
 
+    &__chart-title {
+        background-color: var(--bg-tertiary);
+        color: white;
+
+        padding: 10px;
+        border-radius: 5px;
+    }
+
     &__chart-container {
-        @include center-flex-column(5px);
+        margin-top: 15px;
+
+        @include center-flex-column(30px);
 
         min-height: 400px;
     }
 
     &__info-cards-container {
-        @include center-flex(25px)
+        @include center-flex(25px);
+
+        @include mobile-only {
+            @include center-flex-column(25px);
+
+            &>* {
+                width: 100%;
+            }
+        }
     }
 
     &__pie-chart {
