@@ -10,7 +10,7 @@
 
     padding: 15px;
 
-    border-bottom: 2px solid currentColor;
+    border-bottom: 2px solid var(--bg-tertiary);
 
     @include mobile-only {
         @include center-flex-column(15px);

@@ -11,7 +11,7 @@
         --semi-transparent-bg: rgba(255, 255, 255, 15%);
 
         --scrollbar-track-bg-color: black;
-        --scrollbar-thumb-bg-color: #ababab;
+        --scrollbar-thumb-bg-color: var(--bg-tertiary);
         --scrollbar-thumb-bg-color--hover: #8a8a8a;
         --scrollbar-thumb-bg-color--active: #4f4f4f;
 
