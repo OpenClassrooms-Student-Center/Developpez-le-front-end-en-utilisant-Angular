@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
+
+import { Observable, Subscription, tap } from 'rxjs';
+
 import { LineChartData } from '@core/models/chart.types';
 import { Country, Participation } from '@core/models/olympic-data.types';
 import { OlympicService, ThemeService } from '@core/services/index.services';
-import { Observable, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -30,7 +33,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private olympicService: OlympicService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private titleMetaTagService: Title,
+    private otherMetaTagsService: Meta
   ) {
     this.id = Number(this.activatedRoute.snapshot.params['id']);
 
@@ -42,15 +47,25 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(this.id);
+    this.titleMetaTagService.setTitle(
+      `Fetching olympic records for country of ID ${this.id}`
+    );
 
     this.countryOlympicSubscription$ = this.countryOlympic$
       .pipe(
         tap((countryObject: Country | null | undefined) => {
           if (!countryObject) {
+            this.titleMetaTagService.setTitle(
+              `Error: There is no country with an ID of ${this.id}`
+            );
             return;
           }
+
           this.setCountryData(countryObject);
           this.setOtherInfosData();
+          this.titleMetaTagService.setTitle(
+            `${countryObject.country} olympic records`
+          );
         })
       )
       .subscribe();
@@ -83,11 +98,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.entries = this.countryData[0].series.length;
 
     this.totalAthletes = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.value;
+      return acc + cur.extra?.athleteCount;
     }, 0);
 
     this.totalEarnedMedals = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.extra?.athleteCount;
+      return acc + cur.value;
     }, 0);
   }
 

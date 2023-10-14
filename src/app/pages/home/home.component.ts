@@ -1,13 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+
 import { Observable, Subscription } from 'rxjs';
-import { retryWhen, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+
 import { OlympicService, ThemeService } from '@core/services/index.services';
 import {
   OlympicData,
   MedalCountryItem,
   Participation,
 } from '@core/models/olympic-data.types';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,10 +32,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private olympicService: OlympicService,
     private routerService: Router,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private titleMetaTagService: Title,
+    private otherMetaTagsService: Meta
   ) {}
 
   ngOnInit(): void {
+    this.titleMetaTagService.setTitle('Home page');
+
     this.olympics$ = this.olympicService.getOlympics();
     this.isLoading$ = this.olympicService.getIsLoading();
 

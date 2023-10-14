@@ -5,16 +5,16 @@
     </ng-container>
 
     <ng-template #content>
-        <h2 class="details__country-name">{{countryData[0].name}}</h2>
+        <ng-container *ngIf="!!countryData && countryData.length>0; else hasNoValues">
+            <h2 class="details__country-name">{{countryData[0].name}}</h2>
 
-        <div class="details__info-cards-container">
-            <app-info-card [title]="'Entries'" [numberValue]="entries"></app-info-card>
-            <app-info-card [title]="'Total number of earned medals'" [numberValue]="totalEarnedMedals"></app-info-card>
-            <app-info-card [title]="'Total number of athletes'" [numberValue]="totalAthletes"></app-info-card>
-        </div>
-        <div class="details__line-chart-container">
-            <ng-container *ngIf="countryData && countryData.length>0; else hasNoValues">
-
+            <div class="details__info-cards-container">
+                <app-info-card [title]="'Entries'" [numberValue]="entries"></app-info-card>
+                <app-info-card [title]="'Total number of earned medals'"
+                    [numberValue]="totalEarnedMedals"></app-info-card>
+                <app-info-card [title]="'Total number of athletes'" [numberValue]="totalAthletes"></app-info-card>
+            </div>
+            <div class="details__line-chart-container">
                 <ngx-charts-line-chart [results]="countryData" [ngClass]="{
           'details__line-chart--light': colorScheme === 'light',
           'details__line-chart--dark': colorScheme === 'dark'
@@ -22,13 +22,13 @@
                     [tooltipDisabled]="true" [showYAxisLabel]="true" [xAxisLabel]="'Year'" [yAxisLabel]="'Medals'"
                     [autoScale]="false">
                 </ngx-charts-line-chart>
-            </ng-container>
 
-        </div>
-        <ng-template #hasNoValues>
-            <p>There are no values to display</p>
-        </ng-template>
+            </div>
+        </ng-container>
 
+    </ng-template>
+    <ng-template #hasNoValues>
+        <p>There are no values to display for country of ID: {{id}}</p>
     </ng-template>
 
     <button class="details__go-back-button" type="button" (click)="goBackToPreviousPage($event)">Go back</button>

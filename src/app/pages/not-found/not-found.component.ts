@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-not-found',
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private titleMetaTagService: Title,
+    private otherMetaTagsService: Meta
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleMetaTagService.setTitle('404 page');
+  }
 }
