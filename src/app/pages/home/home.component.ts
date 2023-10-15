@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription, of, take, takeUntil } from 'rxjs';
-import { DtrOlympic, Olympic, Olympics } from 'src/app/core/models/Olympic';
+import { Olympic, Olympics } from 'src/app/core/models/Olympic';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
 import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 

@@ -9,5 +9,10 @@
         [labels]="showLabels"
         [doughnut]="isDoughnut"
         (select)="onSelect($event)"
-    ></ngx-charts-pie-chart>
+    >
+        <ng-template #tooltipTemplate let-model="model">
+            <h1>{{ model.name }}</h1>
+            <h2><mat-icon>workspace_premium</mat-icon> {{ model.value }}</h2>
+        </ng-template>
+    </ngx-charts-pie-chart>
 </div>
