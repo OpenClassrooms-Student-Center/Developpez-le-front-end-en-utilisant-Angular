@@ -4,5 +4,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
+}
+.center h1 {
+  font-size: 25em;
+  color: "red";
+  margin: 0;
+}
+
+.center button {
+  width: fit-content;
+  align-self: center;
+}
+
+.left {
+  display: flex;
   flex-direction: column;
 }
