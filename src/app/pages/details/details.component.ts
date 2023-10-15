@@ -7,7 +7,7 @@ import { Observable, Subscription, tap } from 'rxjs';
 import { LineChartData } from '@core/models/chart.types';
 import { Country, Participation } from '@core/models/olympic-data.types';
 import { OlympicService, ThemeService } from '@core/services/index.services';
-import { formatPrecisionNumber } from '@utils/helpers/internalization.helpers';
+import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-details',
@@ -95,15 +95,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   setOtherInfosData(): void {
-    this.entries = formatPrecisionNumber(this.countryData[0].series.length);
+    this.entries = formatLocalizedPrecisionNumber(
+      this.countryData[0].series.length
+    );
 
-    this.totalAthletes = formatPrecisionNumber(
+    this.totalAthletes = formatLocalizedPrecisionNumber(
       this.countryData[0].series.reduce((acc, cur) => {
         return acc + cur.extra?.athleteCount;
       }, 0)
     );
 
-    this.totalEarnedMedals = formatPrecisionNumber(
+    this.totalEarnedMedals = formatLocalizedPrecisionNumber(
       this.countryData[0].series.reduce((acc, cur) => {
         return acc + cur.value;
       }, 0)

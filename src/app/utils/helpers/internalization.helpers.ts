@@ -55,7 +55,7 @@
  * @returns {string} The formatted number as a string.
  * @throws {Error} Throws an error if the input arguments are invalid or if the range of decimal places is invalid.
  */
-export function formatPrecisionNumber(
+export function formatLocalizedPrecisionNumber(
   number: number,
   locale: string | undefined = undefined,
   minimumFractionDigits: number = 0,
