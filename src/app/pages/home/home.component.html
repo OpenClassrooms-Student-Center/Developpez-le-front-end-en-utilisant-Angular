@@ -1,9 +1,8 @@
 <h2>Olympic games app</h2>
 <hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
-<div>
+<h3>Medals per Country</h3>
+<div class="chart-container">
     <ngx-charts-pie-chart
-        [view]="view"
         [results]="data"
         [gradient]="gradient"
         [legend]="showLegend"

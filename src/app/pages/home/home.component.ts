@@ -17,10 +17,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$: Observable<Olympics> = of(null);
   public olympics!: Array<Olympic>;
   public data!: Array<PieChartValue>;
+  public screenWidth: number = 0;
+  public screenHeight: number = 0;
 
   
   single!: any[];
   view: [number,number] = [700, 400];
+
+
 
   // options
   gradient: boolean = false;
@@ -50,6 +54,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         // TODO Implement component to display an error occure to user
       }
     }); 
+
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+    console.log((this.screenWidth + "*" + this.screenHeight));
+
+    let widthRadio = (this.screenWidth * 100 / 2560)/100
+    let heighRadio = (this.screenHeight * 100 / 1006)/100
+    this.view[0] = this.view[0] * widthRadio;
+    this.view[1] = this.view[1] * heighRadio;
   }
 
   ngOnDestroy() : void {

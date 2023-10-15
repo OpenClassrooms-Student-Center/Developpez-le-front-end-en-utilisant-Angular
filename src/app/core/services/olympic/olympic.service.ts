@@ -33,11 +33,6 @@ export class OlympicService {
 
   getOlympic(id : number) : Olympic {
     let dtrOlympic = this.olympics$?.value?.find((dtrOlympic) => dtrOlympic?.id == id);
-    // this.olympics$.asObservable().subscribe({
-    //   next:(olympics) => {
-    //     this.olympic$.next(olympics?.find((dtrOlympic) => dtrOlympic?.id == id));
-    //   }
-    // }).unsubscribe();
     return new Olympic(dtrOlympic);
   }
 
