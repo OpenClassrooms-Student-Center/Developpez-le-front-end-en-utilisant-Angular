@@ -52,6 +52,6 @@ export type OlympicData = Country[];
 
 export type MedalCountryItem<TExtra = unknown> = {
   name: string;
-  value: number;
+  value: number | string;
   extra?: TExtra;
 };

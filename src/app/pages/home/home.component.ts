@@ -11,6 +11,7 @@ import {
   MedalCountryItem,
   Participation,
 } from '@core/models/olympic-data.types';
+import { formatPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-home',
@@ -25,8 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public colorScheme!: string;
 
   public medalsArray!: MedalCountryItem[];
-  public totalParticipations: number = 0;
-  public numberOfCountries: number = 0;
+  public totalParticipations!: string;
+  public numberOfCountries!: string;
   public themeSubscription$!: Subscription;
 
   constructor(
@@ -55,7 +56,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           }
           this.setMedalsArray(olympicCountryData);
           this.setInfosCardValues(olympicCountryData);
-          console.log(this.medalsArray);
         })
       )
       .subscribe();
@@ -80,9 +80,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       return {
         id: id,
         name: country,
-        value: participations.reduce((acc, cur: Participation) => {
-          return acc + cur.medalsCount;
-        }, 0),
+        value: formatPrecisionNumber(
+          participations.reduce((acc, cur: Participation) => {
+            return acc + cur.medalsCount;
+          }, 0)
+        ),
 
         extra: {
           id,
@@ -93,13 +95,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setInfosCardValues(olympicData: OlympicData) {
     // Calculate the total number of participations
-    this.totalParticipations = olympicData.reduce(
-      (acc, cur) => acc + cur.participations.length,
-      0
+    this.totalParticipations = formatPrecisionNumber(
+      olympicData.reduce((acc, cur) => acc + cur.participations.length, 0)
     );
 
     // Calculate the number of countries that participated
-    this.numberOfCountries = olympicData.length;
+    this.numberOfCountries = formatPrecisionNumber(olympicData.length);
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {
@@ -107,7 +108,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
     const { id } = e.extra;
-    console.log(e);
 
     this.routerService.navigateByUrl(`/details/${id}`);
   }

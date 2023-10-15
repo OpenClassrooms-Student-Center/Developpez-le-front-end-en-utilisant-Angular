@@ -7,6 +7,7 @@ import { Observable, Subscription, tap } from 'rxjs';
 import { LineChartData } from '@core/models/chart.types';
 import { Country, Participation } from '@core/models/olympic-data.types';
 import { OlympicService, ThemeService } from '@core/services/index.services';
+import { formatPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-details',
@@ -16,9 +17,9 @@ import { OlympicService, ThemeService } from '@core/services/index.services';
 export class DetailsComponent implements OnInit, OnDestroy {
   id!: number;
   countryData!: LineChartData;
-  entries!: number;
-  totalAthletes!: number;
-  totalEarnedMedals!: number;
+  entries!: string;
+  totalAthletes!: string;
+  totalEarnedMedals!: string;
 
   private olympicsSubscription: Subscription | undefined;
 
@@ -46,7 +47,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.id);
     this.titleMetaTagService.setTitle(
       `Fetching olympic records for country of ID ${this.id}`
     );
@@ -95,15 +95,19 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   setOtherInfosData(): void {
-    this.entries = this.countryData[0].series.length;
+    this.entries = formatPrecisionNumber(this.countryData[0].series.length);
 
-    this.totalAthletes = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.extra?.athleteCount;
-    }, 0);
+    this.totalAthletes = formatPrecisionNumber(
+      this.countryData[0].series.reduce((acc, cur) => {
+        return acc + cur.extra?.athleteCount;
+      }, 0)
+    );
 
-    this.totalEarnedMedals = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.value;
-    }, 0);
+    this.totalEarnedMedals = formatPrecisionNumber(
+      this.countryData[0].series.reduce((acc, cur) => {
+        return acc + cur.value;
+      }, 0)
+    );
   }
 
   goBackToPreviousPage(e: MouseEvent) {

@@ -10,8 +10,6 @@ export class HeaderComponent implements OnInit {
   logoUrl: string;
   constructor() {
     this.logoUrl = SVG_URLS.logo;
-
-    console.log(SVG_URLS.logo);
   }
 
   ngOnInit(): void {}
