@@ -1,7 +1,48 @@
-.chart-container {
+.container {
     display: flex;
     flex-direction: column;
-    background-color: blueviolet;
-    width: 100vw;
-    height: 100vh;
+}
+
+@media screen and (min-width: 900px) {
+    .chart-container {
+        width: 75vw;
+        height: 75vh;
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+        background-color: #00838F;
+        color: white;
+        padding: 0.4em;
+        border-radius: 0.5em;
+        font-size: 2em;
+        font-family: Arial;
+    }
+}
+
+.statistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.statistic-container {
+    border: 0.2em solid #00838F;
+    border-radius: 0.5em;
+    padding: 0.25em;
+    text-align: center;
+}
+
+.tooltip {
+    h1 {
+
+    }
+    h2 {
+
+    }
 }

@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$: Observable<Olympics> = of(null);
   public olympics!: Array<Olympic>;
   public data!: Array<PieChartValue>;
-  public screenWidth: number = 0;
-  public screenHeight: number = 0;
+  public nbOfCountries : number = 0;
+  public nbOfJOs : number = 0;
 
   
   single!: any[];
@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPosition: string = 'below';
+  tooltipDisabled : boolean = true;
 
   constructor(
     private olympicService: OlympicService,
@@ -48,21 +49,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         if(!olympics) return
         this.olympics = olympics.map((olympic) => new Olympic(olympic));
         this.data = this.olympics.map((olympic : Olympic) => {return {name: olympic.country, value: olympic.getNbOfParticipation()}});
+        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.olympics);
+        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.olympics);
       },
       error : (error) => {
         console.error("Received an error: " + error);
         // TODO Implement component to display an error occure to user
       }
-    }); 
+    });
 
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-    console.log((this.screenWidth + "*" + this.screenHeight));
-
-    let widthRadio = (this.screenWidth * 100 / 2560)/100
-    let heighRadio = (this.screenHeight * 100 / 1006)/100
-    this.view[0] = this.view[0] * widthRadio;
-    this.view[1] = this.view[1] * heighRadio;
   }
 
   ngOnDestroy() : void {

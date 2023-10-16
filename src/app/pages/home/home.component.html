@@ -1,18 +1,37 @@
 <h2>Olympic games app</h2>
 <hr />
-<h3>Medals per Country</h3>
-<div class="chart-container">
-    <ngx-charts-pie-chart
-        [results]="data"
-        [gradient]="gradient"
-        [legend]="showLegend"
-        [labels]="showLabels"
-        [doughnut]="isDoughnut"
-        (select)="onSelect($event)"
-    >
-        <ng-template #tooltipTemplate let-model="model">
-            <h1>{{ model.name }}</h1>
-            <h2><mat-icon>workspace_premium</mat-icon> {{ model.value }}</h2>
-        </ng-template>
-    </ngx-charts-pie-chart>
+<div class="body">
+    <h3>Medals per Country</h3>
+    <div class="container">
+        <div class="statistics">
+            <div class="statistic-container">
+                <span>Number of JOs</span>
+                <br />
+                <span>{{ nbOfJOs }}</span>
+            </div>
+            <div class="statistic-container">
+                <span>Number of Countries</span>
+                <br />
+                <span>{{ nbOfCountries }}</span>
+            </div>
+        </div>
+        <div class="chart-container">
+            <ngx-charts-pie-chart
+                class="pie-label"
+                [results]="data"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+            >
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="tooltip">
+                        <h1>{{ model.name }}</h1>
+                        <h2><mat-icon>workspace_premium</mat-icon>{{ model.value }}</h2>
+                    </div>
+                </ng-template>
+            </ngx-charts-pie-chart>
+        </div>
+    </div>
 </div>
