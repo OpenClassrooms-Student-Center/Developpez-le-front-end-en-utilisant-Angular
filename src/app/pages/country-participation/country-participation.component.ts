@@ -12,7 +12,7 @@ import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 export class CountryParticipationComponent implements OnInit {
   private olympicSubscribe! : Subscription;
 
-  public olympic! : Olympic;
+  public olympic! : Olympic | undefined;
 
   // Line Chart Options
   showXAxisLabel : boolean = true;
@@ -32,13 +32,26 @@ export class CountryParticipationComponent implements OnInit {
 
   ngOnInit(): void {
     let id : number = +this.route.snapshot.params['id'];
-    this.olympic = this.olympicService.getOlympic(id);
-    console.log('Olympic: ' + this.olympic)
-    let series : {name: string, value : number}[] = this.olympic.participations.map((partition) => ({name: String(partition.year), value: partition.medalsCount }))
-    this.multi = [{
-      name : this.olympic.country,
-      series: series
-    }]
+
+    this.olympicSubscribe = this.olympicService.getOlympic$(id).subscribe({
+      next: (olympic) => {
+        this.olympic = olympic;
+        if(olympic) {
+          let series : {name: string, value : number}[] = olympic.participations.map((partition) => ({name: String(partition.year), value: partition.medalsCount }))
+          this.multi = [{
+            name : olympic!.country,
+            series: series
+          }]
+        }
+      },
+      error: (error) => {
+        console.error("Received an error: " + error);
+        // TODO Implement component to display an error occure to user
+      }
+    });
+
+    // this.olympic = this.olympicService.getOlympic(id);
+    // console.log('Olympic: ' + this.olympic)
   }
 
   goBack(): void {

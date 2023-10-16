@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$!: Subject<boolean>;
   private olympicsSubscribe! : Subscription;
 
-  public olympics$: Observable<Olympics> = of(null);
   public olympics!: Array<Olympic>;
   public data!: Array<PieChartValue>;
   public nbOfCountries : number = 0;
@@ -41,12 +40,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.destroy$ = new Subject<boolean>();
-    this.olympics$ = this.olympicService.getOlympics();
-    this.olympicsSubscribe = this.olympics$.pipe(
+    this.olympicsSubscribe = this.olympicService.getOlympics().pipe(
       takeUntil(this.destroy$)
     ).subscribe({
-      next: (olympics : Olympics) => {
-        if(!olympics) return
+      next: (olympics : Olympics | undefined) => {
+        if(!olympics) throw new Error("Olympics data can't be undefined or null.");
+        
         this.olympics = olympics.map((olympic) => new Olympic(olympic));
         this.data = this.olympics.map((olympic : Olympic) => {return {name: olympic.country, value: olympic.getNbOfParticipation()}});
         this.nbOfCountries = this.olympicService.getNumberOfCountry(this.olympics);

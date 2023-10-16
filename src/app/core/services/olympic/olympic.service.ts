@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { DtrOlympic, Olympic, Olympics } from '../../models/Olympic';
+import { Olympic, Olympics } from '../../models/Olympic';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<Olympics>(undefined);
-  private olympic$ = new BehaviorSubject<DtrOlympic>(undefined);
+  private olympics$ = new BehaviorSubject<Olympics | undefined>(undefined);
+  private olympic$ = new BehaviorSubject<Olympic | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
 
@@ -21,17 +21,40 @@ export class OlympicService {
         this.olympics$.error(error);
         console.error(error);
         // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.olympics$.next(undefined);
         return caught;
       })
     );
   }
 
-  getOlympics() : Observable<Olympics> {
+  getOlympics() : Observable<Olympics | undefined> {
     return this.olympics$.asObservable();
   }
 
+  getOlympic$(id : number) : Observable<Olympic | undefined> {
+    if(!this.olympic$.value) {
+      this.loadInitialData().subscribe({
+        next: (olympics) => {
+          if(!olympics) {
+            throw new Error("Olympics data can't be undefined or null.")
+          }
+          let dtrOlympic = olympics.find((dtrOlympic) => dtrOlympic?.id == id);
+          this.olympic$.next(new Olympic(dtrOlympic));
+        },
+        error: (error) => {
+          console.error("Received an error: " + error);
+          // TODO Implement component to display an error occure to user
+        }
+      })
+    } else {
+      let dtrOlympic = this.olympics$.value?.find((dtrOlympic) => dtrOlympic?.id == id);
+      this.olympic$.next(new Olympic(dtrOlympic));
+    }
+    return  this.olympic$.asObservable()
+  }
+
   getOlympic(id : number) : Olympic {
+
     let dtrOlympic = this.olympics$?.value?.find((dtrOlympic) => dtrOlympic?.id == id);
     return new Olympic(dtrOlympic);
   }

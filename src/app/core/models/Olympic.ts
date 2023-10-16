@@ -3,7 +3,7 @@ import { DtrParticipation, Participation } from "./Participation";
 // Dtr = Data received
 export type DtrOlympic = IOlympic | undefined | null;
 
-export type Olympics = Array<DtrOlympic> | undefined | null;
+export type Olympics = Array<DtrOlympic>;
 
 interface IOlympic {
     id : number,
