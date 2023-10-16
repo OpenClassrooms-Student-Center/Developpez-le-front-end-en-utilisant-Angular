@@ -1,3 +1,16 @@
 <p>country-participation works!</p>
 <p>{{ olympic!.country }}</p>
+<div>
+    <ngx-charts-line-chart
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+        [autoScale]="autoScale"
+    >
+</ngx-charts-line-chart>
+</div>
 <button routerLink="">Retour</button>
