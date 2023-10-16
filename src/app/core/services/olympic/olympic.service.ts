@@ -36,11 +36,11 @@ export class OlympicService {
     return new Olympic(dtrOlympic);
   }
 
-  getNumberOfCountry(olympics : Olympics) {
+  getNumberOfCountry(olympics : Olympics) : number {
     throw new Error("Not Implemented");
   }
 
-  getNumberOfJOs(olympics : Olympics) {
+  getNumberOfJOs(olympics : Olympics) : number {
     throw new Error("Not Implemented");
   }
 }
