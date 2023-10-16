@@ -37,10 +37,19 @@ export class OlympicService {
   }
 
   getNumberOfCountry(olympics : Olympics) : number {
-    throw new Error("Not Implemented");
+    if(!olympics) return 0;
+    return olympics.length;
   }
 
-  getNumberOfJOs(olympics : Olympics) : number {
-    throw new Error("Not Implemented");
+  getNumberOfJOs(olympics : Olympics) {
+    if(!olympics) return 0;
+
+    let setOfYears = new Set<number>();
+    olympics.forEach((dtrOlympic) => {
+      dtrOlympic?.participations.forEach((participation) => {
+        setOfYears.add(participation.year);
+      });
+    });
+    return setOfYears.size;
   }
 }
