@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription, of, take, takeUntil } from 'rxjs';
-import { DtrOlympic, Olympic, Olympics } from 'src/app/core/models/Olympic';
+import { Olympic, Olympics } from 'src/app/core/models/Olympic';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
-import { OlympicService } from 'src/app/core/services/olympic.service';
+import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +17,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   public olympics$: Observable<Olympics> = of(null);
   public olympics!: Array<Olympic>;
   public data!: Array<PieChartValue>;
+  public nbOfCountries : number = 0;
+  public nbOfJOs : number = 0;
 
   
   single!: any[];
   view: [number,number] = [700, 400];
+
+
 
   // options
   gradient: boolean = false;
@@ -28,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPosition: string = 'below';
+  tooltipDisabled : boolean = true;
 
   constructor(
     private olympicService: OlympicService,
@@ -44,12 +49,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         if(!olympics) return
         this.olympics = olympics.map((olympic) => new Olympic(olympic));
         this.data = this.olympics.map((olympic : Olympic) => {return {name: olympic.country, value: olympic.getNbOfParticipation()}});
+        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.olympics);
+        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.olympics);
       },
       error : (error) => {
         console.error("Received an error: " + error);
         // TODO Implement component to display an error occure to user
       }
-    }); 
+    });
+
   }
 
   ngOnDestroy() : void {

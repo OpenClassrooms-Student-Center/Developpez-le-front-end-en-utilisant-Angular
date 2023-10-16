@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { DtrOlympic, Olympic, Olympics } from '../models/Olympic';
+import { DtrOlympic, Olympic, Olympics } from '../../models/Olympic';
 
 @Injectable({
   providedIn: 'root',
@@ -33,19 +33,23 @@ export class OlympicService {
 
   getOlympic(id : number) : Olympic {
     let dtrOlympic = this.olympics$?.value?.find((dtrOlympic) => dtrOlympic?.id == id);
-    // this.olympics$.asObservable().subscribe({
-    //   next:(olympics) => {
-    //     this.olympic$.next(olympics?.find((dtrOlympic) => dtrOlympic?.id == id));
-    //   }
-    // }).unsubscribe();
     return new Olympic(dtrOlympic);
   }
 
-  getNumberOfCountry(olympics : Olympics) {
-    throw new Error("Not Implemented");
+  getNumberOfCountry(olympics : Olympics) : number {
+    if(!olympics) return 0;
+    return olympics.length;
   }
 
   getNumberOfJOs(olympics : Olympics) {
-    throw new Error("Not Implemented");
+    if(!olympics) return 0;
+
+    let setOfYears = new Set<number>();
+    olympics.forEach((dtrOlympic) => {
+      dtrOlympic?.participations.forEach((participation) => {
+        setOfYears.add(participation.year);
+      });
+    });
+    return setOfYears.size;
   }
 }
