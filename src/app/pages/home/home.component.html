@@ -5,18 +5,19 @@
     <div class="container">
         <div class="statistics">
             <div class="statistic-container">
-                <span>Number of JOs</span>
+                <span class="title">Number of JOs</span>
                 <br />
-                <span>{{ nbOfJOs }}</span>
+                <span class="value">{{ nbOfJOs }}</span>
             </div>
             <div class="statistic-container">
-                <span>Number of Countries</span>
+                <span class="title">Number of Countries</span>
                 <br />
-                <span>{{ nbOfCountries }}</span>
+                <span class="value">{{ nbOfCountries }}</span>
             </div>
         </div>
-        <div class="chart-container">
+        <div #chartContainerRef class="chart-container">
             <ngx-charts-pie-chart
+                [view]="[chartContainerRef.offsetWidth,chartContainerRef.offsetHeight]"
                 class="pie-label"
                 [results]="data"
                 [gradient]="gradient"
@@ -28,7 +29,9 @@
                 <ng-template #tooltipTemplate let-model="model">
                     <div class="tooltip">
                         <h1>{{ model.name }}</h1>
-                        <h2><mat-icon>workspace_premium</mat-icon>{{ model.value }}</h2>
+                        <div class="subTitle">
+                            <mat-icon>workspace_premium</mat-icon><h2>{{ model.value }}</h2>
+                        </div>
                     </div>
                 </ng-template>
             </ngx-charts-pie-chart>
