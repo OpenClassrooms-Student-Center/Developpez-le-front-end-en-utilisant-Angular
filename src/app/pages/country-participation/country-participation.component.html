@@ -1,16 +1,24 @@
-<p>country-participation works!</p>
-<p>{{ olympic?.country }}</p>
-<div>
-    <ngx-charts-line-chart
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxis]="xAxis"
-        [yAxis]="yAxis"
-        [xAxisLabel]="xAxisLabel"
-        [timeline]="timeline"
-        [results]="multi"
-        [autoScale]="autoScale"
-    >
-</ngx-charts-line-chart>
+<app-header></app-header>
+<div class="body">
+    <app-title [title]="country!.country"></app-title>
+    <div class="statistics">
+        <app-statistic-card text="Number of Entries" [value]="country!.getNbEntries()"></app-statistic-card>
+        <app-statistic-card text="Total number medals" [value]="country!.getTotalNbMedals()"></app-statistic-card>
+        <app-statistic-card text="Total number of athletes" [value]="country!.getTotalNbOfAthletes()"></app-statistic-card>
+    </div>
+    <div #chartContainerRef class="chart-container">
+        <ngx-charts-line-chart
+            [view]="[chartContainerRef.offsetWidth,chartContainerRef.offsetHeight]"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [timeline]="timeline"
+            [results]="multi"
+            [autoScale]="autoScale"
+        >
+        </ngx-charts-line-chart>
+    </div>
+    <button routerLink="">Retour</button>
 </div>
-<button routerLink="">Retour</button>

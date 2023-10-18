@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, partition } from 'rxjs';
-import { Olympic } from 'src/app/core/models/Olympic';
+import { Subscription } from 'rxjs';
+import { Country } from 'src/app/core/models/Country';
 import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 
 @Component({
@@ -9,10 +9,11 @@ import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
   templateUrl: './country-participation.component.html',
   styleUrls: ['./country-participation.component.scss']
 })
-export class CountryParticipationComponent implements OnInit {
-  private olympicSubscribe! : Subscription;
+export class CountryParticipationComponent implements OnInit, OnDestroy {
+  private countrieSubscribe! : Subscription;
 
-  public olympic! : Olympic | undefined;
+  country! : Country | undefined;
+
 
   // Line Chart Options
   showXAxisLabel : boolean = true;
@@ -33,13 +34,13 @@ export class CountryParticipationComponent implements OnInit {
   ngOnInit(): void {
     let id : number = +this.route.snapshot.params['id'];
 
-    this.olympicSubscribe = this.olympicService.getOlympic$(id).subscribe({
-      next: (olympic) => {
-        this.olympic = olympic;
-        if(olympic) {
-          let series : {name: string, value : number}[] = olympic.participations.map((partition) => ({name: String(partition.year), value: partition.medalsCount }))
+    this.countrieSubscribe = this.olympicService.getCountry(id).subscribe({
+      next: (country) => {
+        this.country = country;
+        if(country) {
+          let series : {name: string, value : number}[] = country.participations.map((partition) => ({name: String(partition.year), value: partition.medalsCount }))
           this.multi = [{
-            name : olympic!.country,
+            name : country!.country,
             series: series
           }]
         }
@@ -49,9 +50,10 @@ export class CountryParticipationComponent implements OnInit {
         // TODO Implement component to display an error occure to user
       }
     });
+  }
 
-    // this.olympic = this.olympicService.getOlympic(id);
-    // console.log('Olympic: ' + this.olympic)
+  ngOnDestroy(): void {
+    this.countrieSubscribe.unsubscribe();
   }
 
   goBack(): void {
