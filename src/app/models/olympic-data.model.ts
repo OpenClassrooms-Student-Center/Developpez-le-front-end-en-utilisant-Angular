@@ -1,6 +1,6 @@
 export class Participations {
   id!: number;
-  years!: number;
+  year!: number;
   city!: string;
   medalsCount!: number;
   athleteCount!: number;
