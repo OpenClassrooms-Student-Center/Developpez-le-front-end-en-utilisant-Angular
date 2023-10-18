@@ -9,13 +9,19 @@ import { CountryParticipationComponent } from './pages/country-participation/cou
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from "@angular/material/icon";
+import { HeaderComponent } from './core/components/header/header.component';
+import { TitleComponent } from './core/components/title/title.component';
+import { StatisticCardComponent } from './core/components/statistic-card/statistic-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NotFoundComponent,
-    CountryParticipationComponent
+    CountryParticipationComponent,
+    HeaderComponent,
+    TitleComponent,
+    StatisticCardComponent
   ],
   imports: [
     BrowserModule,

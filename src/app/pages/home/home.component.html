@@ -1,19 +1,10 @@
-<h2>Olympic games app</h2>
-<hr />
+<app-header></app-header>
 <div class="body">
-    <h3>Medals per Country</h3>
+    <app-title title="Medals per country"></app-title>
     <div class="container">
         <div class="statistics">
-            <div class="statistic-container">
-                <span class="title">Number of JOs</span>
-                <br />
-                <span class="value">{{ nbOfJOs }}</span>
-            </div>
-            <div class="statistic-container">
-                <span class="title">Number of Countries</span>
-                <br />
-                <span class="value">{{ nbOfCountries }}</span>
-            </div>
+            <app-statistic-card text="Number of JOs" [value]="nbOfJOs"></app-statistic-card>
+            <app-statistic-card text="Number of countries" [value]="nbOfCountries"></app-statistic-card>
         </div>
         <div #chartContainerRef class="chart-container">
             <ngx-charts-pie-chart

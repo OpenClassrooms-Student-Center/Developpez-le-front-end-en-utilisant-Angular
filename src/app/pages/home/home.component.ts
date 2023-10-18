@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, of, take, takeUntil } from 'rxjs';
-import { Olympic, Olympics } from 'src/app/core/models/Olympic';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Country, Countries } from 'src/app/core/models/Country';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
 import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 
@@ -12,16 +12,15 @@ import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$!: Subject<boolean>;
-  private olympicsSubscribe! : Subscription;
+  private CountriesSubscribe! : Subscription;
 
-  public olympics!: Array<Olympic>;
+  public Countries!: Array<Country>;
   public data!: Array<PieChartValue>;
   public nbOfCountries : number = 0;
   public nbOfJOs : number = 0;
 
   
   single!: any[];
-  view: [number,number] = [700, 400];
 
 
 
@@ -40,16 +39,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.destroy$ = new Subject<boolean>();
-    this.olympicsSubscribe = this.olympicService.getOlympics().pipe(
+    this.CountriesSubscribe = this.olympicService.getCountries().pipe(
       takeUntil(this.destroy$)
     ).subscribe({
-      next: (olympics : Olympics | undefined) => {
-        if(!olympics) throw new Error("Olympics data can't be undefined or null.");
+      next: (Countries : Countries | undefined) => {
+        if(!Countries) throw new Error("Countries data can't be undefined or null.");
         
-        this.olympics = olympics.map((olympic) => new Olympic(olympic));
-        this.data = this.olympics.map((olympic : Olympic) => {return {name: olympic.country, value: olympic.getNbOfParticipation()}});
-        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.olympics);
-        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.olympics);
+        this.Countries = Countries.map((olympic) => new Country(olympic));
+        this.data = this.Countries.map((olympic : Country) => {return {name: olympic.country, value: olympic.getTotalNbMedals()}});
+        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.Countries);
+        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.Countries);
       },
       error : (error) => {
         console.error("Received an error: " + error);
@@ -61,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() : void {
     this.destroy$.next(true);
-    this.olympicsSubscribe.unsubscribe();
+    this.CountriesSubscribe.unsubscribe();
   }
 
   colorScheme : {domain: string[]} = {
@@ -70,6 +69,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSelect(data: PieChartValue): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.router.navigateByUrl(`country/${this.olympics.find((olympic) => olympic.country === data.name)?.id}`)
+    this.router.navigateByUrl(`country/${this.Countries.find((olympic) => olympic.country === data.name)?.id}`)
   }
 }
