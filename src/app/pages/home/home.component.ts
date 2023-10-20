@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Observable, of } from 'rxjs';
-import { ICountry } from 'src/app/core/models/Olympic';
+import { ICountry, Olympics } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+  public olympics$: Observable<Olympics> = of(null);
   public Highcharts: typeof Highcharts = Highcharts;
   public chartOptions: Highcharts.Options = {
     title: {
