@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { LineChartData } from '@core/models/chart.types';
-import { Country, Participation } from '@core/models/olympic-data.types';
+import { Country } from '@core/models/olympic-data.types';
 import { OlympicService, ThemeService } from '@core/services/index.services';
-import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-details',
@@ -17,9 +16,9 @@ import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.h
 export class DetailsComponent implements OnInit, OnDestroy {
   id!: number;
   countryData!: LineChartData;
-  entries!: string;
-  totalAthletes!: string;
-  totalEarnedMedals!: string;
+  entries!: number;
+  totalAthletes!: number;
+  totalEarnedMedals!: number;
 
   private olympicsSubscription: Subscription | undefined;
 
@@ -51,24 +50,22 @@ export class DetailsComponent implements OnInit, OnDestroy {
       `Fetching olympic records for country of ID ${this.id}`
     );
 
-    this.countryOlympicSubscription$ = this.countryOlympic$
-      .pipe(
-        tap((countryObject: Country | null | undefined) => {
-          if (!countryObject) {
-            this.titleMetaTagService.setTitle(
-              `Error: There is no country with an ID of ${this.id}`
-            );
-            return;
-          }
-
-          this.setCountryData(countryObject);
-          this.setOtherInfosData();
+    this.countryOlympicSubscription$ = this.countryOlympic$.subscribe(
+      (countryObject: Country | null | undefined) => {
+        if (!countryObject) {
           this.titleMetaTagService.setTitle(
-            `${countryObject.country} olympic records`
+            `Error: There is no country with an ID of ${this.id}`
           );
-        })
-      )
-      .subscribe();
+          return;
+        }
+
+        this.setCountryData(countryObject);
+        this.setOtherInfosData();
+        this.titleMetaTagService.setTitle(
+          `${countryObject.country} olympic records`
+        );
+      }
+    );
 
     this.themeSubscription$ = this.themeService
       .getColorScheme()
@@ -95,21 +92,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   setOtherInfosData(): void {
-    this.entries = formatLocalizedPrecisionNumber(
-      this.countryData[0].series.length
-    );
+    this.entries = this.countryData[0].series.length;
 
-    this.totalAthletes = formatLocalizedPrecisionNumber(
-      this.countryData[0].series.reduce((acc, cur) => {
-        return acc + cur.extra?.athleteCount;
-      }, 0)
-    );
+    this.totalAthletes = this.countryData[0].series.reduce((acc, cur) => {
+      return acc + cur.extra?.athleteCount;
+    }, 0);
 
-    this.totalEarnedMedals = formatLocalizedPrecisionNumber(
-      this.countryData[0].series.reduce((acc, cur) => {
-        return acc + cur.value;
-      }, 0)
-    );
+    this.totalEarnedMedals = this.countryData[0].series.reduce((acc, cur) => {
+      return acc + cur.value;
+    }, 0);
   }
 
   goBackToPreviousPage(e: MouseEvent) {

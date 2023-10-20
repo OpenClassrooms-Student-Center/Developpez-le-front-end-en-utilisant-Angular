@@ -3,7 +3,6 @@ import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { OlympicService, ThemeService } from '@core/services/index.services';
 import {
@@ -26,8 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public colorScheme!: string;
 
   public medalsArray!: MedalCountryItem[];
-  public totalParticipations!: string;
-  public numberOfCountries!: string;
+  public totalParticipations!: number;
+  public numberOfCountries!: number;
   public themeSubscription$!: Subscription;
 
   constructor(
@@ -46,19 +45,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.medalsArray = [];
 
-    this.olympicsSubscription$ = this.olympics$
-      .pipe(
-        tap((olympicCountryData) => {
-          const hasNoCountriesToDisplay: boolean =
-            olympicCountryData.length < 1;
-          if (hasNoCountriesToDisplay) {
-            return;
-          }
-          this.setMedalsArray(olympicCountryData);
-          this.setInfosCardValues(olympicCountryData);
-        })
-      )
-      .subscribe();
+    this.olympicsSubscription$ = this.olympics$.subscribe(
+      (olympicCountryData) => {
+        const hasNoCountriesToDisplay: boolean = olympicCountryData.length < 1;
+        if (hasNoCountriesToDisplay) {
+          return;
+        }
+        this.setMedalsArray(olympicCountryData);
+        this.setInfosCardValues(olympicCountryData);
+      }
+    );
 
     // Subscribe to the theme changes
     this.themeSubscription$ = this.themeService
@@ -95,12 +91,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setInfosCardValues(olympicData: OlympicData) {
     // Calculate the total number of participations
-    this.totalParticipations = formatLocalizedPrecisionNumber(
-      olympicData.reduce((acc, cur) => acc + cur.participations.length, 0)
+    this.totalParticipations = olympicData.reduce(
+      (acc, cur) => acc + cur.participations.length,
+      0
     );
 
     // Calculate the number of countries that participated
-    this.numberOfCountries = formatLocalizedPrecisionNumber(olympicData.length);
+    this.numberOfCountries = olympicData.length;
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {

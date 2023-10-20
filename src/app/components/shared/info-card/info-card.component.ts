@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-info-card',
@@ -7,9 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class InfoCardComponent implements OnInit {
   @Input() title: string = '';
-  @Input() numberValue: number | string = 0;
+  @Input() numberValue: number = 0;
+
+  public formattedValue: string = '';
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formattedValue = formatLocalizedPrecisionNumber(this.numberValue);
+  }
 }
