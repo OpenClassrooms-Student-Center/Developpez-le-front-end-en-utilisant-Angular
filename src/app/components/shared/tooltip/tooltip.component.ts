@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-tooltip',
@@ -9,7 +10,13 @@ export class TooltipComponent implements OnInit {
   @Input() country: string = '';
   @Input() earnedMedals: number = 0;
 
+  public formattedEarnedMedals: string = '';
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formattedEarnedMedals = formatLocalizedPrecisionNumber(
+      this.earnedMedals
+    );
+  }
 }
