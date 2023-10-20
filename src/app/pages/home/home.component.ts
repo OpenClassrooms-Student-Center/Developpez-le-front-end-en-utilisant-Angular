@@ -16,8 +16,12 @@ export class HomeComponent implements OnInit {
     title: {
       text: ''
     },
+    tooltip: {
+      pointFormat: `{series.name} <b>{point.y}</b>`
+    },
     series: [
       {
+        name: '🥇',
         data: [],
         type: 'pie',
       },
