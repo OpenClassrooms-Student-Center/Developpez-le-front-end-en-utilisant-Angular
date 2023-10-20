@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
  
   public numberOfJo$: Observable<number> | undefined;
 
+  public participationsByOlympic$ : Observable<DataItem> | undefined;
+
    view: [number, number] = [400, 400];
 
    // options
@@ -65,5 +67,6 @@ export class HomeComponent implements OnInit {
 
   public onSelect(selectedItem: DataItem) {
     this.router.navigateByUrl(`country/${selectedItem.name}`);
+    //this.olympicService.getOlympicByName(`country/${selectedItem.name}`);
   }
 }
