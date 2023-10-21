@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Country } from 'src/app/core/models/Country';
@@ -16,6 +16,7 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
 
 
   // Line Chart Options
+  view: [number, number] = window.innerWidth < 800 ? [window.innerWidth,window.innerWidth] : [window.innerWidth/3,window.innerWidth/6];
   showXAxisLabel : boolean = true;
   showYAxisLabel : boolean = false;
   xAxis : boolean = true;
@@ -60,7 +61,18 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('');
   }
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    if(window.innerWidth < 800) {
+      this.view = [window.innerWidth,window.innerWidth];
+    } else {
+      this.view = [window.innerWidth/3,window.innerWidth/6];
+    }
+  }
+
 };
+
+
 
 type lineChartData = {
   name : string,

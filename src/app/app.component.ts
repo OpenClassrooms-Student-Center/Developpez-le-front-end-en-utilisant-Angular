@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
 import { OlympicService } from './core/services/olympic/olympic.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',

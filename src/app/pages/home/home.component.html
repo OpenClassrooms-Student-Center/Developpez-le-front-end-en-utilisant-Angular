@@ -8,12 +8,14 @@
         </div>
         <div #chartContainerRef class="chart-container">
             <ngx-charts-pie-chart
-                [view]="[chartContainerRef.offsetWidth,chartContainerRef.offsetHeight]"
+                [view]="view"
                 class="pie-label"
                 [results]="data"
                 [gradient]="gradient"
                 [legend]="showLegend"
+                [legendPosition]="legendPosition"
                 [labels]="showLabels"
+                [maxLabelLength]="maxLabelLength"
                 [doughnut]="isDoughnut"
                 (select)="onSelect($event)"
             >

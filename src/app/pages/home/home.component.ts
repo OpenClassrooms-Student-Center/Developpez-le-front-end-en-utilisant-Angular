@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Country, Countries } from 'src/app/core/models/Country';
 import { PieChartValue } from 'src/app/core/models/PieChartValue';
 import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
@@ -11,26 +12,27 @@ import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private destroy$!: Subject<boolean>;
-  private CountriesSubscribe! : Subscription;
+  private countriesSubscribe! : Subscription;
 
-  public Countries!: Array<Country>;
+  public countries!: Array<Country>;
   public data!: Array<PieChartValue>;
   public nbOfCountries : number = 0;
   public nbOfJOs : number = 0;
 
-  
+  public getScreenWidth!: number;
+  public getScreenHeight!: number;
+
   single!: any[];
 
-
-
   // options
+  view: [number, number] = window.innerWidth < 800 ? [window.innerWidth,window.innerWidth] : [window.innerWidth/3,window.innerWidth/3];
   gradient: boolean = false;
   showLegend: boolean = false;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-  legendPosition: string = 'below';
+  legendPosition: string | any = 'below';
   tooltipDisabled : boolean = true;
+  maxLabelLength : number = 22;
 
   constructor(
     private olympicService: OlympicService,
@@ -38,17 +40,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.destroy$ = new Subject<boolean>();
-    this.CountriesSubscribe = this.olympicService.getCountries().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe({
-      next: (Countries : Countries | undefined) => {
-        if(!Countries) throw new Error("Countries data can't be undefined or null.");
+    this.getScreenWidth = window.innerWidth;
+    this.getScreenHeight = window.innerHeight;
+
+    this.countriesSubscribe = this.olympicService.getCountries().subscribe({
+      next: (countries : Countries | undefined) => {
+        console.log("Countries Observable: " + JSON.stringify(countries))
+        if(countries === undefined) return
         
-        this.Countries = Countries.map((olympic) => new Country(olympic));
-        this.data = this.Countries.map((olympic : Country) => {return {name: olympic.country, value: olympic.getTotalNbMedals()}});
-        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.Countries);
-        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.Countries);
+        this.countries = countries.map((country) => new Country(country));
+        this.data = this.countries.map((country : Country) => {return {name: country.country, value: country.getTotalNbMedals()}});
+        this.nbOfCountries = this.olympicService.getNumberOfCountry(this.countries);
+        this.nbOfJOs = this.olympicService.getNumberOfJOs(this.countries);
       },
       error : (error) => {
         console.error("Received an error: " + error);
@@ -59,8 +62,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() : void {
-    this.destroy$.next(true);
-    this.CountriesSubscribe.unsubscribe();
+    this.countriesSubscribe.unsubscribe();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    if(window.innerWidth < 800) {
+      this.view = [window.innerWidth,window.innerWidth];
+    } else {
+      this.view = [window.innerWidth/3,window.innerWidth/3];
+    }
   }
 
   colorScheme : {domain: string[]} = {
@@ -69,6 +80,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSelect(data: PieChartValue): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    this.router.navigateByUrl(`country/${this.Countries.find((olympic) => olympic.country === data.name)?.id}`)
+    this.router.navigateByUrl(`country/${this.countries.find((country) => country.country === data.name)?.id}`)
   }
 }

@@ -10,3 +10,8 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
     background-color: #00838F;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+}

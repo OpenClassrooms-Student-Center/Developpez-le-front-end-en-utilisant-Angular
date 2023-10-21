@@ -5,17 +5,23 @@
     padding: 0;
 }
 
-@media screen and (min-width: 900px) {
-    .chart-container {
-        width: 50vw;
-        height: 50vh;
-    }
-}
-
 .statistics {
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 3rem;
     margin-bottom: 1rem;
+}
+
+button {
+    width: 7rem;
+    height: 3rem;
+    background-color: #00838F;
+    color: white;
+    padding: 0.4rem;
+    border-color: #00838F;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: Arial;
+    font-weight: bold;
 }

@@ -3,13 +3,6 @@
     flex-direction: column;
 }
 
-@media screen and (min-width: 900px) {
-    .chart-container {
-        width: 75vw;
-        height: 75vh;
-    }
-}
-
 .body {
     display: flex;
     flex-direction: column;
