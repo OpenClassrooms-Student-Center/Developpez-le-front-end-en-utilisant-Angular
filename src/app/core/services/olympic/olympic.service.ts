@@ -20,7 +20,6 @@ export class OlympicService {
       catchError((error, caught) => {
         this.countries$.error(error);
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
         this.countries$.next(undefined);
         return caught;
       })
@@ -43,7 +42,7 @@ export class OlympicService {
         },
         error: (error) => {
           console.error("Received an error: " + error);
-          // TODO Implement component to display an error occure to user
+          this.country$.error(error);
         }
       })
     } else {
