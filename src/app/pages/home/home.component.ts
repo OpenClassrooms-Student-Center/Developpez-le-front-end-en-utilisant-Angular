@@ -76,11 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       return {
         id: id,
         name: country,
-        value: formatLocalizedPrecisionNumber(
-          participations.reduce((acc, cur: Participation) => {
-            return acc + cur.medalsCount;
-          }, 0)
-        ),
+        value: participations.reduce((acc, cur: Participation) => {
+          return acc + cur.medalsCount;
+        }, 0),
 
         extra: {
           id,
