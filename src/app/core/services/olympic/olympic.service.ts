@@ -1,52 +1,68 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { DtrOlympic, Olympic, Olympics } from '../../models/Olympic';
+import { Country, Countries } from '../../models/Country';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<Olympics>(undefined);
-  private olympic$ = new BehaviorSubject<DtrOlympic>(undefined);
+  private countries$ = new BehaviorSubject<Countries | undefined>(undefined);
+  private country$ = new BehaviorSubject<Country | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
-    return this.http.get<Olympics>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
+    return this.http.get<Countries>(this.olympicUrl).pipe(
+      tap((value) => this.countries$.next(value)),
       catchError((error, caught) => {
-        this.olympics$.error(error);
+        this.countries$.error(error);
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.countries$.next(undefined);
         return caught;
       })
     );
   }
 
-  getOlympics() : Observable<Olympics> {
-    return this.olympics$.asObservable();
+  getCountries() : Observable<Countries | undefined> {
+    return this.countries$.asObservable();
   }
 
-  getOlympic(id : number) : Olympic {
-    let dtrOlympic = this.olympics$?.value?.find((dtrOlympic) => dtrOlympic?.id == id);
-    return new Olympic(dtrOlympic);
+  getCountry(id : number) : Observable<Country | undefined> {
+    if(!this.country$.value) {
+      this.loadInitialData().subscribe({
+        next: (countries) => {
+          if(!countries) {
+            throw new Error("Countries data can't be undefined or null.")
+          }
+          let DtrCountry = countries.find((DtrCountry) => DtrCountry?.id == id);
+          this.country$.next(new Country(DtrCountry));
+        },
+        error: (error) => {
+          console.error("Received an error: " + error);
+          this.country$.error(error);
+        }
+      })
+    } else {
+      let DtrCountry = this.countries$.value?.find((DtrCountry) => DtrCountry?.id == id);
+      this.country$.next(new Country(DtrCountry));
+    }
+    return  this.country$.asObservable()
   }
 
-  getNumberOfCountry(olympics : Olympics) : number {
-    if(!olympics) return 0;
-    return olympics.length;
+  getNumberOfCountry(countries : Countries) : number {
+    if(!countries) return 0;
+    return countries.length;
   }
 
-  getNumberOfJOs(olympics : Olympics) {
-    if(!olympics) return 0;
+  getNumberOfJOs(countries : Countries) {
+    if(!countries) return 0;
 
     let setOfYears = new Set<number>();
-    olympics.forEach((dtrOlympic) => {
-      dtrOlympic?.participations.forEach((participation) => {
+    countries.forEach((DtrCountry) => {
+      DtrCountry?.participations.forEach((participation) => {
         setOfYears.add(participation.year);
       });
     });
