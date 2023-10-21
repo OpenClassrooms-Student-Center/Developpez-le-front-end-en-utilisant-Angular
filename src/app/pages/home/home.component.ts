@@ -10,7 +10,6 @@ import {
   MedalCountryItem,
   Participation,
 } from '@core/models/olympic-data.types';
-import { formatLocalizedPrecisionNumber } from '@utils/helpers/internalization.helpers';
 
 @Component({
   selector: 'app-home',
