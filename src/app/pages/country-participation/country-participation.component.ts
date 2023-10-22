@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Country } from 'src/app/core/models/Country';
 import { OlympicService } from 'src/app/core/services/olympic/olympic.service';
@@ -29,7 +30,8 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
   constructor(
     private olympicService: OlympicService,
     private route : ActivatedRoute,
-    private router : Router
+    private router : Router,
+    private toastrService : ToastrService
     ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error("Received an error: " + error);
-        // TODO Implement component to display an error occure to user
+        this.showErrorToast(error);
       }
     });
   }
@@ -68,6 +70,18 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
     } else {
       this.view = [window.innerWidth/3,window.innerWidth/6];
     }
+  }
+
+  showErrorToast(error : Error) : void {
+    this.toastrService.error(error.message, error.name, {
+      progressBar: true,
+      closeButton: true,
+      progressAnimation: 'decreasing',
+      timeOut: 5000,
+      newestOnTop: true,
+      positionClass: 'toast-bottom-full-width',
+      tapToDismiss: true
+    });
   }
 
 };
