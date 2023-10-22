@@ -30,10 +30,12 @@ export class Country {
     }
 
     public getTotalNbMedals() : number {
+        if (this.participations.length === 0) return 0
         return this.participations.map((participation) => participation.medalsCount).reduce((a,b) => a+b);
     }
 
     public getTotalNbOfAthletes() : number {
+        if (this.participations.length === 0) return 0
         return this.participations.map((participation) => participation.athleteCount).reduce((a,b) => a+b);
     }
 }

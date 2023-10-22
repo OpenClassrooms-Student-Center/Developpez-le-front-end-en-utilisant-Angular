@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Country, Countries } from 'src/app/core/models/Country';
@@ -36,7 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private olympicService: OlympicService,
-    private router : Router
+    private router : Router,
+    private toastrService : ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -53,9 +55,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.nbOfCountries = this.olympicService.getNumberOfCountry(this.countries);
         this.nbOfJOs = this.olympicService.getNumberOfJOs(this.countries);
       },
-      error : (error) => {
+      error : (error : Error) => {
         console.error("Received an error: " + error);
-        // TODO Implement component to display an error occure to user
+        this.showErrorToast(error);
       }
     });
 
@@ -66,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onWindowResize() {
+  onWindowResize() : void {
     if(window.innerWidth < 800) {
       this.view = [window.innerWidth,window.innerWidth];
     } else {
@@ -81,5 +83,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   onSelect(data: PieChartValue): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.router.navigateByUrl(`country/${this.countries.find((country) => country.country === data.name)?.id}`)
+  }
+
+  showErrorToast(error : Error) : void {
+    this.toastrService.error(error.message, error.name, {
+      progressBar: true,
+      closeButton: true,
+      progressAnimation: 'decreasing',
+      timeOut: 5000,
+      newestOnTop: true,
+      positionClass: 'toast-bottom-full-width',
+      tapToDismiss: true
+    });
   }
 }

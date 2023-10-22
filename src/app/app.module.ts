@@ -12,6 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { HeaderComponent } from './core/components/header/header.component';
 import { TitleComponent } from './core/components/title/title.component';
 import { StatisticCardComponent } from './core/components/statistic-card/statistic-card.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StatisticCardComponent } from './core/components/statistic-card/statist
     HttpClientModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],
