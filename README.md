@@ -45,6 +45,13 @@ As you can see, an architecture has already been defined for the project. It is 
     - *index.html*
     - *main.ts*
 
+## Contribute
+
+We decided to choose a *Feature Branch WorkFlow*.
+> Foreach new functionnalities, you need to create a new branch.
+
+Don't forget to commit your change frequently with short description and to create pull request on the main branch to integrete your new functionnality.
+
 
 ## Authors
 
