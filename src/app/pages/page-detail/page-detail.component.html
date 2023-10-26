@@ -1,1 +1,15 @@
-<p>page-detail works!</p>
+<ngx-charts-line-chart
+[view]="view"
+[scheme]="colorScheme"
+[results]="data$ |async"
+[gradient]="gradient"
+[xAxis]="showXAxis"
+[yAxis]="showYAxis"
+[legend]="showLegend"
+[showXAxisLabel]="showXAxisLabel"
+[showYAxisLabel]="showYAxisLabel"
+[xAxisLabel]="xAxisLabel"
+[yAxisLabel]="yAxisLabel"
+[autoScale]="autoScale"
+[timeline]="timeline">
+</ngx-charts-line-chart>

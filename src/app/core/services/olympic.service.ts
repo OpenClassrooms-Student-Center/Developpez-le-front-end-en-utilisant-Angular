@@ -31,9 +31,7 @@ export class OlympicService {
     return this.loadInitialData();
   }
   
-
-  getOlympicByName(name: String): Observable<Olympic[]> {
-  // return  this.getOlympics().pipe(last(), map(olympics => olympics.filter(olympic => olympic.country === name)));
-   return this.getOlympics().pipe(map(olympics => olympics.filter(olympic => olympic.country == name)));
+  getOlympicByName(name: string): Observable<Olympic | undefined> {
+   return this.getOlympics().pipe(map(olympics => olympics.find(olympic => olympic.country == name)));
   }
 }
