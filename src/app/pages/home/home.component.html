@@ -1,6 +1,9 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<h2>Medals per Country</h2>
+
+<article class="stats-container">
+  <p class="stat">Number of JOs <span class="stat-detail">{{ (olympics$ | async)?.length }}</span></p>
+  <p class="stat">Number of countries <span class="stat-detail">{{ (olympics$ | async)?.length }}</span></p>
+</article>
 
 <highcharts-chart
   [Highcharts]="Highcharts"
