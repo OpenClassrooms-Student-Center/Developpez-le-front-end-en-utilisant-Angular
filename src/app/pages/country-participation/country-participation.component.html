@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="body">
+<div *ngIf="country != undefined; else elseBlock" class="body">
     <app-title [title]="country!.country"></app-title>
     <div class="statistics">
         <app-statistic-card text="Number of Entries" [value]="country!.getNbEntries()"></app-statistic-card>
@@ -22,3 +22,9 @@
     </div>
     <button routerLink="">Retour</button>
 </div>
+<ng-template #elseBlock>
+    <div class="body">
+        <app-title title="Unknown country"></app-title>
+        <button routerLink="">Retour</button>
+    </div>
+</ng-template>
