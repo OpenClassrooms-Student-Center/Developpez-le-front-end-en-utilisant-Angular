@@ -52,11 +52,21 @@ export class OlympicService {
     return  this.country$.asObservable()
   }
 
+  /**
+   * Get number of country
+   * @param countries 
+   * @returns number
+   */
   getNumberOfCountry(countries : Countries) : number {
     if(!countries) return 0;
     return countries.length;
   }
 
+  /**
+   * Get number of JOs organised
+   * @param countries 
+   * @returns number
+   */
   getNumberOfJOs(countries : Countries) {
     if(!countries) return 0;
 
