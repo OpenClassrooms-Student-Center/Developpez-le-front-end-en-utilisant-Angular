@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.countriesSubscribe = this.olympicService.getCountries().subscribe({
       next: (countries : Countries | undefined) => {
-        console.log("Countries Observable: " + JSON.stringify(countries))
         if(countries === undefined) return
         
         this.countries = countries.map((country) => new Country(country));
@@ -56,7 +55,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.nbOfJOs = this.olympicService.getNumberOfJOs(this.countries);
       },
       error : (error : Error) => {
-        console.error("Received an error: " + error);
         this.showErrorToast(error);
       }
     });
@@ -81,7 +79,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
 
   onSelect(data: PieChartValue): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     this.router.navigateByUrl(`country/${this.countries.find((country) => country.country === data.name)?.id}`)
   }
 
