@@ -14,12 +14,11 @@ export class OlympicService extends ApiService {
 
   constructor(httpClient: HttpClient) {
     super(httpClient); // Pass the HttpClient instance to the base class
+    this.baseUrl = './assets/mock/olympic.json';
   }
 
   // Change this method to use the inherited API service
   loadInitialData(): Observable<OlympicData> {
-    this.baseUrl = './assets/mock/olympic.json';
-
     // Set isLoading to true when you start loading data
     this.isLoading$.next(true);
 
