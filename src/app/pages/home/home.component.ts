@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.themeSubscription$?.unsubscribe();
   }
 
-  setMedalsArray(olympicData: OlympicData) {
+  setMedalsArray(olympicData: OlympicData): void {
     this.medalsArray = olympicData.map((countryOlympicData) => {
       const { id, country, participations } = countryOlympicData;
       return {
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  setInfosCardValues(olympicData: OlympicData) {
+  setInfosCardValues(olympicData: OlympicData): void {
     // Calculate the total number of participations
     this.totalParticipations = olympicData.reduce(
       (acc, cur) => acc + cur.participations.length,

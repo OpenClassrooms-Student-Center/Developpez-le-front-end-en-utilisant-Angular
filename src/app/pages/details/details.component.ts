@@ -103,7 +103,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  goBackToPreviousPage(e: MouseEvent) {
+  goBackToPreviousPage(e: MouseEvent): void {
     const button = e.currentTarget as HTMLButtonElement;
 
     this.router.navigateByUrl('/');
