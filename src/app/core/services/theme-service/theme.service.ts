@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ThemeService {
   // Initialize based on user preferences
   private isDarkMode: boolean = isDarkMode();
-  private theme: string = this.isDarkMode ? 'dark' : 'light';
+  private theme!: string;
 
   private userThemeQuery: MediaQueryList = window.matchMedia(
     '(prefers-color-scheme: dark)'
@@ -17,6 +17,8 @@ export class ThemeService {
     new BehaviorSubject<string>(this.theme);
 
   constructor() {
+    this.emitThemeSubjectValue();
+
     this.userThemeQuery.addEventListener('change', (e: MediaQueryListEvent) => {
       this.isDarkMode = e.matches;
       this.emitThemeSubjectValue();
