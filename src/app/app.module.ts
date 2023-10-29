@@ -7,7 +7,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // Shared components
 import {
-  DialogComponent,
   SpinLoaderComponent,
   TooltipComponent,
   InfoCardComponent,
@@ -30,7 +29,6 @@ import {
     AppComponent,
     HomeComponent,
     NotFoundComponent,
-    DialogComponent,
     DetailsComponent,
     HeaderComponent,
     FooterComponent,
