@@ -1,0 +1,59 @@
+.homeTitle {
+  text-align: center;
+  display: inline-block;
+  background-color: rgb(34, 102, 91);
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  color: white;
+  margin: auto;
+}
+
+.numberBlock {
+  text-align: center;
+  margin: auto;
+  width: 700px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.counterLabel {
+  display: inline-block;
+  border: solid rgb(34, 102, 91);
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: x-large;
+  border-radius: 15px;
+}
+
+.number {
+  font-weight: bold;
+}
+
+.chart {
+  margin: auto;
+  width: 700px;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 720px) {
+  .homeTitle {
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+    max-width: 100%;
+  }
+  .counterLabel {
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+    max-width: 100%;
+  }
+  .numberBlock {
+    text-align: center;
+    margin-bottom: 0px;
+    margin-left: 200px;
+  }
+}
