@@ -3,6 +3,9 @@ import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { single } from './data';
 import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { OlympicMedalsCountViewModel } from 'src/app/core/viewmodels/OlympicMedalsCountViewModel';
+import { Participation } from 'src/app/core/models/Participation';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +13,11 @@ import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+  public olympics$: Observable<Olympic[]> = of([]);
+  olympics: Olympic[] = [];
+  olympicMedalsCountViewModels: OlympicMedalsCountViewModel[] = [];
+  numberOfJos: number = 0;
+  numberOfCountries: number = 0;
 
   single!: any[];
   view: [number, number] = [700, 400];
@@ -23,7 +30,7 @@ export class HomeComponent implements OnInit {
   legendPosition!: LegendPosition.Below;
 
   colorScheme: Color = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+    domain: ['#5AA454', '#A10A28', '#8A0886', '#C7B42C', '#0040FF'],
     group: ScaleType.Ordinal,
     selectable: true,
     name: 'Customer Usage'
@@ -47,5 +54,48 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
+    this.olympics$.subscribe(olympicList => {
+      this.olympics = olympicList;
+      this.setOlympicHomeViewModels();
+      this.setNumberOfJos();
+      this.setNumberOfCountries();
+    });
+  }
+
+  getMedalsCountByCountry(id: number) {
+    var medalsCount = 0;
+    this.olympics.find(o => o.id == id)?.participations.forEach(p => medalsCount += p.medalsCount);
+    return medalsCount;
+  }
+
+  setOlympicHomeViewModels() {
+    this.olympicMedalsCountViewModels = [];
+    this.olympics.forEach(o => {
+      var olympicMedalsCountViewModel: OlympicMedalsCountViewModel = { name: o.country, value: this.getMedalsCountByCountry(o.id) };
+      this.olympicMedalsCountViewModels.push(olympicMedalsCountViewModel);
+    })
+  }
+
+  setNumberOfJos() {
+    var jos: Participation[] = [];
+    this.olympics.forEach(o => o.participations.forEach(p => {
+      var participation = jos.find(j => j.id === p.id);
+      if (!participation) {
+        jos.push(p);
+      }
+    }));
+    this.numberOfJos = jos.length;
+  }
+
+  setNumberOfCountries() {
+    var olympics: Olympic[] = [];
+    this.olympics.forEach(ol => {
+      var olympic = olympics.find(o => o.id === ol.id);
+      if (!olympic)
+      {
+        olympics.push(ol);
+      }
+    });
+    this.numberOfCountries = olympics.length;
   }
 }
