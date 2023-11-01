@@ -1,1 +1,7 @@
-<p>info-indicators works!</p>
+<div class="info-indicators">
+    <h2 class="info-indicators__title">{{title}}</h2>
+    <div class="info-indicators__container">
+        <app-info-card *ngFor="let indicator of indicators" [title]="indicator.title"
+            [numberValue]="indicator.value"></app-info-card>
+    </div>
+</div>

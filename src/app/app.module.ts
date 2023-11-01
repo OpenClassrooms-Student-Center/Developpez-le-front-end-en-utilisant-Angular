@@ -10,6 +10,7 @@ import {
   SpinLoaderComponent,
   TooltipComponent,
   InfoCardComponent,
+  InfoIndicatorsComponent,
 } from '@components/shared/index.shared-components';
 // Page components
 import {
@@ -23,7 +24,6 @@ import {
   HeaderComponent,
   FooterComponent,
 } from '@components/common/layout/index.layout';
-import { InfoIndicatorsComponent } from './components/shared/info-indicators/info-indicators.component';
 
 @NgModule({
   declarations: [

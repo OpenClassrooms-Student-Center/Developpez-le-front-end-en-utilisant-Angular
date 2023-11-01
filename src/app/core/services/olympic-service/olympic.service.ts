@@ -14,6 +14,7 @@ export class OlympicService extends ApiService {
 
   constructor(httpClient: HttpClient) {
     super(httpClient); // Pass the HttpClient instance to the base class
+
     this.baseUrl = './assets/mock/olympic.json';
   }
 

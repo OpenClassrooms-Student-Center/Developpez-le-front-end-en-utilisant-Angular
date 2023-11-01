@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public totalParticipations!: number;
   public numberOfCountries!: number;
   public themeSubscription$!: Subscription;
+  public arrayOfIndicators: { title: string; value: number }[] = [];
 
   constructor(
     private olympicService: OlympicService,
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.medalsArray = [];
 
     this.olympicsSubscription$ = this.olympics$.subscribe(
-      (olympicCountryData) => {
+      (olympicCountryData: OlympicData) => {
         const hasNoCountriesToDisplay: boolean = olympicCountryData.length < 1;
         if (hasNoCountriesToDisplay) {
           return;
@@ -88,13 +89,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setInfosCardValues(olympicData: OlympicData): void {
     // Calculate the total number of participations
-    this.totalParticipations = olympicData.reduce(
+    const totalParticipations: number = olympicData.reduce(
       (acc, cur) => acc + cur.participations.length,
       0
     );
 
     // Calculate the number of countries that participated
-    this.numberOfCountries = olympicData.length;
+    const numberOfCountries: number = olympicData.length;
+
+    console.log({ totalParticipations, numberOfCountries });
+
+    this.arrayOfIndicators = [
+      { title: 'Total participations', value: totalParticipations },
+      { title: 'Number of countries', value: numberOfCountries },
+    ];
   }
 
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {

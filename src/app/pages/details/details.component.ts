@@ -29,6 +29,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public countryOlympicSubscription$!: Subscription;
   public colorScheme!: string;
 
+  public arrayOfIndicators: { title: string; value: number }[] = [];
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -92,15 +94,27 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   setOtherInfosData(): void {
-    this.entries = this.countryData[0].series.length;
+    const entries: number = this.countryData[0].series.length;
 
-    this.totalAthletes = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.extra?.athleteCount;
-    }, 0);
+    const totalAthletes: number = this.countryData[0].series.reduce(
+      (acc, cur) => {
+        return acc + cur.extra?.athleteCount;
+      },
+      0
+    );
 
-    this.totalEarnedMedals = this.countryData[0].series.reduce((acc, cur) => {
-      return acc + cur.value;
-    }, 0);
+    const totalEarnedMedals: number = this.countryData[0].series.reduce(
+      (acc, cur) => {
+        return acc + cur.value;
+      },
+      0
+    );
+
+    this.arrayOfIndicators = [
+      { title: 'Entries', value: entries },
+      { title: 'Total number of earned medals', value: totalEarnedMedals },
+      { title: 'Total number of athletes', value: totalAthletes },
+    ];
   }
 
   goBackToPreviousPage(e: MouseEvent): void {

@@ -6,14 +6,8 @@
 
     <ng-template #content>
         <ng-container *ngIf="!!countryData && countryData.length>0; else hasNoValues">
-            <h2 class="details__country-name">{{countryData[0].name}}</h2>
+            <app-info-indicators [title]="countryData[0].name" [indicators]="arrayOfIndicators"></app-info-indicators>
 
-            <div class="details__info-cards-container">
-                <app-info-card [title]="'Entries'" [numberValue]="entries"></app-info-card>
-                <app-info-card [title]="'Total number of earned medals'"
-                    [numberValue]="totalEarnedMedals"></app-info-card>
-                <app-info-card [title]="'Total number of athletes'" [numberValue]="totalAthletes"></app-info-card>
-            </div>
             <div class="details__line-chart-container">
                 <ngx-charts-line-chart [results]="countryData" [ngClass]="{
           'details__line-chart--light': colorScheme === 'light',

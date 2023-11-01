@@ -1,0 +1,24 @@
+@use "../../../utils/sass-utils/index.scss" as *;
+
+.info-indicators {
+    @include center-flex-column(15px);
+
+    &__title {
+        @include olympic-card-style;
+    }
+
+
+    &__container {
+
+        @include center-flex(25px);
+
+        @include mobile-only {
+            @include center-flex-column(25px);
+
+            &>* {
+                width: 100%;
+            }
+        }
+    }
+
+}

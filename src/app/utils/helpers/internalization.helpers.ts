@@ -68,7 +68,7 @@ export function formatLocalizedPrecisionNumber(
     typeof maximumFractionDigits !== 'number';
   if (hasInvalidTypes) {
     throw new TypeError(
-      `Invalid argument types: ${typeof number} ${typeof minimumFractionDigits} and ${typeof maximumFractionDigits}`
+      `Invalid argument types: ${number} ${typeof number} ${typeof minimumFractionDigits} and ${typeof maximumFractionDigits}`
     );
   }
 
