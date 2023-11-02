@@ -24,30 +24,4 @@ export class Country {
         this.country = $country!.country;
         this.participations = $country!.participations.map((value : DtrParticipation) => new Participation(value));
     }
-
-    /**
-     * Get number of entries
-     * @returns 
-     */
-    public getNbEntries() : number {
-        return this.participations.length;
-    }
-
-    /**
-     * Get total number of medals won
-     * @returns number
-     */
-    public getTotalNbMedals() : number {
-        if (this.participations.length === 0) return 0
-        return this.participations.map((participation) => participation.medalsCount).reduce((a,b) => a+b);
-    }
-
-    /**
-     * Get total number of athletes who participated
-     * @returns number
-     */
-    public getTotalNbOfAthletes() : number {
-        if (this.participations.length === 0) return 0
-        return this.participations.map((participation) => participation.athleteCount).reduce((a,b) => a+b);
-    }
 }

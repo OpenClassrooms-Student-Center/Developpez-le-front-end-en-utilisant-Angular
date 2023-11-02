@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { OlympicService } from './olympic.service';
 import { Observable } from 'rxjs';
-import { Countries } from '../../models/Country';
+import { Countries, Country } from '../../models/Country';
 
 describe('OlympicService', () => {
   let service: OlympicService;
@@ -39,4 +39,78 @@ describe('OlympicService', () => {
     countries = [];
     expect(service.getNumberOfJOs(countries)).toBe(3);
   });
+
+  describe('Country methods', () => {
+    let country = new Country({
+        id: 1,
+        country: 'Switzerland',
+        participations: [
+            {
+                id: 1,
+                year: 1998,
+                city: 'New York',
+                medalsCount: 54,
+                athleteCount: 254
+            },
+            {
+                id: 2,
+                year: 2002,
+                city: 'Bali',
+                medalsCount: 67,
+                athleteCount: 289
+            }
+        ]
+    });
+
+    beforeEach(() => {
+        country = new Country({
+            id: 1,
+            country: 'Switzerland',
+            participations: [
+                {
+                    id: 1,
+                    year: 1998,
+                    city: 'New York',
+                    medalsCount: 54,
+                    athleteCount: 254
+                },
+                {
+                    id: 2,
+                    year: 2002,
+                    city: 'Bali',
+                    medalsCount: 67,
+                    athleteCount: 289
+                }
+            ]
+        });
+    });
+
+    it('Should be have 2 entries', () => {
+        expect(service.getNbEntries(country)).toBe(2);
+    });
+
+    it('Should be have 0 entries', () => {
+        country.participations = []
+        expect(service.getNbEntries(country)).toBe(0);
+    });
+
+    it('Should be have 121 medals', () => {
+        expect(service.getTotalNbMedals(country)).toBe(121)
+    });
+
+    it('Should be have 0 medals', () => {
+        country.participations = [];
+        expect(service.getTotalNbMedals(country)).toBe(0);
+    });
+    
+    it('Should be have 543 atheltes', () => {
+        expect(service.getTotalNbOfAthletes(country)).toBe(543);
+    });
+
+    it('Should be have 0 atheltes', () => {
+        country.participations = [];
+        expect(service.getTotalNbOfAthletes(country)).toBe(0);
+    });
+});
+
 });

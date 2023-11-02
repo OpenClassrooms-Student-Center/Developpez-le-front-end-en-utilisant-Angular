@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if(countries === undefined) return
         
         this.countries = countries.map((country) => new Country(country));
-        this.data = this.countries.map((country : Country) => {return {name: country.country, value: country.getTotalNbMedals()}});
+        this.data = this.countries.map((country : Country) => {return {name: country.country, value: this.olympicService.getTotalNbMedals(country)}});
         this.nbOfCountries = this.olympicService.getNumberOfCountry(this.countries);
         this.nbOfJOs = this.olympicService.getNumberOfJOs(this.countries);
       },

@@ -2,9 +2,9 @@
 <div *ngIf="country != undefined; else elseBlock" class="body">
     <app-title [title]="country!.country"></app-title>
     <div class="statistics">
-        <app-statistic-card text="Number of Entries" [value]="country!.getNbEntries()"></app-statistic-card>
-        <app-statistic-card text="Total number medals" [value]="country!.getTotalNbMedals()"></app-statistic-card>
-        <app-statistic-card text="Total number of athletes" [value]="country!.getTotalNbOfAthletes()"></app-statistic-card>
+        <app-statistic-card text="Number of Entries" [value]="this.entries"></app-statistic-card>
+        <app-statistic-card text="Total number medals" [value]="this.totalNbMedals"></app-statistic-card>
+        <app-statistic-card text="Total number of athletes" [value]="this.totalNbOfAthletes"></app-statistic-card>
     </div>
     <div #chartContainerRef class="chart-container">
         <ngx-charts-line-chart

@@ -14,6 +14,9 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
   private countrieSubscribe! : Subscription;
 
   country! : Country | undefined;
+  entries : number = 0;
+  totalNbMedals : number = 0;
+  totalNbOfAthletes : number = 0;
 
 
   // Line Chart Options
@@ -46,6 +49,9 @@ export class CountryParticipationComponent implements OnInit, OnDestroy {
             name : country!.country,
             series: series
           }]
+          this.entries = this.olympicService.getNbEntries(country);
+          this.totalNbMedals = this.olympicService.getTotalNbMedals(country);
+          this.totalNbOfAthletes = this.olympicService.getTotalNbOfAthletes(country);
         }
       },
       error: (error) => {

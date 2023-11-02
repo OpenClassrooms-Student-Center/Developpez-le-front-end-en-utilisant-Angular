@@ -54,7 +54,7 @@ export class OlympicService {
 
   /**
    * Get number of country
-   * @param countries 
+   * @param countries : Array<DtrCountry>
    * @returns number
    */
   getNumberOfCountry(countries : Countries) : number {
@@ -64,7 +64,7 @@ export class OlympicService {
 
   /**
    * Get number of JOs organised
-   * @param countries 
+   * @param countries : Array<DtrCountry>
    * @returns number
    */
   getNumberOfJOs(countries : Countries) {
@@ -77,5 +77,34 @@ export class OlympicService {
       });
     });
     return setOfYears.size;
+  }
+
+  /**
+     * Get number of entries
+     * @param country : Country
+     * @returns 
+     */
+  public getNbEntries(country : Country) : number {
+    return country.participations.length;
+  }
+
+  /**
+   * Get total number of medals won
+   * @param country : Country
+   * @returns number
+   */
+  public getTotalNbMedals(country : Country) : number {
+      if (country.participations.length === 0) return 0
+      return country.participations.map((participation) => participation.medalsCount).reduce((a,b) => a+b);
+  }
+
+  /**
+   * Get total number of athletes who participated
+   * @param country : Country
+   * @returns number
+   */
+  public getTotalNbOfAthletes(country : Country) : number {
+      if (country.participations.length === 0) return 0
+      return country.participations.map((participation) => participation.athleteCount).reduce((a,b) => a+b);
   }
 }
