@@ -16,9 +16,6 @@ import { OlympicService, ThemeService } from '@core/services/index.services';
 export class DetailsComponent implements OnInit, OnDestroy {
   id!: number;
   countryData!: LineChartData;
-  entries!: number;
-  totalAthletes!: number;
-  totalEarnedMedals!: number;
 
   private olympicsSubscription: Subscription | undefined;
 

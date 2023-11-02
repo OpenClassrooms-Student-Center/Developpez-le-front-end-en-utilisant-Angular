@@ -24,8 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public colorScheme!: string;
 
   public medalsArray!: MedalCountryItem[];
-  public totalParticipations!: number;
-  public numberOfCountries!: number;
   public themeSubscription$!: Subscription;
   public arrayOfIndicators: { title: string; value: number }[] = [];
 
@@ -96,8 +94,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // Calculate the number of countries that participated
     const numberOfCountries: number = olympicData.length;
-
-    console.log({ totalParticipations, numberOfCountries });
 
     this.arrayOfIndicators = [
       { title: 'Total participations', value: totalParticipations },
