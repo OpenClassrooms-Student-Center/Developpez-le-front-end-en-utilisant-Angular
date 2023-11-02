@@ -4,6 +4,8 @@
   justify-content: space-around;
   align-items: center;
   margin-top: 20px;
+  padding-right: 20%;
+  padding-left: 20%;
 
   p {
     color:#646464;
@@ -22,12 +24,13 @@
 
 
 .chart-container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
 
   canvas {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
+    width: 500px!important;
+    height: 500px!important;
   }
 }
 

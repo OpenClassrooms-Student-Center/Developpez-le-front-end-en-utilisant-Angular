@@ -1,19 +1,19 @@
-<div class="details-container">
+<div class="title">
   <h2>{{ olympicDataForCountry?.country }}</h2>
-  <div class="info">
-    <p>Number of entries: <span>{{ nbParticipation }}</span></p>
-    <p>Total number of medals: <span>{{ nbMedals }}</span></p>
-    <p>Total number of athletes: <span>{{ nbAthletes }}</span></p>
-  </div>
-  <div class="chart-container">
-    <canvas baseChart
-            [datasets]="chartData"
-            [labels]="chartLabels"
-            [options]="chartOptions"
-            [type]="'line'">
-    </canvas>
-  </div>
-  <div class="navigation">
-    <a routerLink="/">Return to Homepage</a>
-  </div>
+</div>
+<div class="infos">
+  <p>Number of entries: <span>{{ nbParticipation }}</span></p>
+  <p>Total number of medals: <span>{{ nbMedals }}</span></p>
+  <p>Total number of athletes: <span>{{ nbAthletes }}</span></p>
+</div>
+<div class="chart-container">
+  <canvas baseChart
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+<div class="back">
+  <a routerLink="/">Return to Homepage</a>
 </div>
