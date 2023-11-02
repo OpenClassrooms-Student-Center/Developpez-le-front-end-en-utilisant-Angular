@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: sans-serif;
+  font-weight: 200;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+.title {
+  text-align: center;
+
+  h2 {
+    display: inline-block;
+    font-size: 24px;
+    color: #ffffff;
+    background-color: #39818D;
+    border-radius: 10px;
+    padding: 10px;
+  }
+}

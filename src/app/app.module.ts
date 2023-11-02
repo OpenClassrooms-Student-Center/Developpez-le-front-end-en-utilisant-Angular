@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgApexchartsModule} from "ng-apexcharts";
+import {NgChartsModule} from "ng2-charts";
+import { DetailsComponent } from './pages/details/details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent, DetailsComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserModule, FormsModule, ReactiveFormsModule, NgApexchartsModule, NgChartsModule,],
   providers: [],
   bootstrap: [AppComponent],
 })
