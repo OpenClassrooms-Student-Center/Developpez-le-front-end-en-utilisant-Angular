@@ -1,3 +1,33 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<app-header></app-header>
+<div class="body">
+    <app-title title="Medals per country"></app-title>
+    <div class="container">
+        <div class="statistics">
+            <app-statistic-card text="Number of JOs" [value]="nbOfJOs"></app-statistic-card>
+            <app-statistic-card text="Number of countries" [value]="nbOfCountries"></app-statistic-card>
+        </div>
+        <div #chartContainerRef class="chart-container">
+            <ngx-charts-pie-chart
+                [view]="view"
+                class="pie-label"
+                [results]="data"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [maxLabelLength]="maxLabelLength"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+            >
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="tooltip">
+                        <h1>{{ model.name }}</h1>
+                        <div class="subTitle">
+                            <mat-icon>workspace_premium</mat-icon><h2>{{ model.value }}</h2>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-charts-pie-chart>
+        </div>
+    </div>
+</div>

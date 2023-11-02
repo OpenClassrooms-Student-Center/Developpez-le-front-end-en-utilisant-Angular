@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div *ngIf="country != undefined; else elseBlock" class="body">
+    <app-title [title]="country!.country"></app-title>
+    <div class="statistics">
+        <app-statistic-card text="Number of Entries" [value]="this.entries"></app-statistic-card>
+        <app-statistic-card text="Total number medals" [value]="this.totalNbMedals"></app-statistic-card>
+        <app-statistic-card text="Total number of athletes" [value]="this.totalNbOfAthletes"></app-statistic-card>
+    </div>
+    <div #chartContainerRef class="chart-container">
+        <ngx-charts-line-chart
+            [view]="view"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [timeline]="timeline"
+            [results]="multi"
+            [autoScale]="autoScale"
+        >
+        </ngx-charts-line-chart>
+    </div>
+    <button routerLink="">Retour</button>
+</div>
+<ng-template #elseBlock>
+    <div class="body">
+        <app-title title="Unknown country"></app-title>
+        <button routerLink="">Retour</button>
+    </div>
+</ng-template>
