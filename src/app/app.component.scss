@@ -1,3 +1,27 @@
 :host {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.navbar {
+  background-color: #b4dadd;
+  margin-bottom: 1em;
+
+  a {
+    background-color: #b4dadd;
+    text-decoration: none;
+    color: #000;
+
+    img {
+      width: 55px;
+      margin-right: .5em;
+    }
+
+    &:hover {
+      background-color: #9bcdd2;
+    }
+  }
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
