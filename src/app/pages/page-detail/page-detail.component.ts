@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, last, map, of } from 'rxjs';
-import { Olympic } from 'src/app/core/models/Olympic';
+import { Observable, last, map, observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { LineChartData } from 'src/app/core/models/LineChartData';
 import { Color, DataItem, ScaleType } from '@swimlane/ngx-charts';
@@ -15,17 +14,23 @@ export class PageDetailComponent implements OnInit {
 
   public data$! : Observable<LineChartData[]>;
 
-  view: [number, number]  = [700, 400];
+  public numberOfJo$: Observable<number> | undefined;
+
+  public numberOfMedals$: Observable<number> | undefined;
+
+  public numberOfAthletes$: Observable<number> | undefined;
+
+  public country$!: Observable<string>;
+
+  view: [number, number]  = [400, 400];
 
   // options
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Year';
-  showYAxisLabel = true;
-  yAxisLabel = 'Number of medals';
+  xAxisLabel = 'Dates';
   timeline = true;
 
   colorScheme: Color = {
@@ -36,7 +41,7 @@ export class PageDetailComponent implements OnInit {
   };
 
   // line, area
-  autoScale = true;
+  autoScale = false;
 
   constructor(
     private olympicService: OlympicService, private route: ActivatedRoute) {
@@ -46,6 +51,7 @@ export class PageDetailComponent implements OnInit {
     const countryName = this.route.snapshot.paramMap.get("name");
     const details = this.olympicService.getOlympicByName(countryName!);
 
+    const olympicsData = this.olympicService.getOlympics();
         
     this.data$ = details.pipe(last(), map(olympic => [{
       name: olympic!.country,
@@ -54,6 +60,23 @@ export class PageDetailComponent implements OnInit {
           value: participation.medalsCount
       }))
     }]))
+
+    this.numberOfJo$=details.pipe(last(), map(olympic => {
+      return olympic!.participations.length
+    }))
+    
+    this.numberOfMedals$ = details.pipe(last(), map(olympic => {
+        return olympic!.participations.reduce((acc, participation) => acc + participation.medalsCount, 0)
+
+    }))
+
+    this.numberOfAthletes$ = details.pipe(last(), map(olympic => {
+      return olympic!.participations.reduce((acc, participation) => acc + participation.athleteCount, 0)
+
+  }))
+
+  this.country$= of(`${this.route.snapshot.paramMap.get("name")}`)!;
+
   }
 
 }

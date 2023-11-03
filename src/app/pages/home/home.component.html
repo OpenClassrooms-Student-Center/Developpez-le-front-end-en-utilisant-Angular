@@ -1,22 +1,51 @@
-<h2></h2>
-<hr />
+<html lang="en">
 
-<div class=" container">
-  <h1>Medals per Country</h1>
-  <div>
-<h3>Number of countries {{ (data$ | async)?.length }}</h3>
-<h3>Number of JOs {{ numberOfJo$ | async }}</h3>
-<ngx-charts-pie-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="data$ |async"
-  [gradient]="gradient"
-  [legend]="showLegend"
-  [legendPosition]="legendPosition"
-  [labels]="showLabels"
-  [doughnut]="isDoughnut"
-  (select)="onSelect($event)"
-  >
-</ngx-charts-pie-chart>
-</div>
-</div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="col d-flex justify-content-center">
+    <div class="card text-bg-info mb-3" style="max-width: 14rem;">
+      <div class="card-body">
+        <h5 class="card-title" id="title">Medals per contry</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col d-flex justify-content-center">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card text-center mb-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Number of countries</h5>
+            <strong><p class="card-text">{{ (data$ | async)?.length }}</p></strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card text-center mb-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Number of JOs</h5>
+            <strong><p class="card-text">{{ numberOfJo$ | async }}</p></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col d-flex justify-content-center">
+    <ngx-charts-pie-chart 
+    [view]="view" 
+    [scheme]="colorScheme" 
+    [results]="data$ |async" 
+    [gradient]="gradient"
+    [labels]="showLabels" 
+    [doughnut]="isDoughnut" 
+    (select)="onSelect($event)">
+    </ngx-charts-pie-chart>
+  </div>
+</body>
+</html>

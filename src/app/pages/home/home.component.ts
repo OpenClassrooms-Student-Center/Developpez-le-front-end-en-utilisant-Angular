@@ -2,9 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { Observable, last, map, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { pie, arc, Pie, Arc, DefaultArcObject, PieArcDatum } from 'd3-shape';
-import { Olympic } from 'src/app/core/models/Olympic';
-import { BrowserModule } from '@angular/platform-browser';
 import { Color, DataItem, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { Router } from '@angular/router';
 
@@ -21,14 +18,12 @@ export class HomeComponent implements OnInit {
 
   public participationsByOlympic$ : Observable<DataItem> | undefined;
 
-   view: [number, number] = [400, 400];
+   view: [number, number] = [400, 600];
 
-   // options
+   // options ngx-charts
    gradient: boolean = true;
-   showLegend: boolean = true;
    showLabels: boolean = true;
    isDoughnut: boolean = false;
-   legendPosition: LegendPosition = LegendPosition.Below;
    colorScheme: Color = {
     name: 'myScheme',
     selectable: true,
@@ -39,7 +34,6 @@ export class HomeComponent implements OnInit {
 
   constructor(private olympicService: OlympicService, private router: Router) {
   }
-
 
   ngOnInit(): void {
 
