@@ -1,0 +1,34 @@
+h2 {
+  border: 2px solid #04838f;
+  border-radius: 8px;
+  padding: .5em;
+  background-color: #04838f;
+  color: #fff;
+  text-align: center;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .stat {
+    border: 2px solid #04838f;
+    border-radius: 8px;
+    padding: .5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: .5em;
+
+    &-detail {
+      flex: 1 1;
+      font-weight: bold;
+    }
+  }
+}
