@@ -7,12 +7,18 @@
   <p>Total number of athletes: <span>{{ nbAthletes }}</span></p>
 </div>
 <div class="chart-container">
-  <canvas baseChart
-          [datasets]="chartData"
-          [labels]="chartLabels"
-          [options]="chartOptions"
-          [type]="'line'">
-  </canvas>
+  <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="'cool'"
+    [results]="chartData"
+    [legend]="false"
+    [animations]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="xAxisLabel">
+  </ngx-charts-line-chart>
 </div>
 <div class="back">
   <a routerLink="/">Return to Homepage</a>

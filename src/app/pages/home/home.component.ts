@@ -1,66 +1,56 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ChartComponent} from "ng-apexcharts";
-import {OlympicData, Participations} from "../../models/olympic-data.model";
-import {DataService} from "../../services/olympic-data.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { DataService } from "../../services/olympic-data.service";
+import { OlympicData } from "../../models/olympic-data.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  @ViewChild("chart") chart!: ChartComponent;
 
-  olympicData!: OlympicData[]
+export class HomeComponent implements OnInit {
+  olympicData!: OlympicData[];
   public nbJO!: number;
   public nbCountry!: number;
 
   // Pie
-  public pieChartOptions: {} = {};
-  public pieChartLabels!: string[];
-  public pieChartDatasets!: {data: number[]}[];
-  public pieChartLegend: boolean = true;
-  public pieChartPlugins: [] = [];
+  view: [number, number] = [700, 400];
+  single!: { name: string; value: number; }[]
 
-  constructor(private dataService: DataService,
-              private router: Router) {}
+  constructor(private dataService: DataService, private router: Router) {}
 
-  public onChartClick(event: any): void {
-    if (event.active && event.active.length > 0 && 'index' in event.active[0]) {
-      const index: number = event.active[0]['index'];
-      const countryClicked: string = this.pieChartLabels[index];
-      this.router.navigate(['/details', countryClicked]);
-    }
+  ngOnInit(): void {
+    this.dataService.getData().subscribe((data: OlympicData[]): void => {
+      // load data
+      this.olympicData = data;
+
+      // add number of country
+      this.nbCountry = this.olympicData.length;
+
+      // add number of JO
+      const allYears: Set<number> = new Set();
+      this.olympicData.forEach(data => {
+        data.participations.forEach(participation => {
+          allYears.add(participation.year);
+        });
+      });
+      this.nbJO = allYears.size;
+
+      // add pie chart data
+      this.single = this.olympicData.map(data => {
+        const totalMedals = data.participations.reduce(
+          (acc, participation) => acc + participation.medalsCount, 0);
+        return {
+          name: data.country,
+          value: totalMedals
+        };
+      });
+    });
   }
 
-    ngOnInit(): void {
-        this.dataService.getData().subscribe((data: OlympicData[]): void => {
-            this.olympicData = data;
-
-            this.nbCountry = this.olympicData.length;
-
-            const allYears: number[] = [];
-            this.olympicData.forEach(data  => {
-                data.participations.forEach(participation  => {
-                    allYears.push(participation.year);
-                });
-            });
-            const uniqueYears: Set<number> = new Set(allYears);
-            this.nbJO = uniqueYears.size;
-
-            this.pieChartLabels = [];
-            const pieChartData: number[] = [];
-
-            this.olympicData.forEach((data: OlympicData) : void => {
-                this.pieChartLabels.push(data.country);
-
-                const totalMedalsForCountry : number = data.participations.reduce(
-                    (acc : number, participation : Participations) => acc + participation.medalsCount, 0);
-                pieChartData.push(totalMedalsForCountry);
-            });
-
-            this.pieChartDatasets = [{ data: pieChartData }];
-        });
-    }
+  onSelect(event: { name: string; }): void {
+    const countryClicked: string = event.name;
+    this.router.navigate(['/details', countryClicked]);
+  }
 }

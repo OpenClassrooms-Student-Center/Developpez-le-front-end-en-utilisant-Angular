@@ -6,13 +6,20 @@
   <p>Number of countries <span>{{nbCountry}}</span></p>
 </div>
 <div class="chart-container">
-  <canvas baseChart
-          [type]="'pie'"
-          [datasets]="pieChartDatasets"
-          [labels]="pieChartLabels"
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]=false
-          (chartClick)="onChartClick($event)">
-  </canvas>
+  <ngx-charts-pie-chart
+    [view]="view"
+    [scheme]="'cool'"
+    [results]="single"
+    [gradient]="false"
+    [legend]="false"
+    [labels]="true"
+    [doughnut]="false"
+    [animations]="false"
+    (select)="onSelect($event)">
+    <ng-template #tooltipTemplate let-model="model">
+      <span style="font-size: 16px;">{{model.name}}</span>
+      <br>
+      <span style="font-size: 16px;">🥇 {{model.value}}</span>
+    </ng-template>
+  </ngx-charts-pie-chart>
 </div>

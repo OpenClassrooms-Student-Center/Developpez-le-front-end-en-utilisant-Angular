@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgApexchartsModule} from "ng-apexcharts";
-import {NgChartsModule} from "ng2-charts";
 import { DetailsComponent } from './pages/details/details.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, DetailsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserModule, FormsModule, ReactiveFormsModule, NgApexchartsModule, NgChartsModule,],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserModule, FormsModule, ReactiveFormsModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
