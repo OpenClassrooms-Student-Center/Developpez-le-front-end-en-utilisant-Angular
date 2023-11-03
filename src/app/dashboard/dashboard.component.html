@@ -1,0 +1,11 @@
+<p>dashboard works!</p>
+<h3>Medals per Country</h3>
+<ngx-charts-pie-chart
+  [results]="chartData" 
+  [view]="[700, 700]"
+  [legend]="true"
+  [labels]="true"
+  (select)="onSelect($event)"
+  [tooltipText]="customTooltipTextFunction"
+>
+</ngx-charts-pie-chart>
