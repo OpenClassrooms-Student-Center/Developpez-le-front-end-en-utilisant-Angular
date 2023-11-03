@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { Olympics } from '../models/Olympic';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { ICountry, Olympics } from '../models/Olympic';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,11 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData() {
+  /**
+   * Charge les données du fichier JSON
+   * @returns {Observable<Olympics>}
+   */
+  loadInitialData(): Observable<Olympics> {
     return this.http.get<Olympics>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
@@ -26,7 +30,22 @@ export class OlympicService {
     );
   }
 
-  getOlympics() {
+  /**
+   * Récupère les données d'un pays ayant participé aux JO
+   * @param {string} countryId L'identifiant du pays a récupérer
+   * @returns {Observable<ICountry|undefined>}
+   */
+  getCountryById(countryId: string): Observable<ICountry | undefined> {
+    return this.getOlympics().pipe(
+      map(olympics => olympics ? olympics.find(country => country.id === +countryId) : undefined)
+    );
+  }
+
+  /**
+   * Récupère l'intégralité des données des pays ayant participés aux JO
+   * @returns {Observable<Olympics>}
+   */
+  getOlympics(): Observable<Olympics> {
     return this.olympics$.asObservable();
   }
 }
