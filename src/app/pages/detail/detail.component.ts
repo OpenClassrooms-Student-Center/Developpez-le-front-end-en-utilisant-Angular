@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, last, map, observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { LineChartData } from 'src/app/core/models/LineChartData';
-import { Color, DataItem, ScaleType } from '@swimlane/ngx-charts';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-page-detail',
-  templateUrl: './page-detail.component.html',
-  styleUrls: ['./page-detail.component.scss']
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss']
 })
-export class PageDetailComponent implements OnInit {
+export class DetailComponent implements OnInit {
 
   public data$! : Observable<LineChartData[]>;
 
@@ -39,9 +39,6 @@ export class PageDetailComponent implements OnInit {
     group: ScaleType.Ordinal,
     domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90'],
   };
-
-  // line, area
-  autoScale = false;
 
   constructor(
     private olympicService: OlympicService, private route: ActivatedRoute) {

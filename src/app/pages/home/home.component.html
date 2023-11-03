@@ -10,42 +10,51 @@
 
 <body>
   <div class="col d-flex justify-content-center">
-    <div class="card text-bg-info mb-3" style="max-width: 14rem;">
-      <div class="card-body">
-        <h5 class="card-title" id="title">Medals per contry</h5>
-      </div>
-    </div>
-  </div>
-  <div class="col d-flex justify-content-center">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card text-center mb-3" style="width: 18rem;">
+        <div class="card text-center mb-3" style="width: 50rem;">
           <div class="card-body">
-            <h5 class="card-title">Number of countries</h5>
-            <strong><p class="card-text">{{ (data$ | async)?.length }}</p></strong>
+            <p class="text-center fs-5">Olympic Games application allowing the display of two graphics.
+              The first graph shows the number of medals per country.
+              If you click on any country, you will be taken to the second graph which shows the number of medals per
+              year of the chosen country.
           </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card text-center mb-3" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Number of JOs</h5>
-            <strong><p class="card-text">{{ numberOfJo$ | async }}</p></strong>
           </div>
+          </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card text-bg-info mb-3" style="max-width: 14rem;">
+        <div class="card-body">
+          <h5 class="card-title" id="title">Medals per contry</h5>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col d-flex justify-content-center">
-    <ngx-charts-pie-chart 
-    [view]="view" 
-    [scheme]="colorScheme" 
-    [results]="data$ |async" 
-    [gradient]="gradient"
-    [labels]="showLabels" 
-    [doughnut]="isDoughnut" 
-    (select)="onSelect($event)">
-    </ngx-charts-pie-chart>
-  </div>
+    <div class="col d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card text-center mb-3" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Number of countries</h5>
+              <strong>
+                <p class="card-text">{{ (data$ | async)?.length }}</p>
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card text-center mb-3" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Number of JOs</h5>
+              <strong>
+                <p class="card-text">{{ numberOfJo$ | async }}</p>
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="data$ |async" [gradient]="gradient"
+        [labels]="showLabels" [doughnut]="isDoughnut" (select)="onSelect($event)">
+      </ngx-charts-pie-chart>
+    </div>
 </body>
+
 </html>

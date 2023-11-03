@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Observable, last, map, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';

@@ -8,13 +8,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
-import { PageDetailComponent } from './pages/page-detail/page-detail.component';
-import { MyErrorHandlerService } from './core/services/handle-error.service';
+import { DetailComponent } from './pages/detail/detail.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, PageDetailComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, DetailComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, NgxChartsModule ,FormsModule],
-  providers: [{provide: ErrorHandler, useClass: MyErrorHandlerService}],
+  providers: [],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

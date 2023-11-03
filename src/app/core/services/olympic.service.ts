@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { ErrorHandler, Injectable } from '@angular/core';
-import { BehaviorSubject, last, Observable, map, catchError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, map, catchError } from 'rxjs';
 import { Olympic } from '../models/Olympic';
-import { MyErrorHandlerService } from './handle-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +16,12 @@ export class OlympicService {
     //si deja chargé
     if (!!this.olympics$) { return this.olympics$; }
     //sinon on va lire le fichier json
-    this.olympics$ = this.http.get<Olympic[]>(this.olympicUrl).pipe(
+    return this.olympics$ = this.http.get<Olympic[]>(this.olympicUrl).pipe(
       catchError((error, caught) => {
         console.error(error);
         return caught;
       })
     );
-    return this.olympics$;
   }
 
   getOlympics(): Observable<Olympic[]> {

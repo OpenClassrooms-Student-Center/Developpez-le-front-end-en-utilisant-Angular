@@ -23,4 +23,4 @@ The predefined architecture includes (in addition to the default angular archite
 
 This project use the typescript interfaces inside the `models` folder, Olympic and Participation. These files corresponding to the data included inside the `olympic.json`. 
 
-I have implement the requested features : creating two graphs with details of JOs. One graph that displays the number of medals per country and another one that displays the details of each country.
+I have implement the requested features : creating two graphs with details of JOs. One graph that displays the number of medals per country and another one that displays the details of each country. If you click on first graph (medals per country), you are redirected to second graph (details of each country).
