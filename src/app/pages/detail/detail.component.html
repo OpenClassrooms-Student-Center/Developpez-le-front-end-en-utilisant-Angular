@@ -1,0 +1,50 @@
+<div class="homeBlock">
+  <div class="homeTitle">
+    <h2>{{ currentCountry?.country }}</h2>
+  </div>
+</div>
+
+<div class="numberBlock">
+  <div class="counterLabel">
+    <p>Number of entries</p>
+    <div class="number">
+      <p>{{ numberOfEntries }}</p>
+    </div>
+  </div>
+  <div class="counterLabel">
+    <p>Total number medals</p>
+    <div class="number">
+      <p>{{ numberOfMedals }}</p>
+    </div>
+  </div>
+  <div class="counterLabel">
+    <p>Total number of athletes</p>
+    <div class="number">
+      <p>{{ numberOfAthletes }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="chart">
+  <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [legend]="legend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [timeline]="timeline"
+    [results]="chartDetails"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+  >
+  </ngx-charts-line-chart>
+</div>
+
+<div class="buttonBlock">
+  <button id="homeButton" (click)="goToHomePage()">Home</button>
+</div>

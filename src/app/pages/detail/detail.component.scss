@@ -23,11 +23,25 @@
   margin-bottom: 20px;
 }
 
+.buttonBlock {
+  text-align: center;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+#homeButton {
+  background-color: rgb(34, 102, 91);
+  width:70px;
+  height:30px;
+  color:white;
+  border-radius: 15px;
+}
+
 .counterLabel {
   display: inline-block;
   border: solid rgb(34, 102, 91);
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-left: 10px;
   padding-right: 10px;
   font-size: x-large;
@@ -46,11 +60,16 @@
 
 @media screen and (max-width: 720px) {
   .homeBlock {
-    margin-left: 200px;
-    width:300px;
+    margin-left: 230px;
+    width: 300px;
   }
+
   .numberBlock {
     display: flex;
     margin-left: 200px;
+  }
+
+  .buttonBlock {
+    margin-left: 340px;
   }
 }
