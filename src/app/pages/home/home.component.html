@@ -1,22 +1,8 @@
-<div class="homeBlock">
-  <div class="homeTitle">
-    <h2>Medals per Country</h2>
-  </div>
-</div>
+<app-title [title]="currentTitle"></app-title>
 
 <div class="numberBlock">
-  <div class="counterLabel">
-    <p>Number of JOs</p>
-    <div class="number">
-      <p>{{ numberOfJos }}</p>
-    </div>
-  </div>
-  <div class="counterLabel">
-    <p>Number of countries</p>
-    <div class="number">
-      <p>{{ numberOfCountries }}</p>
-    </div>
-  </div>
+  <app-counter [counterLabel]="numberOfJosLabel" [counterNumber]="numberOfJos.toString()"></app-counter>
+  <app-counter [counterLabel]="numberOfCountriesLabel" [counterNumber]="numberOfCountries.toString()"></app-counter>
 </div>
 
 <div class="chart">

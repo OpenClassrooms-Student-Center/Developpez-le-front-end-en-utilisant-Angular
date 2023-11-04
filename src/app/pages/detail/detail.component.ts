@@ -26,6 +26,14 @@ export class DetailComponent implements OnInit, OnDestroy {
   subscription: Subscription | undefined;
   routeSubscription: Subscription | undefined;
 
+  currentTitle: string = '';
+  numberOfEntriesLabel: string = '';
+  numberOfMedalsLabel: string = '';
+  numberOfAthletesLabel: string = '';
+  numberOfEntriesText: string = '';
+  numberOfMedalsText: string = '';
+  numberOfAthletesText: string = '';
+
   multi!: any[];
   view: [number, number] = [700, 300];
 
@@ -73,6 +81,7 @@ export class DetailComponent implements OnInit, OnDestroy {
         this.currentCountry = this.olympicService.getOlympicById(this.currentCountryId, this.olympics);
         if (this.currentCountry) {
           this.setValues();
+          this.setChildrenComponentValues();
         }
       }
     });
@@ -84,6 +93,18 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.setNumberOfEntries();
     this.setNumberOfMedals();
     this.setNumberOfAthletes();
+  }
+
+  setChildrenComponentValues(): void {
+    if (this.currentCountry) {
+      this.currentTitle = this.currentCountry.country;
+    }
+    this.numberOfEntriesLabel = 'Number of Entries';
+    this.numberOfMedalsLabel = 'Number of Medals';
+    this.numberOfAthletesLabel = 'Number of Athletes';
+    this.numberOfEntriesText = this.numberOfEntries.toString();
+    this.numberOfMedalsText = this.numberOfMedals.toString();
+    this.numberOfAthletesText = this.numberOfAthletes.toString();
   }
 
   setOlympicMedalsCounts(): void {

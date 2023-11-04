@@ -21,6 +21,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   numberOfCountries: number = 0;
   subscription: Subscription | undefined;
 
+  currentTitle: string = '';
+  numberOfJosLabel: string = '';
+  numberOfCountriesLabel: string = '';
+  numberOfJosText: string = '';
+  numberOfCountriesText: string = '';
+
   single!: any[];
   view: [number, number] = [700, 400];
 
@@ -63,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.olympics$.subscribe(olympicList => {
       this.olympics = olympicList;
       this.setValues();
+      this.setChildrenComponentValues();
     });
   }
 
@@ -70,6 +77,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.setOlympicMedalsCounts();
     this.setNumberOfJos();
     this.setNumberOfCountries();
+  }
+
+  setChildrenComponentValues() {
+    this.currentTitle = 'Medals per Country';
+    this.numberOfJosLabel = 'Number of JOs';
+    this.numberOfCountriesLabel = 'Number of Countries';
+    this.numberOfJosText = this.numberOfJos.toString();
+    this.numberOfCountriesText = this.numberOfCountries.toString();
   }
 
   setOlympicMedalsCounts(): void {

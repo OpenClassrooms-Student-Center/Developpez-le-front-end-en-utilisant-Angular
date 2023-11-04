@@ -1,0 +1,25 @@
+.homeTitle {
+  text-align: center;
+  display: inline-block;
+  background-color: rgb(34, 102, 91);
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  color: white;
+  margin: auto;
+  font-size: x-large;
+}
+
+.homeBlock {
+  text-align: center;
+  margin: auto;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 720px) {
+  .homeBlock {
+    margin-left: 250px;
+    width:300px;
+  }
+}
