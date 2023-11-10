@@ -2,7 +2,7 @@
 
 <div id="charts">
   <ngx-charts-pie-chart
-    [results]="dataChart"
+    [results]="dataChart$ | async"
     [customColors]="colorScheme"
     [labels]="true"
     (select)="goToDetails($event)"

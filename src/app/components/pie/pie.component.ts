@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { Header } from 'src/app/core/models/Header';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { PieData as DataPie } from 'src/app/core/models/PieData';
@@ -13,10 +13,11 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class PieComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
-  dataChart!: DataPie[];
+  dataChart$!: Observable<DataPie[]>;
   olympics!: Olympic[];
-  joCount!: number;
-  header!: Header;
+  joCount$!: Observable<number>;
+  countriesCount$!: Observable<number>;
+  header: Header = { title: '', indicator: [] };
 
   colorScheme = [
     { name: 'Italy', value: '#a95963' },
@@ -38,11 +39,11 @@ export class PieComponent implements OnInit, OnDestroy {
             indicator: [
               {
                 description: 'Number of JOs',
-                value: this.joCount,
+                value$: this.joCount$,
               },
               {
                 description: 'Number of countries',
-                value: this.olympics.length,
+                value$: this.countriesCount$,
               },
             ],
           };
@@ -59,23 +60,11 @@ export class PieComponent implements OnInit, OnDestroy {
    * pour le démarrage de la page d'accueil.
    */
   private initData(): void {
-    this.subscription.push(
-      this.olympicService
-        .getTotalJo()
-        .subscribe((totalJo) => (this.joCount = totalJo))
-    );
-
-    this.subscription.push(
-      this.olympicService
-        .getOlympics()
-        .subscribe((olympic) => (this.olympics = olympic))
-    );
-
-    this.subscription.push(
-      this.olympicService
-        .getPieData()
-        .subscribe((data) => (this.dataChart = data))
-    );
+    this.joCount$ = this.olympicService.getTotalJo();
+    this.countriesCount$ = this.olympicService
+      .getOlympics()
+      .pipe(map((olympics: Olympic[]) => olympics.length));
+    this.dataChart$ = this.olympicService.getPieData();
   }
 
   public goToDetails(event: {
@@ -83,9 +72,9 @@ export class PieComponent implements OnInit, OnDestroy {
     value: number;
     label: string;
   }): void {
-    const selectCountry = this.olympics.find(
-      (olympic) => olympic.country === event.name
-    );
+    const selectCountry = this.olympicService
+      .getOlympics()
+      .find((olympic) => olympic.country === event.name);
 
     if (selectCountry) {
       this.router.navigate(['/details', selectCountry.id]);

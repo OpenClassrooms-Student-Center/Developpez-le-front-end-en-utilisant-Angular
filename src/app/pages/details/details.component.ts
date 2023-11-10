@@ -30,6 +30,7 @@ export class DetailsComponent implements OnInit {
     this.header = {
       title: this.nameCountry,
       indicator: [
+        /*
         {
           description: 'Number of entries',
           value: this.totalParticipations,
@@ -38,7 +39,7 @@ export class DetailsComponent implements OnInit {
         {
           description: 'Total number of athletes',
           value: this.totalAthletes,
-        },
+        },*/
       ],
     };
   }
