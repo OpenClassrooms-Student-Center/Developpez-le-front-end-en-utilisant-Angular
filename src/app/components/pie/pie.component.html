@@ -1,0 +1,18 @@
+<div id="charts">
+  <ngx-charts-pie-chart
+    [results]="dataChart"
+    [customColors]="colorScheme"
+    [labels]="true"
+    (select)="goToDetails($event)"
+  >
+    <ng-template #tooltipTemplate let-model="model">
+      <div>{{ model.name }}</div>
+      <div>
+        <!--SVG-->
+        <!--<app-medals></app-medals>-->
+        <!--SVG-->
+        {{ model.value }}
+      </div>
+    </ng-template>
+  </ngx-charts-pie-chart>
+</div>

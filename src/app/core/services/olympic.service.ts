@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Participation } from '../models/Participation';
+import { PieData } from '../models/PieData';
 
 @Injectable({
   providedIn: 'root',
@@ -37,38 +38,50 @@ export class OlympicService {
       )
     );
   }
-  getMedalsById(id: number): number {
-    let medalsByCountry = 0;
-    /*    this.olympics$.pipe(
-      map((olympics: Olympic[]) =>
-        olympics[id].participations.forEach(
-          (participation: Participation) =>
-            (counterByCountry += participation.medalsCount)
+  /**
+   *
+   * @param id country's id
+   * @returns country's total medals for all olympics games
+   */
+  getMedalsById(id: number): Observable<number | undefined> {
+    return this.getOlympicById(id).pipe(
+      map((olympic) =>
+        //if (olympic)
+        olympic?.participations.reduce(
+          (accumulator, currentValue) =>
+            (accumulator += currentValue.medalsCount),
+          0
         )
       )
-    );*/
-    this.getOlympicById(id).subscribe((olympic) => {
-      if (olympic)
-        olympic.participations.forEach(
-          (participation: Participation) =>
-            (medalsByCountry += participation.medalsCount)
-        );
-    });
-    return medalsByCountry;
+    );
   }
-  getAthletesById(id: number): number {
-    let athletesByCountry = 0;
-
-    this.getOlympicById(id).subscribe((olympic) => {
-      if (olympic)
-        olympic.participations.forEach(
-          (participation: Participation) =>
-            (athletesByCountry += participation.athleteCount)
-        );
-    });
-    return athletesByCountry;
+  getAthletesById(id: number): Observable<number | undefined> {
+    return this.getOlympicById(id).pipe(
+      map((olympic) =>
+        //if (olympic)
+        olympic?.participations.reduce(
+          (accumulator, currentValue) =>
+            (accumulator += currentValue.athleteCount),
+          0
+        )
+      )
+    );
   }
 
+  /**
+   *
+   * @returns Les données pour le graphique type Pie
+   */
+  getPieData(): Observable<PieData[]> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        return olympics.map((olympic: Olympic) => ({
+          name: olympic.country,
+          value: this.getMedalsById(olympic.id),
+        }));
+      })
+    );
+  }
   getListOfOlympicGamesById(id: number): number[] {
     let olympicsListByCountry!: number[];
 

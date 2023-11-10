@@ -15,6 +15,6 @@ import { Header } from 'src/app/core/models/Header';
 export class HeaderComponent implements OnInit {
   @Input() header!: Header;
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    //throw new Error('Method not implemented.');
   }
 }
