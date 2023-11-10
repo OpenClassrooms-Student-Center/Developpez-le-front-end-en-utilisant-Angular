@@ -28,9 +28,14 @@ export class OlympicService {
     );
   }
 
+  /**
+   * Get all datas
+   * @returns Observable<Olympic[]>
+   */
   getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
+
   getOlympicById(id: number): Observable<Olympic | undefined> {
     return this.getOlympics().pipe(
       map((olympics: Olympic[]) =>
@@ -93,7 +98,11 @@ export class OlympicService {
       map((olympics) => {
         return olympics.map((olympic: Olympic) => ({
           name: olympic.country,
-          value: this.getMedalsById(olympic.id),
+          value: olympic.participations.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.medalsCount,
+            0
+          ),
         }));
       })
     );

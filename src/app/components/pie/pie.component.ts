@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Header } from 'src/app/core/models/Header';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { PieData } from 'src/app/core/models/PieData';
+import { PieData as DataPie } from 'src/app/core/models/PieData';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
@@ -13,44 +13,32 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class PieComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
-  dataChart!: PieData[];
+  dataChart!: DataPie[];
   olympics!: Olympic[];
   joCount!: number;
-  view: any[] = [700, 400];
-
-  // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
-  legendPosition: string = 'below';
-  /*
-  colorScheme = {
-    domain: ['#a95963', '#a8385d', '#7aa3e5', '#7aa3e5', '#aae3f5'],
-  };*/
-  totalJo!: number;
   header!: Header;
 
   colorScheme = [
-    { name: 'Italy', value: '#956065' },
-    { name: 'Spain', value: '#b8cbe7' },
-    { name: 'Germany', value: '#793d52' },
-    { name: 'United States', value: '#89a1db' },
-    { name: 'France', value: '#9780a1' },
+    { name: 'Italy', value: '#a95963' },
+    { name: 'Spain', value: '#a8385d' },
+    { name: 'Germany', value: '#7aa3e5' },
+    { name: 'United States', value: '#793d52' },
+    { name: 'France', value: '#aae3f5' },
   ];
 
   constructor(private olympicService: OlympicService, private router: Router) {}
+
   ngOnInit(): void {
     this.subscription.push(
-      this.olympicService.getOlympics().subscribe((olympics) => {
-        if (olympics) {
+      this.olympicService.getOlympics().subscribe((result) => {
+        if (result) {
           this.initData();
           this.header = {
             title: 'Medals per Country',
             indicator: [
               {
                 description: 'Number of JOs',
-                value: this.totalJo,
+                value: this.joCount,
               },
               {
                 description: 'Number of countries',
@@ -100,7 +88,7 @@ export class PieComponent implements OnInit, OnDestroy {
     );
 
     if (selectCountry) {
-      this.router.navigate(['/detail', selectCountry.id]);
+      this.router.navigate(['/details', selectCountry.id]);
     }
   }
 }
