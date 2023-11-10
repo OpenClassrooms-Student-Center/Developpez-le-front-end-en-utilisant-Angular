@@ -12,8 +12,6 @@ export class TooltipComponent implements OnInit {
 
   public formattedEarnedMedals: string = '';
 
-  constructor() {}
-
   ngOnInit(): void {
     this.formattedEarnedMedals = formatLocalizedPrecisionNumber(
       this.earnedMedals

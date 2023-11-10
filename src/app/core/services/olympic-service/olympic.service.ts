@@ -18,9 +18,7 @@ export class OlympicService extends ApiService {
     this.baseUrl = './assets/mock/olympic.json';
   }
 
-  // Change this method to use the inherited API service
   loadInitialData(): Observable<OlympicData> {
-    // Set isLoading to true when you start loading data
     this.isLoading$.next(true);
 
     const fetchedObservable: Observable<OlympicData> =
@@ -31,12 +29,10 @@ export class OlympicService extends ApiService {
     return fetchedObservable.pipe(
       delay(1_500),
       tap((value) => {
-        // Use tap to update isLoading when data arrives
         this.isLoading$.next(false);
         return this.olympics$.next(value);
       }),
       catchError((error: string, caught: Observable<OlympicData>): never => {
-        // can be useful to end loading state and let the user know something went wrong
         this.isLoading$.next(false);
         this.olympics$.next([]);
         throw new Error(

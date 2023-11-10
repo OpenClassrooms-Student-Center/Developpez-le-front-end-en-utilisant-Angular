@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SVG_URLS } from 'src/app/public/images/index.images';
 
 @Component({
@@ -6,11 +6,9 @@ import { SVG_URLS } from 'src/app/public/images/index.images';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   logoUrl: string;
   constructor() {
     this.logoUrl = SVG_URLS.logo;
   }
-
-  ngOnInit(): void {}
 }

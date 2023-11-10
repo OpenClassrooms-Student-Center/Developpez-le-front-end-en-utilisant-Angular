@@ -12,8 +12,6 @@ export class InfoCardComponent implements OnInit {
 
   public formattedValue: string = '';
 
-  constructor() {}
-
   ngOnInit(): void {
     this.formattedValue = formatLocalizedPrecisionNumber(this.numberValue);
   }

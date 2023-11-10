@@ -15,12 +15,10 @@ type RequestOptions = {
   providedIn: 'root',
 })
 class ApiService {
-  // Set the baseUrl as a URL object
-  protected baseUrl: string = ''; // Replace with your actual API base URL
+  protected baseUrl: string = '';
 
   constructor(public http: HttpClient) {}
 
-  // Construct a URL using the URL API
   private constructUrl(urlSegment: string): string {
     const isRelativeUrl: boolean = !this.baseUrl.startsWith('https://');
     if (isRelativeUrl) {

@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
-  // Initialize based on user preferences
   private isDarkMode: boolean = isDarkMode();
   private theme!: string;
 
