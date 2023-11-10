@@ -1,6 +1,11 @@
-<h1>{{ header.title }}</h1>
-<app-header-detail
-  *ngFor="let _headerDetail of header.headerDetails$ | async"
-  [headerDetails]="_headerDetail"
->
-</app-header-detail>
+<header>
+  <div class="title">
+    <h1>{{ header.title }}</h1>
+  </div>
+  <div id="count">
+    <div class="count" *ngFor="let data of header.indicator">
+      <h3>{{ data.description }}</h3>
+      <p>{{ data.value }}</p>
+    </div>
+  </div>
+</header>

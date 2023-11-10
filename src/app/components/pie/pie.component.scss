@@ -1,0 +1,101 @@
+::ng-deep .ngx-charts {
+  text {
+    font-size: 0.9em !important;
+  }
+}
+::ng-deep ngx-tooltip-content {
+  background-color: #04838f !important;
+  margin-top: 4em;
+  font-size: 1.3em !important;
+  font-weight: bold !important;
+}
+
+::ng-deep body > app-root > ngx-tooltip-content > div > span {
+  border-top: 7px solid #04838f !important;
+}
+
+svg .medal path {
+  fill: white;
+}
+
+header {
+  max-width: 40em;
+  margin: auto;
+  margin-top: 2em;
+}
+
+h1 {
+  margin: auto;
+  padding: 5px 15px;
+  width: fit-content;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  color: white;
+  background-color: #04838f;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+h3 {
+  font-weight: 100;
+  color: #666666;
+}
+
+#count {
+  display: flex;
+  justify-content: center;
+  margin-left: 2em;
+}
+
+.count1 {
+  margin-right: 3.5em;
+}
+
+.count {
+  padding: 8px 14px;
+  border: 2px solid #04838f;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 100;
+}
+
+p {
+  font-weight: 900;
+  font-size: large;
+}
+
+#charts {
+  height: 40em;
+}
+
+#tooltip h3 {
+  color: white !important;
+  padding: 0.3em;
+}
+
+@media screen and (max-width: 640px) {
+  #charts {
+    height: 30em;
+  }
+  .count {
+    font-size: 10px;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #charts {
+    height: 20em;
+  }
+  .count2 {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (min-width: 844px) {
+  ::ng-deep .ngx-charts {
+    font-size: 1.6em !important;
+  }
+}

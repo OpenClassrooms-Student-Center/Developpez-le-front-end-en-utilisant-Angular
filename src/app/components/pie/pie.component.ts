@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Header } from 'src/app/core/models/Header';
+import { Olympic } from 'src/app/core/models/Olympic';
 import { PieData } from 'src/app/core/models/PieData';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { BrowserModule } from '@angular/platform-browser';
+import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
   selector: 'app-pie',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './pie.component.html',
   styleUrl: './pie.component.scss',
 })
-export class PieComponent implements OnInit {
+export class PieComponent implements OnInit, OnDestroy {
+  subscription: Subscription[] = [];
   dataChart!: PieData[];
+  olympics!: Olympic[];
+  joCount!: number;
   view: any[] = [700, 400];
 
   // options
@@ -21,30 +24,73 @@ export class PieComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPosition: string = 'below';
-
+  /*
   colorScheme = {
     domain: ['#a95963', '#a8385d', '#7aa3e5', '#7aa3e5', '#aae3f5'],
-  };
+  };*/
+  totalJo!: number;
+  header!: Header;
 
-  constructor() {
-    //Object.assign(this, { single });
-  }
+  colorScheme = [
+    { name: 'Italy', value: '#956065' },
+    { name: 'Spain', value: '#b8cbe7' },
+    { name: 'Germany', value: '#793d52' },
+    { name: 'United States', value: '#89a1db' },
+    { name: 'France', value: '#9780a1' },
+  ];
+
+  constructor(private olympicService: OlympicService, private router: Router) {}
   ngOnInit(): void {
-    dataChart;
+    this.subscription.push(
+      this.olympicService.getOlympics().subscribe((olympics) => {
+        if (olympics) {
+          this.initData();
+          this.header = {
+            title: 'Medals per Country',
+            indicator: [
+              {
+                description: 'Number of JOs',
+                value: this.totalJo,
+              },
+              {
+                description: 'Number of countries',
+                value: this.olympics.length,
+              },
+            ],
+          };
+        }
+      })
+    );
   }
 
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  public ngOnDestroy() {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+  /**
+   * La fonction 'initData' contient toutes les fonctions du service nécessaires
+   * pour le démarrage de la page d'accueil.
+   */
+  private initData(): void {
+    this.subscription.push(
+      this.olympicService
+        .getTotalJo()
+        .subscribe((totalJo) => (this.joCount = totalJo))
+    );
+
+    this.subscription.push(
+      this.olympicService
+        .getOlympics()
+        .subscribe((olympic) => (this.olympics = olympic))
+    );
+
+    this.subscription.push(
+      this.olympicService
+        .getPieData()
+        .subscribe((data) => (this.dataChart = data))
+    );
   }
 
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-  public goToDetail(event: {
+  public goToDetails(event: {
     name: string;
     value: number;
     label: string;

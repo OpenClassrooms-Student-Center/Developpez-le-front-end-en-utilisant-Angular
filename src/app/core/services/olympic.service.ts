@@ -67,6 +67,22 @@ export class OlympicService {
       )
     );
   }
+  /**
+   * Tri les données et récupère le total de participations aux Jeux olympiques
+   */
+  getTotalJo(): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) =>
+        olympics?.reduce(
+          (
+            accumulator: number,
+            currentValue: { participations: Participation[] }
+          ) => accumulator + currentValue.participations.length,
+          0
+        )
+      )
+    );
+  }
 
   /**
    *
@@ -82,6 +98,7 @@ export class OlympicService {
       })
     );
   }
+
   getListOfOlympicGamesById(id: number): number[] {
     let olympicsListByCountry!: number[];
 

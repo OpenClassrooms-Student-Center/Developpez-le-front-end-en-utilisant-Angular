@@ -1,0 +1,88 @@
+header {
+  max-width: 38em;
+  margin: auto;
+  margin-top: 2em;
+  margin-bottom: 3em;
+}
+
+a {
+  margin-right: 0.5em;
+}
+
+#charts {
+  width: 40em;
+  margin: auto;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  margin-right: 5px;
+  padding: 5px 15px;
+  width: fit-content;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  color: white;
+  background-color: #04838f;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+h3 {
+  font-weight: 100;
+  color: #666666;
+}
+
+#count {
+  display: flex;
+  justify-content: space-around;
+}
+
+.count {
+  padding: 8px 14px;
+  border: 2px solid #04838f;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 100;
+}
+
+p {
+  font-weight: 900;
+  font-size: large;
+}
+
+#date {
+  font-size: 2.5em;
+  text-align: center;
+  margin-top: 0.8em;
+}
+
+@media screen and (max-width: 580px) {
+  .count {
+    font-size: 10px;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  #charts {
+    width: 80em;
+  }
+}
+
+@media screen and (min-width: 1040px) {
+  #charts {
+    width: 60em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  #charts {
+    width: 20em;
+  }
+}

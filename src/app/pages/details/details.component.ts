@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../components/header/header.component';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-details',
-  standalone: true,
   templateUrl: './details.component.html',
-  styleUrl: './details.component.scss',
-  imports: [CommonModule, HeaderComponent],
+  styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent {}
+export class DetailsComponent implements OnInit {
+  paramId!: number;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.paramId = Number(this.route.snapshot.params['id']);
+  }
+}
