@@ -11,20 +11,48 @@ import {
   Participation,
 } from '@core/models/olympic-data.types';
 
+/**
+ * Component representing the home page.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  /**
+   * Observable for Olympic data.
+   */
   public olympics$!: Observable<OlympicData>;
+
+  /**
+   * Subscription for Olympic data updates.
+   */
   public olympicsSubscription$: Subscription | undefined;
 
+  /**
+   * Observable indicating whether data is loading.
+   */
   public isLoading$!: Observable<boolean>;
+
+  /**
+   * The current color scheme of the application.
+   */
   public colorScheme!: string;
 
+  /**
+   * Array of MedalCountryItem representing countries and their medal counts.
+   */
   public medalsArray!: MedalCountryItem[];
+
+  /**
+   * Subscription for theme changes.
+   */
   public themeSubscription$!: Subscription;
+
+  /**
+   * Array of indicators containing additional information about the Olympic data.
+   */
   public arrayOfIndicators: { title: string; value: number }[] = [];
 
   constructor(
@@ -68,6 +96,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.themeSubscription$?.unsubscribe();
   }
 
+  /**
+   * Set the medalsArray based on Olympic data for the pie chart
+   * @param olympicData - Olympic data to extract medal information from.
+   */
   setMedalsArray(olympicData: OlympicData): void {
     this.medalsArray = olympicData.map((countryOlympicData) => {
       const { id, country, participations } = countryOlympicData;
@@ -85,6 +117,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Set values for the variable to be inputted to the `info-indicators` component based on Olympic data.
+   * @param olympicData - Olympic data to extract additional information from.
+   */
   setInfosCardValues(olympicData: OlympicData): void {
     // Calculate the total number of participations
     const totalParticipations: number = olympicData.reduce(
@@ -101,6 +137,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     ];
   }
 
+  /**
+   * Navigate to the details page for a country based on its ID.
+   * @param e - MedalCountryItem containing information about the selected country.
+   */
   selectCountryById(e: MedalCountryItem<{ id: string }>): void {
     if (!e.extra) {
       return;

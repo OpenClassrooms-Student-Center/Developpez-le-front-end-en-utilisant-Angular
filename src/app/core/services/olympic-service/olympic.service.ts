@@ -5,6 +5,11 @@ import { Country, OlympicData } from '@core/models/olympic-data.types';
 import ApiService from '../api-service/api-service.service'; // Assuming you have the correct import path
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+/**
+ * OlympicService provides methods for fetching Olympic data and managing related state.
+ *
+ * @extends ApiService
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +23,11 @@ export class OlympicService extends ApiService {
     this.baseUrl = './assets/mock/olympic.json';
   }
 
+  /**
+   * Loads the initial Olympic data from the API.
+   *
+   * @returns {Observable<OlympicData>} An observable with the loaded Olympic data.
+   */
   loadInitialData(): Observable<OlympicData> {
     this.isLoading$.next(true);
 
@@ -42,10 +52,21 @@ export class OlympicService extends ApiService {
     );
   }
 
+  /**
+   * Gets the observable of Olympic data.
+   *
+   * @returns {Observable<OlympicData>} An observable of Olympic data.
+   */
   getOlympics(): Observable<OlympicData> {
     return this.olympics$.asObservable();
   }
 
+  /**
+   * Gets an observable of a specific Olympic country by its ID.
+   *
+   * @param {number} id - The ID of the Olympic country.
+   * @returns {Observable<Country | null | undefined>} An observable of the Olympic country.
+   */
   getOlympicCountryById(id: number): Observable<Country | null | undefined> {
     return this.olympics$.pipe(
       map((olympics) =>
@@ -57,6 +78,11 @@ export class OlympicService extends ApiService {
     );
   }
 
+  /**
+   * Gets the observable of the loading state.
+   *
+   * @returns {Observable<boolean>} An observable indicating whether data is currently being loaded.
+   */
   getIsLoading(): Observable<boolean> {
     return this.isLoading$.asObservable();
   }

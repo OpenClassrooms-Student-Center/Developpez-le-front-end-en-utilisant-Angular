@@ -7,6 +7,9 @@ import { SVG_URLS } from 'src/app/public/images/index.images';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  /**
+   * URL of the TéléSport logo
+   */
   logoUrl: string;
   constructor() {
     this.logoUrl = SVG_URLS.logo;

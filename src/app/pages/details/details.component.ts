@@ -7,25 +7,56 @@ import { Observable, Subscription } from 'rxjs';
 import { LineChartData } from '@core/models/chart.types';
 import { Country } from '@core/models/olympic-data.types';
 import { OlympicService, ThemeService } from '@core/services/index.services';
-
+/**
+ * DetailsComponent represents the page displaying detailed information about a specific country's Olympic records.
+ */
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit, OnDestroy {
+  /**
+   * The ID of the country for which the Olympic records are displayed.
+   */
   id!: number;
+
+  /**
+   * Line chart Data representing the country's Olympic records.
+   */
   countryData!: LineChartData;
 
+  /**
+   * Subscription for Olympic data updates.
+   */
   private olympicsSubscription: Subscription | undefined;
 
+  /**
+   * Subscription for Olympic data updates.
+   */
   public themeSubscription$!: Subscription;
+
+  /**
+   * Observable for the country's Olympic data.
+   */
   public countryOlympic$: Observable<Country | null | undefined>;
+  /**
+   * Observable indicating whether data is loading.
+   */
   public isLoading$: Observable<boolean>;
 
+  /**
+   * Subscription for country Olympic data updates.
+   */
   public countryOlympicSubscription$!: Subscription;
+  /**
+   * The current color scheme of the application.
+   */
   public colorScheme!: string;
 
+  /**
+   * Array of indicators containing additional information about the country's Olympic records for the info-indicators component
+   */
   public arrayOfIndicators: { title: string; value: number }[] = [];
 
   constructor(
@@ -73,6 +104,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Sets the data for displaying the country's Olympic records on the line chart
+   *
+   * @param {Country} countryObject - The country's Olympic data.
+   */
   setCountryData(countryObject: Country): void {
     const { country, participations } = countryObject;
     this.countryData = [{ name: country, series: [] }];
@@ -90,6 +126,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Sets data for the `info-indicators` component based on the country's Olympic records.
+   */
   setOtherInfosData(): void {
     const entries: number = this.countryData[0].series.length;
 
@@ -114,6 +153,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     ];
   }
 
+  /**
+   * Navigates back to the previous page.
+   *
+   * @param {MouseEvent} e - The click event.
+   */
   goBackToPreviousPage(e: MouseEvent): void {
     const button = e.currentTarget as HTMLButtonElement;
 

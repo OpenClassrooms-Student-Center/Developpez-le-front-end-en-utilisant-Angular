@@ -15,10 +15,21 @@ type RequestOptions = {
   providedIn: 'root',
 })
 class ApiService {
+  /**
+   * The base URL for making HTTP requests to the API.
+   * It is initialized to an empty string by default.
+   */
   protected baseUrl: string = '';
 
   constructor(public http: HttpClient) {}
 
+  /**
+   * Constructs the complete URL by combining the base URL and the provided URL segment.
+   *
+   * @private
+   * @param {string} urlSegment - The URL segment to be appended to the base URL.
+   * @returns {string} The constructed URL.
+   */
   private constructUrl(urlSegment: string): string {
     const isRelativeUrl: boolean = !this.baseUrl.startsWith('https://');
     if (isRelativeUrl) {

@@ -6,9 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-  currentDate: number;
+  /**
+   * Current date as a year
+   */
+  currentYear: number;
 
   constructor() {
-    this.currentDate = new Date().getFullYear();
+    this.currentYear = new Date().getFullYear();
   }
 }
