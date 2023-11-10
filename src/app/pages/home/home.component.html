@@ -53,6 +53,13 @@
     <div class="col d-flex justify-content-center">
       <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="data$ |async" [gradient]="gradient"
         [labels]="showLabels" [doughnut]="isDoughnut" (select)="onSelect($event)">
+        <ng-template #tooltipTemplate let-model="model">
+          {{ model.name }}
+          <div class="tooltip-icon-container">
+            <img src="assets/images/icons8-badge-64.png" class="tooltip-icon"/>
+            {{ model.value }}
+          </div>
+      </ng-template>
       </ngx-charts-pie-chart>
     </div>
 </body>

@@ -16,12 +16,7 @@ export class OlympicService {
     //si deja chargé
     if (!!this.olympics$) { return this.olympics$; }
     //sinon on va lire le fichier json
-    return this.olympics$ = this.http.get<Olympic[]>(this.olympicUrl).pipe(
-      catchError((error, caught) => {
-        console.error(error);
-        return caught;
-      })
-    );
+    return this.olympics$ = this.http.get<Olympic[]>(this.olympicUrl);
   }
 
   getOlympics(): Observable<Olympic[]> {

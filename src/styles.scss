@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+.ngx-charts-tooltip-content.type-tooltip {
+    background-color: #088395 !important ;
+    color: white !important;
+    font-size: 0.9rem !important;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 10px;
+    padding: 15px!important;
+  }
+  .tooltip-icon-container {
+    justify-content: center !important;
+    display: flex;
+    align-items: center;
+  }
+  .tooltip-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
