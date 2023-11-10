@@ -1,0 +1,12 @@
+<app-header [header]="header"></app-header>
+
+<div id="charts">
+  <ngx-charts-line-chart
+    [yAxis]="true"
+    [xAxis]="true"
+    [results]="dataChart$ | async"
+  >
+  </ngx-charts-line-chart>
+</div>
+<div><h3 id="date">Dates</h3></div>
+<a routerLink="">Back</a>

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subject, Subscription, map, tap } from 'rxjs';
 import { Header } from 'src/app/core/models/Header';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { PieData as DataPie } from 'src/app/core/models/PieData';
@@ -12,6 +12,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrl: './pie.component.scss',
 })
 export class PieComponent implements OnInit, OnDestroy {
+  private destroy$!: Subject<boolean>;
   subscription: Subscription[] = [];
   dataChart$!: Observable<DataPie[]>;
   olympics!: Olympic[];
@@ -30,6 +31,7 @@ export class PieComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
+    this.destroy$ = new Subject<boolean>();
     this.subscription.push(
       this.olympicService.getOlympics().subscribe((result) => {
         if (result) {
@@ -72,12 +74,12 @@ export class PieComponent implements OnInit, OnDestroy {
     value: number;
     label: string;
   }): void {
-    const selectCountry = this.olympicService
-      .getOlympics()
-      .find((olympic) => olympic.country === event.name);
-
-    if (selectCountry) {
-      this.router.navigate(['/details', selectCountry.id]);
-    }
+    let selectedId = 0;
+    this.subscription.push(
+      this.olympicService
+        .getOlympicIdByName(event.name)
+        .subscribe((olympic) => (selectedId = olympic?.id || 0))
+    );
+    this.router.navigate(['/details', selectedId]);
   }
 }

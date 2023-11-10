@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './pages/details/details.component';
 import { PieComponent } from './components/pie/pie.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LineComponent } from './components/line/line.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { HeaderComponent } from './components/header/header.component';
     PieComponent,
     DetailsComponent,
     HeaderComponent,
+    LineComponent,
   ],
+  providers: [],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +31,5 @@ import { HeaderComponent } from './components/header/header.component';
     NgxChartsModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

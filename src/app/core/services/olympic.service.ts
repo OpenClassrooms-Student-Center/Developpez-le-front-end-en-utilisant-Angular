@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Participation } from '../models/Participation';
 import { PieData } from '../models/PieData';
+import LineData from '../models/LineData';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,13 @@ export class OlympicService {
       )
     );
   }
+  getOlympicIdByName(name: string): Observable<Olympic | undefined> {
+    return this.getOlympics().pipe(
+      map((olympics: Olympic[]) =>
+        olympics.find((olympic: Olympic) => olympic.country === name)
+      )
+    );
+  }
   /**
    *
    * @param id country's id
@@ -51,7 +59,6 @@ export class OlympicService {
   getMedalsById(id: number): Observable<number | undefined> {
     return this.getOlympicById(id).pipe(
       map((olympic) =>
-        //if (olympic)
         olympic?.participations.reduce(
           (accumulator, currentValue) =>
             (accumulator += currentValue.medalsCount),
@@ -63,13 +70,17 @@ export class OlympicService {
   getAthletesById(id: number): Observable<number | undefined> {
     return this.getOlympicById(id).pipe(
       map((olympic) =>
-        //if (olympic)
         olympic?.participations.reduce(
           (accumulator, currentValue) =>
             (accumulator += currentValue.athleteCount),
           0
         )
       )
+    );
+  }
+  getParticipationsById(id: number): Observable<number | undefined> {
+    return this.getOlympicById(id).pipe(
+      map((olympic) => olympic?.participations.length)
     );
   }
   /**
@@ -107,27 +118,17 @@ export class OlympicService {
       })
     );
   }
-
-  getListOfOlympicGamesById(id: number): number[] {
-    let olympicsListByCountry!: number[];
-
-    this.getOlympicById(id).subscribe((olympic) => {
-      if (olympic)
-        olympic.participations.forEach((participation: Participation) =>
-          olympicsListByCountry.push(participation.year)
-        );
-    });
-    return olympicsListByCountry;
-  }
-
-  getNumberOfCountries(): number {
-    return 0;
-  }
-  getListOfOlympicGames(): string[] {
-    let olympicsList = ['2012', '2016', '2020'];
-    return olympicsList;
-  }
-  getNumberOfOlympicGames(): number {
-    return this.getListOfOlympicGames().length;
+  getLineDataById(id: number): Observable<LineData[]> {
+    return this.getOlympicById(id).pipe(
+      map((result) => [
+        {
+          name: result?.country || '',
+          series: (result?.participations || []).map((element) => ({
+            name: element.year.toString(),
+            value: element.medalsCount,
+          })),
+        },
+      ])
+    );
   }
 }
