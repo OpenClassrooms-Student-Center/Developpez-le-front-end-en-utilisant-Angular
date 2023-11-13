@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, map, tap } from 'rxjs';
+import { Observable, Subject, Subscription, map, take, tap } from 'rxjs';
 import { Header } from 'src/app/core/models/Header';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { PieData as DataPie } from 'src/app/core/models/PieData';
@@ -31,7 +31,12 @@ export class PieComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.destroy$ = new Subject<boolean>();
+    /*
+    this.subscription.push(
+      this.olympicService
+        .loadInitialData()
+        .pipe(take(1))
+        .subscribe(() =>*/
     this.subscription.push(
       this.olympicService.getOlympics().subscribe((result) => {
         if (result) {
@@ -51,24 +56,33 @@ export class PieComponent implements OnInit, OnDestroy {
           };
         }
       })
+      // )
+      // )
     );
   }
-
+  /** use to destoy all observales */
   public ngOnDestroy() {
     this.subscription.forEach((element) => element.unsubscribe());
   }
   /**
-   * La fonction 'initData' contient toutes les fonctions du service nécessaires
-   * pour le démarrage de la page d'accueil.
+   * 'initData' function have all needed element to start app
    */
   private initData(): void {
-    this.joCount$ = this.olympicService.getTotalJo();
-    this.countriesCount$ = this.olympicService
-      .getOlympics()
-      .pipe(map((olympics: Olympic[]) => olympics.length));
-    this.dataChart$ = this.olympicService.getPieData();
+    try {
+      this.joCount$ = this.olympicService.getTotalJo();
+      this.countriesCount$ = this.olympicService
+        .getOlympics()
+        .pipe(map((olympics: Olympic[]) => olympics.length));
+      this.dataChart$ = this.olympicService.getPieData();
+    } catch (error) {
+      console.log(error);
+      this.router.navigate(['/not-found']);
+    }
   }
-
+  /**
+   * function to go to the detail page
+   * @param event dom info to select the good details page
+   */
   public goToDetails(event: {
     name: string;
     value: number;

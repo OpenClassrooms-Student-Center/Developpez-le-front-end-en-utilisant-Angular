@@ -5,15 +5,6 @@ header {
   margin-bottom: 3em;
 }
 
-a {
-  margin-right: 0.5em;
-}
-
-#charts {
-  width: 40em;
-  margin: auto;
-}
-
 .title {
   display: flex;
   justify-content: center;
@@ -36,9 +27,10 @@ h3 {
   color: #666666;
 }
 
-#count {
+#container {
   display: flex;
   justify-content: space-around;
+  gap: 20px;
 }
 
 .count {

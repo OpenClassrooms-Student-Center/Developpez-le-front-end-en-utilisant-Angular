@@ -6,8 +6,8 @@ import { DetailsComponent } from './pages/details/details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'error', component: NotFoundComponent },
   { path: 'details/:id', component: DetailsComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 /*[
   {

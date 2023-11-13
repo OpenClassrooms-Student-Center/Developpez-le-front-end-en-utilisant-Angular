@@ -6,7 +6,11 @@
     [xAxis]="true"
     [results]="dataChart$ | async"
   >
+    <ng-template #tooltipTemplate let-model="model">
+      <div>{{ model.name }}</div>
+      <div>🏅 {{ model.value }}</div>
+    </ng-template>
   </ngx-charts-line-chart>
 </div>
 <div><h3 id="date">Dates</h3></div>
-<a routerLink="">Back</a>
+<div id="link-container"><a routerLink="">Back</a></div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Participation } from '../models/Participation';
@@ -12,7 +12,7 @@ import LineData from '../models/LineData';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class OlympicService {
         // TODO: improve error handling
         console.error(error);
         // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
+        this.olympics$.next([]);
         return caught;
       })
     );
@@ -38,14 +38,14 @@ export class OlympicService {
   }
 
   getOlympicById(id: number): Observable<Olympic | undefined> {
-    return this.getOlympics().pipe(
+    return this.olympics$.pipe(
       map((olympics: Olympic[]) =>
         olympics.find((olympic: Olympic) => olympic.id === id)
       )
     );
   }
   getOlympicIdByName(name: string): Observable<Olympic | undefined> {
-    return this.getOlympics().pipe(
+    return this.olympics$.pipe(
       map((olympics: Olympic[]) =>
         olympics.find((olympic: Olympic) => olympic.country === name)
       )
