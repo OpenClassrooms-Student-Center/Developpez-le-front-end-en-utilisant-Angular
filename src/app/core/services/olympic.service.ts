@@ -78,9 +78,9 @@ export class OlympicService {
       )
     );
   }
-  getParticipationsById(id: number): Observable<number | undefined> {
+  getParticipationsById(id: number): Observable<Participation[] | undefined> {
     return this.getOlympicById(id).pipe(
-      map((olympic) => olympic?.participations.length)
+      map((olympic) => olympic?.participations)
     );
   }
   /**
@@ -120,12 +120,12 @@ export class OlympicService {
   }
   getLineDataById(id: number): Observable<LineData[]> {
     return this.getOlympicById(id).pipe(
-      map((result) => [
+      map((olympic) => [
         {
-          name: result?.country || '',
-          series: (result?.participations || []).map((element) => ({
-            name: element.year.toString(),
-            value: element.medalsCount,
+          name: olympic?.country || '',
+          series: (olympic?.participations || []).map((participation) => ({
+            name: participation.year.toString(),
+            value: participation.medalsCount,
           })),
         },
       ])

@@ -6,6 +6,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import LineData from 'src/app/core/models/LineData';
 import { Olympic } from 'src/app/core/models/Olympic';
+import { Participation } from 'src/app/core/models/Participation';
 
 @Component({
   selector: 'app-line',
@@ -14,9 +15,9 @@ import { Olympic } from 'src/app/core/models/Olympic';
 })
 export class LineComponent implements OnInit {
   @Input() id!: number;
+  header: Header = { title: '', indicator: [] };
   nameCountry!: string;
   dataChart$!: Observable<LineData[]>;
-  header: Header = { title: '', indicator: [] };
   totalMedals$!: Observable<number | undefined>;
   totalAthletes$!: Observable<number | undefined>;
   totalParticipations$!: Observable<number | undefined>;
@@ -51,38 +52,16 @@ export class LineComponent implements OnInit {
     );
   }
   private InitData(): void {
-    /* this.totalParticipations$ = this.olympicService
-      .getOlympicById(this.id)
-      .pipe(map((olympic: Olympic) => olympic.participations.length));
-    /*this.subscription.push(
-      this.olympicService.getOlympicById(this.id).subscribe((result) => {
-        console.log(result);
-        if (result) {
-          this.nameCountry = result.country;
-          this.totalParticipations = result.participations.length;
-        }
-      })
-    );*/ /*
-    this.totalMedals$ = this.olympicService.getMedalsById(this.id);
-    this.subscription.push(
-      this.olympicService.getMedalsById(this.id).subscribe((totalMedals) => {
-        if (totalMedals) this.totalMedals = totalMedals;
-      })
-    );
-    this.subscription.push(
-      this.olympicService.getAthletesById(this.id).subscribe((totalAthlete) => {
-        if (totalAthlete) this.totalAthletes = totalAthlete;
-      })
-    );*/
     this.totalMedals$ = this.olympicService.getMedalsById(this.id);
     this.totalAthletes$ = this.olympicService.getAthletesById(this.id);
-    this.totalParticipations$ !=
-      this.olympicService.getParticipationsById(this.id);
-    console.log(this.totalParticipations$);
-    /*
     this.totalParticipations$ = this.olympicService
-      .getOlympicById(this.id)
-      .pipe(map((olympic: Olympic) => olympic.participations.length));*/
+      .getParticipationsById(this.id)
+      .pipe(
+        map(
+          (participations: Participation[] | undefined) =>
+            participations?.length
+        )
+      );
     this.subscription.push(
       this.olympicService.getOlympicById(this.id).subscribe((result) => {
         if (result) {
