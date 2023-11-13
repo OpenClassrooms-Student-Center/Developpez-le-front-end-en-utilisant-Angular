@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Header } from 'src/app/core/models/Header';
-import { Observable, Subscription, map, take } from 'rxjs';
+import { Observable, Subject, Subscription, map, take } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Router } from '@angular/router';
 import LineData from 'src/app/core/models/LineData';
-import { Olympic } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 
 @Component({
@@ -13,7 +11,8 @@ import { Participation } from 'src/app/core/models/Participation';
   templateUrl: './line.component.html',
   styleUrl: './line.component.scss',
 })
-export class LineComponent implements OnInit {
+export class LineComponent implements OnInit, OnDestroy {
+  private destroy$!: Subject<boolean>;
   @Input() id!: number;
   header: Header = { title: '', indicator: [] };
   nameCountry!: string;
@@ -27,12 +26,12 @@ export class LineComponent implements OnInit {
   constructor(private olympicService: OlympicService, private route: Router) {}
 
   ngOnInit(): void {
+    this.destroy$ = new Subject<boolean>();
     this.subscription.push(
       this.olympicService
         .loadInitialData()
         .pipe(take(1))
         .subscribe(() =>
-          //this.olympicService.loadInitialData();
           this.subscription.push(
             this.olympicService.getOlympicById(this.id).subscribe((result) => {
               if (result) {
@@ -62,6 +61,14 @@ export class LineComponent implements OnInit {
         )
     );
   }
+  /** use to destoy all observales */
+  public ngOnDestroy() {
+    this.subscription.forEach((element) => element.unsubscribe());
+    this.destroy$.next(true);
+  }
+  /**
+   * init all datas for header and line component
+   */
   private InitData(): void {
     try {
       this.totalMedals$ = this.olympicService.getMedalsById(this.id);

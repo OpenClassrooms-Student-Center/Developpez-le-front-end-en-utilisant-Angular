@@ -16,13 +16,15 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * loading all initial datas from olympic.json to Olympic interface array
+   * @returns BehaviorSubject<Olympic[]> : Olympic interface array
+   */
   loadInitialData() {
     return this.http.get<any>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
-        // TODO: improve error handling
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next([]);
         return caught;
       })
@@ -36,7 +38,11 @@ export class OlympicService {
   getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
-
+  /**
+   * Get Olympic infos by country's id
+   * @param id country's id to get
+   * @returns Olympic
+   */
   getOlympicById(id: number): Observable<Olympic | undefined> {
     return this.olympics$.pipe(
       map((olympics: Olympic[]) =>
@@ -44,6 +50,11 @@ export class OlympicService {
       )
     );
   }
+  /**
+   * Get Olympic infos by country's name
+   * @param id country's name to get
+   * @returns Olympic
+   */
   getOlympicIdByName(name: string): Observable<Olympic | undefined> {
     return this.olympics$.pipe(
       map((olympics: Olympic[]) =>
@@ -52,7 +63,7 @@ export class OlympicService {
     );
   }
   /**
-   *
+   * Get Olympic medals total by country's id
    * @param id country's id
    * @returns country's total medals for all olympics games
    */
@@ -67,6 +78,11 @@ export class OlympicService {
       )
     );
   }
+  /**
+   * Get Olympic athletes total by country's id
+   * @param id country's id
+   * @returns country's total athletes for all olympics games
+   */
   getAthletesById(id: number): Observable<number | undefined> {
     return this.getOlympicById(id).pipe(
       map((olympic) =>
@@ -78,13 +94,19 @@ export class OlympicService {
       )
     );
   }
+  /**
+   * Get Olympic participation total by country's id
+   * @param id country's id
+   * @returns country's total athletes for all olympics games
+   */
   getParticipationsById(id: number): Observable<Participation[] | undefined> {
     return this.getOlympicById(id).pipe(
       map((olympic) => olympic?.participations)
     );
   }
   /**
-   * Tri les données et récupère le total de participations aux Jeux olympiques
+   * Get All Olympic participation total by all countries
+   * @returns country's total participations for all countries at the olympics games
    */
   getTotalJo(): Observable<number> {
     return this.olympics$.pipe(
@@ -101,8 +123,8 @@ export class OlympicService {
   }
 
   /**
-   *
-   * @returns Les données pour le graphique type Pie
+   * Get an object PieData for the pie with countries name and medals total
+   * @returns Observable<PieData[]>
    */
   getPieData(): Observable<PieData[]> {
     return this.olympics$.pipe(
@@ -118,6 +140,11 @@ export class OlympicService {
       })
     );
   }
+
+  /**
+   * Get an object LineData for the line graph with country name, participation's year and participation's medals
+   * @returns Observable<LineData[]>
+   */
   getLineDataById(id: number): Observable<LineData[]> {
     return this.getOlympicById(id).pipe(
       map((olympic) => [

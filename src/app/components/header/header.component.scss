@@ -9,7 +9,10 @@ header {
   display: flex;
   justify-content: center;
 }
-
+.image {
+  display: flex;
+  justify-content: center;
+}
 h1 {
   margin-right: 5px;
   padding: 5px 15px;
@@ -46,12 +49,6 @@ p {
   font-size: large;
 }
 
-#date {
-  font-size: 2.5em;
-  text-align: center;
-  margin-top: 0.8em;
-}
-
 @media screen and (max-width: 580px) {
   .count {
     font-size: 10px;
@@ -59,22 +56,15 @@ p {
   h1 {
     font-size: 1.5em;
   }
-}
-
-@media screen and (min-width: 1400px) {
-  #charts {
-    width: 80em;
-  }
-}
-
-@media screen and (min-width: 1040px) {
-  #charts {
-    width: 60em;
+  img {
+    width: 50%;
+    height: 50%;
   }
 }
 
 @media screen and (max-width: 680px) {
-  #charts {
-    width: 20em;
+  img {
+    width: 75%;
+    height: 75%;
   }
 }

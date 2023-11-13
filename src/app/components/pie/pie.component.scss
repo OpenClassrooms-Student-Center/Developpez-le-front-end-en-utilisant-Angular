@@ -13,53 +13,13 @@
 ::ng-deep body > app-root > ngx-tooltip-content > div > span {
   border-top: 7px solid #04838f !important;
 }
-
-svg .medal path {
-  fill: white;
-}
-
-header {
-  max-width: 40em;
-  margin: auto;
-  margin-top: 2em;
-}
-
-h1 {
-  margin: auto;
-  padding: 5px 15px;
-  width: fit-content;
-  margin-bottom: 1em;
-  border-radius: 10px;
-  color: white;
-  background-color: #04838f;
-  font-weight: 100;
-  letter-spacing: 2px;
-}
-
-h3 {
-  font-weight: 100;
-  color: #666666;
-}
-p {
-  font-weight: 900;
-  font-size: large;
-}
-
 #charts {
-  height: 40em;
-}
-
-#tooltip h3 {
-  color: white !important;
-  padding: 0.3em;
+  height: 35em;
 }
 
 @media screen and (max-width: 640px) {
   #charts {
-    height: 30em;
-  }
-  .count {
-    font-size: 10px;
+    height: 20em;
   }
   h1 {
     font-size: 1.5em;
@@ -68,10 +28,7 @@ p {
 
 @media screen and (max-width: 575px) {
   #charts {
-    height: 20em;
-  }
-  .count2 {
-    margin-right: 30px;
+    height: 15em;
   }
 }
 

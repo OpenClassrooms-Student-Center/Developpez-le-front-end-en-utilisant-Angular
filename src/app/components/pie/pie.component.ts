@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, map, take, tap } from 'rxjs';
+import { Observable, Subject, Subscription, map, take } from 'rxjs';
 import { Header } from 'src/app/core/models/Header';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { PieData as DataPie } from 'src/app/core/models/PieData';
@@ -31,41 +31,44 @@ export class PieComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    /*
+    this.destroy$ = new Subject<boolean>();
+
     this.subscription.push(
       this.olympicService
         .loadInitialData()
         .pipe(take(1))
-        .subscribe(() =>*/
-    this.subscription.push(
-      this.olympicService.getOlympics().subscribe((result) => {
-        if (result) {
-          this.initData();
-          this.header = {
-            title: 'Medals per Country',
-            indicator: [
-              {
-                description: 'Number of JOs',
-                value$: this.joCount$,
-              },
-              {
-                description: 'Number of countries',
-                value$: this.countriesCount$,
-              },
-            ],
-          };
-        }
-      })
-      // )
-      // )
+        .subscribe(() =>
+          this.subscription.push(
+            this.olympicService.getOlympics().subscribe((result) => {
+              if (result) {
+                this.initData();
+                this.header = {
+                  title: 'Medals per Country',
+                  indicator: [
+                    {
+                      description: 'Number of JOs',
+                      value$: this.joCount$,
+                    },
+                    {
+                      description: 'Number of countries',
+                      value$: this.countriesCount$,
+                    },
+                  ],
+                };
+              }
+            })
+          )
+        )
     );
   }
   /** use to destoy all observales */
   public ngOnDestroy() {
     this.subscription.forEach((element) => element.unsubscribe());
+    // unsubscribe
+    this.destroy$.next(true);
   }
   /**
-   * 'initData' function have all needed element to start app
+   * init all datas for header and pie component
    */
   private initData(): void {
     try {
