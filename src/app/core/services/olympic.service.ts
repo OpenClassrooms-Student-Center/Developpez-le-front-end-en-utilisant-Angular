@@ -21,7 +21,7 @@ export class OlympicService {
    * @returns BehaviorSubject<Olympic[]> : Olympic interface array
    */
   loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
+    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         console.error(error);
