@@ -1,0 +1,78 @@
+@use "../../utils/sass-utils/index" as *;
+
+.home {
+    &__banner {
+        background-image: url('/assets/images/png/telesport_banner.png');
+        background-position: center;
+        background-size: cover; // Use cover to maintain aspect ratio and cover the element
+        background-repeat: no-repeat;
+
+        height: min(500px, 40dvh); // Set a height to fill the viewport vertically
+        position: relative;
+
+        overflow: hidden;
+
+        &-content {
+            background-color: var(--bg-primary);
+
+            padding: 10px;
+            border-radius: 5px;
+
+            @include center-flex-column(15px);
+            align-items: unset;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            height: auto;
+            width: 75%;
+
+            translate: -50% -50%;
+            padding: 15px;
+
+            border: 2px solid var(--bg-tertiary);
+        }
+
+        &-title {
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        &-description {}
+    }
+
+    &__chart-title {
+        @include olympic-card-style;
+    }
+
+    &__chart-container {
+        margin-top: 15px;
+
+        @include center-flex-column(30px);
+
+        min-height: 400px;
+    }
+
+    &__info-cards-container {
+        @include center-flex(25px);
+
+        @include mobile-only {
+            @include center-flex-column(25px);
+
+            &>* {
+                width: 100%;
+            }
+        }
+    }
+
+    &__pie-chart {
+        &--light {
+            fill: black;
+        }
+
+        &--dark {
+            fill: white;
+        }
+    }
+}

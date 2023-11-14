@@ -1,0 +1,29 @@
+<section class="details">
+    <ng-container *ngIf="isLoading$ | async; else content">
+        <p>Loading country line chart...</p>
+        <app-spin-loader></app-spin-loader>
+    </ng-container>
+
+    <ng-template #content>
+        <ng-container *ngIf="!!countryData && countryData.length>0; else hasNoValues">
+            <app-info-indicators [title]="countryData[0].name" [indicators]="arrayOfIndicators"></app-info-indicators>
+
+            <div class="details__line-chart-container">
+                <ngx-charts-line-chart [results]="countryData" [ngClass]="{
+          'details__line-chart--light': colorScheme === 'light',
+          'details__line-chart--dark': colorScheme === 'dark'
+        }" [autoScale]="true" [xAxis]="true" [yAxis]="true" [legend]="false" [showXAxisLabel]="true"
+                    [tooltipDisabled]="true" [showYAxisLabel]="true" [xAxisLabel]="'Year'" [yAxisLabel]="'Medals'"
+                    [autoScale]="false">
+                </ngx-charts-line-chart>
+
+            </div>
+        </ng-container>
+
+    </ng-template>
+    <ng-template #hasNoValues>
+        <p>There are no values to display for country of ID: {{id}}</p>
+    </ng-template>
+
+    <button class="details__go-back-button" type="button" (click)="goBackToPreviousPage($event)">Go back</button>
+</section>

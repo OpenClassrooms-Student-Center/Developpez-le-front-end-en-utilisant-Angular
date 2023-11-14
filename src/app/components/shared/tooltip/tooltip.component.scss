@@ -1,0 +1,24 @@
+@use "../../../utils/sass-utils/index.scss" as *;
+
+.tooltip {
+    &__container {
+        width: 100%;
+        @include olympic-card-style;
+
+        min-width: 100px;
+
+        @include center-flex-column(15px);
+    }
+
+
+
+    &__country {
+        font-size: 18px;
+    }
+
+    &__earned-medals {
+        font-size: 18px;
+
+        @include center-flex(5px);
+    }
+}
