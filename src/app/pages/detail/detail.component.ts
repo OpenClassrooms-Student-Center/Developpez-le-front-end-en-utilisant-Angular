@@ -41,22 +41,28 @@ export class DetailComponent implements OnInit {
   };
 
   constructor(
-    private olympicService: OlympicService, private route: ActivatedRoute) {
+    private olympicService: OlympicService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
     const countryName = this.route.snapshot.paramMap.get("name");
     const details = this.olympicService.getOlympicByName(countryName!);
 
-    const olympicsData = this.olympicService.getOlympics();
-        
-    this.data$ = details.pipe(last(), map(olympic => [{
-      name: olympic!.country,
-      series: olympic!.participations.map(participation => ({
-          name: `${participation.year}`,
-          value: participation.medalsCount
-      }))
-    }]))
+      this.data$ = details.pipe(last(), map(
+        olympic => {
+          if(olympic === undefined) {
+            console.log("error");
+            this.router.navigateByUrl(`/error`);
+          }
+          return [{
+            name: olympic!.country,
+            series: olympic!.participations.map(participation => ({
+              name: `${participation.year}`,
+              value: participation.medalsCount
+            }))
+          }];
+      })
+      )
 
     this.numberOfJo$=details.pipe(last(), map(olympic => {
       return olympic!.participations.length
