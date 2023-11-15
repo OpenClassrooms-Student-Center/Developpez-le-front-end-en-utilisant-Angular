@@ -1,0 +1,75 @@
+a {
+  max-width: 38em;
+  margin: auto;
+  padding: 7px 15px;
+  width: fit-content;
+  border-radius: 10px;
+  color: white;
+  background-color: #04838f;
+  font-weight: 100;
+  letter-spacing: 2px;
+  text-align: center;
+}
+#link-container {
+  text-align: center;
+}
+::ng-deep .ngx-charts {
+  text {
+    font-size: 0.9em !important;
+  }
+}
+::ng-deep ngx-tooltip-content {
+  background-color: #04838f !important;
+  margin-top: 2em;
+  font-size: 1.3em !important;
+  font-weight: bold !important;
+}
+
+::ng-deep body > app-root > ngx-tooltip-content > div > span {
+  border-top: 7px solid #04838f !important;
+}
+h3 {
+  font-weight: 100;
+  color: #666666;
+}
+
+#date {
+  font-size: 2em;
+  text-align: center;
+  margin-top: 0.2em;
+}
+
+#charts {
+  width: 30em;
+  margin: auto;
+}
+/* responsive */
+@media screen and (max-width: 580px) {
+  .count {
+    font-size: 10px;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+  #charts {
+    width: 15em;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  #charts {
+    width: 60em;
+  }
+}
+
+@media screen and (min-width: 1040px) {
+  #charts {
+    width: 50em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  #charts {
+    width: 20em;
+  }
+}

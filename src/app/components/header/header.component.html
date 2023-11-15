@@ -1,0 +1,14 @@
+<header>
+  <div class="image">
+    <img src="../../../assets/images/Telesport.png" alt="Télésport" />
+  </div>
+  <div class="title">
+    <h1>{{ header.title }}</h1>
+  </div>
+  <div id="container">
+    <div class="count" *ngFor="let data of header.indicator">
+      <h3>{{ data.description }}</h3>
+      <p *ngIf="data.value$">{{ data.value$ | async }}</p>
+    </div>
+  </div>
+</header>
