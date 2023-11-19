@@ -18,13 +18,9 @@ export class OlympicService {
   loadInitialData(): Observable<Olympic[]> {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling
-        console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
+      catchError((error) => {
+        this.olympics$.error(error)
         this.olympics$.next([]);
-        this.router.navigateByUrl(`notfound`);
-
         throw Error("Data loading error");
       })
     );
@@ -36,7 +32,7 @@ export class OlympicService {
 
   getOlympicById(id: number, olympics: Olympic[]): Olympic | undefined {
     var olympic = undefined;
-    if (olympics) {
+    if (olympics.length > 0) {
       olympic = olympics.find(o => o.id == id);
     }
     return olympic;
@@ -44,7 +40,7 @@ export class OlympicService {
 
   getOlympicByCountry(country: string, olympics: Olympic[]): Olympic | undefined {
     var olympic = undefined;
-    if (olympics) {
+    if (olympics.length > 0) {
       olympic = olympics.find(o => o.country == country);
     }
     return olympic;
