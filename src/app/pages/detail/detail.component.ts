@@ -6,7 +6,6 @@ import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ChartDetail } from 'src/app/core/viewmodels/ChartDetail';
 import { OlympicMedalsCount } from 'src/app/core/viewmodels/OlympicMedalsCount';
-import { multi } from './data';
 
 @Component({
   selector: 'app-detail',
@@ -33,11 +32,11 @@ export class DetailComponent implements OnInit, OnDestroy {
   numberOfEntriesText: string = '';
   numberOfMedalsText: string = '';
   numberOfAthletesText: string = '';
+  infoMessage: string = '';
 
-  multi!: any[];
+  //Line chart properties --------------------------------------
   view: [number, number] = [700, 300];
 
-  // options
   legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
@@ -55,36 +54,37 @@ export class DetailComponent implements OnInit, OnDestroy {
     selectable: true,
     name: 'Customer Usage'
   };
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
+  //-------------------------------------------------------------
 
   constructor(private route: ActivatedRoute, private router: Router, private olympicService: OlympicService) {
-    Object.assign(this, { multi });
   }
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => this.currentCountryId = params['id']);
     this.olympics$ = this.olympicService.getOlympics();
-    this.subscription = this.olympics$.subscribe(olympicList => {
-      this.olympics = olympicList;
-      if (this.olympics && this.currentCountryId) {
-        this.currentCountry = this.olympicService.getOlympicById(this.currentCountryId, this.olympics);
-        if (this.currentCountry) {
-          this.setValues();
-          this.setChildrenComponentValues();
-        }
-      }
+    this.subscription = this.olympics$.subscribe({
+      next: olympicList => {
+        this.olympics = olympicList;
+        this.setPage();
+      },
+      error: () => {
+        this.infoMessage = "Country data loading error";
+      },
     });
+  }
+
+  setPage(): void {
+    if (this.olympics.length > 0 && this.currentCountryId) {
+      this.currentCountry = this.olympicService.getOlympicById(this.currentCountryId, this.olympics);
+      if (this.currentCountry) {
+        this.setValues();
+        this.setChildrenComponentValues();
+        this.infoMessage = this.currentCountry.country + " data loaded";
+      }
+      else {
+        this.router.navigateByUrl(`notfound`);
+      }
+    }
   }
 
   setValues(): void {
@@ -119,6 +119,8 @@ export class DetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  // The line chart needs a set of values. Each value must contain a name (string) attribute, a set of values named series with each one that contains a name and a value.
+  // This method takes values from Olympic set to create a set of values to insert into the line chart.
   setChartDetails(): void {
     this.chartDetails = [];
     if (this.currentCountry) {
@@ -146,10 +148,6 @@ export class DetailComponent implements OnInit, OnDestroy {
     if (this.currentCountry) {
       this.numberOfAthletes = this.olympicService.getNumberOfAthletesByOlympicId(this.currentCountry.id, this.olympics);
     }
-  }
-
-  goToHomePage(): void {
-    this.router.navigateByUrl(``);
   }
 
   ngOnDestroy(): void {

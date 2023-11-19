@@ -1,8 +1,54 @@
 .center {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: inline-block;
+  border: solid rgb(34, 102, 91);
+  margin-left: 700px;
+  margin-top: 300px;
+  padding-bottom: 20px;
+  font-size: x-large;
+  border-radius: 15px;
+  color: #5e5c5c;
+  text-align: center;
+  min-width: 500px;
+}
+
+@media screen and (min-width: 427px) and (max-width: 490px) {
+  .center {
+    margin-left: 180px;
+    zoom: 50%;
+  }
+}
+
+@media screen and (min-width: 491px) and (max-width: 629px) {
+  .center {
+    margin-left: 285px;
+    zoom: 60%;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 426px) {
+  .center {
+    margin-left: 130px;
+    zoom: 50%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .center {
+    margin-left: 60px;
+    zoom: 50%;
+  }
+}
+
+@media screen and (min-width: 491px) and (max-width: 834px) {
+  .center {
+    margin-left: 230px;
+    zoom: 80%;
+  }
+}
+
+@media screen and (min-width: 835px) {
+  .center {
+    margin-left: 600px;
+    zoom: 100%;
+  }
 }

@@ -1,8 +1,20 @@
+<app-navbar></app-navbar>
+
 <app-title [title]="currentTitle"></app-title>
 
 <div class="numberBlock">
-  <app-counter [counterLabel]="numberOfJosLabel" [counterNumber]="numberOfJosText"></app-counter>
-  <app-counter [counterLabel]="numberOfCountriesLabel" [counterNumber]="numberOfCountriesText"></app-counter>
+  <div class="blockOne">
+    <app-counter
+      [counterLabel]="numberOfJosLabel"
+      [counterNumber]="numberOfJosText"
+    ></app-counter>
+  </div>
+  <div class="blockTwo">
+    <app-counter
+      [counterLabel]="numberOfCountriesLabel"
+      [counterNumber]="numberOfCountriesText"
+    ></app-counter>
+  </div>
 </div>
 
 <div class="chart">
@@ -16,8 +28,14 @@
     [labels]="showLabels"
     [doughnut]="isDoughnut"
     (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
   >
+    <ng-template #tooltipTemplate let-model="model">
+      <div style="background-color: rgb(34, 102, 91); padding: 1px 20px 1px 20px; margin: 0px -10px 0px -10px;">
+        <p>{{ model.name }}</p>
+        <p><fa-icon [icon]="faMedalIcon"></fa-icon> {{ model.value }}</p>
+      </div>
+    </ng-template>
   </ngx-charts-pie-chart>
 </div>
+
+<app-infobar [barInfo]="infoMessage"></app-infobar>

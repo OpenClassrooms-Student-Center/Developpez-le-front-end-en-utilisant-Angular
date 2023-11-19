@@ -1,41 +1,8 @@
-.homeTitle {
-  text-align: center;
-  display: inline-block;
-  background-color: rgb(34, 102, 91);
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 15px;
-  color: white;
-  margin: auto;
-  font-size: x-large;
-}
-
-.homeBlock {
-  text-align: center;
-  margin: auto;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
-
 .numberBlock {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   max-width: 100%;
-  margin-bottom: 20px;
-}
-
-.counterLabel {
-  display: inline-block;
-  border: solid rgb(34, 102, 91);
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: x-large;
-  border-radius: 15px;
-}
-
-.number {
-  font-weight: bold;
+  margin: auto;
 }
 
 .chart {
@@ -44,9 +11,68 @@
   max-width: 100%;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 375px) {
   .numberBlock {
+    margin-left: 80px;
+    zoom: 50%;
+  }
+
+  .blockOne {
     display: flex;
-    margin-left: 250px;
+    min-width: 250px;
+  }
+
+  .blockTwo {
+    display: flex;
+    min-width: 250px;
+  }
+
+  .chart {
+    margin-left: -100px;
+    zoom: 60%;
+  }
+}
+
+@media screen and (max-height: 568px) {
+  .numberBlock {
+    margin-left: 80px;
+    zoom: 40%;
+  }
+
+  .blockOne {
+    display: flex;
+    min-width: 250px;
+  }
+
+  .blockTwo {
+    display: flex;
+    min-width: 250px;
+  }
+
+  .chart {
+    margin-left: -100px;
+    zoom: 50%;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 490px) {
+  .numberBlock {
+    margin-left: 80px;
+    zoom: 50%;
+  }
+
+  .blockOne {
+    display: flex;
+    min-width: 250px;
+  }
+
+  .blockTwo {
+    display: flex;
+    min-width: 250px;
+  }
+
+  .chart {
+    margin-left: -90px;
+    zoom: 80%;
   }
 }

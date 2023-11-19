@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { single } from './data';
 import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicMedalsCount } from 'src/app/core/viewmodels/OlympicMedalsCount';
-import { Participation } from 'src/app/core/models/Participation';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { DataValue } from 'src/app/core/viewmodels/DataValue';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +26,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   numberOfCountriesLabel: string = '';
   numberOfJosText: string = '';
   numberOfCountriesText: string = '';
+  faMedalIcon = faMedal;
+  infoMessage: string = '';
 
-  single!: any[];
+  //Pie chart properties ---------------------------------------------
   view: [number, number] = [700, 400];
 
-  // options
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
@@ -43,34 +44,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     selectable: true,
     name: 'Customer Usage'
   };
+  // ------------------------------------------------------------------
 
   constructor(private olympicService: OlympicService, private router: Router) {
-    Object.assign(this, { single });
-  }
-
-  onSelect(data: { name: string, value: number, label: string }): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-    var olympic = this.olympicService.getOlympicByCountry(data.name, this.olympics);
-    if (olympic) {
-      this.router.navigateByUrl(`detail/${olympic.id}`);
-    }
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.subscription = this.olympics$.subscribe(olympicList => {
-      this.olympics = olympicList;
-      this.setValues();
-      this.setChildrenComponentValues();
+    this.subscription = this.olympics$.subscribe({
+      next: (olympicList) => {
+        this.olympics = olympicList;
+        this.setPage();
+      },
+      error: () => {
+        this.infoMessage = "Homepage loading error";
+      },
     });
+  }
+
+  setPage(): void {
+    this.setValues();
+    this.setChildrenComponentValues();
+    this.infoMessage = "Homepage data loaded";
   }
 
   setValues(): void {
@@ -79,7 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.setNumberOfCountries();
   }
 
-  setChildrenComponentValues() {
+  setChildrenComponentValues(): void {
     this.currentTitle = 'Medals per Country';
     this.numberOfJosLabel = 'Number of JOs';
     this.numberOfCountriesLabel = 'Number of Countries';
@@ -87,6 +82,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.numberOfCountriesText = this.numberOfCountries.toString();
   }
 
+  // The pie chart needs a set of values. Each value must contain a name (string) attribute and a value (number) attribute.
+  // This method takes values from Olympic set to create a set of values to insert into the pie chart.
   setOlympicMedalsCounts(): void {
     this.olympicMedalsCounts = [];
     this.olympics.forEach(o => {
@@ -103,6 +100,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setNumberOfCountries(): void {
     this.numberOfCountries = this.olympicService.getNumberOfCountries(this.olympics);
+  }
+
+  onSelect(data: DataValue): void {
+    var olympic = this.olympicService.getOlympicByCountry(data.name, this.olympics);
+    olympic ? this.router.navigateByUrl(`detail/${olympic.id}`) : this.router.navigateByUrl(`notfound`);
   }
 
   ngOnDestroy(): void {

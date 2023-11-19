@@ -1,55 +1,7 @@
-.homeTitle {
-  text-align: center;
-  display: inline-block;
-  background-color: rgb(34, 102, 91);
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 15px;
-  color: white;
-  margin: auto;
-  font-size: x-large;
-}
-
-.homeBlock {
-  text-align: center;
-  margin: auto;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
-
 .numberBlock {
   text-align: center;
   max-width: 100%;
   margin-bottom: 20px;
-}
-
-.buttonBlock {
-  text-align: center;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
-
-#homeButton {
-  background-color: rgb(34, 102, 91);
-  width:70px;
-  height:30px;
-  color:white;
-  border-radius: 15px;
-}
-
-.counterLabel {
-  display: inline-block;
-  border: solid rgb(34, 102, 91);
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: x-large;
-  border-radius: 15px;
-}
-
-.number {
-  font-weight: bold;
 }
 
 .chart {
@@ -58,18 +10,38 @@
   max-width: 100%;
 }
 
-@media screen and (max-width: 720px) {
-  .homeBlock {
-    margin-left: 230px;
-    width: 300px;
-  }
-
+@media screen and (min-width: 414px) and (max-width: 490px) {
   .numberBlock {
     display: flex;
-    margin-left: 200px;
+    margin-left: 60px;
+    zoom: 50%;
   }
 
-  .buttonBlock {
-    margin-left: 340px;
+  .chart {
+    zoom: 50%;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 413px) {
+  .numberBlock {
+    display: flex;
+    margin-left: 20px;
+    zoom: 50%;
+  }
+
+  .chart {
+    zoom: 50%;
+  }
+}
+
+@media screen and (max-width: 374px) {
+  .numberBlock {
+    display: flex;
+    margin-left: 30px;
+    zoom: 40%;
+  }
+
+  .chart {
+    zoom: 40%;
   }
 }

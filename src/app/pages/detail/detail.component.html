@@ -1,9 +1,20 @@
+<app-navbar></app-navbar>
+
 <app-title [title]="currentTitle"></app-title>
 
 <div class="numberBlock">
-  <app-counter [counterLabel]="numberOfEntriesLabel" [counterNumber]="numberOfEntriesText"></app-counter>
-  <app-counter [counterLabel]="numberOfMedalsLabel" [counterNumber]="numberOfMedalsText"></app-counter>
-  <app-counter [counterLabel]="numberOfAthletesLabel" [counterNumber]="numberOfAthletesText"></app-counter>
+  <app-counter
+    [counterLabel]="numberOfEntriesLabel"
+    [counterNumber]="numberOfEntriesText"
+  ></app-counter>
+  <app-counter
+    [counterLabel]="numberOfMedalsLabel"
+    [counterNumber]="numberOfMedalsText"
+  ></app-counter>
+  <app-counter
+    [counterLabel]="numberOfAthletesLabel"
+    [counterNumber]="numberOfAthletesText"
+  ></app-counter>
 </div>
 
 <div class="chart">
@@ -19,13 +30,8 @@
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
     [results]="chartDetails"
-    (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
   >
   </ngx-charts-line-chart>
 </div>
 
-<div class="buttonBlock">
-  <button id="homeButton" (click)="goToHomePage()">Home</button>
-</div>
+<app-infobar [barInfo]="infoMessage"></app-infobar>
