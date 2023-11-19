@@ -1,5 +1,6 @@
 .counterLabel {
   display: inline-block;
+  text-align: center;
   border: solid rgb(34, 102, 91);
   margin-left: 10px;
   margin-right: 10px;
@@ -7,8 +8,19 @@
   padding-right: 10px;
   font-size: x-large;
   border-radius: 15px;
+  color: rgb(94, 92, 92);
 }
 
 .number {
   font-weight: bold;
+  text-align: center;
+  color: black;
+}
+
+@media screen and (max-width: 490px) {
+  .counterLabel {
+    min-width: 200px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
 }
