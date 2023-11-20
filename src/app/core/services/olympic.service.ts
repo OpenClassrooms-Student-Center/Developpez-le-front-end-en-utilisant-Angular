@@ -58,6 +58,7 @@ export class OlympicService {
     var medalsCount = 0;
     var country = this.getOlympicById(id, olympics);
     if (country) {
+      // loop for each participation
       country.participations.forEach(p => medalsCount += p.medalsCount);
     }
     return medalsCount;
@@ -65,8 +66,10 @@ export class OlympicService {
 
   getNumberOfJos(olympics: Olympic[]): number {
     var jos: Participation[] = [];
+    // one loop for each olympic and inside a loop for each participation
     olympics.forEach(o => o.participations.forEach(p => {
       var participation = this.getParticipationById(p.id, jos);
+      // to avoid duplicate values, this participation p is pushed inside jos only if it doesn't exist in jos
       if (!participation) {
         jos.push(p);
       }

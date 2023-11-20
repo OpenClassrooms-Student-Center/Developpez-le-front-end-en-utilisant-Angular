@@ -107,6 +107,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.numberOfAthletesText = this.numberOfAthletes.toString();
   }
 
+  // This method takes values from Olympic set to create a set of values with a string and a number.
   setOlympicMedalsCounts(): void {
     this.olympicMedalsCounts = [];
     if (this.currentCountry) {
