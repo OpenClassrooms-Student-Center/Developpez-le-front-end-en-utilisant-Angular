@@ -9,7 +9,7 @@ example of participation:
     athleteCount: 372
 }
 */
-interface Participation {
+export interface Participation {
     id: number;
     year: number;
     city: string;
@@ -17,4 +17,3 @@ interface Participation {
     athleteCount: number;
   }
   
-  export default Participation;
