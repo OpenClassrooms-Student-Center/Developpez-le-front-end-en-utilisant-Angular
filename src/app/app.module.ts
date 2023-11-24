@@ -7,6 +7,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CountryDetailsComponent } from './pages/country-details/country-details.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { SwimlaneComponent } from './pages/swimlane/swimlane.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
     HomeComponent,
     NotFoundComponent,
     CountryDetailsComponent,
+    SwimlaneComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,4 +26,4 @@ import { BrowserModule } from '@angular/platform-browser';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

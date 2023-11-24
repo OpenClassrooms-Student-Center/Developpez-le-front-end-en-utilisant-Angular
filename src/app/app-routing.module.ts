@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CountryDetailsComponent } from './pages/country-details/country-details.component';
+import { SwimlaneComponent } from './pages/swimlane/swimlane.component';
 
 
 const routes: Routes = [
@@ -11,8 +12,8 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'country-details/:countryName',
-    component: CountryDetailsComponent,
+    path: 'swimlane/:countryName',
+    component: SwimlaneComponent,
   },
   {
     path: '**', // wildcard
@@ -24,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
