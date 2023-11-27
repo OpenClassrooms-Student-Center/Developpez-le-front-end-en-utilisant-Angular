@@ -16,6 +16,5 @@ export class PiechartComponent {
   @Input() data: any[] = [];
 
   onSelect(event: any): void {
-    // Handle chart selection if needed
   }
 }

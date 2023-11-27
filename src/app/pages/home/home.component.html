@@ -2,6 +2,6 @@
 <main>
   <hr />
   <h1>Medals per Country</h1>
-  <app-piechart [data]="filterData((olympics$ | async) ?? [], selectedYear)"></app-piechart>
+  <app-piechart [data]="filterData((olympics$ | async) ?? [])"></app-piechart>
   <p>{{ (olympics$ | async)?.length }} data loaded</p>
 </main>
