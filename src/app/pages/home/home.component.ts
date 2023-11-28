@@ -17,12 +17,20 @@ interface ChartValue {
 export class HomeComponent implements OnInit {
   public olympics$: Observable<Olympic[]> = of([]);
   public chartValues$: Observable<ChartValue[]> = of([]);
+  public totalGames: number = 0;
+  
 
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
     // Charger les données olympiques au moment de l'initialisation
     this.olympics$ = this.olympicService.getOlympics();
+
+    // Calculer le nombre total de Jeux olympiques (années uniques)
+    this.olympics$.subscribe(data => {
+      const uniqueYears = [...new Set(data.flatMap(item => item.participations.map(p => p.year)))];
+      this.totalGames = uniqueYears.length;
+    });
 
     this.chartValues$ = this.olympics$.pipe(
       map((countries) => {
