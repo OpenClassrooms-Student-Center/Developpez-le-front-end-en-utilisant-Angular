@@ -3,5 +3,12 @@
   <hr />
   <h1>Medals per Country</h1>
   <app-piechart [data]="(chartValues$ | async) ?? []"></app-piechart>
-  <p>{{ (olympics$ | async)?.length }} data loaded</p>
+  <div>
+    <p>Number of JOs</p>
+    <p>{{(olympics$ | async)?.length}}</p>
+  </div>
+  <div>
+    <p>Number of countries</p>
+    <p>{{(olympics$ | async)?.length}}</p>
+  </div>
 </main>
