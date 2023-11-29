@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+interface LineChartData {
+  name: string;
+  value: number;
+}
 
 @Component({
   selector: 'app-linechart',
-  templateUrl: './linechart.component.html',
-  styleUrls: ['./linechart.component.scss']
+  template: `
+    <ngx-charts-line-chart
+      [results]="data"
+      [view]="[500, 300]"
+      [gradient]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+    >
+    </ngx-charts-line-chart>
+  `,
 })
-export class LinechartComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class LinechartComponent {
+  @Input() data: LineChartData[] = [];
 }

@@ -7,46 +7,52 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 interface ChartValue {
   name: string;
   value: number;
+  numberEntries: number;
+  medalsCount: number;
+  athleteCount: number;
 }
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss'],
 })
 
-export class HomeComponent implements OnInit {
+export class DetailComponent implements OnInit {
   public olympics$: Observable<Olympic[]> = of([]);
   public chartValues$: Observable<ChartValue[]> = of([]);
-  public totalGames: number = 0;
-  
+  public numberEntries: number = 0;
+  public totalMedals: number = 0;
+  public totalAthletes: number = 0;
+
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    // Charger les données olympiques au moment de l'initialisation
     this.olympics$ = this.olympicService.getOlympics();
-
-    // Calculer le nombre total de Jeux olympiques (années uniques)
-    this.olympics$.subscribe(data => {
-      const uniqueYears = [...new Set(data.flatMap(item => item.participations.map(p => p.year)))];
-      this.totalGames = uniqueYears.length;
-    });
 
     this.chartValues$ = this.olympics$.pipe(
       map((countries) => {
         const result: ChartValue[] = [];
+
         countries.forEach((country) => {
-          // Calculer le total des médailles pour le pays actuel
-          const totalMedals = country.participations.reduce((value, participation) => {
+          this.numberEntries = 0;
+          this.totalMedals = country.participations.reduce((value, participation) => {
+            this.numberEntries++;
             return value + participation.medalsCount;
           }, 0);
-          // Ajouter le résultat au tableau
+    
+          this.totalAthletes = country.participations.reduce((value, participation) => {
+            return value + participation.athleteCount;
+          }, 0);
+    
           result.push({
             name: country.country,
-            value: totalMedals,
+            value: this.totalMedals,
+            numberEntries: this.numberEntries,
+            medalsCount: this.totalMedals, 
+            athleteCount: this.totalAthletes,
           });
         });
-        // Retourner le tableau de résultats
         return result;
       })
     );

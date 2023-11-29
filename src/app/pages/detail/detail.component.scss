@@ -1,4 +1,4 @@
-.containerMedalsPerCountry{
+.nameOfTheCountry{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,23 +11,23 @@
     }
 }
 
-.dataOutPieChart{
+.dataOutLineChart{
     display: flex;
     text-align: center;
 
-    .containerNumberOfJos{
+    .containerNumberOfCountries{
         margin: 15px;
         border: 2px solid #00838f;
         padding: 10px;
         border-radius: 10px;
     }
     
-    .textDataOutPieChart{
+    .textDataOutLineChart{
         color: grey;
         margin: 0;
     }
 
-    .countDataOutPieChart{
+    .countDataOutLineChart{
         margin-top: 5px;
         margin-bottom: 0;
         font-weight:bold;
