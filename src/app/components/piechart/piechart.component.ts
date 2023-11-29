@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   template: `
     <ngx-charts-pie-chart
       [results]="data"
-      [view]="[400, 300]"
+      [view]="[300, 300]" 
       [gradient]="false"
       (select)="onSelect($event)"
     >

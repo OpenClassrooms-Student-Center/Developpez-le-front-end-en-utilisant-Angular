@@ -1,0 +1,42 @@
+.containerMedalsPerCountry{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1{
+        background-color: #00838f;
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+
+.dataOutPieChart{
+    display: flex;
+    text-align: center;
+
+    .containerNumberOfJos{
+        margin: 15px;
+        border: 2px solid #00838f;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .containerNumberOfCountries{
+        margin: 15px;
+        border: 2px solid #00838f;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .textDataOutPieChart{
+        color: grey;
+        margin: 0;
+    }
+
+    .countDataOutPieChart{
+        margin-top: 5px;
+        margin-bottom: 0;
+        font-weight:bold;
+    }
+}

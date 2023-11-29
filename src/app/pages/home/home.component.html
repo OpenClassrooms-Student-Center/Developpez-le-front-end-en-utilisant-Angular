@@ -1,14 +1,18 @@
 <app-header></app-header>
 <main>
   <hr />
-  <h1>Medals per Country</h1>
-  <app-piechart [data]="(chartValues$ | async) ?? []"></app-piechart>
-  <div>
-    <p>Number of JOs</p>
-    <p>{{(totalGames)}}</p>
-  </div>
-  <div>
-    <p>Number of countries</p>
-    <p>{{(olympics$ | async)?.length}}</p>
+  <div class="containerMedalsPerCountry">
+    <h1>Medals per Country</h1>
+    <div class="dataOutPieChart">
+      <div class="containerNumberOfJos">
+        <p class="textDataOutPieChart">Number of JOs</p>
+        <p class="countDataOutPieChart">{{(totalGames)}}</p>
+      </div>
+      <div class="containerNumberOfCountries">
+        <p class="textDataOutPieChart">Number of countries</p>
+        <p class="countDataOutPieChart">{{(olympics$ | async)?.length}}</p>
+      </div>
+    </div>
+    <app-piechart [data]="(chartValues$ | async) ?? []"></app-piechart>
   </div>
 </main>
