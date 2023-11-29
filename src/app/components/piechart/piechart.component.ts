@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-piechart',
@@ -16,6 +17,12 @@ import { Component, Input } from '@angular/core';
 export class PiechartComponent {
   @Input() data: any[] = [];
 
+  constructor(private router: Router) {}
+
   onSelect(event: any): void {
+    if (event.name) {
+      // Naviguer vers la page de détail avec le nom du pays comme paramètre
+      this.router.navigate(['/detail', event.name]);
+    }
   }
 }
