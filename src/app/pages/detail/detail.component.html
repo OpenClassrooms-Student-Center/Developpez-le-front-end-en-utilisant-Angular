@@ -1,27 +1,22 @@
 <app-header></app-header>
 <main>
   <hr />
-  <div *ngIf="chartValues$ | async as chartValues">
-  
-    <div *ngFor="let chartValue of chartValues">
-      <div class="nameOfTheCountry">
-        <h1>{{chartValue.name}}</h1>
-        <div class="dataOutLineChart">
-          <div class="containerNumberOfCountries">
-            <p class="textDataOutLineChart">Number of entries</p>
-            <p class="countDataOutLineChart">{{numberEntries}}</p>
-          </div>
-          <div class="containerNumberOfCountries">
-            <p class="textDataOutLineChart">Total number medals</p>
-            <p class="countDataOutLineChart">{{totalMedals}}</p>
-          </div>
-          <div class="containerNumberOfCountries">
-            <p class="textDataOutLineChart">Total number of athletes</p>
-            <p class="countDataOutLineChart">{{totalAthletes}}</p>
-          </div>
-        </div>
-        <app-linechart [data]="(chartValues$ | async) ?? []"></app-linechart>
+  <div class="nameOfTheCountry">
+    <h1>{{ chartValues[0].name }}</h1>
+    <div class="dataOutLineChart">
+      <div class="containerNumberOfCountries">
+        <p class="textDataOutLineChart">Number of entries</p>
+        <p class="countDataOutLineChart">{{ chartValues[0].numberEntries }}</p>
+      </div>
+      <div class="containerNumberOfCountries">
+        <p class="textDataOutLineChart">Total number medals</p>
+        <p class="countDataOutLineChart">{{ chartValues[0].medalsCount }}</p>
+      </div>
+      <div class="containerNumberOfCountries">
+        <p class="textDataOutLineChart">Total number of athletes</p>
+        <p class="countDataOutLineChart">{{ chartValues[0].athleteCount }}</p>
       </div>
     </div>
+    <app-linechart [data]="chartValues"></app-linechart>
   </div>
 </main>
