@@ -33,7 +33,7 @@ export class DetailComponent implements OnInit {
         // Appeler olympicService pour obtenir la liste des pays
         this.olympicService.getOlympics().pipe(
           // Vérifier si le pays existe dans la liste
-        map(pays => pays.find(p => p.country === params.get('country')))
+        map(countries => countries.find(country => country.country === params.get('country')))
       ))
     ).subscribe(selectedCountryData => {
       // Affecter les valeurs du graphique en fonction des données du pays sélectionné
