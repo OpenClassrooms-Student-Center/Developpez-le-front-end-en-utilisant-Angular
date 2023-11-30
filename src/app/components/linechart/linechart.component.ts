@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 interface LineChartData {
-  name: string;
+  name: number;
   value: number;
 }
 

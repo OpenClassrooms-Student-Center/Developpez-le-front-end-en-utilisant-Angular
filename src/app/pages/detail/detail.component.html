@@ -2,8 +2,10 @@
 <main>
   <hr />
   <div class="nameOfTheCountry">
-    <h1>{{ chartValues[0].name }}</h1>
-    <div class="dataOutLineChart">
+    <div class="nameOfTheCountry" *ngIf="chartValues[0]">
+      <h1>{{ chartValues[0].name }}</h1>
+      <!-- le reste du contenu -->
+    </div>    <div class="dataOutLineChart">
       <div class="containerNumberOfCountries">
         <p class="textDataOutLineChart">Number of entries</p>
         <p class="countDataOutLineChart">{{ chartValues[0].numberEntries }}</p>
@@ -17,6 +19,6 @@
         <p class="countDataOutLineChart">{{ chartValues[0].athleteCount }}</p>
       </div>
     </div>
-    <app-linechart [data]="chartValues"></app-linechart>
+      <app-linechart [data]="chartValues[0].medalsData || []"></app-linechart>
   </div>
 </main>
