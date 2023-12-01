@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OlympicService } from '../../core/services/olympic.service';
-import { id } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-swimlane',
@@ -21,7 +20,7 @@ export class SwimlaneComponent {
       this.countryName = params.get('countryName')!;
       this.olympicService.getFormattedOlympics().subscribe(data => {
         console.log(data);
-        const countryData = data.filter(country => country.id === 1)[0];
+        const countryData = data.find(country => country.name === this.countryName);
         
         if (countryData) {
           this.participationsCount = countryData.participations.length;

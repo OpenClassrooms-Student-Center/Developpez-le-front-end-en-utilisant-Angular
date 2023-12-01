@@ -39,7 +39,8 @@ export class OlympicService {
   private transformToChartData(data: any[]): any[] {
     return data.map(country => ({
       name: country.country,
-      value: country.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0)
+      value: country.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0),
+      participations: country.participations
     }));
   }
 }
