@@ -13,7 +13,6 @@ interface LineChartData {
       [gradient]="false"
       [xAxis]="true"
       [yAxis]="true"
-      [legend]="true"
     >
     </ngx-charts-line-chart>
   `,
