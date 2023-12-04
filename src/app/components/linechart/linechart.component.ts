@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 interface LineChartData {
-  name: number;
-  value: number;
+  name: string; series: {value:number; name: number}[]
 }
 
 @Component({

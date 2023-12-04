@@ -19,6 +19,6 @@
         <p class="countDataOutLineChart">{{ chartValues[0].athleteCount }}</p>
       </div>
     </div>
-      <app-linechart [data]="chartValues[0].medalsData || []"></app-linechart>
+      <app-linechart [data]="[chartValues[0].medalsData]"></app-linechart>
   </div>
 </main>

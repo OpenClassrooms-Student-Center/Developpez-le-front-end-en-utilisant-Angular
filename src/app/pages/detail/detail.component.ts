@@ -11,7 +11,7 @@ interface ChartValue {
   numberEntries: number;
   medalsCount: number;
   athleteCount: number;
-  medalsData: { name: number; value: number }[]; 
+  medalsData: { name: string; series: {value: number; name: number}[] }; 
 }
 
 
@@ -46,11 +46,12 @@ export class DetailComponent implements OnInit {
               numberEntries: selectedCountryData.participations.length,
               medalsCount: selectedCountryData.participations.reduce((sum, participation) => sum + participation.medalsCount, 0),
               athleteCount: selectedCountryData.participations.reduce((sum, participation) => sum + participation.athleteCount, 0),
-              medalsData: selectedCountryData.participations.map(participation => ({
-                name: participation.year,
-                value: participation.medalsCount,
+              medalsData: {name: selectedCountryData.country, 
+                series: selectedCountryData.participations.map(participation => ({
+                  value: participation.medalsCount,
+                  name: participation.year,
               }))
-            }] : [];
+            }}] : [];
             console.log('Medals Data:', this.chartValues[0]?.medalsData || []);
     });
   }
