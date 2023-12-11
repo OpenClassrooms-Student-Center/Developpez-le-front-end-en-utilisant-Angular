@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
 
@@ -30,7 +30,7 @@ export class SwimlaneComponent {
 
   colorScheme = 'cool';
 
-  constructor(private route: ActivatedRoute, private olympicService: OlympicService,) { }
+  constructor(private route: ActivatedRoute, private olympicService: OlympicService, private router: Router ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -55,6 +55,10 @@ export class SwimlaneComponent {
     });
     
 
+  }
+
+  goHome() {
+    this.router.navigate(['/']);
   }
 
 }
