@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
 
 @Component({
@@ -13,23 +14,44 @@ export class SwimlaneComponent {
   totalMedals!: number;
   totalAthletes!: number;
 
+  multi: any[] = [];
+    view: [number, number] = [700, 300];
+
+  legend = true;
+  showLabels = true; // Si vous avez besoin de cette propriété
+  animations = true; // Si vous avez besoin de cette propriété
+  xAxis = true;
+  yAxis = true;
+  showYAxisLabel = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Year';
+  yAxisLabel = 'Medals';
+  timeline = true;
+
+  colorScheme = 'cool';
+
   constructor(private route: ActivatedRoute, private olympicService: OlympicService,) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.countryName = params.get('countryName')!;
       this.olympicService.getFormattedOlympics().subscribe(data => {
-        console.log(data);
         const countryData = data.find(country => country.name === this.countryName);
         
         if (countryData) {
           this.participationsCount = countryData.participations.length;
           this.totalMedals = countryData.participations.reduce((sum: any, participation: { medalsCount: any; }) => sum + participation.medalsCount, 0);
           this.totalAthletes = countryData.participations.reduce((sum: any, participation: { athleteCount: any; }) => sum + participation.athleteCount, 0);
-          console.log(countryData);
         }
       });
       
+    });
+
+    this.route.paramMap.subscribe(params => {
+      this.countryName = params.get('countryName')!;
+      this.olympicService.getCountrySeriesData().subscribe(data => {
+        this.multi = data.filter(country => country.name === this.countryName);
+      });
     });
     
 

@@ -40,7 +40,24 @@ export class OlympicService {
     return data.map(country => ({
       name: country.country,
       value: country.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0),
-      participations: country.participations
+      participations: country.participations, 
     }));
   }
+
+  getCountrySeriesData() {
+    return this.loadInitialData().pipe(
+      map(data => this.transformToCountrySeries(data))
+    );
+  }
+
+  private transformToCountrySeries(data: any[]): any[] {
+    return data.map(country => ({
+      name: country.country,
+      series: country.participations.map((participation: { year: number, medalsCount: number }) => ({
+        name: participation.year.toString(),
+        value: participation.medalsCount
+      }))
+    }));
+  }
+  
 }

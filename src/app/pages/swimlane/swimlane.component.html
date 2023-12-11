@@ -1,4 +1,34 @@
 <h2>{{ countryName }}</h2>
-<p>Nombre de participations : {{ participationsCount }}</p>
-<p>Nombre total de médailles : {{ totalMedals }}</p>
-<p>Nombre total d'athlètes : {{ totalAthletes }}</p>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <p>Nombre de participations : {{ participationsCount }}</p>
+      </div>
+      <div class="col">
+        <p>Nombre total de médailles : {{ totalMedals }}</p>
+      </div>
+      <div class="col">
+        <p>Nombre total d'athlètes : {{ totalAthletes }}</p>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [legend]="legend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [results]="multi">
+    </ngx-charts-line-chart>
+  </div>
+  
+
+ 
