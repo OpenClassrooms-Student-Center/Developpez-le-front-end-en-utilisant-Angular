@@ -44,7 +44,7 @@ fdescribe('OlympicService', () => {
   it('should retrieve olympic data', () => {
     const mockOlympicData: Country[] = [
       { id: 1, country: 'Country1', participations: [] },
-      // ...other countries
+
     ];
 
     service.loadInitialData().subscribe((data) => {
@@ -56,5 +56,4 @@ fdescribe('OlympicService', () => {
     req.flush(mockOlympicData); 
   });
 
-  // ...other tests
 });

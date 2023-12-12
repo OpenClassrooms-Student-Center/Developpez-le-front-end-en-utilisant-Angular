@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Country } from '../models/Olympic';
+import { PieChart } from '../models/PieChart'
 
 /**
  * Service to manage Olympic data.
@@ -45,4 +46,14 @@ export class OlympicService {
   getOlympics() {
     return this.olympics$.asObservable();
   }
+
+  processDataForPieChart(data: Country[]): PieChart[] {
+    return data.map(country => {
+      return {
+        name: country.country,
+        value: country.participations.reduce((acc, curr) => acc + curr.medalsCount, 0)
+      };
+    });
+  }
+  
 }
