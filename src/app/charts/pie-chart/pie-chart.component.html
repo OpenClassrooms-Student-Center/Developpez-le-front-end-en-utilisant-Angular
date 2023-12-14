@@ -1,15 +1,8 @@
-<div style="display: block">
-    <ngx-charts-pie-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="countriesMedals"
-      [gradient]="gradient"
-      [legend]="showLegend"
-      [legendPosition]="legendPosition"
-      [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      [arcWidth]="arcWidth"
+<section #chartContainer style="display: block; width: 100%; height: 100%;">
+  <div style="display: block">
+    <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="countriesMedals" [gradient]="gradient"
+      [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" [arcWidth]="arcWidth"
       (select)="onSelect($event)">
     </ngx-charts-pie-chart>
   </div>
-  
+</section>

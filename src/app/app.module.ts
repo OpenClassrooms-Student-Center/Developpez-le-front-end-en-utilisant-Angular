@@ -13,6 +13,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { TitleComponent } from './components/title/title.component';
 
 /**
  * The `AppModule` class.
@@ -25,7 +26,8 @@ import { LineChartComponent } from './charts/line-chart/line-chart.component';
     HomeComponent, 
     NotFoundComponent, 
     PieChartComponent, 
-    LineChartComponent
+    LineChartComponent,
+    TitleComponent,
   ],
   imports: [
     BrowserModule, 
