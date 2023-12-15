@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { PieChart } from 'src/app/core/models/PieChart';
 import { Country } from 'src/app/core/models/Olympic';
@@ -13,9 +13,6 @@ import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
   styleUrls: ['./pie-chart.component.scss']
 })
 export class PieChartComponent implements OnInit {
-  // View dimensions for the pie chart.
-  @ViewChild('chartContainer') chartContainer!: ElementRef;
-  view!: [number, number];
 
   // Color scheme configuration for the pie chart.
   colorScheme: Color = {
@@ -39,9 +36,8 @@ export class PieChartComponent implements OnInit {
   /**
    * Constructor to inject the OlympicService and ChangeDetectorRef.
    * @param olympicService - Service to fetch Olympic data.
-   * @param cdr - Change detector reference.
    */
-  constructor(private olympicService: OlympicService, private cdr: ChangeDetectorRef) { }
+  constructor(private olympicService: OlympicService) { }
 
   /**
    * OnInit lifecycle hook to load initial data for the pie chart.
@@ -53,31 +49,10 @@ export class PieChartComponent implements OnInit {
     });
   }
 
-  /**
-   * Lifecycle hook that is called after Angular has fully initialized a component's view.
-   */
-  ngAfterViewInit() {
-    this.updateChartSize();
-    this.cdr.detectChanges();
-  }
+ 
+  
 
-  /**
-   * Listener for window resize events to update the chart size.
-   */
-  @HostListener('window:resize')
-  onResize() {
-    this.updateChartSize();
-  }
-
-  /**
-   * Updates the size of the chart based on its container.
-   */
-  private updateChartSize() {
-    const element = this.chartContainer.nativeElement;
-    const width = element.offsetWidth;
-    const height = element.offsetHeight;
-    this.view = [width, height];
-  }
+  
 
   /**
    * Handles the selection event on the pie chart.
