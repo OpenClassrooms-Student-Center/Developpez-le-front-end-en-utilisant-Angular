@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, TemplateRef, ViewChild} from '@angular/core';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { PieChart } from 'src/app/core/models/PieChart';
 import { Country } from 'src/app/core/models/Olympic';
@@ -10,7 +10,8 @@ import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+  styleUrls: ['./pie-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PieChartComponent implements OnInit {
 

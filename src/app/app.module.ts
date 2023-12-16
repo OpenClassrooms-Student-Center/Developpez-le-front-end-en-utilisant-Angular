@@ -14,7 +14,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { TitleComponent } from './components/title/title.component';
-import { SectionGraphComponent } from './components/section-graph/section-graph.component';
 
 /**
  * The `AppModule` class.
@@ -29,7 +28,6 @@ import { SectionGraphComponent } from './components/section-graph/section-graph.
     PieChartComponent, 
     LineChartComponent,
     TitleComponent,
-    SectionGraphComponent,
   ],
   imports: [
     BrowserModule, 
