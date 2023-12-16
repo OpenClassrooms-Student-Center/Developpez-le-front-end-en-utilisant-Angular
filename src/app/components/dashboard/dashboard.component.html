@@ -1,7 +1,10 @@
-<p>dashboard works!</p>
-<ul>
-  <li *ngFor="let result of dashboardDatas">
-    {{result.getName()}}
-    {{result.getValue()}}
-  </li>
-</ul>
+<ngx-charts-pie-chart
+  [results]="dashboardDatas"
+  [legend]="showLegend"
+  [labels]="showLabels"
+  [trimLabels] = "trimLabels"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+>
+</ngx-charts-pie-chart>

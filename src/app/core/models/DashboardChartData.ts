@@ -3,16 +3,30 @@
  */
 export class DashboardChartData {
 
-  constructor(private name : string, private value : number) {
+  private extra : ExtraDatas;
+
+  constructor(public id : number, public name : string, public value : number) {
+    this.extra = new ExtraDatas(id);
   }
 
   public getName() : string {
     return this.name;
   }
-
   public getValue():number {
     return this.value
   }
+  getId(): number {
+    return this.extra.id;
+  }
+}
 
+class ExtraDatas {
+
+  constructor(public id: number) {
+  }
+
+  public getId() : number {
+    return this.id;
+  }
 
 }
