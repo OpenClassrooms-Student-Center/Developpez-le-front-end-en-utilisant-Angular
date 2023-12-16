@@ -3,8 +3,6 @@ import {map, Subscription} from "rxjs";
 import {OlympicService} from "../../core/services/olympic.service";
 import {DashboardChartData} from "../../core/models/DashboardChartData";
 import {Olympic} from "../../core/models/Olympic";
-import {Participation} from "../../core/models/Participation";
-import {ColorHelper, NgxChartsModule} from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /*
   Variables ngx-chart
    */
+  view : [number, number] = [640, 480];
   showLegend : boolean = false;
   showLabels : boolean = true;
   trimLabels : boolean = false;
@@ -79,9 +78,5 @@ export class DashboardComponent implements OnInit, OnDestroy{
   onDeactivate(data : any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-
-
-
-
 
 }
