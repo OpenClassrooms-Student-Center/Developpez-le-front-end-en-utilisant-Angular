@@ -18,6 +18,9 @@ export class DashboardComponent implements OnInit, OnDestroy{
   // Dashboard chartDataTable
   dashboardDatas : DashboardChartData[] = [];
 
+  joCount : number = 0;
+  countriesCount : number = 0;
+
   /*
   Variables ngx-chart
    */
@@ -32,6 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     this.subscription = this.olympicService.getOlympics().pipe(
       map(
         olympics => {
+          this.countriesCount = olympics.length;
           this.dashboardDatas = this.dashboardDataMapper(olympics);
         }
       )
@@ -51,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     let results: DashboardChartData[] = [];
     for (let olympic of olympics){
       let totalMedalCount = 0;
+      this.joCount = olympic.participations.length > this.joCount ? olympic.participations.length : this.joCount;
       for (let participation of olympic.participations){
         totalMedalCount += participation.medalsCount;
       }
