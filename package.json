@@ -1,6 +1,6 @@
 {
   "name": "olympic-games-starter",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,13 +11,16 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.12",
+    "@angular/cdk": "^16.2.12",
     "@angular/common": "^16.2.12",
     "@angular/compiler": "^16.2.12",
     "@angular/core": "^16.2.12",
     "@angular/forms": "^16.2.12",
+    "@angular/material": "^16.2.12",
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
+    "@swimlane/ngx-charts": "^20.5.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.3"
@@ -26,6 +29,9 @@
     "@angular-devkit/build-angular": "^16.2.10",
     "@angular/cli": "~16.2.10",
     "@angular/compiler-cli": "^16.2.12",
+    "@types/d3-scale": "^4.0.8",
+    "@types/d3-selection": "^3.0.10",
+    "@types/d3-shape": "^3.1.6",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
