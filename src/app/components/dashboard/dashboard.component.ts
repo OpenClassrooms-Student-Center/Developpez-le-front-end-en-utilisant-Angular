@@ -3,8 +3,6 @@ import {map, Subscription} from "rxjs";
 import {OlympicService} from "../../core/services/olympic.service";
 import {DashboardChartData} from "../../core/models/DashboardChartData";
 import {Olympic} from "../../core/models/Olympic";
-import {Participation} from "../../core/models/Participation";
-import {ColorHelper, NgxChartsModule} from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
