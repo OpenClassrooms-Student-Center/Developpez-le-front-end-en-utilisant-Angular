@@ -1,10 +1,30 @@
-<ngx-charts-pie-chart
-  [results]="dashboardDatas"
-  [legend]="showLegend"
-  [labels]="showLabels"
-  [trimLabels] = "trimLabels"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
->
-</ngx-charts-pie-chart>
+<div id="dashboard">
+  <div id="dashboard_header">
+    <p>Medals per Country</p>
+  </div>
+    <div id="header_datas">
+      <div class="result_datas">
+        <p class="result_title">Number of JOs</p>
+        <p class="result">{{ joCount }}</p>
+      </div>
+      <div class="result_datas">
+        <p class="result_title">Number of countries</p>
+        <p class="result">{{ countriesCount }}</p>
+      </div>
+    </div>
+
+  <div id="dashboard_chart" #dashboard_chart>
+    <ngx-charts-pie-chart class="ngx-charts"
+      [view]="view"
+      [results]="dashboardDatas"
+      [legend]="showLegend"
+      [labels]="showLabels"
+      [trimLabels]="trimLabels"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)"
+    >
+    </ngx-charts-pie-chart>
+  </div>
+
+</div>

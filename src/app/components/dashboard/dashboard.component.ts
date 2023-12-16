@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /*
   Variables ngx-chart
    */
+  view : [number, number] = [640, 480];
   showLegend : boolean = false;
   showLabels : boolean = true;
   trimLabels : boolean = false;
@@ -77,9 +78,5 @@ export class DashboardComponent implements OnInit, OnDestroy{
   onDeactivate(data : any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-
-
-
-
 
 }
