@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import {Olympic} from "../models/Olympic";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData() {
+  loadInitialData(): Observable<Olympic[]> {
     return this.http.get<any>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
@@ -25,7 +26,7 @@ export class OlympicService {
     );
   }
 
-  getOlympics() {
+  getOlympics() : Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
 }
