@@ -31,14 +31,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscription = this.olympicService.getOlympics().pipe(
-      map(
-        olympics => {
-          this.countriesCount = olympics.length;
-          this.dashboardDatas = this.dashboardDataMapper(olympics);
-        }
-      )
-    ).subscribe();
+    this.subscription = this.olympicService.getOlympics().subscribe(
+      olympics => {
+        this.countriesCount = olympics.length;
+        this.dashboardDatas = this.dashboardDataMapper(olympics);
+      }
+    );
   }
 
   ngOnDestroy(): void {
