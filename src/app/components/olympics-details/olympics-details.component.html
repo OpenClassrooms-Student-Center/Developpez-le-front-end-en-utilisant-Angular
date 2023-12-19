@@ -1,1 +1,35 @@
-<p>olympics-details works!</p>
+<div id="dashboard">
+  <div id="dashboard_header">
+    <p>{{ countryName }}</p>
+  </div>
+  <div id="header_datas">
+    <div class="result_datas">
+      <p class="result_title">Number of Entries</p>
+      <p class="result">{{ entriesCount }}</p>
+    </div>
+    <div class="result_datas">
+      <p class="result_title">Total Number Medals</p>
+      <p class="result">{{ medalsCount }}</p>
+    </div>
+    <div class="result_datas">
+      <p class="result_title">Total Number of Athletes</p>
+      <p class="result">{{ athletesCount }}</p>
+    </div>
+  </div>
+<div id="dashboard_chart" #dashboard_chart>
+  <ngx-charts-line-chart class="ngx-charts"
+                        [view]="view"
+                        [results]="datas"
+                        [legend]="showLegend"
+                         [animations]="true"
+                         [autoScale]="autoScale"
+                         [showXAxisLabel]="showXAxisLabel"
+                         [showYAxisLabel]="showYAxisLabel"
+                         [xAxis]="xAxis"
+                         [yAxis]="yAxis"
+                         [xAxisLabel]="xAxisLabel"
+                         [yAxisLabel]="yAxisLabel"
+  >
+  </ngx-charts-line-chart>
+</div>
+</div>
