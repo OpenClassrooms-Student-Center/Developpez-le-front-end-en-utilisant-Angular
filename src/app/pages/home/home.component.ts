@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     name: 'custom',
     selectable: true,
     group: 'Ordinal',
-    domain: ['#793D52', '#B8CBE7', '#89A1DB', '#793D52', '#FFA07A'],
+    domain: ['#956065', '#B8CBE7', '#89A1DB', '#793D52', '#9780A1'],
   };
 
 
