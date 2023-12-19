@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Country } from '../models/Olympic';
-import { PieChart } from '../models/PieChart'
+import { PieChart } from '../models/PieChart';
+import { ChartData } from '../models/ChartData';
+import { TotalOlympicGamesAndCountry } from '../models/TotalOlympicGamesAndCountry';
 
 /**
  * Service to manage Olympic data.
@@ -20,7 +22,7 @@ export class OlympicService {
    * Constructs the OlympicService.
    * @param http HttpClient used for making HTTP requests.
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Loads initial Olympic data from a JSON file.
@@ -55,5 +57,29 @@ export class OlympicService {
       };
     });
   }
-  
+
+
+  /**
+   * Counts the number of unique Olympic years in the country data.
+   *
+   * @param {Country[]} data - The data of countries and their Olympic participations.
+   * @returns {number} The number of unique Olympic years.
+   */
+  processOlympicGamesAndCountry(data: Country[]): TotalOlympicGamesAndCountry {
+    const uniqueYears = new Set<number>();
+    const uniqueCountry = new Set<string>();
+    data.forEach((country) => {
+      country.participations.forEach((participation) => {
+        uniqueYears.add(participation.year);
+        uniqueCountry.add(country.country);
+      });
+    });
+    const uniqueYearsCountry: TotalOlympicGamesAndCountry = {
+      totalOlympicGames: uniqueYears.size,
+      totalCountries: uniqueCountry.size
+    }
+    return uniqueYearsCountry;
+  }
+
 }
+

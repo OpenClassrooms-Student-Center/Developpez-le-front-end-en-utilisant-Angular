@@ -1,0 +1,10 @@
+@import 'variables';
+
+.statistic-card {
+    text-align: center;
+    border: 2px solid $primary-color;
+    padding: 10px;
+    border-radius: $border-radius;
+    line-height: 2em;
+    margin-left: 50px;
+}

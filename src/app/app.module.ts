@@ -14,6 +14,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { TitleComponent } from './components/title/title.component';
+import { CustomChartComponent } from './custom-chart/custom-chart.component';
+import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 
 /**
  * The `AppModule` class.
@@ -28,6 +30,8 @@ import { TitleComponent } from './components/title/title.component';
     PieChartComponent, 
     LineChartComponent,
     TitleComponent,
+    CustomChartComponent,
+    StatisticCardComponent,
   ],
   imports: [
     BrowserModule, 

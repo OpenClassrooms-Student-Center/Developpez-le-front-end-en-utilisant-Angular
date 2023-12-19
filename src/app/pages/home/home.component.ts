@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { ChartData } from 'src/app/core/models/ChartData';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +8,18 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
 
+  chartdata: ChartData[] = [];
+
+  totalOlympicGames: number = 0;
+  totalCountries: number = 0;
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
+    this.olympicService.loadInitialData().subscribe((olympics) => {
+      const value = this.olympicService.processOlympicGamesAndCountry(olympics);
+      this.totalOlympicGames = value.totalOlympicGames;
+      this.totalCountries = value.totalCountries; 
+    });
   }
 }

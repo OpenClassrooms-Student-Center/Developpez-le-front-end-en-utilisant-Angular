@@ -44,7 +44,7 @@ export class PieChartComponent implements OnInit {
    * OnInit lifecycle hook to load initial data for the pie chart.
    */
   ngOnInit(): void {
-    this.olympicService.loadInitialData().subscribe((countries: Country[]) => {
+    this.olympicService.getOlympics().subscribe((countries: Country[]) => {
       this.data = countries;
       this.countriesMedals = this.olympicService.processDataForPieChart(this.data);
     });

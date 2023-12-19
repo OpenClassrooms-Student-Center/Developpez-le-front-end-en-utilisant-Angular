@@ -1,0 +1,9 @@
+@import 'variables';
+h2 {
+    padding: 3px 15px 3px 15px;
+    display: inline-block;
+    background: $primary-color;
+    border-radius: $border-radius;
+    font-weight: 400;
+    color: white;
+  }

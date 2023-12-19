@@ -1,10 +1,10 @@
-<ngx-charts-pie-chart [scheme]="colorScheme" [results]="countriesMedals" [gradient]="gradient"
-  [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" [arcWidth]="arcWidth"
-  (select)="onSelect($event)">
-  <ng-template #tooltipTemplate let-model="model">
-    {{ model.name }} <br> <i class="fa-solid fa-award"></i> {{ model.value }}
-    <div class="custom-tooltip">
-      <div class="custom-tooltip-pointer"></div>
-    </div>
-  </ng-template>
-</ngx-charts-pie-chart>
+  <ngx-charts-pie-chart [scheme]="colorScheme" [results]="countriesMedals" [gradient]="gradient"
+    [legendPosition]="legendPosition" [labels]="showLabels" [doughnut]="isDoughnut" [arcWidth]="arcWidth"
+    (select)="onSelect($event)">
+    <ng-template #tooltipTemplate let-model="model">
+      {{ model.name }} <br> <i class="fa-solid fa-award"></i> {{ model.value }}
+      <div class="custom-tooltip">
+        <div class="custom-tooltip-pointer"></div>
+      </div>
+    </ng-template>
+  </ngx-charts-pie-chart>
