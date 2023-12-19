@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {map, Subscription} from "rxjs";
 import {OlympicService} from "../../core/services/olympic.service";
-import {DashboardChartData} from "../../core/models/DashboardChartData";
+import {ChartData} from "../../core/models/ChartData";
 import {Olympic} from "../../core/models/Olympic";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
   // Observable subscription / unsubscription object.
   subscription !: Subscription;
   // Dashboard chartDataTable
-  dashboardDatas : DashboardChartData[] = [];
+  dashboardDatas : ChartData[] = [];
 
   joCount : number = 0;
   countriesCount : number = 0;
@@ -27,18 +28,16 @@ export class DashboardComponent implements OnInit, OnDestroy{
   showLabels : boolean = true;
   trimLabels : boolean = false;
 
-  constructor(private olympicService : OlympicService) {
+  constructor(private olympicService : OlympicService, private router : Router) {
   }
 
   ngOnInit(): void {
-    this.subscription = this.olympicService.getOlympics().pipe(
-      map(
-        olympics => {
-          this.countriesCount = olympics.length;
-          this.dashboardDatas = this.dashboardDataMapper(olympics);
-        }
-      )
-    ).subscribe();
+    this.subscription = this.olympicService.getOlympics().subscribe(
+      olympics => {
+        this.countriesCount = olympics.length;
+        this.dashboardDatas = this.dashboardDataMapper(olympics);
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -48,17 +47,17 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /**
    * Méthode de mappage des données d'un tableau d'Olympic pour l'affichage dans le graphique dashBoard
    * @param olympics les données à mapper
-   * @return un objet de type DashboardChartData pour l'affichage avec ngx-charts
+   * @return un objet de type ChartData pour l'affichage avec ngx-charts
    */
-  dashboardDataMapper(olympics : Olympic[]) : DashboardChartData[] {
-    let results: DashboardChartData[] = [];
+  dashboardDataMapper(olympics : Olympic[]) : ChartData[] {
+    let results: ChartData[] = [];
     for (let olympic of olympics){
       let totalMedalCount = 0;
       this.joCount = olympic.participations.length > this.joCount ? olympic.participations.length : this.joCount;
       for (let participation of olympic.participations){
         totalMedalCount += participation.medalsCount;
       }
-      results.push(new DashboardChartData(olympic.id, olympic.country, totalMedalCount));
+      results.push(new ChartData(olympic.id, olympic.country, totalMedalCount));
     }
     return results;
   }
@@ -67,16 +66,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   Méthodes evenements Ngx-Charts
    */
 
-  onSelect(data : any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data : any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data : any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  onSelect(data : ChartData): void {
+    this.router.navigate(['/details', data.extra.id]);
   }
 
 }
