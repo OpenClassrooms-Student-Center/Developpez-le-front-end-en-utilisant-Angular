@@ -1,0 +1,29 @@
+// home.component.scss
+
+::ng-deep ngx-charts-pie-chart .pie-label.animation {
+  font-size: 25px;
+
+
+}
+.custom-badge {
+  background-color: #04838F;
+  color: #fff; /* Couleur du texte, choisissez celle qui convient */
+  font-weight: normal;
+}
+.my-custom-badge {
+  background-color: #fff; /* Blanc pour la couleur de fond */
+  color: black; /* Couleur du texte */
+  border: 2px solid #04838F; /* Bordure de couleur #04838F */
+  font-weight: normal; /* Texte non gras */
+  padding: 0.5rem 1rem; /* Espacement intérieur du badge */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+
+
+
+
+
+
+
+
