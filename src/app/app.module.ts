@@ -8,10 +8,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OlympicsDetailsComponent } from './components/olympics-details/olympics-details.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent, OlympicsDetailsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
