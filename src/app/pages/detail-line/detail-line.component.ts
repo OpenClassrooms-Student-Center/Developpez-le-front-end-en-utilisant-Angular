@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { Input } from '@angular/core';
 
 @Component({
@@ -36,41 +36,39 @@ export class DetailLineComponent implements OnInit {
     return String(value);
   }
 
-  constructor(private olympicService: OlympicService,private route: ActivatedRoute) {}
+  constructor(private olympicService: OlympicService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    
     this.route.paramMap.subscribe((params) => {
-     
       this.countryName = params.get('countryName');
 
       this.olympics$.subscribe((olympics) => {
-       
         const selectedCountry = olympics.find(
           (country: any) => country.country === this.countryName
-        );
+        ); 
 
-        if (selectedCountry) {
-          this.numberOfMedals = selectedCountry.participations.reduce((totalMedals:any, participation:any) => totalMedals + participation.medalsCount,
-          0);
-          this.numberOfAthletes = selectedCountry.participations.reduce((totalAthletes:any, participation:any) => totalAthletes + participation.athleteCount,
-          0);
-          this.numberOfParticipations = selectedCountry.participations.length;
-          
-
-        
-          this.lineChartData = [
-            {
-              name: selectedCountry.country,
-              series: selectedCountry.participations.map(
-                (participation: any) => ({
-                  name: participation.year,
-                  value: participation.medalsCount,
-                })
-              ),
-            },
-          ];
+        if (!selectedCountry) {
+         
+          this.router.navigate(['/not-found']);
+          return; 
         }
+
+      
+        this.numberOfMedals = selectedCountry.participations.reduce((totalMedals: any, participation: any) => totalMedals + participation.medalsCount, 0);
+        this.numberOfAthletes = selectedCountry.participations.reduce((totalAthletes: any, participation: any) => totalAthletes + participation.athleteCount, 0);
+        this.numberOfParticipations = selectedCountry.participations.length;
+
+        this.lineChartData = [
+          {
+            name: selectedCountry.country,
+            series: selectedCountry.participations.map(
+              (participation: any) => ({
+                name: participation.year,
+                value: participation.medalsCount,
+              })
+            ),
+          },
+        ];
       });
     });
   }

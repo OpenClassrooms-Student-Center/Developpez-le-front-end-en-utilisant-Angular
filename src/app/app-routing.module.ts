@@ -9,16 +9,20 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
-
-
   {
-     path: 'detail/:countryName',
-    component: DetailLineComponent 
+    path: 'detail/:countryName',
+   component: DetailLineComponent 
+ },
+  {
+    path: 'detail/**',
+    component: NotFoundComponent,
   },
+
     {
     path: '**',
     component: NotFoundComponent,
-  }
+  },
+
 ];
 
 @NgModule({

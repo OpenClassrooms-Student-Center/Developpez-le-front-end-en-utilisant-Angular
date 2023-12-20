@@ -31,7 +31,14 @@
   [maxLabelLength]=20
   (select)="onPieChartSelect($event)"
 >
-
+<ng-template #tooltipTemplate let-model="model">
+  <div >
+      {{ model.name }}
+      <div >
+        🥇{{ model.value }}
+      </div>
+  </div>
+</ng-template>
 
 
 </ngx-charts-pie-chart>
