@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  selectedCountryName: string | undefined;
   public olympics$: Observable<any> = this.olympicService.getOlympics();
   public pieChartData: any[] = [];
   public numberOfCountries : any = 0;
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
   };
 
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
    
@@ -43,5 +45,12 @@ export class HomeComponent implements OnInit {
          this.numberOfCountries = olympics.length;
       });
      
+    }
+    onPieChartSelect(event: any): void {
+      // 'event' contient les détails du secteur sélectionné, y compris le nom du pays
+      const selectedCountryName = event.name;
+  
+      // Vous pouvez maintenant naviguer vers la page de détail en passant le nom du pays en paramètre
+      this.router.navigate(['/detail', selectedCountryName]);
     }
 }

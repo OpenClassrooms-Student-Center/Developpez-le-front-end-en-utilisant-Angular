@@ -1,3 +1,4 @@
+
 <div class="d-flex justify-content-center align-items-center">
 
   <h1><span class="badge custom-badge">Medals per Country</span></h1>
@@ -28,10 +29,12 @@
   [labels]="true"
   [tooltipDisabled]="false"
   [maxLabelLength]=20
+  (select)="onPieChartSelect($event)"
 >
 </ngx-charts-pie-chart>
 
 </div>
+<router-outlet></router-outlet>
 
 
 
