@@ -47,10 +47,10 @@ export class HomeComponent implements OnInit {
      
     }
     onPieChartSelect(event: any): void {
-      // 'event' contient les détails du secteur sélectionné, y compris le nom du pays
+      
       const selectedCountryName = event.name;
   
-      // Vous pouvez maintenant naviguer vers la page de détail en passant le nom du pays en paramètre
+      
       this.router.navigate(['/detail', selectedCountryName]);
     }
 }

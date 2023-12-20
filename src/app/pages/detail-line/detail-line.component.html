@@ -8,7 +8,7 @@
     <div style="margin-left: 50px;"></div>
   <div class="text-center">
     <h3>
-      <span class="badge my-custom-badge">Number of JOs<br> <strong>3</strong></span>
+      <span class="badge my-custom-badge">Number of JOs<br> <strong>{{numberOfParticipations}}</strong></span>
     </h3>
   </div>
   <div style="margin-left: 20px;"></div>
@@ -41,7 +41,7 @@
   [xAxisTickFormatting]="formatXAxisTick"
 >
 <ng-template #tooltipTemplate let-model="model">
-    <!-- Afficher simplement l'année sans formatage -->
+ 
     <div class="custom-tooltip">
       <p>{{ model.name }}</p>
       <p>{{ model.value }} Medals</p>

@@ -18,6 +18,7 @@ export class DetailLineComponent implements OnInit {
   public lineChartData: any[] = [];
   public numberOfAthletes: any;
   public numberOfMedals: any;
+  public numberOfParticipations : any;
 
   legend: boolean = false;
   showXAxisLabel: boolean = true;
@@ -40,11 +41,11 @@ export class DetailLineComponent implements OnInit {
   ngOnInit(): void {
     
     this.route.paramMap.subscribe((params) => {
-      // Récupérer le nom du pays depuis l'URL
+     
       this.countryName = params.get('countryName');
 
       this.olympics$.subscribe((olympics) => {
-        // Filtrer les données pour le pays sélectionné
+       
         const selectedCountry = olympics.find(
           (country: any) => country.country === this.countryName
         );
@@ -54,7 +55,10 @@ export class DetailLineComponent implements OnInit {
           0);
           this.numberOfAthletes = selectedCountry.participations.reduce((totalAthletes:any, participation:any) => totalAthletes + participation.athleteCount,
           0);
-          // Adapter les données pour ngx-charts
+          this.numberOfParticipations = selectedCountry.participations.length;
+          
+
+        
           this.lineChartData = [
             {
               name: selectedCountry.country,
