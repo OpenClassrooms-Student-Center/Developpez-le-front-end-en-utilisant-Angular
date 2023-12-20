@@ -21,7 +21,7 @@
                         [view]="view"
                         [results]="datas"
                         [legend]="showLegend"
-                         [animations]="true"
+                         [animations]="false"
                          [autoScale]="autoScale"
                          [showXAxisLabel]="showXAxisLabel"
                          [showYAxisLabel]="showYAxisLabel"
@@ -29,7 +29,11 @@
                          [yAxis]="yAxis"
                          [xAxisLabel]="xAxisLabel"
                          [yAxisLabel]="yAxisLabel"
+
   >
   </ngx-charts-line-chart>
 </div>
+  <div id="footer">
+  <button (click)="onBackToDashBoard()">Back</button>
+  </div>
 </div>
