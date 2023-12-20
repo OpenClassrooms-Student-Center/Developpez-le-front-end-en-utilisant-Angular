@@ -4,6 +4,7 @@
     "head head head"
     "datas datas datas"
     "chart chart chart"
+    "footer footer footer"
 ;
   justify-content: center;
 }
@@ -38,8 +39,17 @@
 
 #dashboard_chart {
   grid-area: chart;
-  align-self: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
+
+#footer {
+  grid-area: footer;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  }
 
 .result_datas {
   border: #04838F solid 5px;

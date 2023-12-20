@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {OlympicService} from "../../core/services/olympic.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {filter, find, map, Observable, Subscription} from "rxjs";
 import {DetailsChartData} from "../../core/models/DetailsChartData";
 import {ChartData} from "../../core/models/ChartData";
@@ -14,7 +14,6 @@ import {catchError} from "rxjs/operators";
 })
 export class OlympicsDetailsComponent implements OnInit, OnDestroy {
 
-  olympicId !: number;
   subscription !: Subscription;
   datas !: DetailsChartData[];
   countryName !: string;
@@ -36,7 +35,7 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
   autoScale: boolean = true;
 
 
-  constructor(private olympicService: OlympicService, private route: ActivatedRoute) {
+  constructor(private olympicService: OlympicService, private route: ActivatedRoute,private router : Router) {
   }
 
   ngOnDestroy(): void {
@@ -72,6 +71,10 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
       results.push(medalResults);
     }
     return results;
+  }
+
+  onBackToDashBoard() {
+    this.router.navigate(['/dashboard']);
   }
 
 
