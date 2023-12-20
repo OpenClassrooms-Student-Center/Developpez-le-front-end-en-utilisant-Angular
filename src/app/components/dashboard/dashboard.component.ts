@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {map, Subscription} from "rxjs";
+import {map, Observable, Subscription, tap} from "rxjs";
 import {OlympicService} from "../../core/services/olympic.service";
 import {ChartData} from "../../core/models/ChartData";
 import {Olympic} from "../../core/models/Olympic";
@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
 
   // Observable subscription / unsubscription object.
   subscription !: Subscription;
+
   // Dashboard chartDataTable
   dashboardDatas : ChartData[] = [];
 
@@ -32,12 +33,15 @@ export class DashboardComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.subscription = this.olympicService.getOlympics().subscribe(
-      olympics => {
-        this.countriesCount = olympics.length;
-        this.dashboardDatas = this.dashboardDataMapper(olympics);
-      }
+    const olympic$ = this.olympicService.getOlympics();
+    const chartDataMapper$ = olympic$.pipe(
+      map((value) => {
+        return this.dashboardDataMapper(value);
+      })
     );
+    this.subscription = chartDataMapper$.subscribe(value => {
+      this.dashboardDatas = value;
+    });
   }
 
   ngOnDestroy(): void {
@@ -51,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
    */
   dashboardDataMapper(olympics : Olympic[]) : ChartData[] {
     let results: ChartData[] = [];
+    this.countriesCount = olympics.length;
     for (let olympic of olympics){
       let totalMedalCount = 0;
       this.joCount = olympic.participations.length > this.joCount ? olympic.participations.length : this.joCount;
@@ -65,7 +70,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /*
   Méthodes evenements Ngx-Charts
    */
-
   onSelect(data : ChartData): void {
     this.router.navigate(['/details', data.extra.id]);
   }
