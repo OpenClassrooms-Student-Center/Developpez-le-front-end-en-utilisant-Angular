@@ -47,7 +47,6 @@ span {
 
 ::ng-deep .ngx-charts {
     text{
-        fill: green!important;
         font-size: 15px;
         white-space : wrap;
         display: flex!important;
@@ -61,9 +60,13 @@ span {
     }
 }
 
-::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+ ::ng-deep .ngx-charts-tooltip-content.type-tooltip {
     background-color: #2D909F !important;
     color: white !important;
+    .tooltip-caret.position-top {
+        color: white !important;
+        border-top: 7px solid #2D909F !important;
+      }
   }
 
 #logo_medal {
