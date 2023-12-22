@@ -1,6 +1,7 @@
 <div id="dashboard">
   <div id="dashboard_header">
-    <p>{{ countryName }}</p>
+    <p>{{ countryName | uppercase }}</p>
+    <a routerLink="/">Back To Dashboard</a>
   </div>
   <div id="header_datas">
     <div class="result_datas">
@@ -16,9 +17,10 @@
       <p class="result">{{ athletesCount }}</p>
     </div>
   </div>
-<div id="dashboard_chart" #dashboard_chart>
+<div id="dashboard_chart">
   <ngx-charts-line-chart class="ngx-charts"
-                        [view]="view"
+                         (window:resize)="onResize($event)"
+                         [view]="view"
                         [results]="datas"
                         [legend]="showLegend"
                          [animations]="false"
@@ -29,11 +31,8 @@
                          [yAxis]="yAxis"
                          [xAxisLabel]="xAxisLabel"
                          [yAxisLabel]="yAxisLabel"
-
+                         [timeline]="timeline"
   >
   </ngx-charts-line-chart>
 </div>
-  <div id="footer">
-  <button (click)="onBackToDashBoard()">Back</button>
-  </div>
 </div>

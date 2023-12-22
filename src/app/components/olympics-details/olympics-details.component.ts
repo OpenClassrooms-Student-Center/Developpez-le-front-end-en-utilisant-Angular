@@ -26,12 +26,14 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
   view: [number, number] = [640, 480];
   showLegend: boolean = false;
   xAxis: boolean = true;
-  yAxis: boolean = false;
+  yAxis: boolean = true;
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
   xAxisLabel: string = "Year";
   yAxisLabel: string = "Medals";
   autoScale: boolean = true;
+  timeline: boolean = true;
+  animate : boolean = false;
 
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute,private router : Router) {
@@ -42,6 +44,7 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.view = [innerWidth / 1.3 , innerHeight / 1.3];
     const olympicId = +<string>this.route.snapshot.paramMap.get('id');
     const olympic$ = this.olympicService.getOlympics();
     const olympicExtractor$ = olympic$.pipe(
@@ -75,6 +78,9 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
   onBackToDashBoard() {
     this.router.navigate(['/dashboard']);
   }
+  onResize($event: any) {
+    $event.target.innerWidth <= 640 ? this.view = [$event.target.innerWidth / 1.3, 300] : this.view = [$event.target.innerWidth / 1.3, $event.target.innerHeight/1.3];
 
+  }
 
 }
