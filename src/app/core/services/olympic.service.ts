@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject,Observable } from 'rxjs';
+import { catchError, tap,map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,4 +28,15 @@ export class OlympicService {
   getOlympics() {
     return this.olympics$.asObservable();
   }
+  getCountryDetails(countryName: string): Observable<any> {
+    return this.getOlympics().pipe(
+      map((olympics) => {
+        if (!olympics) {
+          return null;
+        }
+        return olympics.find((country:any) => country.country === countryName) || null;
+      })
+    );
+  }
+  
 }
