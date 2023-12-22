@@ -1,66 +1,7 @@
-#dashboard {
-  display: grid;
-  grid-template-areas:
-    "head head"
-    "datas datas"
-    "chart chart"
-;
-  justify-content: center;
-}
-
-#dashboard_header {
-grid-area: head;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#dashboard_header p {
-  background-color: #04838F;
-  color: white;
-  border-radius: 5px;
-  padding: 10px;
-  width: fit-content;
-  font-size: 2rem;
-}
-
-#header_datas {
-  grid-area: datas;
-  display: flex;
-  flex: 1;
-  justify-content: space-evenly;
-}
-
-#header_datas p {
-  margin-block-start: 0.5rem;
-  margin-block-end: 0.5rem;
-}
-
-#dashboard_chart {
-grid-area: chart;
-align-self: center;
-}
-
-.result_datas {
-  border: #04838F solid 5px;
-  border-radius: 10px;
-  width: fit-content;
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 0px 10px;
-}
-
-.result_title {
-  font-weight: lighter;
-}
-
-.result {
-  font-weight: bold;
-}
-
 ::ng-deep .ngx-charts {
   text {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: lighter;
   }
 }
+
