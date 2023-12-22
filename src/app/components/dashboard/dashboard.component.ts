@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {map, Observable, Subscription, tap} from "rxjs";
 import {OlympicService} from "../../core/services/olympic.service";
 import {ChartData} from "../../core/models/ChartData";
@@ -24,15 +24,19 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /*
   Variables ngx-chart
    */
-  view : [number, number] = [640, 480];
+  view! : [number, number];
   showLegend : boolean = false;
+  legendPosition = 'below';
   showLabels : boolean = true;
-  trimLabels : boolean = false;
+  trimLabels : boolean = true;
+  tooltipTemplate !: TemplateRef<any>;
+  animate : boolean = false;
 
   constructor(private olympicService : OlympicService, private router : Router) {
   }
 
   ngOnInit(): void {
+    this.view = [innerWidth / 1.3 , innerHeight / 1.3];
     const olympic$ = this.olympicService.getOlympics();
     const chartDataMapper$ = olympic$.pipe(
       map((value) => {
@@ -74,4 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     this.router.navigate(['/details', data.extra.id]);
   }
 
+  onResize($event: any) {
+    this.view = [$event.innerWidth/1.3 , $event.innerHeight/1.3];
+  }
 }
