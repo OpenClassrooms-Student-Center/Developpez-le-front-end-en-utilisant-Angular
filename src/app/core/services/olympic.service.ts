@@ -9,7 +9,7 @@ import {Olympic} from "../models/Olympic";
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new Subject<Olympic[]>();
+  private olympiqcs$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
 
