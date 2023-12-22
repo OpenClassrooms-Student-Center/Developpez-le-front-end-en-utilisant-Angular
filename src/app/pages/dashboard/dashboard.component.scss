@@ -1,0 +1,92 @@
+h1 {
+  background-color:#2D909F;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: normal;
+  padding: 5px;
+}
+
+h3 {
+  font-weight: normal;
+  margin: 0;
+}
+
+.category {
+  border-radius: 10px;
+  border: #2D909F solid;
+  text-align: center;
+  padding: 5px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  gap: 30px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 30%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+span {
+  font-weight: bold;
+}
+
+::ng-deep .ngx-charts {
+    text{
+        fill: green!important;
+        font-size: 15px;
+        white-space : wrap;
+        display: flex!important;
+        width: 300px;
+    }
+}
+
+::ng-deep .pie-label {
+    text{
+       display: flex!important;
+    }
+}
+
+::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+    background-color: #2D909F !important;
+    color: white !important;
+  }
+
+#logo_medal {
+  width: 30px;
+  vertical-align: middle;
+}
+
+.container_medals {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    span {
+      font-size: 1.3em;
+    }
+}
+
+.section_medals {
+  display: flex;
+  justify-content: center;
+}
+
+.nb_medals {
+  margin-top: auto;
+  margin-bottom: auto;
+}

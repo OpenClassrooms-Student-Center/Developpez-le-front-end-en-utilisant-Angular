@@ -1,0 +1,36 @@
+<header>
+  <h1>Medals per Country</h1>
+  <div class="categories">
+    <div class="category">
+      <h3>Number of JOs</h3>
+      <span>{{numberOfJO}}</span>
+    </div>
+    <div class="category">
+      <h3>Number of countries</h3>
+      <span>{{numberOfCountries}}</span>
+    </div>
+  </div>
+</header>
+
+<body>
+  <ngx-charts-pie-chart
+    [view]="[1000,400]"
+    [results]="dataset"
+    [gradient]="true"
+    [legend]="false"
+    [labels]="true"
+    [trimLabels]="false"
+    (activate)="onActivate($event)">
+
+    <ng-template #tooltipTemplate let-model="model">
+      <div class="container_medals">
+        <span>{{model.name}}</span>
+        <div class="section_medals">
+          <img id="logo_medal" src="../../../assets/images/medals.png" alt="medals of champion"/>
+          <span class="nb_medals">{{model.value}}</span>
+        </div>
+      </div>
+    </ng-template>
+
+  </ngx-charts-pie-chart>
+</body>
