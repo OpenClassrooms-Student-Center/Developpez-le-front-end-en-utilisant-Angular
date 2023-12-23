@@ -1,8 +1,9 @@
 <div class="centered-content">
   <h3>Medals per Country</h3>
   <ngx-charts-pie-chart
+  (window:resize)="onResize($event)"
     [results]="chartData"
-    [view]="[700, 700]"
+    [view]="view"
     [legend]="true"
     [labels]="true"
     (select)="onSelect($event)"
