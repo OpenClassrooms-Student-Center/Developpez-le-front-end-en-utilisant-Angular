@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-swimlane',
   templateUrl: './swimlane.component.html',
   styleUrls: ['./swimlane.component.scss']
 })
-export class SwimlaneComponent {
+export class SwimlaneComponent implements OnDestroy {
   countryName!: string;
   participationsCount!: number;
   totalMedals!: number;
@@ -29,6 +30,10 @@ export class SwimlaneComponent {
   timeline = true;
 
   colorScheme = 'cool';
+
+  private paramSubscription: Subscription | undefined;
+  private olympicDataSubscription: Subscription | undefined;
+  private countrySeriesDataSubscription: Subscription | undefined;
 
   constructor(private route: ActivatedRoute, private olympicService: OlympicService, private router: Router ) { }
 
@@ -55,6 +60,19 @@ export class SwimlaneComponent {
     });
     
 
+  }
+
+  ngOnDestroy(): void {
+
+    if (this.paramSubscription) {
+      this.paramSubscription.unsubscribe();
+    }
+    if (this.olympicDataSubscription) {
+      this.olympicDataSubscription.unsubscribe();
+    }
+    if (this.countrySeriesDataSubscription) {
+      this.countrySeriesDataSubscription.unsubscribe();
+    }
   }
 
   goHome() {
