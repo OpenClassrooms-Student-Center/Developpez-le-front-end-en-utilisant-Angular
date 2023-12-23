@@ -46,11 +46,8 @@ export class HomeComponent implements OnInit {
       });
      
     }
+    
     onPieChartSelect(event: any): void {
-      
-      const selectedCountryName = event.name;
-  
-      
-      this.router.navigate(['/detail', selectedCountryName]);
+      this.router.navigate(['/detail', event.name]);
     }
 }
