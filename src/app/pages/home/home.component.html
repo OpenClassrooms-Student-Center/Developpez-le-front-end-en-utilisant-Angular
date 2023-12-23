@@ -1,6 +1,34 @@
-<app-title></app-title>
-<div class="statistic-cards">
-    <app-statistic-card title="Number of JOs" [value]="totalCountries"></app-statistic-card>
-    <app-statistic-card title="Number of Countries" [value]="totalOlympicGames"></app-statistic-card>
-</div>
-<app-pie-chart></app-pie-chart>
+<!-- This ng-container displays content when afficherDeuxiemeElement is false -->
+<ng-container *ngIf="!afficherDeuxiemeElement">
+    <!-- Display the title component for "Medals per Country" -->
+    <app-title title="Medals per Country"></app-title>
+    <!-- Display statistic cards for the number of JOs and number of countries -->
+    <div class="statistic-cards">
+        <app-statistic-card title="Number of JOs" [value]="totalOlympicGames"></app-statistic-card>
+        <app-statistic-card title="Number of Countries" [value]="totalCountries"></app-statistic-card>
+    </div>
+    <!-- Display a pie chart -->
+    <app-pie-chart></app-pie-chart>
+</ng-container>
+
+<!-- This ng-container displays content when afficherDeuxiemeElement is true -->
+<ng-container *ngIf="afficherDeuxiemeElement">
+    <!-- Display a chart back button and the title component with dynamic title -->
+    <div class="chart-back">
+        <button class="arrow-back" (click)="onRetourClick()"></button>
+        <app-title [title]="elementSelectionne"></app-title>
+    </div>
+    <!-- Display statistic cards for entries, total number of medals, and total number of athletes -->
+    <div class="statistic-cards">
+        <app-statistic-card title="Number of entries"
+            [value]="entriesMedalsAthletesResult.entries"></app-statistic-card>
+        <app-statistic-card title="Total number medals"
+            [value]="entriesMedalsAthletesResult.medals"></app-statistic-card>
+        <app-statistic-card title="Total number of athletes"
+            [value]="entriesMedalsAthletesResult.athletes"></app-statistic-card>
+    </div>
+    <!-- Display a line chart with a dynamic title -->
+    <div class="container-line">
+        <app-line-chart [title]="elementSelectionne"></app-line-chart>
+    </div>
+</ng-container>
