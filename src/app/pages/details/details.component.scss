@@ -1,0 +1,45 @@
+/* Import variables from 'variables.scss' */
+@import 'variables';
+
+/* Apply styles to the host element */
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Apply styles to elements with class 'statistic-cards' */
+.statistic-cards {
+    display: flex;
+}
+
+/* Apply styles to elements with class 'container-line' */
+.container-line {
+    width: 100%;
+    height: 100%;
+}
+
+/* Apply styles to elements with class 'chart-back' */
+.chart-back {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Apply styles to elements with class 'arrow-back' */
+.arrow-back {
+    position: absolute;
+    cursor: pointer;
+    top: 25%;
+    right: 90%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 0 20px 40px;
+    border-color: transparent transparent transparent $primary-color;
+    transform: rotate(180deg);
+    background: transparent;
+}

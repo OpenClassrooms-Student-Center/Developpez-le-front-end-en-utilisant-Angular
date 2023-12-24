@@ -31,11 +31,6 @@ export class HomeComponent implements OnInit {
   totalCountries: number = 0;
 
   /**
-   * Boolean flag to indicate whether the second element is to be displayed.
-   */
-  afficherDeuxiemeElement: boolean = false;
-
-  /**
    * Name of the selected element.
    */
   elementSelectionne: string = '';
@@ -60,7 +55,6 @@ export class HomeComponent implements OnInit {
    * @param olympicService Service to manage Olympic data.
    */
   constructor(private changeDetectorRef: ChangeDetectorRef, private olympicService: OlympicService) {
-    this.afficherDeuxiemeElement = this.olympicService.afficherDeuxiemeElement;
     this.elementSelectionne = this.olympicService.elementSelectionne;
     this.entriesMedalsAthletesResult = this.olympicService.entriesMedalsAthletesResult;
   }
@@ -70,17 +64,6 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit(): void {
 
-// Subscribes to afficherDeuxiemeElement$ observable from OlympicService
-this.olympicService.afficherDeuxiemeElement$.pipe(
-  takeUntil(this.unsubscribe$)
-).subscribe({
-  next: (afficherDeuxiemeElement) => {
-    this.afficherDeuxiemeElement = afficherDeuxiemeElement;
-  },
-  error: (error) => {
-    console.error('Error fetching afficherDeuxiemeElement:', error);
-  }
-});
 
 // Subscribes to elementSelectionne$ observable from OlympicService
 this.olympicService.elementSelectionne$.pipe(
@@ -108,21 +91,6 @@ this.olympicService.loadInitialData().pipe(
     console.error('Error loading initial data:', error);
     this.totalOlympicGames = 0;
     this.totalCountries = 0;
-  }
-});
-
-// Subscribes to entriesMedalsAthletesResult$ observable from OlympicService
-this.olympicService.entriesMedalsAthletesResult$.pipe(
-  takeUntil(this.unsubscribe$)
-).subscribe({
-  next: (entriesMedalsAthletesResult) => {
-    this.entriesMedalsAthletesResult = entriesMedalsAthletesResult;
-    this.changeDetectorRef.detectChanges();
-  },
-  error: (error) => {
-    console.error('Error fetching entriesMedalsAthletesResult:', error);
-    // Handle error or set default values
-    this.entriesMedalsAthletesResult = { entries: 0, medals: 0, athletes: 0 };
   }
 });
 

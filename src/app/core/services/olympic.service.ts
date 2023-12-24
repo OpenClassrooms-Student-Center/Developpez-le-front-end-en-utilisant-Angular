@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Country } from '../models/Olympic';
@@ -19,15 +20,9 @@ import { MedalYearData } from '../models/MedalData';
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Country[]>([]);
-  private afficherDeuxiemeElementSubject$ = new BehaviorSubject<boolean>(false);
   private elementSelectionneSubject$ = new BehaviorSubject<string>('');
   private entriesMedalsAthletesResultSubject$ = new BehaviorSubject<EntriesMedalsAthletes>({ entries: 0, medals: 0, athletes: 0 });
 
-  /**
-   * Indicates whether the second element should be displayed.
-   * Initially set to false.
-   */
-  afficherDeuxiemeElement: boolean = false;
 
   /**
    * Stores the selected element's name.
@@ -49,7 +44,7 @@ export class OlympicService {
    * Constructs the OlympicService.
    * @param http HttpClient used for making HTTP requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   /**
    * Loads initial Olympic data from a JSON file.
@@ -76,9 +71,6 @@ export class OlympicService {
   }
 
   // Getters for BehaviorSubjects as observables
-  get afficherDeuxiemeElement$() {
-    return this.afficherDeuxiemeElementSubject$.asObservable();
-  }
 
   get elementSelectionne$() {
     return this.elementSelectionneSubject$.asObservable();
@@ -160,27 +152,23 @@ export class OlympicService {
   processCountryMedalsPerDate(data: Country[], nameCountry: string): MedalData[] {
     const countryData = data.find(country => country.country === nameCountry);
     if (!countryData) {
-      return []; // Retourner un tableau vide en cas de données non trouvées
+      return [];
     }
-  
+
     const medalSeries: MedalYearData[] = countryData.participations.map(participation => {
       return {
         name: participation.year.toString(),
         value: participation.medalsCount
       };
     });
-  
+
     const medalData: MedalData = {
       name: nameCountry,
       series: medalSeries
     };
-  
-    // Retourner l'objet dans un tableau
+
     return [medalData];
   }
-  
-
-
 
   /**
    * Handles selection events, updating relevant observables.
@@ -189,17 +177,15 @@ export class OlympicService {
   onSelect(event: any): void {
     this.elementSelectionne = event.name;
     this.elementSelectionneSubject$.next(event.name);
-    this.afficherDeuxiemeElement = true;
-    this.afficherDeuxiemeElementSubject$.next(true);
+    this.router.navigate([`/${event.name}`]);
   }
 
   /**
    * Resets the state of selection observables.
    */
   retour(): void {
-    this.afficherDeuxiemeElement = false;
     this.elementSelectionne = '';
     this.elementSelectionneSubject$.next('');
-    this.afficherDeuxiemeElementSubject$.next(false);
+    this.router.navigate([``]);
   }
 }

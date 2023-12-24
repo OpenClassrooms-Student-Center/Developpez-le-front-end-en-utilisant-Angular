@@ -17,6 +17,7 @@ import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { TitleComponent } from './components/title/title.component';
 import { CustomChartComponent } from './custom-chart/custom-chart.component';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
+import { DetailsComponent } from './pages/details/details.component';
 
 /**
  * The `AppModule` class.
@@ -33,6 +34,7 @@ import { StatisticCardComponent } from './statistic-card/statistic-card.componen
     TitleComponent,
     CustomChartComponent,
     StatisticCardComponent,
+    DetailsComponent,
   ],
   imports: [
     BrowserModule, 
