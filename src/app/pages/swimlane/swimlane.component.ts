@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostListener,  OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
@@ -61,6 +61,16 @@ export class SwimlaneComponent implements OnDestroy {
     
 
   }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const window = event.target as Window;
+    if (window) {
+      this.view = [window.innerWidth / 1.35, 100]; // Ajustez la division selon votre layout
+    }
+  }
+
 
   ngOnDestroy(): void {
 
