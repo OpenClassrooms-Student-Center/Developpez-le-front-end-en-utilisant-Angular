@@ -32,7 +32,6 @@ export class PieChartComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   arcWidth: number = 0.25;
-  animations: boolean = false;
 
   /**
    * Data for the pie chart.
@@ -52,7 +51,6 @@ export class PieChartComponent implements OnInit {
    */
   ngOnInit(): void {
     this.countriesMedals = this.olympicService.processDataForPieChart();
-    console.log(this.countriesMedals);
   }
 
   /**

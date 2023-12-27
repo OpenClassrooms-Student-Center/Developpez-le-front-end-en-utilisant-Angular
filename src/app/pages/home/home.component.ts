@@ -85,7 +85,6 @@ export class HomeComponent implements OnInit {
     // Subscribes to olympics$ observable from OlympicService
     this.olympicService.olympics$.subscribe(() => {
       const value = this.olympicService.processOlympicGamesAndCountry();
-      console.log(value);
       this.totalOlympicGames = value.totalOlympicGames;
       this.totalCountries = value.totalCountries;
     });

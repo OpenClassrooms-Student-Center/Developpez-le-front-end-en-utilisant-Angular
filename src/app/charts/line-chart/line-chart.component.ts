@@ -30,7 +30,7 @@ export class LineChartComponent implements OnInit {
   autoScale: boolean = true;
   timeline: boolean = true;
   tooltipDisabled: boolean = true;
-  animations: boolean = false;
+  animations: boolean = true;
   showGridLines: boolean = true;
   showXAxis: boolean = true;
   showYAxis: boolean = true;
@@ -96,7 +96,6 @@ export class LineChartComponent implements OnInit {
       next: (elementSelectionne) => {
         this.elementSelectionne = elementSelectionne;
         this.changeDetectorRef.detectChanges();
-        console.log(this.elementSelectionne);
       },
       error: (error) => {
         console.error('Error fetching elementSelectionne:', error);
@@ -105,12 +104,8 @@ export class LineChartComponent implements OnInit {
 
     // Subscribe to olympics$ observable from OlympicService
     this.olympicService.olympics$.subscribe(() => {
-      console.log(this.elementSelectionne);
       this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes(this.elementSelectionne);
-      console.log(this.elementSelectionne);
-      console.log(this.entriesMedalsAthletesResult);
-      this.medalsData = this.olympicService.processCountryMedalsPerDate(this.elementSelectionne);
-      console.log(this.medalsData);
+      this.medalsData = this.olympicService.processCountryMedalsPerDate();
     });
   }
 

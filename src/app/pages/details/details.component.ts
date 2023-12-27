@@ -93,8 +93,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe(params => {
       if (params) {
-        this.countryName = params.get('countryname');
-        console.log(this.countryName);
+        console.log('params');
+        this.countryName = typeof params.get('countryname') === 'string' ? params.get('countryname') : null;
       } else {
         console.log('No route parameters available');
       }
@@ -106,7 +106,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe(countries => {
       if (this.countryName) {
-        this.olympicService.isValidCountry(this.countryName).subscribe(isValid => {
+        this.olympicService.updateCountryId(this.countryName);
+        this.olympicService.isValidCountry().subscribe(isValid => {
           this.isValidCountry = isValid;
 
           if (typeof this.countryName === 'string') {
