@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
   /**
    * Array of Country data for display.
    */
-  data: Country[] = [];
+  isLoading: boolean = false;
+
 
   /**
    * Total number of Olympic Games participated.
@@ -64,35 +65,33 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit(): void {
 
+    this.olympicService.isLoading$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
 
-// Subscribes to elementSelectionne$ observable from OlympicService
-this.olympicService.elementSelectionne$.pipe(
-  takeUntil(this.unsubscribe$)
-).subscribe({
-  next: (elementSelectionne) => {
-    this.elementSelectionne = elementSelectionne;
-    this.changeDetectorRef.detectChanges();
-  },
-  error: (error) => {
-    console.error('Error fetching elementSelectionne:', error);
-  }
-});
+    // Subscribes to elementSelectionne$ observable from OlympicService
+    this.olympicService.elementSelectionne$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe({
+      next: (elementSelectionne) => {
+        this.elementSelectionne = elementSelectionne;
+        this.changeDetectorRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error fetching elementSelectionne:', error);
+      }
+    });
 
-// Subscribes to loadInitialData() observable from OlympicService
-this.olympicService.loadInitialData().pipe(
-  takeUntil(this.unsubscribe$)
-).subscribe({
-  next: (olympics) => {
-    const value = this.olympicService.processOlympicGamesAndCountry(olympics);
-    this.totalOlympicGames = value.totalOlympicGames;
-    this.totalCountries = value.totalCountries;
-  },
-  error: (error) => {
-    console.error('Error loading initial data:', error);
-    this.totalOlympicGames = 0;
-    this.totalCountries = 0;
-  }
-});
+    // Subscribes to loadInitialData() observable from OlympicService
+
+    this.olympicService.olympics$.subscribe(() => {
+      const value = this.olympicService.processOlympicGamesAndCountry();
+      console.log(value);
+      this.totalOlympicGames = value.totalOlympicGames;
+      this.totalCountries = value.totalCountries;
+    });
 
   }
 

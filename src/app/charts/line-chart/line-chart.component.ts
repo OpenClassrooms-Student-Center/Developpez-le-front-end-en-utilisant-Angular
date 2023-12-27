@@ -1,12 +1,12 @@
 // Import statements
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ChangeDetectorRef } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Country } from 'src/app/core/models/Olympic';
 import { MedalData } from 'src/app/core/models/MedalData';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subscription, Subject } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
 
 /**
  * LineChartComponent displays a line chart with medals data for a selected country.
@@ -49,6 +49,9 @@ export class LineChartComponent implements OnInit {
   data: Country[] = [];
   elementSelectionne: string
 
+  isLoading: boolean = false;
+
+
   /**
    * Stores entries, medals, and athletes result.
    */
@@ -58,9 +61,12 @@ export class LineChartComponent implements OnInit {
     athletes: 0
   };
 
+  private unsubscribe$ = new Subject<void>();
+
+
   private subscription: Subscription = new Subscription();
 
-  constructor(private olympicService: OlympicService) {
+  constructor(private olympicService: OlympicService, private changeDetectorRef: ChangeDetectorRef) {
     this.elementSelectionne = this.olympicService.elementSelectionne;
   }
 
@@ -68,18 +74,37 @@ export class LineChartComponent implements OnInit {
    * Initializes the component and subscribes to Olympic data.
    */
   ngOnInit(): void {
-    this.subscription.add(
-      this.olympicService.getOlympics().pipe(
-        catchError((error) => {
-          console.error('There was an error!', error);
-          return [];
-        })
-      ).subscribe((countries: Country[]) => {
-        this.data = countries;
-        this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes(this.data, this.elementSelectionne);
-        this.medalsData = this.olympicService.processCountryMedalsPerDate(this.data, this.elementSelectionne);
-      })
-    );
+
+    this.olympicService.isLoading$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+
+    // Subscribes to elementSelectionne$ observable from OlympicService
+    this.olympicService.elementSelectionne$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe({
+      next: (elementSelectionne) => {
+        this.elementSelectionne = elementSelectionne;
+        this.changeDetectorRef.detectChanges();
+        console.log(this.elementSelectionne);
+      },
+      error: (error) => {
+        console.error('Error fetching elementSelectionne:', error);
+      }
+    });
+
+    this.olympicService.olympics$.subscribe(() => {
+      console.log(this.elementSelectionne);
+      this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes(this.elementSelectionne);
+      console.log(this.elementSelectionne);
+      console.log(this.entriesMedalsAthletesResult);
+      this.medalsData = this.olympicService.processCountryMedalsPerDate(this.elementSelectionne);
+      console.log(this.medalsData);
+    });
+
+
   }
 
   /**

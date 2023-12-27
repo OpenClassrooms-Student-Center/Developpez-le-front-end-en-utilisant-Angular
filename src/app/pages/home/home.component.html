@@ -1,9 +1,11 @@
-<!-- Display the title component for "Medals per Country" -->
-<app-title title="Medals per Country"></app-title>
-<!-- Display statistic cards for the number of JOs and number of countries -->
-<div class="statistic-cards">
-    <app-statistic-card title="Number of JOs" [value]="totalOlympicGames"></app-statistic-card>
-    <app-statistic-card title="Number of Countries" [value]="totalCountries"></app-statistic-card>
-</div>
-<!-- Display a pie chart -->
-<app-pie-chart></app-pie-chart>
+<ng-container *ngIf="!isLoading">
+    <!-- Display the title component for "Medals per Country" -->
+    <app-title title="Medals per Country"></app-title>
+    <!-- Display statistic cards for the number of JOs and number of countries -->
+    <div class="statistic-cards">
+            <app-statistic-card title="Number of JOs" [value]="totalOlympicGames"></app-statistic-card>
+            <app-statistic-card title="Number of Countries" [value]="totalCountries"></app-statistic-card>
+    </div>
+    <!-- Display a pie chart -->
+    <app-pie-chart></app-pie-chart>
+</ng-container>

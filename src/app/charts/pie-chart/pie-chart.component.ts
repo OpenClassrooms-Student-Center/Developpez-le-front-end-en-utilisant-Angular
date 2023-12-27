@@ -40,7 +40,6 @@ export class PieChartComponent implements OnInit {
   /**
    * Data for the pie chart.
    */
-  data: Country[] = [];
   countriesMedals: PieChart[] = [];
 
   private subscription: Subscription = new Subscription();
@@ -55,17 +54,11 @@ export class PieChartComponent implements OnInit {
    * OnInit lifecycle hook to load initial data for the pie chart.
    */
   ngOnInit(): void {
-    this.subscription.add(
-      this.olympicService.getOlympics().pipe(
-        catchError((error) => {
-          console.error('There was an error!', error);
-          return [];
-        }),
-      ).subscribe((countries: Country[]) => {
-        this.data = countries;
-        this.countriesMedals = this.olympicService.processDataForPieChart(this.data);
-      })
-    );
+
+
+    this.countriesMedals = this.olympicService.processDataForPieChart();
+    console.log(this.countriesMedals);
+
   }
 
   /**

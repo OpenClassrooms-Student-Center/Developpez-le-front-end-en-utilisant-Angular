@@ -1,11 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Country } from 'src/app/core/models/Olympic';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Subscription, of, filter } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 
+/**
+ * Component for displaying details of a selected country.
+ */
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -13,36 +17,99 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class DetailsComponent implements OnInit {
 
-  /**
-   * Array of Country data for display.
-   */
-  data: Country[] = [];
+
+  isLoading: boolean = false;
+
 
   /**
    * Name of the selected element.
    */
   elementSelectionne: string = '';
 
+  // Property to track whether a valid country is found
+  isValidCountry: boolean = true;
+
   /**
    * Stores entries, medals, and athletes result.
-   */
+  */
   entriesMedalsAthletesResult: EntriesMedalsAthletes = {
     entries: 0,
     medals: 0,
     athletes: 0
   };
 
+  countryName: string | null | undefined;
+
+  private subscription: Subscription = new Subscription();
   /**
- * Subject to manage the unsubscription of observables.
- */
+   * Subject to manage the unsubscription of observables.
+   */
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private olympicService: OlympicService) {
+  /**
+   * Constructor to inject dependencies.
+   * @param route - The ActivatedRoute for retrieving route parameters.
+   * @param router - The Router for navigation.
+   * @param changeDetectorRef - The ChangeDetectorRef for manual change detection.
+   * @param olympicService - The OlympicService for data retrieval.
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
+    private olympicService: OlympicService
+  ) {
     this.elementSelectionne = this.olympicService.elementSelectionne;
     this.entriesMedalsAthletesResult = this.olympicService.entriesMedalsAthletesResult;
   }
 
+  /**
+   * OnInit lifecycle hook to initialize the component.
+   */
   ngOnInit(): void {
+
+    this.olympicService.isLoading$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+
+    this.route.paramMap.pipe(
+      catchError((error) => {
+        console.error('Error fetching route parameters:', error);
+        return of(null);
+      }),
+      takeUntil(this.unsubscribe$)
+    ).subscribe(params => {
+      if (params) {
+        this.countryName = params.get('countryname');
+        console.log(this.countryName);
+      } else {
+        console.log('No route parameters available');
+      }
+    });
+
+    this.olympicService.olympics$.pipe(
+      filter(countries => countries && countries.length > 0),
+      takeUntil(this.unsubscribe$)
+    ).subscribe(countries => {
+      if (this.countryName) {
+        this.olympicService.isValidCountry(this.countryName).subscribe(isValid => {
+          this.isValidCountry = isValid;
+
+          if (typeof this.countryName === 'string') {
+            this.olympicService.updateElementSelectionne(this.countryName);
+          }
+
+          if (!isValid) {
+            this.router.navigate(['/not-found']);
+          }
+        });
+      }
+    });
+
+
+
     // Subscribes to elementSelectionne$ observable from OlympicService
     this.olympicService.elementSelectionne$.pipe(
       takeUntil(this.unsubscribe$)
@@ -70,21 +137,21 @@ export class DetailsComponent implements OnInit {
         this.entriesMedalsAthletesResult = { entries: 0, medals: 0, athletes: 0 };
       }
     });
+
   }
 
-    /**
-   * OnDestroy lifecycle hook to complete the unsubscribe$ subject.
+  /**
+   * OnDestroy lifecycle hook to clean up resources.
    */
-    ngOnDestroy(): void {
-      this.unsubscribe$.next();
-      this.unsubscribe$.complete();
-    }
-  
-    /**
-     * Handles the retour (back) click event.
-     */
-    onRetourClick(): void {
-      this.olympicService.retour();
-    }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
+  /**
+   * Handles the retour (back) click event.
+   */
+  onRetourClick(): void {
+    this.olympicService.retour();
+  }
 }

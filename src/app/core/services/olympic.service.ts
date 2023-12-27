@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 import { Country } from '../models/Olympic';
 import { PieChart } from '../models/PieChart';
 import { TotalOlympicGamesAndCountry } from '../models/TotalOlympicGamesAndCountry';
@@ -19,9 +19,10 @@ import { MedalYearData } from '../models/MedalData';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<Country[]>([]);
+  private olympicsSubject$ = new BehaviorSubject<Country[]>([]);
   private elementSelectionneSubject$ = new BehaviorSubject<string>('');
   private entriesMedalsAthletesResultSubject$ = new BehaviorSubject<EntriesMedalsAthletes>({ entries: 0, medals: 0, athletes: 0 });
+  private isLoadingSubject$ = new BehaviorSubject<boolean>(false);
 
 
   /**
@@ -46,46 +47,65 @@ export class OlympicService {
    */
   constructor(private http: HttpClient, private router: Router) { }
 
+  
+  /**
+   * Gets an observable of the current Olympic data.
+   * @returns Observable of the Country array.
+  */
+
+  get isLoading$(): Observable<boolean> {
+    return this.isLoadingSubject$.asObservable();
+  }
+ get olympics$() {
+   return this.olympicsSubject$.asObservable();
+  }
+  
+  // Getters for BehaviorSubjects as observables
+  
+  get elementSelectionne$() {
+    return this.elementSelectionneSubject$.asObservable();
+  }
+  
+  get entriesMedalsAthletesResult$() {
+    return this.entriesMedalsAthletesResultSubject$.asObservable();
+  }
+  
+
+  updateElementSelectionne(newElementSelectionne: string): void {
+    this.elementSelectionne = newElementSelectionne;
+    this.elementSelectionneSubject$.next(newElementSelectionne);
+  }
+  
   /**
    * Loads initial Olympic data from a JSON file.
    * Updates the observable with new data upon successful retrieval, or sets it to an empty array in case of an error.
    * @returns Observable of the HTTP request.
    */
-  loadInitialData() {
+  loadInitialData(): Observable<Country[]> {
+    console.log("loadInitialData");
+    this.isLoadingSubject$.next(true);
     return this.http.get<Country[]>(this.olympicUrl).pipe(
-      tap((countries) => this.olympics$.next(countries)),
-      catchError((error, caught) => {
+      tap((countries) => {
+        this.olympicsSubject$.next(countries)
+        console.log('data is create');
+        this.isLoadingSubject$.next(false);
+      }),
+      catchError((error) => {
         console.error(error);
-        this.olympics$.next([]);
-        return caught;
+        this.olympicsSubject$.next([]);
+        this.isLoadingSubject$.next(false);
+        throw error;
       })
     );
-  }
-
-  /**
-   * Gets an observable of the current Olympic data.
-   * @returns Observable of the Country array.
-   */
-  getOlympics() {
-    return this.olympics$.asObservable();
-  }
-
-  // Getters for BehaviorSubjects as observables
-
-  get elementSelectionne$() {
-    return this.elementSelectionneSubject$.asObservable();
-  }
-
-  get entriesMedalsAthletesResult$() {
-    return this.entriesMedalsAthletesResultSubject$.asObservable();
   }
 
   /**
    * Processes data for pie chart representation.
    * @param data Array of Country data.
    * @returns Array of PieChart data.
-   */
-  processDataForPieChart(data: Country[]): PieChart[] {
+  */
+ processDataForPieChart(): PieChart[] {
+   let data = this.olympicsSubject$.getValue();
     return data.map(country => ({
       name: country.country,
       value: country.participations.reduce((acc, curr) => acc + curr.medalsCount, 0),
@@ -97,7 +117,9 @@ export class OlympicService {
    * @param data Array of Country data.
    * @returns Object containing counts of unique Olympic years and countries.
    */
-  processOlympicGamesAndCountry(data: Country[]): TotalOlympicGamesAndCountry {
+  processOlympicGamesAndCountry(): TotalOlympicGamesAndCountry {
+    let data = this.olympicsSubject$.getValue();
+    console.log(data);
     const uniqueYears = new Set<number>();
     const uniqueCountries = new Set<string>();
 
@@ -120,7 +142,8 @@ export class OlympicService {
    * @param nameCountry Name of the country to process.
    * @returns Object containing entries, medals, and athletes counts.
    */
-  processEntriesMedalsAthletes(data: Country[], nameCountry: string): EntriesMedalsAthletes {
+  processEntriesMedalsAthletes(nameCountry: string): EntriesMedalsAthletes {
+    let data = this.olympicsSubject$.getValue();
     let entriesValue = 0, medalsValue = 0, athletesValue = 0;
 
     data.forEach(country => {
@@ -149,7 +172,9 @@ export class OlympicService {
    * Each element in the 'series' array of the returned object is a 'MedalYearData' instance.
    * It represents the number of medals won by the country in a specific year.
    */
-  processCountryMedalsPerDate(data: Country[], nameCountry: string): MedalData[] {
+  processCountryMedalsPerDate(nameCountry: string): MedalData[] {
+    let data = this.olympicsSubject$.getValue();
+    console.log(data);
     const countryData = data.find(country => country.country === nameCountry);
     if (!countryData) {
       return [];
@@ -168,6 +193,14 @@ export class OlympicService {
     };
 
     return [medalData];
+  }
+
+  isValidCountry(countryName: string): Observable<boolean> {
+    return this.olympicsSubject$.pipe(
+      map((data: Country[]) => {
+        return data.some(country => country.country === countryName);
+      })
+    );
   }
 
   /**

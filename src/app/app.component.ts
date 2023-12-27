@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
    * Here, it calls `loadInitialData` method of `OlympicService` to fetch Olympic data.
    */
   ngOnInit(): void {
-    this.olympicService.loadInitialData().pipe(take(1)).subscribe({});
-
+    this.olympicService.loadInitialData().pipe(take(1)).subscribe({});    
   }
 }
