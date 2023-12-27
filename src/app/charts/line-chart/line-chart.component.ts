@@ -6,7 +6,7 @@ import { Country } from 'src/app/core/models/Olympic';
 import { MedalData } from 'src/app/core/models/MedalData';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
 import { Subscription, Subject } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * LineChartComponent displays a line chart with medals data for a selected country.
@@ -18,7 +18,7 @@ import { catchError, takeUntil } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class LineChartComponent implements OnInit {
-
+  // Input property for chart title
   @Input() title: string = '';
 
   // Chart options
@@ -35,6 +35,8 @@ export class LineChartComponent implements OnInit {
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   customYScaleTicks: number = 5;
+
+  // Color scheme for the chart
   colorScheme: Color = {
     name: 'customScheme',
     selectable: true,
@@ -42,15 +44,18 @@ export class LineChartComponent implements OnInit {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   }
 
+  // Data arrays
   medalsData: MedalData[] = [{
     name: '',
     series: []
   }];
   data: Country[] = [];
-  elementSelectionne: string
 
+  // Selected element name
+  elementSelectionne: string;
+
+  // Loading indicator
   isLoading: boolean = false;
-
 
   /**
    * Stores entries, medals, and athletes result.
@@ -62,10 +67,13 @@ export class LineChartComponent implements OnInit {
   };
 
   private unsubscribe$ = new Subject<void>();
-
-
   private subscription: Subscription = new Subscription();
 
+  /**
+   * Constructs the LineChartComponent.
+   * @param olympicService - The OlympicService for data retrieval.
+   * @param changeDetectorRef - The ChangeDetectorRef for manual change detection.
+   */
   constructor(private olympicService: OlympicService, private changeDetectorRef: ChangeDetectorRef) {
     this.elementSelectionne = this.olympicService.elementSelectionne;
   }
@@ -74,14 +82,14 @@ export class LineChartComponent implements OnInit {
    * Initializes the component and subscribes to Olympic data.
    */
   ngOnInit(): void {
-
+    // Subscribe to isLoading$ observable from OlympicService
     this.olympicService.isLoading$.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(isLoading => {
       this.isLoading = isLoading;
     });
 
-    // Subscribes to elementSelectionne$ observable from OlympicService
+    // Subscribe to elementSelectionne$ observable from OlympicService
     this.olympicService.elementSelectionne$.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe({
@@ -95,6 +103,7 @@ export class LineChartComponent implements OnInit {
       }
     });
 
+    // Subscribe to olympics$ observable from OlympicService
     this.olympicService.olympics$.subscribe(() => {
       console.log(this.elementSelectionne);
       this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes(this.elementSelectionne);
@@ -103,8 +112,6 @@ export class LineChartComponent implements OnInit {
       this.medalsData = this.olympicService.processCountryMedalsPerDate(this.elementSelectionne);
       console.log(this.medalsData);
     });
-
-
   }
 
   /**

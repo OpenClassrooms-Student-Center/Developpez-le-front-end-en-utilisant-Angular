@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { PieChart } from 'src/app/core/models/PieChart';
-import { Country } from 'src/app/core/models/Olympic';
 import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
 import { Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 /**
  * Component for displaying pie charts using ngx-charts.
@@ -16,7 +14,6 @@ import { catchError } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class PieChartComponent implements OnInit {
-
   /**
    * Color scheme configuration for the pie chart.
    */
@@ -45,20 +42,17 @@ export class PieChartComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   /**
-   * Constructor to inject the OlympicService.
-   * @param olympicService - Service to fetch Olympic data.
+   * Constructs the PieChartComponent.
+   * @param olympicService - The OlympicService for data retrieval.
    */
   constructor(private olympicService: OlympicService) { }
 
   /**
-   * OnInit lifecycle hook to load initial data for the pie chart.
+   * Initializes the component and loads initial data for the pie chart.
    */
   ngOnInit(): void {
-
-
     this.countriesMedals = this.olympicService.processDataForPieChart();
     console.log(this.countriesMedals);
-
   }
 
   /**

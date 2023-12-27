@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Country } from 'src/app/core/models/Olympic';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -19,7 +18,6 @@ export class HomeComponent implements OnInit {
    * Array of Country data for display.
    */
   isLoading: boolean = false;
-
 
   /**
    * Total number of Olympic Games participated.
@@ -84,8 +82,7 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    // Subscribes to loadInitialData() observable from OlympicService
-
+    // Subscribes to olympics$ observable from OlympicService
     this.olympicService.olympics$.subscribe(() => {
       const value = this.olympicService.processOlympicGamesAndCountry();
       console.log(value);

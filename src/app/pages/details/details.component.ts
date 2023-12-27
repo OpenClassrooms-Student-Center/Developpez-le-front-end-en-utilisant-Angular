@@ -6,7 +6,6 @@ import { takeUntil, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
-
 /**
  * Component for displaying details of a selected country.
  */
@@ -15,32 +14,42 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
-
+  /**
+   * Flag to indicate if data is loading.
+   */
   isLoading: boolean = false;
-
 
   /**
    * Name of the selected element.
    */
   elementSelectionne: string = '';
 
-  // Property to track whether a valid country is found
+  /**
+   * Flag to indicate if the selected country is valid.
+   */
   isValidCountry: boolean = true;
 
   /**
    * Stores entries, medals, and athletes result.
-  */
+   */
   entriesMedalsAthletesResult: EntriesMedalsAthletes = {
     entries: 0,
     medals: 0,
     athletes: 0
   };
 
+  /**
+   * The name of the selected country (from route parameter).
+   */
   countryName: string | null | undefined;
 
+  /**
+   * Subscription to manage resource cleanup.
+   */
   private subscription: Subscription = new Subscription();
+
   /**
    * Subject to manage the unsubscription of observables.
    */
@@ -68,12 +77,14 @@ export class DetailsComponent implements OnInit {
    */
   ngOnInit(): void {
 
+    // Subscribe to isLoading$ observable to track data loading status
     this.olympicService.isLoading$.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(isLoading => {
       this.isLoading = isLoading;
     });
 
+    // Subscribe to paramMap observable to retrieve route parameters
     this.route.paramMap.pipe(
       catchError((error) => {
         console.error('Error fetching route parameters:', error);
@@ -89,6 +100,7 @@ export class DetailsComponent implements OnInit {
       }
     });
 
+    // Subscribe to olympics$ observable to handle country selection and validation
     this.olympicService.olympics$.pipe(
       filter(countries => countries && countries.length > 0),
       takeUntil(this.unsubscribe$)
@@ -107,7 +119,6 @@ export class DetailsComponent implements OnInit {
         });
       }
     });
-
 
 
     // Subscribes to elementSelectionne$ observable from OlympicService
@@ -137,7 +148,6 @@ export class DetailsComponent implements OnInit {
         this.entriesMedalsAthletesResult = { entries: 0, medals: 0, athletes: 0 };
       }
     });
-
   }
 
   /**
