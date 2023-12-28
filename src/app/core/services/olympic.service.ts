@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Country } from '../models/Olympic';
 import { PieChart } from '../models/PieChart';
 import { TotalOlympicGamesAndCountry } from '../models/TotalOlympicGamesAndCountry';
 import { EntriesMedalsAthletes } from '../models/EntriesMedalsAthletes';
-import { MedalData } from '../models/MedalData';
-import { MedalYearData } from '../models/MedalData';
+import { MedalData, MedalYearData } from '../models/MedalData';
+import { OlympicEvent } from '../models/OlympicPieEvent';
 
 /**
  * Service for managing Olympic data.
- * It provides functionality to load, retrieve, and process Olympic country participation data.
+ * Provides functionality to load, retrieve, and process data related to Olympic country participation.
  */
 @Injectable({
   providedIn: 'root',
@@ -21,61 +21,54 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympicsSubject$ = new BehaviorSubject<Country[]>([]);
   private elementSelectionneSubject$ = new BehaviorSubject<string>('');
-  private countryIdSubject$ = new BehaviorSubject<number>(1);
+  private countryIdSubject$ = new BehaviorSubject<number | null>(null);
   private entriesMedalsAthletesResultSubject$ = new BehaviorSubject<EntriesMedalsAthletes>({ entries: 0, medals: 0, athletes: 0 });
   private isLoadingSubject$ = new BehaviorSubject<boolean>(false);
-
-
-  /**
-   * Stores the selected element's name.
-   * Initially an empty string.
-   */
-  elementSelectionne: string = '';
-
-  /**
-   * Holds the result for entries, medals, and athletes.
-   * Initially set with all values to 0.
-   */
-  entriesMedalsAthletesResult: EntriesMedalsAthletes = {
-    entries: 0,
-    medals: 0,
-    athletes: 0
-  };
-
-  countryId!: number | null;
+  private errorSubject$ = new BehaviorSubject<boolean>(false);
 
   countryName!: string | null;
 
-  /**
-   * Constructs the OlympicService.
-   * @param http HttpClient used for making HTTP requests.
-   */
   constructor(private http: HttpClient, private router: Router) { }
 
-
   /**
-   * Gets an observable of the current Olympic data.
-   * @returns Observable of the Country array.
-  */
-
+   * Observable indicating the loading state.
+   */
   get isLoading$(): Observable<boolean> {
     return this.isLoadingSubject$.asObservable();
   }
-  get olympics$() {
+
+  /**
+   * Observable containing the current Olympic data as an array of countries.
+   */
+  get olympics$(): Observable<Country[]> {
     return this.olympicsSubject$.asObservable();
   }
 
-  // Getters for BehaviorSubjects as observables
+  /**
+   * Observable indicating if an error occurred.
+   */
+  get error$(): Observable<boolean> {
+    return this.errorSubject$.asObservable();
+  }
 
-  get elementSelectionne$() {
+  /**
+   * Observable for the currently selected element name.
+   */
+  get elementSelectionne$(): Observable<string> {
     return this.elementSelectionneSubject$.asObservable();
   }
 
-  get entriesMedalsAthletesResult$() {
+  /**
+   * Observable for the current entries, medals, and athletes result.
+   */
+  get entriesMedalsAthletesResult$(): Observable<EntriesMedalsAthletes> {
     return this.entriesMedalsAthletesResultSubject$.asObservable();
   }
 
-  get countryId$() {
+  /**
+   * Observable for the current country ID.
+   */
+  get countryId$(): Observable<number | null> {
     return this.countryIdSubject$.asObservable();
   }
 
@@ -84,7 +77,6 @@ export class OlympicService {
    * @param newElementSelectionne New name of the selected element.
    */
   updateElementSelectionne(newElementSelectionne: string): void {
-    this.elementSelectionne = newElementSelectionne;
     this.elementSelectionneSubject$.next(newElementSelectionne);
   }
 
@@ -92,50 +84,39 @@ export class OlympicService {
    * Updates the country ID based on the given country name.
    * @param countryName Name of the country to find the ID for.
    */
-  updateCountryId(countryName: string | null): void {
-    console.log(countryName);
-    this.countryId = this.countryIdByName(countryName) || -1; // Use -1 as a default value
-    this.countryIdSubject$.next(this.countryId);
-    console.log(this.countryId);
+  updateCountryId(countryName: string): void {
+    this.countryIdSubject$.next(this.countryIdByName(countryName) || -1);
   }
 
   /**
    * Loads initial Olympic data from a JSON file.
-   * Updates the observable with new data upon successful retrieval, or sets it to an empty array in case of an error.
-   * @returns Observable of the HTTP request.
+   * Updates observable with new data upon successful retrieval, or sets it to an empty array in case of error.
    */
   loadInitialData(): Observable<Country[]> {
     this.isLoadingSubject$.next(true);
     return this.http.get<Country[]>(this.olympicUrl).pipe(
       tap((countries) => {
-        this.olympicsSubject$.next(countries)
+        this.olympicsSubject$.next(countries);
         this.isLoadingSubject$.next(false);
       }),
-      catchError((error) => {
-        console.error(error);
-        this.olympicsSubject$.next([]);
-        this.isLoadingSubject$.next(false);
-        throw error;
+      catchError(() => {
+        this.isLoadingSubject$.next(true);
+        this.errorSubject$.next(true);
+        return EMPTY;
       })
     );
   }
 
-/**
- * Get the country ID by its name.
- * @param countryName - The name of the country to search for.
- * @returns The ID of the country if found, or undefined if not found.
- */
-countryIdByName(countryName: string | null): number | undefined {
-  if (countryName === null) {
-    return undefined;
+  /**
+   * Finds the country ID by its name.
+   * @param countryName The name of the country to search for.
+   * @returns The ID of the country if found, or undefined if not found.
+   */
+  countryIdByName(countryName: string): number | undefined {
+    const lowercaseCountryName = countryName.toLowerCase();
+    const country = this.olympicsSubject$.getValue().find(c => c.country.toLowerCase() === lowercaseCountryName);
+    return country?.id;
   }
-  const lowercaseCountryName = countryName.toLowerCase();
-  const country = this.olympicsSubject$.getValue().find((c) => c.country.toLowerCase() === lowercaseCountryName);
-
-  return country?.id;
-}
-
-
 
   /**
    * Processes data for pie chart representation.
@@ -179,7 +160,7 @@ countryIdByName(countryName: string | null): number | undefined {
    * @param nameCountry Name of the country to process.
    * @returns Object containing entries, medals, and athletes counts.
    */
-  processEntriesMedalsAthletes(nameCountry: string): EntriesMedalsAthletes {
+  processEntriesMedalsAthletes(): EntriesMedalsAthletes {
     let data = this.olympicsSubject$.getValue();
     let countryId = this.countryIdSubject$.getValue();
     let entriesValue = 0, medalsValue = 0, athletesValue = 0;
@@ -250,9 +231,8 @@ countryIdByName(countryName: string | null): number | undefined {
    * Handles selection events, updating relevant observables.
    * @param event Selection event object.
    */
-  onSelect(event: any): void {
+  onSelect(event: OlympicEvent): void {
     this.updateCountryId(event.name);
-    this.elementSelectionne = event.name;
     this.elementSelectionneSubject$.next(event.name);
     this.router.navigate([`/${event.name}`]);
   }
@@ -261,7 +241,6 @@ countryIdByName(countryName: string | null): number | undefined {
    * Resets the state of selection observables.
    */
   retour(): void {
-    this.elementSelectionne = '';
     this.elementSelectionneSubject$.next('');
     this.router.navigate([``]);
   }

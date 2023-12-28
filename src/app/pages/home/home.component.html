@@ -9,3 +9,6 @@
     <!-- Display a pie chart -->
     <app-pie-chart></app-pie-chart>
 </ng-container>
+<ng-container *ngIf="error">
+    <span class="error">😞 Oups ! Une erreur de chargement s'est produite.</span>
+</ng-container>

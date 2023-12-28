@@ -10,12 +10,12 @@ const routes: Routes = [
     component: HomeComponent,
   }, 
   {
-    path: ':countryname',
-    component: DetailsComponent,
-  },
-  {
     path: 'not-found',
     component: NotFoundComponent,
+  },
+  {
+    path: ':countryname',
+    component: DetailsComponent,
   },
   {
     path: '**',

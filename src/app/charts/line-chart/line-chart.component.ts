@@ -1,11 +1,10 @@
-// Import statements
-import { Component, OnInit, ViewEncapsulation, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Country } from 'src/app/core/models/Olympic';
 import { MedalData } from 'src/app/core/models/MedalData';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 /**
@@ -18,8 +17,6 @@ import { takeUntil } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class LineChartComponent implements OnInit {
-  // Input property for chart title
-  @Input() title: string = '';
 
   // Chart options
   legend: boolean = false;
@@ -49,10 +46,8 @@ export class LineChartComponent implements OnInit {
     name: '',
     series: []
   }];
-  data: Country[] = [];
 
-  // Selected element name
-  elementSelectionne: string;
+  data: Country[] = [];
 
   // Loading indicator
   isLoading: boolean = false;
@@ -67,21 +62,20 @@ export class LineChartComponent implements OnInit {
   };
 
   private unsubscribe$ = new Subject<void>();
-  private subscription: Subscription = new Subscription();
 
   /**
    * Constructs the LineChartComponent.
    * @param olympicService - The OlympicService for data retrieval.
    * @param changeDetectorRef - The ChangeDetectorRef for manual change detection.
    */
-  constructor(private olympicService: OlympicService, private changeDetectorRef: ChangeDetectorRef) {
-    this.elementSelectionne = this.olympicService.elementSelectionne;
+  constructor(private olympicService: OlympicService) {
   }
 
   /**
    * Initializes the component and subscribes to Olympic data.
    */
   ngOnInit(): void {
+
     // Subscribe to isLoading$ observable from OlympicService
     this.olympicService.isLoading$.pipe(
       takeUntil(this.unsubscribe$)
@@ -89,22 +83,11 @@ export class LineChartComponent implements OnInit {
       this.isLoading = isLoading;
     });
 
-    // Subscribe to elementSelectionne$ observable from OlympicService
-    this.olympicService.elementSelectionne$.pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe({
-      next: (elementSelectionne) => {
-        this.elementSelectionne = elementSelectionne;
-        this.changeDetectorRef.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error fetching elementSelectionne:', error);
-      }
-    });
-
     // Subscribe to olympics$ observable from OlympicService
-    this.olympicService.olympics$.subscribe(() => {
-      this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes(this.elementSelectionne);
+    this.olympicService.olympics$.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(() => {
+      this.entriesMedalsAthletesResult = this.olympicService.processEntriesMedalsAthletes();
       this.medalsData = this.olympicService.processCountryMedalsPerDate();
     });
   }
@@ -113,6 +96,7 @@ export class LineChartComponent implements OnInit {
    * OnDestroy lifecycle hook to clean up resources.
    */
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

@@ -6,6 +6,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 import { OlympicService } from './core/services/olympic.service';
+import { Router } from '@angular/router';
 
 /**
  * The `AppComponent` component.
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
    * 
    * @param {OlympicService} olympicService - The service used to load initial Olympic data.
    */
-  constructor(private olympicService: OlympicService) { }
+  constructor(private olympicService: OlympicService, private router: Router) { }
 
   /**
    * The `ngOnInit` lifecycle hook.

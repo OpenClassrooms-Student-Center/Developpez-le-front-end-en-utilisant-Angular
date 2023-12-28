@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Subject } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 /**
  * HomeComponent is responsible for displaying and managing Olympic data.
+ * It also handles the loading states and potential errors.
  */
 @Component({
   selector: 'app-home',
@@ -15,12 +15,12 @@ import { takeUntil } from 'rxjs/operators';
 export class HomeComponent implements OnInit {
 
   /**
-   * Array of Country data for display.
+   * Indicates whether data is being loaded.
    */
   isLoading: boolean = false;
 
   /**
-   * Total number of Olympic Games participated.
+   * Total number of Olympic Games participated in.
    */
   totalOlympicGames: number = 0;
 
@@ -30,38 +30,29 @@ export class HomeComponent implements OnInit {
   totalCountries: number = 0;
 
   /**
-   * Name of the selected element.
+   * Indicates whether an error has occurred.
    */
-  elementSelectionne: string = '';
+  error: boolean = false;
 
   /**
-   * Stores entries, medals, and athletes result.
-   */
-  entriesMedalsAthletesResult: EntriesMedalsAthletes = {
-    entries: 0,
-    medals: 0,
-    athletes: 0
-  };
-
-  /**
-   * Subject to manage the unsubscription of observables.
+   * Subject used to manage unsubscription from observables upon component destruction.
    */
   private unsubscribe$ = new Subject<void>();
 
   /**
    * Constructs the HomeComponent.
-   * @param changeDetectorRef For detecting changes manually.
    * @param olympicService Service to manage Olympic data.
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef, private olympicService: OlympicService) {
-    this.elementSelectionne = this.olympicService.elementSelectionne;
-    this.entriesMedalsAthletesResult = this.olympicService.entriesMedalsAthletesResult;
+  constructor(private olympicService: OlympicService) {
   }
 
   /**
    * OnInit lifecycle hook to set up subscriptions to observables.
+   * It subscribes to loading, error, and Olympic data observables.
    */
   ngOnInit(): void {
+    
+    this.subscribeToOlympics();
 
     this.olympicService.isLoading$.pipe(
       takeUntil(this.unsubscribe$)
@@ -69,30 +60,17 @@ export class HomeComponent implements OnInit {
       this.isLoading = isLoading;
     });
 
-    // Subscribes to elementSelectionne$ observable from OlympicService
-    this.olympicService.elementSelectionne$.pipe(
+    this.olympicService.error$.pipe(
       takeUntil(this.unsubscribe$)
-    ).subscribe({
-      next: (elementSelectionne) => {
-        this.elementSelectionne = elementSelectionne;
-        this.changeDetectorRef.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error fetching elementSelectionne:', error);
-      }
-    });
-
-    // Subscribes to olympics$ observable from OlympicService
-    this.olympicService.olympics$.subscribe(() => {
-      const value = this.olympicService.processOlympicGamesAndCountry();
-      this.totalOlympicGames = value.totalOlympicGames;
-      this.totalCountries = value.totalCountries;
+    ).subscribe(error => {
+      this.error = error;
     });
 
   }
 
   /**
-   * OnDestroy lifecycle hook to complete the unsubscribe$ subject.
+   * OnDestroy lifecycle hook to complete the unsubscribe$ subject,
+   * ensuring cleanup of subscriptions to prevent memory leaks.
    */
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -100,9 +78,25 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Handles the retour (back) click event.
+   * Subscribes to the olympics$ observable from OlympicService.
+   * Processes the Olympic data upon each emission.
    */
-  onRetourClick(): void {
-    this.olympicService.retour();
+  private subscribeToOlympics() {
+    this.olympicService.olympics$
+      .pipe(
+        tap(() => this.processOlympicData()),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
   }
+
+  /**
+   * Processes Olympic data, updating total Olympic Games and total countries.
+   */
+  private processOlympicData() {
+    const value = this.olympicService.processOlympicGamesAndCountry();
+    this.totalOlympicGames = value.totalOlympicGames;
+    this.totalCountries = value.totalCountries;
+  }
+
 }

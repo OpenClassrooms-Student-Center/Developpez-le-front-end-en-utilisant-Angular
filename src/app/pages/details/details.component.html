@@ -2,7 +2,7 @@
     <!-- Display a chart back button and the title component with dynamic title -->
     <div class="chart-back">
         <button class="arrow-back" (click)="onRetourClick()"></button>
-        <app-title [title]="elementSelectionne"></app-title>
+        <app-title [title]="countryName"></app-title>
     </div>
     <!-- Display statistic cards for entries, total number of medals, and total number of athletes -->
     <div class="statistic-cards">
@@ -15,7 +15,7 @@
     </div>
     <!-- Display a line chart with a dynamic title -->
     <div class="container-line">
-        <app-line-chart [title]="elementSelectionne"></app-line-chart>
+        <app-line-chart></app-line-chart>
     </div>
 </ng-container>
 <!-- Conditionally display the Not Found component if isValidCountry is false -->

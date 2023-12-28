@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Country } from 'src/app/core/models/Olympic';
 import { EntriesMedalsAthletes } from 'src/app/core/models/EntriesMedalsAthletes';
-import { Subject, Subscription, of, filter } from 'rxjs';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { Subject, filter } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -43,12 +42,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   /**
    * The name of the selected country (from route parameter).
    */
-  countryName: string | null | undefined;
-
-  /**
-   * Subscription to manage resource cleanup.
-   */
-  private subscription: Subscription = new Subscription();
+  countryName!: string;
 
   /**
    * Subject to manage the unsubscription of observables.
@@ -68,8 +62,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private olympicService: OlympicService
   ) {
-    this.elementSelectionne = this.olympicService.elementSelectionne;
-    this.entriesMedalsAthletesResult = this.olympicService.entriesMedalsAthletesResult;
   }
 
   /**
@@ -84,19 +76,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.isLoading = isLoading;
     });
 
-    // Subscribe to paramMap observable to retrieve route parameters
+    // Subscribe to the paramMap observable of the route to retrieve route parameters.
     this.route.paramMap.pipe(
-      catchError((error) => {
-        console.error('Error fetching route parameters:', error);
-        return of(null);
-      }),
       takeUntil(this.unsubscribe$)
     ).subscribe(params => {
-      if (params) {
-        console.log('params');
-        this.countryName = typeof params.get('countryname') === 'string' ? params.get('countryname') : null;
+      const countryName = params.get('countryname');
+      if (countryName) {
+        this.countryName = countryName;
       } else {
-        console.log('No route parameters available');
+        this.router.navigate(['']);
       }
     });
 
@@ -104,7 +92,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.olympicService.olympics$.pipe(
       filter(countries => countries && countries.length > 0),
       takeUntil(this.unsubscribe$)
-    ).subscribe(countries => {
+    ).subscribe(() => {
       if (this.countryName) {
         this.olympicService.updateCountryId(this.countryName);
         this.olympicService.isValidCountry().subscribe(isValid => {
@@ -121,20 +109,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-
-    // Subscribes to elementSelectionne$ observable from OlympicService
-    this.olympicService.elementSelectionne$.pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe({
-      next: (elementSelectionne) => {
-        this.elementSelectionne = elementSelectionne;
-        this.changeDetectorRef.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error fetching elementSelectionne:', error);
-      }
-    });
-
     // Subscribes to entriesMedalsAthletesResult$ observable from OlympicService
     this.olympicService.entriesMedalsAthletesResult$.pipe(
       takeUntil(this.unsubscribe$)
@@ -143,12 +117,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.entriesMedalsAthletesResult = entriesMedalsAthletesResult;
         this.changeDetectorRef.detectChanges();
       },
-      error: (error) => {
-        console.error('Error fetching entriesMedalsAthletesResult:', error);
-        // Handle error or set default values
+      error: () => {
         this.entriesMedalsAthletesResult = { entries: 0, medals: 0, athletes: 0 };
       }
     });
+  }
+
+  /**
+   * Handles the retour (back) click event.
+  */
+  onRetourClick(): void {
+    this.olympicService.retour();
   }
 
   /**
@@ -159,10 +138,4 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  /**
-   * Handles the retour (back) click event.
-   */
-  onRetourClick(): void {
-    this.olympicService.retour();
-  }
 }
