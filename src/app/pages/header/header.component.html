@@ -1,0 +1,12 @@
+<header>
+  <h1>{{title}}</h1>
+  <div class="categories">
+    <div *ngFor="let item of infos | keyvalue">
+      <div class="category">
+        <h3>{{item.key}}</h3>
+        <span>{{item.value}}</span>
+      </div>
+    </div>
+  </div>
+</header>
+

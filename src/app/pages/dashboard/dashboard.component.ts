@@ -3,6 +3,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
 import { Olympic } from '../../core/models/Olympic';
+import { Router } from '@angular/router';
+import { HeaderService } from '../../core/services/header.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,101 +12,67 @@ import { Olympic } from '../../core/models/Olympic';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  constructor(private olympicService: OlympicService) {}
-  ngOnInit(): void {
-        this.getOlympics();
-  }
+  constructor(
+    private olympicService: OlympicService,
+    private headerService: HeaderService,
+    private router: Router
+  ) {}
+
   dataset: any[] = [];
   olympics: Olympic[] = [];
   numberOfJO = 0;
   numberOfCountries = 0;
-  title = 'barchartApp';
 
- onActivate(event: any): void {
-    console.log('Activate', event.value);
-    this.getInfoCountry(event.value.name);
-  }
-
-  getInfoCountry(country : string): void {
-    this.numberOfJO = 0;
-    this.olympics
-              .filter((olympic) => olympic.country === country )
-              .forEach(olympic =>
-                  {this.numberOfJO += olympic.participations.length;}
-              );
-  }
-
-  getOlympics(): void {
-    this.olympicService.getOlympics().subscribe(olympic => {
-    this.olympics = olympic;
-
-    var arrayTmp: any[] = [];
-    for (let i=0;i<olympic.length;i++) {
-      var totalMedals = 0;
-      for (let j=0;j<olympic[i].participations.length;j++) {
-          totalMedals += olympic[i].participations[j].medalsCount;
-      }
-      var obj = {
-        "name": olympic[i].country,
-        "value": totalMedals
-      }
-      arrayTmp.push(obj);
-    }
-    this.dataset = [...arrayTmp];
+  ngOnInit(): void {
+    this.olympicService.getOlympics().subscribe((olympics) => {
+      this.olympics = olympics;
+      this.numberOfCountries= olympics.length;
+      this.setDataCharts(olympics);
+      this.updateHeader();
     });
   }
-    /** single: any[];
-      view: any[] = [700, 400];
 
-      // options
-      gradient: boolean = true;
-      showLegend: boolean = true;
-      showLabels: boolean = true;
-      isDoughnut: boolean = false;
-      legendPosition: string = 'below';
+  onSelect(event: any): void {
+    var olympic = this.olympics.find(olympic => olympic.country === event.name);
+    this.router.navigateByUrl('detail/' + olympic?.id);
+  }
 
-      colorScheme = {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-      };
+ /**
+ * set values country and medalsCount for chart
+ * Set informations numberJO for Header
+ */
+  private setDataCharts(olympics : Olympic[] | undefined) {
+    let dataChart : any[] = [];
+    let totalMedals = 0;
+    let yearOlympics : number[] = [];
 
-      constructor() {
-        Object.assign(this, { single });
-      }*/
-
-      /** onSelect(data): void {
-        console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    for (let olympic of olympics!) {
+      totalMedals = olympic.participations.reduce((x,participation) => {
+        if (!yearOlympics.includes(participation.year)) {
+          yearOlympics.push(participation.year);
+          this.numberOfJO++;
+        }
+        return x + participation.medalsCount;
+      }, 0);
+      var obj = {
+        "name": olympic.country,
+        "value": totalMedals
       }
+      dataChart.push(obj);
+    }
+    this.dataset = [...dataChart];
+  }
 
-      onActivate(data): void {
-        console.log('Activate', JSON.parse(JSON.stringify(data)));
-      }
-
-      onDeactivate(data): void {
-        console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-      }*/
-
-       /** getNbUniqueCountries(olympic : Olympic): number {
-          alreadySeen: any [] = [];
-          var countries = olympic.filter(ol => ol.country.indexOf > -1 ? alreadySeen.push(ol.country) : "").foreach(ol => ol.country);
-          console.log(countries);
-
-          olympic.participations.forEach(function(participation) {
-                var country = participation.country;
-                if (alreadySeen[country]) {
-                  console.log(country);
-                } else {
-                  alreadySeen.push(country);
-                 }
-              });
-
-          return 5;
-        }*/
-
-              /**  Object.keys(olympic).foreach(key => {
-                 var obj = {
-                  "name": key.country,
-                  "value": key.country
-                  }
-                })*/
-
+/**
+ * Update values for header
+ */
+ private updateHeader() {
+     this.headerService.setInfos(
+       new Map<string, number>([
+        ["Number of JOs", this.numberOfJO],
+        ["Number of countries", this.numberOfCountries]
+       ])
+     );
+     this.headerService.setTitle("Medals per Country");
+  }
 }
