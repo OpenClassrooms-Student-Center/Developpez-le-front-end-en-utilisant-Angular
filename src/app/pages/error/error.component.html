@@ -1,5 +1,10 @@
-<h1>OOPS ! Something went wrong ...</h1>
-<div><p>{{error.name}}</p><p>{{error.message}}</p>
-</div>
-<a routerLink="/">Back</a>
+<div id="dashboard">
+  <div id="dashboard_header">
+<p>OOPS ! Something went wrong ...</p>
+    <a class="button" routerLink="/">Back To Dashboard</a>
+  </div>
 
+<div id="error">
+  <p>{{error.name}}</p><p>{{error.message}}</p>
+</div>
+</div>

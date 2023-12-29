@@ -8,7 +8,7 @@ import {Olympic} from "../models/Olympic";
   providedIn: 'root',
 })
 export class OlympicService {
-  private olympicUrl = './assets/mock/olympics.json';
+  private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
