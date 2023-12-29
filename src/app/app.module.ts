@@ -10,9 +10,10 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { OlympicsDetailsComponent } from './components/olympics-details/olympics-details.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GlobalErrorHandler} from "./core/services/global-error-handler";
+import { ErrorComponent } from './pages/error/error.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent, OlympicsDetailsComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, DashboardComponent, OlympicsDetailsComponent, ErrorComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule, BrowserAnimationsModule],
   providers: [
     {
