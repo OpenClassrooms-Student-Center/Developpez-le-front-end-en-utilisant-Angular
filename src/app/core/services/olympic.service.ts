@@ -18,7 +18,7 @@ export class OlympicService {
       tap((value) => this.olympics$.next(value)),
       retry(3),
       catchError((error : HttpErrorResponse) => {
-        console.error(error);
+        //console.error(error);
         return throwError(() => error);
       })
     );
@@ -28,7 +28,7 @@ export class OlympicService {
     return this.olympics$.asObservable().pipe(
       retry(3),
       catchError((error : HttpErrorResponse) => {
-      console.error(error);
+      //console.error(error);
       return throwError(() => error);
     }));
   }
