@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, retry, Subject, throwError} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {Olympic} from "../models/Olympic";
 
@@ -16,17 +16,20 @@ export class OlympicService {
   loadInitialData(): Observable<Olympic[]> {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling
-        console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(error);
-        return caught;
+      retry(3),
+      catchError((error : HttpErrorResponse) => {
+        //console.error(error);
+        return throwError(() => error);
       })
     );
   }
 
   getOlympics() : Observable<Olympic[]> {
-    return this.olympics$.asObservable();
+    return this.olympics$.asObservable().pipe(
+      retry(3),
+      catchError((error : HttpErrorResponse) => {
+      //console.error(error);
+      return throwError(() => error);
+    }));
   }
 }
