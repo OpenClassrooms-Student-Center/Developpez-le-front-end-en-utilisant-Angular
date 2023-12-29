@@ -18,7 +18,6 @@ export class HeaderComponent {
     });
     this.headerService.infos.subscribe(updateInfos => {
       this.infos = updateInfos;
-      console.log(this.infos);
     });
   }
 }

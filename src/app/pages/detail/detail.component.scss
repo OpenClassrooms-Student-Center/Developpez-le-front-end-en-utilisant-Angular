@@ -1,42 +1,26 @@
-h1 {
-  background-color:#2D909F;
-  color: white;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: normal;
-  padding: 5px;
-}
-
-h3 {
-  font-weight: normal;
-  margin: 0;
-}
-
-.category {
-  border-radius: 10px;
-  border: #2D909F solid;
-  text-align: center;
-  padding: 5px;
-}
-
-.categories {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
-  gap: 30px;
-}
-
-header {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: 70%;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-body {
+.body {
   display: flex;
   justify-content: center;
 }
+
+/*********** CSS for Ngx Charts **************/
+
+::ng-deep .ngx-charts {
+    text{
+        font-size: 15px;
+        white-space : wrap;
+        display: flex!important;
+        width: 300px;
+    }
+}
+
+::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+  background-color: #2D909F !important;
+  color: white !important;
+  .tooltip-caret.position-top {
+      color: white !important;
+      border-top: 7px solid #2D909F !important;
+    }
+}
+
+/*********** END CSS for Ngx Charts **************/
