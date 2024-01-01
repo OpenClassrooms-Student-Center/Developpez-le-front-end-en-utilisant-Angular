@@ -1,3 +1,12 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="centered-content">
+  <h3>Medals per Country</h3>
+  <ngx-charts-pie-chart
+  (window:resize)="onResize($event)"
+    [results]="chartData"
+    [view]="view"
+    [legend]="true"
+    [labels]="true"
+    (select)="onSelect($event)"
+    [tooltipText]="customTooltipTextFunction">
+  </ngx-charts-pie-chart>
+</div>

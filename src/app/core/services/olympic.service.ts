@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,4 +29,35 @@ export class OlympicService {
   getOlympics() {
     return this.olympics$.asObservable();
   }
+
+  getFormattedOlympics() {
+    return this.loadInitialData().pipe(
+      map(data => this.transformToChartData(data))
+    );
+  }
+
+  private transformToChartData(data: any[]): any[] {
+    return data.map(country => ({
+      name: country.country,
+      value: country.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0),
+      participations: country.participations, 
+    }));
+  }
+
+  getCountrySeriesData() {
+    return this.loadInitialData().pipe(
+      map(data => this.transformToCountrySeries(data))
+    );
+  }
+
+  private transformToCountrySeries(data: any[]): any[] {
+    return data.map(country => ({
+      name: country.country,
+      series: country.participations.map((participation: { year: number, medalsCount: number }) => ({
+        name: participation.year.toString(),
+        value: participation.medalsCount
+      }))
+    }));
+  }
+  
 }
