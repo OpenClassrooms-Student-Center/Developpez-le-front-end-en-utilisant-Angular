@@ -1,6 +1,12 @@
 # OlympicGamesStarter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This application shows informations about Olympic games. (number of medals, number of athletes, ...)
+
+Graphic charts are available on page to be more interactive.
+
+## How to install
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
 
 Don't forget to install your node_modules before starting (`npm install`).
 
@@ -12,18 +18,32 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
+## How to run application
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+After run `http://localhost:4200/`, the main page shows dashboard by default.
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+This page can be accessed by `http://localhost:4200/dashboard`.
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+By clicking on country in chart pie, the detail page displays. (in this form : `http://localhost:4200/detail:ID`)
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+## Components / Services
 
-You're now ready to implement the requested features.
+Each component has ts (typescript), scss and html file.
+- Dashboard component handles graphic chart pie from library ngx-charts.
+- Detail component handles graphic chart bar from library ngx-charts.
+- Header component handles title and others informations according to page selected.
+- Home component only displays the number of country.
+- Not-found component displays a simple page if url is wrong.
 
-Good luck!
+Services are used for some components : 
+- olympic-service to get informations about all countries or only one with HttpClient.
+- header-service to set title and other informations of header page.
+
+## Modules and app-routing-module
+
+Module contains all necessary components and modules.
+
+app-routing-module contains routes with all components displayed.
+
+## Models 
+Models (olympic and Participation) to create interface used in components or services.
