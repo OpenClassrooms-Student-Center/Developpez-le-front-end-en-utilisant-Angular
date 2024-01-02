@@ -1,4 +1,4 @@
-<div class="header">
+<div *ngIf="title" class="header">
   <h1>{{title}}</h1>
   <div class="categories">
     <div *ngFor="let item of infos | keyvalue">

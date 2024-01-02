@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class HeaderService {
-  title = new BehaviorSubject('Initial Title');
+  title = new BehaviorSubject('');
   infos = new BehaviorSubject<Map<string, number>>(new Map<string, number>);
 
   setTitle(title: string) {

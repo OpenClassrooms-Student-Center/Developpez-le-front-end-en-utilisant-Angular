@@ -34,7 +34,6 @@ export class OlympicService {
     let olympic: Observable<Olympic | undefined> = this.getOlympics()
       .pipe(tap(x => console.log(x)), map(array => {
           return array.find(olympic => olympic.id === id);
-
       }));
     return olympic;
   }
