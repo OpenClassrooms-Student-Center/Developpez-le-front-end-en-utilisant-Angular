@@ -1,4 +1,5 @@
 $primary-color : #04838F;
+$error-background : rgba(255, 127, 127, 64);
 $text-color-accent : #FFFFFF;
 
 html, body { height: 100% }
@@ -60,6 +61,11 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: $error-background;
+  p {
+    text-align: center;
+    color: $text-color-accent;
+  }
 }
 
 #footer {
