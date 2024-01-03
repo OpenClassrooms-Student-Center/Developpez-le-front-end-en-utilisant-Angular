@@ -1,35 +1,43 @@
-import { Component  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { OlympicService } from '../../core/services/olympic.service';
 import { Olympic } from '../../core/models/Olympic';
 import { Router } from '@angular/router';
 import { HeaderService } from '../../core/services/header.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private olympicService: OlympicService,
     private headerService: HeaderService,
     private router: Router
   ) {}
 
-  dataset: any[] = [];
+  dataset: string[] = [];
   olympics: Olympic[] = [];
   numberOfJO = 0;
   numberOfCountries = 0;
 
+ subscription!: Subscription;
+
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe((olympics) => {
+    this.subscription = this.olympicService.getOlympics().subscribe((olympics) => {
       this.olympics = olympics;
       this.numberOfCountries= olympics.length;
       this.setDataCharts(olympics);
       this.updateHeader();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    console.log("unsubscribe");
   }
 
   onSelect(event: any): void {
