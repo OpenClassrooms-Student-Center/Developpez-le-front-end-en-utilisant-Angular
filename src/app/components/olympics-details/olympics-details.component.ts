@@ -44,6 +44,7 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Init chart view size depending on screen innerSize
     this.view = [innerWidth / 1.3 , innerHeight / 1.3];
     const olympicId = +<string>this.route.snapshot.paramMap.get('id');
     const olympic$ = this.olympicService.getOlympics();
@@ -57,6 +58,10 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Map Olympic Data to fit ngx-charts data format
+   * @param olympic
+   */
   mapDatas(olympic: Olympic | undefined): DetailsChartData[] {
     let results: DetailsChartData[] = [];
     if (olympic === undefined) {
@@ -75,9 +80,10 @@ export class OlympicsDetailsComponent implements OnInit, OnDestroy {
     return results;
   }
 
-  onBackToDashBoard() {
-    this.router.navigate(['/dashboard']);
-  }
+  /**
+   * Resize chart viewPort on widow.resize event
+   * @param $event
+   */
   onResize($event: any) {
     $event.target.innerWidth <= 640 ? this.view = [$event.target.innerWidth / 1.3, 300] : this.view = [$event.target.innerWidth / 1.3, $event.target.innerHeight/1.3];
 

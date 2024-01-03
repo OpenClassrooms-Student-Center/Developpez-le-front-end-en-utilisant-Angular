@@ -74,10 +74,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
   /*
   Méthodes evenements Ngx-Charts
    */
+  // redirect To olympic details on click
   onSelect(data : ChartData): void {
     this.router.navigate(['/details', data.extra.id]);
   }
 
+  // resize chart on window.resize() event
   onResize($event: any) {
     this.view = [$event.innerWidth/1.3 , $event.innerHeight/1.3];
   }
