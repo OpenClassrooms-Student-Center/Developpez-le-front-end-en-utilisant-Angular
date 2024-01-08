@@ -37,7 +37,6 @@ Each component has ts (typescript), scss and html file.
 
 Services are used for some components : 
 - olympic-service to get informations about all countries or only one with HttpClient.
-- header-service to set title and other informations of header page.
 
 ## Modules and app-routing-module
 
