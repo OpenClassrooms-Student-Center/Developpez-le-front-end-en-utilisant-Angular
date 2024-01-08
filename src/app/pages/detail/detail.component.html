@@ -1,13 +1,18 @@
+<app-header
+  [title]="country"
+  [infos]="infosHeaders"
+></app-header>
 <div class="body">
   <ngx-charts-bar-vertical
-    [view]="[1000,400]"
-    [results]="single"
+    [view]="view"
+    [results]="dataChart"
     [gradient]="true"
     [legend]="false"
     [xAxis]="true"
     [yAxis]="true"
     [showXAxisLabel]="true"
     [xAxisLabel]="'Dates'"
+    (window:resize)="onResize($event)"
   >
   </ngx-charts-bar-vertical>
 </div>

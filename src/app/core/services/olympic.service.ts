@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError  } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
@@ -45,7 +46,12 @@ export class OlympicService {
   getOlympic(id: number): Observable<Olympic | undefined> {
     let olympic: Observable<Olympic | undefined> = this.getOlympics()
       .pipe(tap(x => console.log(x)), map(array => {
-          return array.find(olympic => olympic.id === id);
+          if (array.find(olympic => olympic.id === id) === undefined) {
+            this.router.navigateByUrl('404', {skipLocationChange: true});
+            return undefined;
+          } else {
+            return array.find(olympic => olympic.id === id);
+          }
       }));
     return olympic;
   }

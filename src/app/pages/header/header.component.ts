@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { HeaderService } from '../../core/services/header.service';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,17 +6,9 @@ import { HeaderService } from '../../core/services/header.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  constructor(private headerService: HeaderService) {}
+  constructor() {}
 
-  title = "No Title";
-  infos : Map<string, number> = new Map<string, number>();
+  @Input() title = "No Title";
+  @Input() infos?: Map<string, number>;
 
-  ngOnInit(): void {
-    this.headerService.title.subscribe(updatedTitle => {
-      this.title = updatedTitle;
-    });
-    this.headerService.infos.subscribe(updateInfos => {
-      this.infos = updateInfos;
-    });
-  }
 }

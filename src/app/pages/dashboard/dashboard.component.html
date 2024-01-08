@@ -1,12 +1,17 @@
+<app-header
+  [title]="'Medals per Country'"
+  [infos]="infosHeaders"
+></app-header>
 <div class="body">
   <ngx-charts-pie-chart
-    [view]="[1000,400]"
-    [results]="dataset"
+    [view]="view"
+    [results]="dataChart"
     [gradient]="true"
     [legend]="false"
     [labels]="true"
     [trimLabels]="false"
     (select)="onSelect($event)"
+    (window:resize)="onResize($event)"
   >
 
     <ng-template #tooltipTemplate let-model="model">
@@ -20,3 +25,4 @@
 
   </ngx-charts-pie-chart>
 </div>
+<ngx-spinner [fullScreen]="true" type="ball-scale-multiple" size="medium" >Loading</ngx-spinner>

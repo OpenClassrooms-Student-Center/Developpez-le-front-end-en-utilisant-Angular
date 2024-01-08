@@ -5,7 +5,6 @@ import { OlympicService } from '../../core/services/olympic.service';
 import { Olympic } from '../../core/models/Olympic';
 import { Participation } from '../../core/models/Participation';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { HeaderService } from '../../core/services/header.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,16 +16,17 @@ export class DetailComponent {
 constructor(
     private route: ActivatedRoute,
     private olympicService: OlympicService,
-    private headerService: HeaderService,
     private location: Location
   ) {}
 
-  single: any[] = [];
+  dataChart: {name: string, value: number}[] = [];
+  view: [number, number] = [0,0];
 
   entries = 0;
   totalMedals = 0;
   totalAthletes = 0;
   country! : string;
+  infosHeaders: Map<string, number> = new Map<string, number>();
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -39,37 +39,40 @@ constructor(
   }
 
  /**
+  * Resize window when window changes
+  */
+  onResize(event : Event) {
+   const target = event.target as Window;
+      this.view = [target.innerWidth / 1.1, target.innerHeight/ 2];
+  }
+
+ /**
  * set values year and medalsCount for chart
  * Set informations entries, totalMedals and totalAthletes for Header
  */
  private setDataCharts(olympic : Olympic | undefined) {
-    let dataChart : any[] = [];
-
-    olympic?.participations!.forEach(participation => {
-      this.entries++;
-      this.totalMedals += participation.medalsCount;
-      this.totalAthletes += participation.athleteCount;
-      var obj = {
-        "name": String(participation.year),
-        "value": String(participation.medalsCount)
-      }
-      dataChart.push(obj);
-    });
-    this.single = [...dataChart];
+    if (olympic && olympic.participations.length !== 0) {
+      this.dataChart = olympic.participations.map((participation : Participation) => {
+        this.entries++;
+        this.totalMedals += participation.medalsCount;
+        this.totalAthletes += participation.athleteCount;
+        return {
+          "name": String(participation.year),
+          "value": participation.medalsCount
+        };
+      });
+    }
  }
 
 /**
  * Update values for header
  */
  private updateHeader() {
-     this.headerService.setInfos(
-       new Map<string, number>([
+    this.infosHeaders = new Map<string, number>([
          ["Number of entries", this.entries],
          ["Total number medals", this.totalMedals],
          ["Total number of athletes", this.totalAthletes]
-       ])
-     );
-     this.headerService.setTitle(this.country);
+       ]);
   }
 
  private goBack() {

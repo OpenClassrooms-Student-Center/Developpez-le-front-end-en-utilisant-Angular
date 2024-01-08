@@ -23,18 +23,16 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
-  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .header {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  width: 70%;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom : 60px;
 }
 
 span {
