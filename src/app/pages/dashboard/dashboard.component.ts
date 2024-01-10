@@ -7,52 +7,34 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-export class Events {
-  private _name! : string;
-  private _value! : string;
-
-  get name() : string {
-    return this._name;
-  }
-
-  set name(num1:string) {
-    this._name = num1;
-  }
-}
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  protected view: [number, number] = [0,0];
+  protected dataChart: {name: string, value: number}[] = [];
+  private olympics: Olympic[] = [];
+  private numberOfJO : number = 0;
+  private numberOfCountries : number = 0;
+  protected infosHeaders: Map<string, number> = new Map<string, number>();
+  private subscription!: Subscription;
+
   constructor(
     private olympicService: OlympicService,
     private router: Router,
     private spinner: NgxSpinnerService
   ) {}
 
-  view: [number, number] = [0,0];
-  dataset: string[] = [];
-  dataChart: {name: string, value: number}[] = [];
-  olympics: Olympic[] = [];
-  numberOfJO : number = 0;
-  numberOfCountries : number = 0;
-  infosHeaders: Map<string, number> = new Map<string, number>();
-
-
- subscription!: Subscription;
-
   ngOnInit(): void {
-    this.spinner.show();
-    console.log("spinner activated");
-
-    this.subscription = this.olympicService.getOlympics().subscribe((olympics) => {
-      this.olympics = olympics;
-      this.numberOfCountries= olympics.length;
-      this.setDataCharts(olympics);
-      this.updateHeader();
-      this.spinner.hide();
-      console.log("spinner desactivated");
+    this.spinner.show().then(x => {
+      this.subscription = this.olympicService.getOlympics().subscribe((olympics) => {
+        this.olympics = olympics;
+        this.numberOfCountries= olympics.length;
+        this.setDataCharts(olympics);
+        this.updateHeader();
+      });
     });
   }
 
@@ -60,11 +42,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onSelect(event: Events): void {
+  /**
+  * Run page detail when element selected
+  */
+  onSelect(event: {name : string, value : string}): void {
     var olympic = this.olympics.find(olympic => olympic.country === event.name);
     this.router.navigateByUrl('detail/' + olympic?.id);
   }
 
+  /**
+  * Resize chart when window changes
+  */
   onResize(event : Event) {
    const target = event.target as Window;
       this.view = [target.innerWidth / 1.1, target.innerHeight/ 2];
@@ -95,13 +83,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-/**
- * Update values for header
- */
- private updateHeader() {
-   this.infosHeaders = new Map<string, number>([
-            ["Number of JOs", this.numberOfJO],
-            ["Number of countries", this.numberOfCountries]
-           ]);
+  /**
+  * Update values for header
+  */
+  private updateHeader() {
+    this.infosHeaders = new Map<string, number>([
+      ["Number of JOs", this.numberOfJO],
+      ["Number of countries", this.numberOfCountries]
+    ]);
   }
 }

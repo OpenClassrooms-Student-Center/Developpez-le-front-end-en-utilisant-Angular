@@ -3,7 +3,9 @@
   [infos]="infosHeaders"
 ></app-header>
 <div class="body">
-  <ngx-charts-pie-chart
+  <ngx-spinner *ngIf="dataChart?.length==0" [fullScreen]="true" type="ball-scale-multiple" size="medium" >Loading</ngx-spinner>
+
+  <ngx-charts-pie-chart *ngIf="dataChart?.length!=0"
     [view]="view"
     [results]="dataChart"
     [gradient]="true"
@@ -25,4 +27,3 @@
 
   </ngx-charts-pie-chart>
 </div>
-<ngx-spinner [fullScreen]="true" type="ball-scale-multiple" size="medium" >Loading</ngx-spinner>

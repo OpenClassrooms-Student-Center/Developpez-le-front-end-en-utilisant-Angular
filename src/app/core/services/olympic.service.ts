@@ -45,14 +45,16 @@ export class OlympicService {
 
   getOlympic(id: number): Observable<Olympic | undefined> {
     let olympic: Observable<Olympic | undefined> = this.getOlympics()
-      .pipe(tap(x => console.log(x)), map(array => {
+      .pipe(
+        map(array => {
           if (array.find(olympic => olympic.id === id) === undefined) {
             this.router.navigateByUrl('404', {skipLocationChange: true});
             return undefined;
           } else {
             return array.find(olympic => olympic.id === id);
           }
-      }));
+        })
+      );
     return olympic;
   }
 
