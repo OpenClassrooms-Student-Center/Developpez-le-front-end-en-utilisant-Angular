@@ -36,7 +36,7 @@ Graphic charts are available on page to be more interactive.
 
 ## Usage
 
-1. Go to application : http://localhost:4200/. The main page shows dashboard by default and can be accessed as well by http://localhost:4200/dashboard.
+1. Navigate on : http://localhost:4200/. The main page shows dashboard by default and can be accessed as well by http://localhost:4200/dashboard.
 
 2. By clicking on country in chart pie, the detail page displays. The page is displayed on this url : http://localhost:4200/detail:ID.
 
