@@ -1,48 +1,55 @@
 # OlympicGamesStarter
 
-This application shows informations about Olympic games. (number of medals, number of athletes, ...)
+This application shows informations about previous Olympic games. (number of medals, number of athletes, ...)
 
 Graphic charts are available on page to be more interactive.
 
-## How to install
+## Getting Started
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
+### Prerequisites
 
-Don't forget to install your node_modules before starting (`npm install`).
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+* NodeJs
+  ```sh
+  https://nodejs.org/en/download
+  ```
+* Angular
+  ```sh
+  npm install -g @angular/cli
+  ```
+  
+## Installation
 
-## Development server
+ 
+* Install NPM packages
+  ```sh
+  npm install
+  ```
+ 
+* Builds and serves application
+  ```sh
+  ng serve
+  ```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Usage
 
-## Build
+1. Go to application : http://localhost:4200/. The main page shows dashboard by default and can be accessed as well by http://localhost:4200/dashboard.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. By clicking on country in chart pie, the detail page displays. The page is displayed on this url : http://localhost:4200/detail:ID.
 
-## How to run application
+## Libraries used
 
-After run `http://localhost:4200/`, the main page shows dashboard by default.
+* [ngx-charts](https://www.npmjs.com/package/@swimlane/ngx-charts) - Graph visualization library for Angular
 
-This page can be accessed by `http://localhost:4200/dashboard`.
+* [ngx-spinner](https://www.npmjs.com/package/ngx-spinner) -  is a loading (spinner) component library with more than 50 different types. 
 
-By clicking on country in chart pie, the detail page displays. (in this form : `http://localhost:4200/detail:ID`)
 
-## Components / Services
+<!-- CONTACT -->
+## Contact
 
-Each component has ts (typescript), scss and html file.
-- Dashboard component handles graphic chart pie from library ngx-charts.
-- Detail component handles graphic chart bar from library ngx-charts.
-- Header component handles title and others informations according to page selected.
-- Home component only displays the number of country.
-- Not-found component displays a simple page if url is wrong.
+Paysant Gérald - geraldpaysant@gmail.com
 
-Services are used for some components : 
-- olympic-service to get informations about all countries or only one with HttpClient.
-
-## Modules and app-routing-module
-
-Module contains all necessary components and modules.
-
-app-routing-module contains routes with all components displayed.
-
-## Models 
-Models (olympic and Participation) to create interface used in components or services.
+Project Link: [https://github.com/gpaysant/Developpez-le-back-end-en-utilisant-Java-et-Spring](https://github.com/gpaysant/Developpez-le-back-end-en-utilisant-Java-et-Spring)
