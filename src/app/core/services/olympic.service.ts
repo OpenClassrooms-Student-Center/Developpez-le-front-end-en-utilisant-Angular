@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError  } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,7 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
@@ -26,7 +25,6 @@ export class OlympicService {
       console.error('An error occurred:', error.error);
       alert("Network error : \n" + error.error);
     } else if (error.status === 504) {
-      console.log('504 Gateway Timeout', '', { timeOut: 5000 });
       alert("Error Timeout network");
     } else {
       // The backend returned an unsuccessful response code.
@@ -47,12 +45,7 @@ export class OlympicService {
     let olympic: Observable<Olympic | undefined> = this.getOlympics()
       .pipe(
         map(array => {
-          if (array.find(olympic => olympic.id === id) === undefined) {
-            this.router.navigateByUrl('404', {skipLocationChange: true});
-            return undefined;
-          } else {
-            return array.find(olympic => olympic.id === id);
-          }
+          return array.find(olympic => olympic.id === id);
         })
       );
     return olympic;

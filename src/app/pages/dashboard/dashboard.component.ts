@@ -13,12 +13,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  protected view: [number, number] = [0,0];
-  protected dataChart: {name: string, value: number}[] = [];
+  public view: [number, number] = [0,0];
+  public dataChart: {name: string, value: number}[] = [];
   private olympics: Olympic[] = [];
   private numberOfJO : number = 0;
   private numberOfCountries : number = 0;
-  protected infosHeaders: Map<string, number> = new Map<string, number>();
+  public infosHeaders: Map<string, number> = new Map<string, number>();
   private subscription!: Subscription;
 
   constructor(
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   /**
   * Resize chart when window changes
   */
-  onResize(event : Event) {
+  onResize(event : Event): void {
    const target = event.target as Window;
       this.view = [target.innerWidth / 1.1, target.innerHeight/ 2];
   }
@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
  * set values country and medalsCount for chart
  * Set informations numberJO for Header
  */
-  private setDataCharts(olympics : Olympic[] | undefined) {
+  private setDataCharts(olympics : Olympic[] | undefined): void {
     let totalMedals = 0;
     let yearOlympics : number[] = [];
 
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   /**
   * Update values for header
   */
-  private updateHeader() {
+  private updateHeader(): void {
     this.infosHeaders = new Map<string, number>([
       ["Number of JOs", this.numberOfJO],
       ["Number of countries", this.numberOfCountries]
