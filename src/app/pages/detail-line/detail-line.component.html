@@ -1,0 +1,56 @@
+
+<div class="d-flex justify-content-center align-items-center">
+
+    <h1><span class="badge custom-badge">{{countryName}}</span></h1>
+</div>
+<br>
+<div class="d-flex justify-content-center align-items-center">
+    <div style="margin-left: 50px;"></div>
+  <div class="text-center">
+    <h3>
+      <span class="badge my-custom-badge">Number of JOs<br> <strong>{{numberOfParticipations}}</strong></span>
+    </h3>
+  </div>
+  <div style="margin-left: 20px;"></div>
+  <div class="text-center">
+    <h3>
+      <span class="badge my-custom-badge">Total number of medals<br> <strong>{{numberOfMedals}}</strong></span>
+    </h3>
+  </div>
+
+    <div style="margin-left: 20px;"></div>
+    <div class="text-center">
+        <h3>
+        <span class="badge my-custom-badge">Total number of athletes<br> <strong>{{numberOfAthletes}}</strong></span>
+        </h3>
+    </div>
+</div>
+<div class="d-flex justify-content-center align-items-center">
+<ngx-charts-line-chart
+  [view]="[600, 400]"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+ 
+  [results]="lineChartData"
+  [tooltipDisabled]="false"
+  [xAxisTickFormatting]="formatXAxisTick"
+>
+<ng-template #tooltipTemplate let-model="model">
+ 
+    <div class="custom-tooltip">
+      <p>{{ model.name }}</p>
+      <p>{{ model.value }} Medals</p>
+    </div>
+  </ng-template>
+</ngx-charts-line-chart>
+</div>
+<br> 
+
+<div class="d-flex justify-content-center align-items-center">
+    <a href="http://localhost:4200" class="btn custom-button" role="button">Retour à la page d'accueil</a>
+</div>

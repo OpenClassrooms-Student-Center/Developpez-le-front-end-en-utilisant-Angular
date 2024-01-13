@@ -1,3 +1,52 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+
+<div class="d-flex justify-content-center align-items-center">
+
+  <h1><span class="badge custom-badge">Medals per Country</span></h1>
+</div>
+<br>
+<div class="d-flex justify-content-center align-items-center">
+  <div class="text-center">
+    <h3>
+      <span class="badge my-custom-badge">Number of JOs<br> <strong>{{numberOfOlympics}}</strong></span>
+    </h3>
+  </div>
+  <div style="margin-left: 20px;"></div>
+  <div class="text-center">
+    <h3>
+      <span class="badge my-custom-badge">Number of countries<br> <strong>{{numberOfCountries}}</strong></span>
+    </h3>
+  </div>
+</div>
+ 
+<div class="d-flex justify-content-center align-items-center">
+
+<ngx-charts-pie-chart
+  [view]="[600, 400]"
+  [scheme]="colorScheme"
+  [results]="pieChartData"
+  [legend]="false"
+  [explodeSlices]="false"
+  [labels]="true"
+  [tooltipDisabled]="false"
+  [maxLabelLength]=20
+  (select)="onPieChartSelect($event)"
+>
+<ng-template #tooltipTemplate let-model="model">
+  <div >
+      {{ model.name }}
+      <div >
+        🥇{{ model.value }}
+      </div>
+  </div>
+</ng-template>
+
+
+</ngx-charts-pie-chart>
+
+</div>
+<router-outlet></router-outlet>
+
+
+
+
+
