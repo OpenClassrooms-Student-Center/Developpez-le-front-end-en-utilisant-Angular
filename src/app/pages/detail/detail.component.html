@@ -1,4 +1,24 @@
-<div class="card">
+<div class="container">
+<div class="box">
+  <div></div>
+  <div class="box-center">Name of the country</div>
+  <div></div>
+</div>
+<div class="box">
+  <div class="box-side-rigth">
+    <div>Number of entries</div>
+    <div>{{ 0 }}</div>
+  </div>
+  <div class="box-side-rigth">
+    <div>Total number of medals</div>
+    <div>{{ 0 }}</div>
+  </div>
+  <div class="box-side-rigth">
+    <div>Total number of athletes</div>
+    <div>{{ 0 }}</div>
+  </div>
+</div>
+<div layout="row" layout-xs="column">
   <div #ContainerRef class="card-body">
     <ngx-charts-line-chart
       [results]="saleData"
@@ -8,8 +28,9 @@
       [showYAxisLabel]="showYAxisLabel"
       [xAxisLabel]="xAxisLabel"
       [yAxisLabel]="yAxisLabel"
-      [view]="[1500, 500]"
+      [view]="[1000, 300]"
     >
     </ngx-charts-line-chart>
   </div>
+</div>
 </div>

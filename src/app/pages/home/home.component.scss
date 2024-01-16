@@ -1,3 +1,9 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .menudemoBasicUsage .md-menu-demo {
   padding: 24px;
 }
@@ -29,7 +35,7 @@
   color:gray;
   font-weight: 500;
   font-size: 22px;
-  width: 15%;
+  width: 17%;
   align-items:center;
   justify-content:center;
   display:flex;
@@ -39,7 +45,7 @@
   border-style: solid;
   border-color:#008890;
   div{
-    margin: 7px;;
+    margin: 7px;
   }
 
 }
@@ -49,7 +55,7 @@
   color:gray;
   font-weight: 500;
   font-size: 22px;
-  width: 15%;
+  width: 17%;
   align-items:center;
   justify-content:center;
   display:flex;
@@ -59,7 +65,7 @@
   border-style: solid;
   border-color:#008890;
   div{
-    margin: 7px;;
+    margin: 7px;
   }
 
 }
