@@ -5,7 +5,21 @@
 <ul *ngIf="olympics$ | async as olympics">
   <li *ngFor="let olympic of olympics">{{ olympic.id }}</li>
 </ul> -->
-
+<div class="box">
+  <div></div>
+  <div class="box-center">Medals per country</div>
+  <div></div>
+</div>
+<div class="box">
+  <div class="box-side-left">
+    <div>Numbers of JOs</div>
+    <div>{{ numberOfJos }}</div>
+  </div>
+  <div class="box-side-rigth">
+    <div>Numbers of countries</div>
+    <div>{{ (olympics$ | async)?.length }}</div>
+  </div>
+</div>
 <div layout="row" layout-xs="column">
   <ngx-charts-pie-chart
     [results]="saleData"

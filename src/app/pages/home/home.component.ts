@@ -11,28 +11,23 @@ import { Participation } from '../../core/models/Participation';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$!: Observable<Olympic[]>;
+  public olympics$! : Observable<Olympic[]>;
   legendTitle = 'Olympic games app';
-  //public olympics$!: Observable<Olympic[]> = of(null);
-
+  numberOfJos = 0;
+ 
   constructor(private olympicService: OlympicService, private route: Router) {}
 
   saleData: any[] = [];
+  nbOfJo:Participation[]=[]
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-
-    console.log(this.olympics$);
-    /*
-"name": "France",
-    "value": 36745,
-    "extra": {
-      "code": "fr"
-    }
-*/
     this.olympics$.subscribe((response) => {
-      this.saleData = response.map((dt: any, i: number) => ({
-        //id: dt.id,
+      const year = response?.map(
+        data =>({jo:data.participations})
+      );
+
+      this.saleData = response?.map((dt) => ({
         name: dt.country,
         value: dt.participations.reduce(
           (total: number, participation: Participation) =>
@@ -42,17 +37,14 @@ export class HomeComponent implements OnInit {
         extra: {
           id: dt.id,
         },
-        /*value: dt.participations.reduce(
-          (value: number) => value + dt.participations.medalsCount,
-          0
-        ),
-        */
-        //
       }));
-    });
+      //console.log(this.saleData)
+      //this.numberOfJos =  this.saleData?.reduce((total:number,data:any) => total+data.value,0);
+    }  
+    );
   }
+  
   selectOneOlympic(event: any) {
-    console.log(event.extra.id);
     let id = event.extra.id;
     this.route.navigateByUrl(`/country/${id}`);
   }

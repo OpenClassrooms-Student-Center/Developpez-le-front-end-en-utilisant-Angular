@@ -32,10 +32,6 @@ export class OlympicService {
   }
 
   getParticipations(id: number) {
-    return this.olympics$
-      .asObservable()
-      .pipe(
-        map((country) => country.filter((value: Olympic) => value.id === id)[0])
-      );
+    return this.getOlympics();
   }
 }
