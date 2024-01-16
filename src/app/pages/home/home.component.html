@@ -1,3 +1,19 @@
-<h2>Olympic games app</h2>
+<!-- <h2>Olympic games app</h2>
 <hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
+
+<ul *ngIf="olympics$ | async as olympics">
+  <li *ngFor="let olympic of olympics">{{ olympic.id }}</li>
+</ul> -->
+
+<div layout="row" layout-xs="column">
+  <ngx-charts-pie-chart
+    [results]="saleData"
+    [legend]="true"
+    [legendTitle]="legendTitle"
+    [view]="[1500, 500]"
+    [labels]="true"
+    (select)="selectOneOlympic($event)"
+  >
+  </ngx-charts-pie-chart>
+</div>
