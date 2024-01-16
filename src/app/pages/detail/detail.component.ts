@@ -14,6 +14,10 @@ export class DetailComponent implements OnInit {
   public olympics$!: Observable<Olympic[]>;
   public participations$!: Observable<Olympic[]>;
   id!: number;
+  numberOfCountry:number=0;
+  numberOfMedhal:number=0;
+  numberOfAthlete:number=0;
+  nameOfCountry!:string;
 
   constructor(
     private olympicService: OlympicService,
@@ -32,17 +36,26 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.params['id'];
-    //this.olympics$ = this.olympicService.getOlympics();
-
     this.participations$ = this.olympicService.getParticipations(this.id);
+    
 
     this.participations$.subscribe((data) => {
-      const country = data?.find((elt, i) => elt.id === this.id);
-      console.log(country)
-      const participations = country?.participations as Participation[];
-      const series = participations?.map(elt => ({value:elt.athleteCount,name : elt.year}));
-     // console.log(series)
-      //this.saleData = [{name: country?.country, series: series}];
+      //console.log(this.id)
+     // console.log(data[0])
+      const pays = data?.find((elt,i) => elt.id == this.id);
+      const participations = pays?.participations as Participation[];
+      this.numberOfAthlete = participations.reduce((total,value)=>total+value.athleteCount,0)
+      console.log(participations);
+      const series = participations?.map(
+        elt => ({value:elt.medalsCount,name : elt.year.toFixed() })
+        );
+      this.numberOfCountry = series.length;
+      this.numberOfMedhal = series.reduce((total,value)=>total+value.value,0);
+      //console.log(series)
+      this.saleData = [{name: pays?.country, series: series}];
+      
+      //console.log(this.saleData);
+      /*
       this.saleData = [
         {
           "name": "Morocco",
@@ -170,6 +183,7 @@ export class DetailComponent implements OnInit {
           ]
         }
       ];
+      */
 
       //console.log(this.saleData)
       }
