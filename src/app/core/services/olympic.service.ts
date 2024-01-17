@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Olympic } from '../models/Olympic';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +11,12 @@ import { catchError, tap } from 'rxjs/operators';
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<any>(undefined);
+  router: any;
 
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
+    return this.http.get<Array<Olympic>>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
@@ -25,7 +28,30 @@ export class OlympicService {
     );
   }
 
-  getOlympics() {
+  getOlympics(): Observable<Array<Olympic>> {
     return this.olympics$.asObservable();
+  }
+
+  /**
+   * 
+  */
+
+  countMedals(olympic:Olympic):number {
+    let medals: number = 0;
+
+    for (let participation of olympic.participations) {
+      medals += participation.medalsCount;
+    }
+    return medals;
+  }  
+
+  countUniqueGames(olympic:Olympic):number {
+    let totalGames: number = 0;
+
+    for (let participation of olympic.participations) {
+      totalGames = participation.id;
+    }
+
+    return totalGames;
   }
 }

@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { OlympicService } from './olympic.service';
 
 describe('OlympicService', () => {
