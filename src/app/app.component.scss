@@ -11,6 +11,7 @@ a {
   
   a:visited {
     color: white;
+    text-decoration: none;
   }
   
   a:focus {
@@ -21,7 +22,6 @@ a {
   a:hover {
     border-bottom: 1px solid;
     text-decoration: none;
-   // background: white;
   }
   
   a:active {

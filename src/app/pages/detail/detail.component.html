@@ -1,36 +1,36 @@
 <div class="container">
-<div class="box">
-  <div></div>
-  <div class="box-center">{{ saleData[0].name }}</div>
-  <div></div>
-</div>
-<div class="box">
-  <div class="box-side-rigth">
-    <div>Number of entries</div>
-    <div>{{ numberOfCountry  }}</div>
+  <div class="box">
+    <div></div>
+    <div class="box-center">{{ nameOfCountry }}</div>
+    <div></div>
   </div>
-  <div class="box-side-rigth">
-    <div>Total number of medals</div>
-    <div>{{ numberOfMedhal }}</div>
+  <div class="box">
+    <div class="box-side-rigth">
+      <div>Number of entries</div>
+      <div>{{ numberOfCountry  }}</div>
+    </div>
+    <div class="box-side-rigth">
+      <div>Total number of medals</div>
+      <div>{{ numberOfMedhal }}</div>
+    </div>
+    <div class="box-side-rigth">
+      <div>Total number of athletes</div>
+      <div>{{ numberOfAthlete }}</div>
+    </div>
   </div>
-  <div class="box-side-rigth">
-    <div>Total number of athletes</div>
-    <div>{{ numberOfAthlete }}</div>
+  <div layout="row" layout-xs="column">
+    <div #ContainerRef class="card-body">
+      <ngx-charts-line-chart
+        [results]="saleData"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [view]="[1000, 300]"
+      >
+      </ngx-charts-line-chart>
+    </div>
   </div>
-</div>
-<div layout="row" layout-xs="column">
-  <div #ContainerRef class="card-body">
-    <ngx-charts-line-chart
-      [results]="saleData"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [view]="[1000, 300]"
-    >
-    </ngx-charts-line-chart>
-  </div>
-</div>
 </div>
