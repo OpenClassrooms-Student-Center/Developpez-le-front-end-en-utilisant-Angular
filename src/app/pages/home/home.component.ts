@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart, ChartEvent } from 'chart.js';
+import { Chart } from 'chart.js';
 import { Observable, Subscription, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             display: false,
           },
           datalabels:{
-            display: true,
+            display: false,
             color: '007bff',
             align: 'end',
             anchor: 'end',
