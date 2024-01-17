@@ -13,14 +13,12 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 export class CountryComponent implements OnInit, OnDestroy {
   
   countryId!: number;
-
   olympics$!: Observable<Array<Olympic>>;
   pieChart!: any;
   mLabels: Array<number> = [];
   mMedals: Array<number> = [];
   mNumberOfGames: number = 0;
   subscription!: Subscription;
-  data!: Subscription;
   totalMedals: number = 0;
   totalAthletes: number = 0;
 
@@ -32,7 +30,6 @@ export class CountryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.countryId = +this.route.snapshot.params['id'];
-    console.log(this.countryId);
     this.olympics$ = this.olympicService.getOlympics();
     this.subscription = this.olympics$.subscribe((value) =>
       this.modifyChartData(value)
@@ -42,6 +39,14 @@ export class CountryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  /**
+   * Creates an empty pie chart, responsive.
+   * Creates the click event that lets navigate to specific chosen country
+   *
+   * @remarks
+   * Requires {@link chart.js/auto} and {@link chartjs-plugin-datalabels}
+   */
 
   createChart(): void {
     this.pieChart = new Chart('MyChart', {
@@ -67,6 +72,12 @@ export class CountryComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Populates the empty pie chart with correct data
+   *
+   * @param olympics - The array of olympics retrieved by service
+   */
+
   modifyChartData(olympics: Array<Olympic>): void {
     if (olympics) {
       const olympic = olympics[this.countryId].participations;
@@ -77,6 +88,8 @@ export class CountryComponent implements OnInit, OnDestroy {
         this.totalAthletes += entry.athleteCount;
       }
       this.createChart();
+    } else {
+      this.router.navigateByUrl('error');
     }
   }
 }

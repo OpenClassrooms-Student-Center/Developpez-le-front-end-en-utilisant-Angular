@@ -1,25 +1,26 @@
 <div class="fullApp">
-  <div *ngIf="olympics$ | async as olympic">
+  <div *ngIf="olympics$ | async as olympic" class="title">
     <h2>{{ olympic[countryId].country }}</h2>
     <div class="infos">
+      <div class="specificInfos">
+        <p>
+          Numbers of entries:<br>
+          <strong>{{ olympic[countryId].participations.length }}</strong>
+        </p>
+      </div>
       <div class="specificInfos">   
         <p>
-          Total number medals:
+          Total number medals:<br>
           <strong>{{ totalMedals }}</strong>
         </p>
       </div>
       <div class="specificInfos">
         <p>
-          Total number athletes:
+          Total number athletes:<br>
           <strong>{{ totalAthletes }}</strong>
         </p>
       </div>
-      <div class="specificInfos">
-        <p>
-          Numbers of entries:
-          <strong>{{ olympic[countryId].participations.length }}</strong>
-        </p>
-      </div>
+      
     </div>
   </div>
 
