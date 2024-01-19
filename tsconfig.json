@@ -21,6 +21,12 @@
     "lib": [
       "es2020",
       "dom"
+    ],
+    "types": [
+      "node",
+      "d3-shape",
+      "d3-scale",
+      "d3-selection"
     ]
   },
   "angularCompilerOptions": {
