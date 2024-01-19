@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+    h1{
+        border-radius: 10px;
+        color: white;
+        background-color: crimson;
+        max-width: 20%;
+        margin: 0 auto;
+    }
+    .info-container {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+      }
+    
+      .info-box {
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        margin: 20px;
+    
+        p {
+          margin: 0;
+        }
+      }
+    
