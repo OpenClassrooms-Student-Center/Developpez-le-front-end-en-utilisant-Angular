@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Olympics } from '../models/Olympic';
 
@@ -21,8 +21,10 @@ export class OlympicService {
         console.error(error);
         // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next([]);
-        return caught;
-      })
+        // return caught;
+        const err = new Error('Une erreur c\' est produite pendant le chargement'); 
+        return throwError(() => err);
+      }) 
     );
   }
 
