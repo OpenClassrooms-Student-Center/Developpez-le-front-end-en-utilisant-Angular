@@ -2,16 +2,20 @@
 <hr />
 
 
-    <div><h1>Medals per Country</h1></div>
-    <div class="info-container">
-    <div class="info-box">
-      <p>Number of JOs</p>
-      <span><b>{{ numberOfCities }}</b></span>
+    
+  <div class="info-container">
+    <h1>Medals per Country</h1>
+    <div>
+      <div class="info-box">
+        <p>Number of JOs</p>
+        <span><b>{{ numberOfCities }}</b></span>
+      </div>
+      <div class="info-box">
+        <p>Number of Countries</p>
+        <span><b>{{ numberOfCountries }}</b></span>
+      </div>
     </div>
-    <div class="info-box">
-      <p>Number of Countries</p>
-      <span><b>{{ numberOfCountries }}</b></span>
-    </div>
+    
   </div>
     <div class="pie-chart-container">
       <ngx-charts-pie-chart
