@@ -1,15 +1,25 @@
 <h2>Olympic games app</h2>
 <hr />
 
-numberOfOlympics {{ numberOfCities }}
-numberOfCountries {{ numberOfCountries }}
-<div>
-    <h1>Medals per Country</h1>
-    <ngx-charts-pie-chart
-      [results]="chartData"
-      [legend]="false"
-      [explodeSlices]="false"
-      [labels]="true"
-      (select)="detailOfCountry($event)"
-    ></ngx-charts-pie-chart>
+
+    <div><h1>Medals per Country</h1></div>
+    <div class="info-container">
+    <div class="info-box">
+      <p>Number of JOs</p>
+      <span><b>{{ numberOfCities }}</b></span>
+    </div>
+    <div class="info-box">
+      <p>Number of Countries</p>
+      <span><b>{{ numberOfCountries }}</b></span>
+    </div>
   </div>
+    <div class="pie-chart-container">
+      <ngx-charts-pie-chart
+        [results]="chartData"
+        [legend]="false"
+        [explodeSlices]="false"
+        [labels]="true"
+        (select)="detailOfCountry($event)"
+      ></ngx-charts-pie-chart>
+    </div>
+ 
