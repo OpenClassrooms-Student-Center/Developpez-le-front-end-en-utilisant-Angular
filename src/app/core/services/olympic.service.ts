@@ -1,4 +1,3 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -31,6 +30,7 @@ export class OlympicService {
   }
 
   getParticipations(id: number) {
+    //console.log(this.olympicUrl);
     return this.getOlympics();
   }
 }
