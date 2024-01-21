@@ -1,4 +1,4 @@
-.container{
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,60 +12,61 @@
 }
 
 .box {
-  display: flex;
+  // display: flex;
   justify-content: center;
-  margin-top: 30px;;
+  // margin-top: 30px;
 }
-.box-center{
+
+.box-center {
   height: 60px;
-  background-color:#008890;
+  background-color: #008890;
   color: white;
   font-weight: 500;
   font-size: 22px;
-  width: 300px;
+  // width: 300px;
   align-items: center;
   justify-content: center;
   display: flex;
-  border-radius : 50px;
+  border-radius: 50px;
   border: 1 solid black;
 }
-.box-side-left{
+.box-side-left {
   flex-direction: column;
   height: 100px;
-  color:gray;
+  color: gray;
   font-weight: 500;
   font-size: 22px;
-  width: 300px;
-  align-items:center;
-  justify-content:center;
-  display:flex;
-  border-radius : 20px;
+  //width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 20px;
   border: 2 solid;
-  margin-right: 30px;
+  //margin-right: 30px;
   border-style: solid;
-  border-color:#008890;
-  div{
+  border-color: #008890;
+  //  float: right;
+  // clear: both;
+  div {
     margin: 7px;
   }
-
 }
-.box-side-rigth{
+.box-side-rigth {
   flex-direction: column;
   height: 100px;
-  color:gray;
+  color: gray;
   font-weight: 500;
   font-size: 22px;
-  width: 300px;
-  align-items:center;
-  justify-content:center;
-  display:flex;
-  border-radius : 20px;
+  //width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 20px;
   border: 2 solid;
-  margin-left: 30px;
+  //margin-left: 30px;
   border-style: solid;
-  border-color:#008890;
-  div{
+  border-color: #008890;
+  div {
     margin: 7px;
   }
-
 }
