@@ -8,6 +8,7 @@ import { OlympicService } from './core/services/olympic.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  appTitle = 'Olympic games app';
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {

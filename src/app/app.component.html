@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<!-- <div layout="row" layout-xs="column">
+  <div flex>
+    <mat-toolbar color="accent">
+      <a routerLink="/">{{ appTitle }}</a>
+     </mat-toolbar>
+   <router-outlet></router-outlet>
+  </div>
+</div> 
+-->
+<nav class="navbar navbar-expand-lg mb-4" style="background-color: #008890">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">{{ appTitle }}</a>
+  </div>
+</nav>
+
+<main class="row-fluid">
+  <router-outlet></router-outlet>
+</main>
