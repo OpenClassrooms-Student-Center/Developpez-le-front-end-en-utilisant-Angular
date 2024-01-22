@@ -10,6 +10,10 @@ example of participation:
 }
 */
 
+/**
+   * We create a class Participation that will be in our main class Olympic
+*/
+
 export class Participation {
     id!: number;
     year!: number;
