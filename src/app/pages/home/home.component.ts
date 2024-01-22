@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-//   public olympics$: Observable<Olympics[]> = of([]);
+// public olympics$: Observable<Olympics[]> = of([]);
 
   public olympics: Olympics[] = [];
   public chartData: any[] = [];
@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
     });
   }
   
-  //Récupère l'id du pays cliquer pour ouvrir la page country-detail
   detailOfCountry(event: any): void{
     if(event.name){
 		//compare le nom de chaque country avec le name de l'event

@@ -41,16 +41,17 @@
 }
 
 // // Utiliser des media queries pour ajuster le style sur des petits écrans
-// @media screen and (max-width: 600px) {
-//   h1 {
-//     font-size: medium;
-//   }
-//   .info-container {
-//     // flex-direction: column; // Mettre les éléments les uns en dessous des autres sur des petits écrans
-//     display: flex;
-//     flex-wrap: wrap;
-//     .info-box {
-//       // flex: 0 0 100%; // Occupe la largeur complète sur des petits écrans
-//     }
-//   }
-// }
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: medium;
+  }
+  .info-container {
+    flex-direction: column; // Mettre les éléments les uns en dessous des autres sur des petits écrans
+    display: flex;
+    flex-wrap: wrap;
+    .info-box {
+      // flex: 0 0 100%; // Occupe la largeur complète sur des petits écrans
+      max-width: 100%;
+    }
+  }
+}
