@@ -33,7 +33,7 @@ export class OlympicService {
   }
 
   /**
-   * 
+   * We count the number of medals and return the value
   */
 
   countMedals(olympic:Olympic):number {
@@ -44,6 +44,10 @@ export class OlympicService {
     }
     return medals;
   }  
+
+  /**
+   * We count the total games the country were in and return the value
+  */
 
   countUniqueGames(olympic:Olympic):number {
     let totalGames: number = 0;
