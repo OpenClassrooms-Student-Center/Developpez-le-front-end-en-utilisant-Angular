@@ -1,8 +1,13 @@
 <h2>Olympic games app</h2>
 <hr />
 
+<div *ngIf="error">
+  <div class="error">
+  {{ errMsg }}
+  </div>
+</div> 
 
-    
+<div *ngIf="!error">
   <div class="info-container">
     <h1>Medals per Country</h1>
     <div>
@@ -12,16 +17,30 @@
       <div class="info-box">
         <p>Number of countries<br><b>{{ numberOfCountries }}</b></p>
       </div>
-    </div>
+  </div>
     
   </div>
-    <div class="pie-chart-container">
+  <div class="pie-chart-container">
       <ngx-charts-pie-chart
         [results]="chartData"
         [legend]="false"
         [explodeSlices]="false"
         [labels]="true"
         (select)="detailOfCountry($event)"
-      ></ngx-charts-pie-chart>
+      >
+    
+      <ng-template #tooltipTemplate let-model="model">
+        <div class="custom-tooltip">
+          <div class="tooltip-label">{{ model.name }}</div>
+          <div class="tooltip-value">
+            <img src="{{ iconData }}" alt="Icon" class="tooltip-icon"> {{ model.value }}
+          </div>
+        </div>
+      </ng-template>
+
+    </ngx-charts-pie-chart>
+
+
+
     </div>
- 
+  </div>
