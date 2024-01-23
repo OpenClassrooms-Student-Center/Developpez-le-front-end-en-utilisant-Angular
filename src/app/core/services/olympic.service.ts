@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -16,26 +16,27 @@ export class OlympicService {
   loadInitialData() {
     return this.http.get<Olympics[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling
-        console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next([]);
-        // return caught;
-        const err = new Error('Une erreur c\' est produite pendant le chargement'); 
-        return throwError(() => err);
-      }) 
+      catchError(this.handleError) 
     );
   }
 
   getOlympics() {
-    return this.olympics$.asObservable();
+    return this.http.get<Olympics[]>(this.olympicUrl).pipe(
+      tap(data=>console.log(data)),
+      catchError(this.handleError) 
+    );
   }
 
   getCountryById(countryId: number): Observable<Olympics | null> {
     return this.http.get<Olympics[]>(this.olympicUrl).pipe(
       map(countries => countries.find(country => country.id === countryId) || null),
+      catchError(this.handleError) 
     );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<any> {
+    const err = 'Une erreur s\'est produite pendant l\'accès aux données. Veuillez réessayer plus tard.';
+    return throwError(() => err)
   }
 
 }

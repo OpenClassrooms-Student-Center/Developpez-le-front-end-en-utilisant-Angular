@@ -1,13 +1,23 @@
-<p>participations : {{ numberOfEntries }}</p>
-<p>medals : {{ numberOfMedals }}</p>
-<p>athletes : {{ numberOfAthletes }}</p>
 
-<ngx-charts-line-chart
-  [results]="numberOfMedalsPerYear"
-  [xAxis]="true"
-  [yAxis]="true"
-  [legend]="true"
-  [showXAxisLabel]="true"
-  [showYAxisLabel]="true"
-  xAxisLabel="Dates"
-></ngx-charts-line-chart>
+<div *ngIf="error">
+  <div class="error">
+  {{ errMsg }}
+  </div>
+</div> 
+
+<div *ngIf="!error">
+  <h1>{{ countryName }}</h1>
+
+  <p>participations : {{ numberOfEntries }}</p>
+  <p>medals : {{ numberOfMedals }}</p>
+  <p>athletes : {{ numberOfAthletes }}</p>
+
+  <ngx-charts-line-chart
+    [results]="numberOfMedalsPerYear"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    xAxisLabel="Dates"
+  ></ngx-charts-line-chart>
+</div>
