@@ -1,10 +1,8 @@
 <h2>Olympic games app</h2>
 <hr />
 
-<div *ngIf="error">
-  <div class="error">
-  {{ errMsg }}
-  </div>
+<div *ngIf="error" class="error">
+  <h2>{{ errMsg }}</h2>
 </div> 
 
 <div *ngIf="!error">
@@ -20,7 +18,7 @@
   </div>
     
   </div>
-  <div class="pie-chart-container">
+    <div class="chart-container">
       <ngx-charts-pie-chart
         [results]="chartData"
         [legend]="false"

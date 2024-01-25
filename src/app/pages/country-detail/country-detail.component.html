@@ -1,23 +1,32 @@
+<button (click)="goBack()" class="goBackBtn">Retour</button>
 
-<div *ngIf="error">
-  <div class="error">
-  {{ errMsg }}
-  </div>
+<div *ngIf="error" class="error">
+  <h2>{{ errMsg }}</h2>
 </div> 
 
 <div *ngIf="!error">
-  <h1>{{ countryName }}</h1>
-
-  <p>participations : {{ numberOfEntries }}</p>
-  <p>medals : {{ numberOfMedals }}</p>
-  <p>athletes : {{ numberOfAthletes }}</p>
-
-  <ngx-charts-line-chart
-    [results]="numberOfMedalsPerYear"
-    [xAxis]="true"
-    [yAxis]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    xAxisLabel="Dates"
-  ></ngx-charts-line-chart>
+  <div class="info-container">
+    <h1>{{ countryName }}</h1>
+    <div>
+      <div class="info-box">
+        <p>Number of entries<br><b>{{ numberOfEntries }}</b></p>
+      </div>
+      <div class="info-box">
+        <p>Total number medals<br><b>{{ numberOfMedals }}</b></p>
+      </div>
+      <div class="info-box">
+        <p>Total number of athletes<br><b>{{ numberOfAthletes }}</b></p>
+      </div>
+  </div>
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [results]="numberOfMedalsPerYear"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Dates"
+      class="graph"
+    ></ngx-charts-line-chart>
+  </div>
 </div>

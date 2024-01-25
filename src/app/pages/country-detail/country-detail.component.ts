@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MedalsPerYear } from 'src/app/core/models/MedalsPerYear';
 import { Olympics } from 'src/app/core/models/Olympic';
@@ -23,7 +23,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	public errMsg: string = ""
 	public error: boolean = false
 	
-  	constructor(private route: ActivatedRoute, private olympicService: OlympicService) { }
+  	constructor(private route: ActivatedRoute,private router: Router,  private olympicService: OlympicService) { }
 
 
 	  ngOnInit(): void {
@@ -32,7 +32,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 		).subscribe({
 		  next: (params) => {
 			const countryId = +params['id'];
-			if (countryId) {
+			if (typeof countryId === 'number') {
 			  this.olympicService.getCountryById(countryId)
 				.pipe(takeUntil(this.ngUnsubscribe))
 				.subscribe({
@@ -85,5 +85,9 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 		  })) ?? [];
 	  }
 
-
+	goBack(): void {
+		this.router.navigate(['../../'], { relativeTo: this.route });
+		// home
+		// this.router.navigateByUrl('/');
+	}
 }
