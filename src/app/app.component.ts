@@ -13,11 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.subscription = this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+    // this.subscription = this.olympicService.loadInitialData().pipe(take(1)).subscribe();
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+    // if (this.subscription) this.subscription.unsubscribe();
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { MedalsPerYear } from 'src/app/core/models/MedalsPerYear';
 import { Olympics } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -15,7 +16,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	public numberOfAthletes: number = 0
 	public numberOfEntries: number = 0
 	//TODO : faire une interface
-	public numberOfMedalsPerYear!: [{"name": string,"series": [{"name": string,"value": number}]}]  
+	public numberOfMedalsPerYear!: MedalsPerYear[]
 
 	private ngUnsubscribe = new Subject();
 	
@@ -70,6 +71,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 		this.ngUnsubscribe.next(null);
 		this.ngUnsubscribe.complete();
 	}
+	
 	calculateTotalMedals(country: Olympics): number {
 		return country.participations?.reduce((total, participation) => total + (participation.medalsCount ?? 0), 0) ?? 0;
 	}
@@ -78,9 +80,9 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	}
 	calculateMedalsByYear(country: Olympics): any { 
 		return country.participations?.map(participation => ({
-				name: participation.year?.toString() ?? '',
-				value: participation.medalsCount,
-		  }));
+			name: participation.year?.toString() ?? '',
+			value: participation.medalsCount,
+		  })) ?? [];
 	  }
 
 
