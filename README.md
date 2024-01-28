@@ -19,6 +19,6 @@ I created typescripts methods inside the `models` & `services` folders that I us
 
 There are 3 main components : 
 
-- 'homme.component' which is the home page. 
+- 'home.component' which is the home page. 
 - 'country.component' which is the second page that will detail the country results.
 - 'not-found.component' which is the error and redirection page.
