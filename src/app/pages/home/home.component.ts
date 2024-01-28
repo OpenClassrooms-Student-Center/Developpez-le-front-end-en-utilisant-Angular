@@ -64,9 +64,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(event.name){
 		//compare le nom de chaque country avec le name de l'event
       const selectedCountry = this.olympics.find(country => country.country === event.name);
-      //TODO : créer le guard pour les id inconnus
-     selectedCountry ? this.router.navigate(['/country-detail', selectedCountry.id]) : this.router.navigate(['/not-found'])
+      this.router.navigate(['/country-detail', selectedCountry?.id])
     }
   }
- 
+
 }

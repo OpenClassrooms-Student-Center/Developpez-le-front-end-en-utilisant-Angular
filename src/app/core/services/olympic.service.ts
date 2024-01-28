@@ -34,6 +34,17 @@ export class OlympicService {
     );
   }
 
+  isIdExist(countryId: number): Observable<Olympics | null> {
+    return this.http.get<Olympics[]>(this.olympicUrl).pipe(
+      map(countries => {
+        const country = countries.find(country => country.id === +countryId);
+        return Boolean(country); // Convertit le pays en valeur booléenne
+      }),
+      catchError(this.handleError) 
+    )
+    
+  }
+
   private handleError(error: HttpErrorResponse): Observable<any> {
     const err = 'Une erreur s\'est produite pendant l\'accès aux données. Veuillez réessayer plus tard.';
     return throwError(() => err)
