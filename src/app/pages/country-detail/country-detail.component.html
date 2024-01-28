@@ -1,10 +1,10 @@
 <button (click)="goBack()" class="goBackBtn">Retour</button>
 
-<div *ngIf="error" class="error">
-  <h2>{{ errMsg }}</h2>
+<div *ngIf="messageVisible" class="message">
+  <h2>{{ message }}</h2>
 </div> 
 
-<div *ngIf="!error">
+<div *ngIf="!messageVisible">
   <div class="info-container">
     <h1>{{ countryName }}</h1>
     <div>

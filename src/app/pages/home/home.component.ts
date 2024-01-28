@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public numberOfCountries: number = 0;
   public numberOfCities: number = 0;
   private subscription!: Subscription
-  public errMsg: string = ""
-  public error: boolean = false
+  public message: string = "Données en cours de chargement"
+  public messageVisible: boolean = true
   
 
   public iconData = './assets/gold-medal.png';
@@ -49,13 +49,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         name: country.country ?? '',
         value: country.participations?.reduce((total, p) => total + (p.medalsCount ?? 0), 0)
       }));
+      this.messageVisible = false
      },
       (error) => {
-        this.errMsg = error
-        this.error = true
+        this.message = error
+        this.messageVisible = true
       }
     );
   }
+
   ngOnDestroy(): void {
     if(this.subscription) this.subscription.unsubscribe()
   }

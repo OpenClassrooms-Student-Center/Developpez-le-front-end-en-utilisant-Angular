@@ -1,11 +1,11 @@
 <h2>Olympic games app</h2>
 <hr />
 
-<div *ngIf="error" class="error">
-  <h2>{{ errMsg }}</h2>
+<div *ngIf="messageVisible" class="message">
+  <h2>{{ message }}</h2>
 </div> 
 
-<div *ngIf="!error">
+<div *ngIf="!messageVisible">
   <div class="info-container">
     <h1>Medals per Country</h1>
     <div>

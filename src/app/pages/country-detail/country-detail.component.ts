@@ -15,13 +15,12 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	public numberOfMedals: number = 0
 	public numberOfAthletes: number = 0
 	public numberOfEntries: number = 0
-	//TODO : faire une interface
 	public numberOfMedalsPerYear!: MedalsPerYear[]
 
 	private ngUnsubscribe = new Subject();
 	
-	public errMsg: string = ""
-	public error: boolean = false
+	public message: string = "Données en cours de chargement"
+	public messageVisible: boolean = true
 	
   	constructor(private route: ActivatedRoute,private router: Router,  private olympicService: OlympicService) { }
 
@@ -48,21 +47,22 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 						  "series": this.calculateMedalsByYear(country)
 						}
 					  ];
+					  this.messageVisible = false
 					} else {
-					  this.errMsg = 'Le pays n\'a pas été trouvé.';
-					  this.error = true;
+					  	this.message = 'Le pays n\'a pas été trouvé.';
+        				this.messageVisible = true
 					}
 				  },
 				  error: (error) => {
-					this.errMsg = error;
-					this.error = true;
+					this.message = error;
+					this.messageVisible = true
 				  }
 				});
 			}
 		  },
 		  error: (error) => {
-			this.errMsg = error;
-			this.error = true;
+			this.message = error;
+			this.messageVisible = true
 		  }
 		});
 	  }
