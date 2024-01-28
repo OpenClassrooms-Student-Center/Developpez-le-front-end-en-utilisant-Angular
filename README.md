@@ -15,7 +15,7 @@ I continued to use the architecture you gave me :
 - `pages` folder: contains components used for routing
 - `core` folder: contains the business logic (`services` and `models` folders)
 
-I created typescripts methods inside the `models` folder and the 'services' folder that I use inside the components.
+I created typescripts methods inside the `models` & `services` folders that I use inside the components.
 
 There are 3 main components : 
 
