@@ -16,16 +16,13 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	public numberOfAthletes: number = 0
 	public numberOfEntries: number = 0
 	public numberOfMedalsPerYear!: MedalsPerYear[]
-
-	private ngUnsubscribe = new Subject();
-	
 	public message: string = "Données en cours de chargement"
 	public messageVisible: boolean = true
+	private ngUnsubscribe = new Subject();
 	
   	constructor(private route: ActivatedRoute,private router: Router,  private olympicService: OlympicService) { }
 
-
-	  ngOnInit(): void {
+	ngOnInit(): void {
 		this.route.params.pipe(
 		  takeUntil(this.ngUnsubscribe)
 		).subscribe({
@@ -65,11 +62,10 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 			this.messageVisible = true
 		  }
 		});
-	  }
-
+	}
 	ngOnDestroy(): void {
-		this.ngUnsubscribe.next(null);
-		this.ngUnsubscribe.complete();
+		this.ngUnsubscribe.next(null); // Émettre une valeur null pour désinscrire les observables
+		this.ngUnsubscribe.complete(); // Terminer le sujet pour la désinscription complète
 	}
 	
 	calculateTotalMedals(country: Olympics): number {
@@ -83,11 +79,8 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 			name: participation.year?.toString() ?? '',
 			value: participation.medalsCount,
 		  })) ?? [];
-	  }
-
+	}
 	goBack(): void {
-		this.router.navigate(['../../'], { relativeTo: this.route });
-		// home
-		// this.router.navigateByUrl('/');
+		this.router.navigateByUrl('/');
 	}
 }

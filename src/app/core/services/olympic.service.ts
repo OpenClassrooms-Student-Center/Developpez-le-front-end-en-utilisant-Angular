@@ -9,16 +9,8 @@ import { Olympics } from '../models/Olympic';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<Olympics[]>([]);
 
   constructor(private http: HttpClient) {}
-
-  loadInitialData() {
-    return this.http.get<Olympics[]>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
-      catchError(this.handleError) 
-    );
-  }
 
   getOlympics() {
     return this.http.get<Olympics[]>(this.olympicUrl).pipe(

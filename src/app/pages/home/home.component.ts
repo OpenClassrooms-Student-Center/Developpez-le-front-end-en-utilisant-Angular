@@ -19,19 +19,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription!: Subscription
   public message: string = "Données en cours de chargement"
   public messageVisible: boolean = true
-  
-
   public iconData = './assets/gold-medal.png';
 
   constructor(private olympicService: OlympicService, private router: Router) {}
   
   ngOnInit(): void {
-    this.subscription = this.olympicService.getOlympics().subscribe(
-      (data) => {
+    this.subscription = this.olympicService.getOlympics().subscribe({
+      next: (data) => {
       this.olympics = data;
       this.numberOfCountries = this.olympics.length;
 
-      //Set pour stocker les villes de façon uniques
       const uniqueCities = new Set<string>(); 
       this.olympics.forEach((country) => {
         country.participations?.forEach((participation: Participation) => {
@@ -51,11 +48,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       }));
       this.messageVisible = false
      },
-      (error) => {
-        this.message = error
-        this.messageVisible = true
-      }
-    );
+     error: (error) => {
+			this.message = error;
+			this.messageVisible = true
+		  }
+    });
   }
 
   ngOnDestroy(): void {

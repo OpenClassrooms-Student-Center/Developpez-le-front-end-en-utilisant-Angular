@@ -15,14 +15,10 @@ export class IdExistsGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const id = next.params['id']; 
     return this.olympicService.isIdExist(id).pipe(
-      map(isId =>
-        // isId ?  true : false
-        {if (isId) {
-          return true; // L'ID existe, autorisez la navigation
-        } else {
-          // L'ID n'existe pas, redirigez vers une page d'erreur ou une autre page appropriée
-          return this.router.createUrlTree(['/not-found']);
-        }}
+      map(isId =>{
+          if (isId) return true;
+          else return this.router.createUrlTree(['/not-found']);
+        }
       )
     );
   }
