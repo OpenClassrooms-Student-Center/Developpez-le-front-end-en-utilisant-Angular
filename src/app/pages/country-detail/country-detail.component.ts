@@ -10,6 +10,9 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './country-detail.component.html',
   styleUrls: ['./country-detail.component.scss']
 })
+
+
+
 export class CountryDetailComponent implements OnInit, OnDestroy {
 	public countryName: string = ""
 	public numberOfMedals: number = 0
@@ -18,17 +21,16 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	public numberOfMedalsPerYear!: MedalsPerYear[]
 	public message: string = "Données en cours de chargement"
 	public messageVisible: boolean = true
-	private ngUnsubscribe = new Subject();
+	private ngUnsubscribe = new Subject<void>();
 	
   	constructor(private route: ActivatedRoute,private router: Router,  private olympicService: OlympicService) { }
 
 	ngOnInit(): void {
 		this.route.params.pipe(
-		  takeUntil(this.ngUnsubscribe)
+		  takeUntil(this.ngUnsubscribe) //takeuntil s'assure que l'abonnement est annulé quand le subject emet une valeur à la destruction du composant
 		).subscribe({
 		  next: (params) => {
 			const countryId = +params['id'];
-			if (typeof countryId === 'number') {
 			  this.olympicService.getCountryById(countryId)
 				.pipe(takeUntil(this.ngUnsubscribe))
 				.subscribe({
@@ -46,25 +48,18 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 					  ];
 					  this.messageVisible = false
 					} else {
-					  	this.message = 'Le pays n\'a pas été trouvé.';
-        				this.messageVisible = true
+					  	let errMsg = 'Le pays n\'a pas été trouvé.';
+						this.errorFct(errMsg)
 					}
 				  },
-				  error: (error) => {
-					this.message = error;
-					this.messageVisible = true
-				  }
+				  error: (error) => this.errorFct(error)
 				});
-			}
 		  },
-		  error: (error) => {
-			this.message = error;
-			this.messageVisible = true
-		  }
+		  error: (error) => this.errorFct(error)
 		});
 	}
 	ngOnDestroy(): void {
-		this.ngUnsubscribe.next(null); // Émettre une valeur null pour désinscrire les observables
+		this.ngUnsubscribe.next(); // Émettre pour désinscrire les observables
 		this.ngUnsubscribe.complete(); // Terminer le sujet pour la désinscription complète
 	}
 	
@@ -82,5 +77,9 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	}
 	goBack(): void {
 		this.router.navigateByUrl('/');
+	}
+	errorFct(errMsg: any){
+		this.message = errMsg;
+		this.messageVisible = true
 	}
 }

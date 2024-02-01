@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Olympics } from '../models/Olympic';
 
@@ -8,7 +8,7 @@ import { Olympics } from '../models/Olympic';
   providedIn: 'root',
 })
 export class OlympicService {
-  private olympicUrl = './assets/mock/olympic.json';
+  private olympicUrl = './assets/mock/olympic2.json';
 
   constructor(private http: HttpClient) {}
 
@@ -37,6 +37,7 @@ export class OlympicService {
     
   }
 
+  // class implement ErrorHandler interface  a part 
   private handleError(error: HttpErrorResponse): Observable<any> {
     const err = 'Une erreur s\'est produite pendant l\'accès aux données. Veuillez réessayer plus tard.';
     return throwError(() => err)
