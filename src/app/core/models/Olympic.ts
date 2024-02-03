@@ -19,5 +19,5 @@ export class Olympic {
     id!: number;
     country!: string;
     participations!: Array<Participation>;
-  medalsCount: any;
+    medalsCount!: number;
 }
