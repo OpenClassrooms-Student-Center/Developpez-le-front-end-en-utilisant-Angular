@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
+import { Chart, ChartEvent } from 'chart.js';
 import { Observable, Subscription, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { HeaderComponent } from 'src/app/pages/header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export class HomeComponent implements OnInit, OnDestroy {
 
   olympics$!: Observable<Array<Olympic>>;
-  pieChart!: any;
+  pieChart!: Chart;
   mLabels: Array<string> = [];
   mMedals: Array<number> = [];
   mNumberOfGames: number = 0;
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(() => this.setInitialData());
   }
 
-  ngOnDestroy(): void { //bonne pratique libérer espace
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.data.unsubscribe();
   }
@@ -59,13 +60,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         responsive: true,
         maintainAspectRatio: false,
 
-        onClick: (e) => {
+        onClick: (e: ChartEvent) => {
+          const nativeEvent = e.native || e;
           //Need to use this nasty getElementsAtEventForMode to get the index for the click (got data from chart.js API)
           try {
             this.router.navigateByUrl(
               '/' +
                 this.pieChart.getElementsAtEventForMode(
-                  e,
+                  nativeEvent as unknown as MouseEvent,
                   'nearest',
                   { intersect: true },
                   true
@@ -122,7 +124,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @remarks
    * This embedding lets it do so modifyChart waits for initialData before creating new Chart
    */
-  setInitialData() {
+  setInitialData() : void {
     this.olympics$ = this.olympicService.getOlympics();
     this.subscription = this.olympics$.subscribe((value) => {
       this.modifyChartData(value);

@@ -4,6 +4,7 @@ import { Chart } from 'chart.js';
 import { Observable, Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { HeaderComponent } from 'src/app/pages/header/header.component';
 
 @Component({
   selector: 'app-country',
@@ -14,7 +15,7 @@ export class CountryComponent implements OnInit, OnDestroy {
   
   countryId!: number;
   olympics$!: Observable<Array<Olympic>>;
-  pieChart!: any;
+  pieChart!: Chart;
   mLabels: Array<number> = [];
   mMedals: Array<number> = [];
   mNumberOfGames: number = 0;

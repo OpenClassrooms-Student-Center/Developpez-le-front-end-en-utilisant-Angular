@@ -7,11 +7,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NgChartsModule } from 'ng2-charts';
 import { CountryComponent } from './pages/country/country.component';
+import { HeaderComponent } from './pages/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, CountryComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, CountryComponent, HeaderComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgChartsModule], //lib
   providers: [],
-  bootstrap: [AppComponent], //component lancées en 1er
+  bootstrap: [AppComponent],
+  exports: [HeaderComponent],
 })
 export class AppModule {}

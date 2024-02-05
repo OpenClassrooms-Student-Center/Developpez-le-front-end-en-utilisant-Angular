@@ -1,21 +1,5 @@
+<app-header [olympics$]="olympics$" [mNumberOfGames]="mNumberOfGames"></app-header>
 <div class="fullApp">
-    <div *ngIf="olympics$ | async as olympic" class="title">
-        <h2>Medals per Country</h2>
-        <div class="infos">
-            <div class="specificInfos">
-                <p>
-                    Number of JOs <br>
-                    <strong>{{ mNumberOfGames }}</strong>
-                </p>
-            </div>
-            <div class="specificInfos">
-                <p>
-                    Number of countries <br>
-                    <strong>{{ (olympics$ | async)?.length }}</strong>
-                </p>
-            </div>
-        </div>
-    </div>
     <div class="chart-wrapper">
         <canvas id="MyChart">
             <!-- <canvas id="MyChart" (chartClick)="onChartClick($event)"></canvas> -->
