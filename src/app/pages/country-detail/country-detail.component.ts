@@ -11,8 +11,6 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./country-detail.component.scss']
 })
 
-
-
 export class CountryDetailComponent implements OnInit, OnDestroy {
 	public countryName: string = ""
 	public numberOfMedals: number = 0
@@ -69,12 +67,12 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
 	calculateTotalAthletes(country: Olympics): number {
 		return country.participations?.reduce((total, participation) => total + (participation.athleteCount ?? 0), 0) ?? 0;
 	}
-	calculateMedalsByYear(country: Olympics): any { 
+	calculateMedalsByYear(country: Olympics): { name: string; value: number }[] { 
 		return country.participations?.map(participation => ({
-			name: participation.year?.toString() ?? '',
-			value: participation.medalsCount,
-		  })) ?? [];
-	}
+		  name: participation.year?.toString() ?? '',
+		  value: participation.medalsCount || 0,
+		})) || [];
+	  }
 	goBack(): void {
 		this.router.navigateByUrl('/');
 	}
