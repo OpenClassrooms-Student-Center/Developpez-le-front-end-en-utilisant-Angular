@@ -15,7 +15,7 @@ import { HeaderComponent } from 'src/app/pages/header/header.component';
 
 export class HomeComponent implements OnInit, OnDestroy {
 
-  olympics$!: Observable<Array<Olympic>>;
+  olympics$!: Observable<Array<Olympic> | null>;
   pieChart!: Chart;
   mLabels: Array<string> = [];
   mMedals: Array<number> = [];
@@ -106,17 +106,17 @@ export class HomeComponent implements OnInit, OnDestroy {
    *
    * @param olympics - The array of olympics retrieved by service
    */
-  modifyChartData(olympics: Array<Olympic>): void {
-    if (olympics) {
-      for (let olympic of olympics) {
-        this.mLabels.push(olympic.country);
-        this.mMedals.push(this.olympicService.countMedals(olympic));
-        this.mNumberOfGames = this.olympicService.countUniqueGames(olympic);
-      }
-      
-      this.createChart();
+  modifyChartData(olympics: Array<Olympic> | null): void {
+    if (!olympics) {
+      return;
     }
-  }
+    for (let olympic of olympics) {
+      this.mLabels.push(olympic.country);
+      this.mMedals.push(this.olympicService.countMedals(olympic));
+      this.mNumberOfGames = this.olympicService.countUniqueGames(olympic);
+    } 
+    this.createChart();
+    }
 
   /**
    * Sets initial data

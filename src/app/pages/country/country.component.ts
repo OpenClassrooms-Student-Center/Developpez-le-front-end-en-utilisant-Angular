@@ -14,7 +14,7 @@ import { HeaderComponent } from 'src/app/pages/header/header.component';
 export class CountryComponent implements OnInit, OnDestroy {
   
   countryId!: number;
-  olympics$!: Observable<Array<Olympic>>;
+  olympics$!: Observable<Array<Olympic> | null>;
   pieChart!: Chart;
   mLabels: Array<number> = [];
   mMedals: Array<number> = [];
@@ -79,18 +79,19 @@ export class CountryComponent implements OnInit, OnDestroy {
    * @param olympics - The array of olympics retrieved by service
    */
 
-  modifyChartData(olympics: Array<Olympic>): void {
-    if (olympics) {
-      const olympic = olympics[this.countryId].participations;
-      for (let entry of olympic) {
-        this.mLabels.push(entry.year);
-        this.mMedals.push(entry.medalsCount);
-        this.totalMedals += entry.medalsCount;
-        this.totalAthletes += entry.athleteCount;
-      }
-      this.createChart();
-    } else {
+  modifyChartData(olympics: Array<Olympic> | null): void {
+    if (!olympics) {
       this.router.navigateByUrl('error');
+      return;
     }
+
+    const olympic = olympics[this.countryId]?.participations;
+    for (let entry of olympic) {
+      this.mLabels.push(entry.year);
+      this.mMedals.push(entry.medalsCount);
+      this.totalMedals += entry.medalsCount;
+      this.totalAthletes += entry.athleteCount;
+    }
+    this.createChart();
   }
 }

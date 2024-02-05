@@ -10,10 +10,9 @@ import { Router } from '@angular/router';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
-  router: any;
+  private olympics$ = new BehaviorSubject<Array<Olympic> | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   loadInitialData(): Observable<Array<Olympic>>  {
     return this.http.get<Array<Olympic>>(this.olympicUrl).pipe(
@@ -28,7 +27,7 @@ export class OlympicService {
     );
   }
 
-  getOlympics(): Observable<Array<Olympic>> {
+  getOlympics(): Observable<Array<Olympic> | null> {
     return this.olympics$.asObservable();
   }
 
