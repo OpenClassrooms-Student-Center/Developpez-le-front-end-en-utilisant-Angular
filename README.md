@@ -4,10 +4,10 @@ Olympic Games App is an application that provides users with a dashboard display
 He features the following functions :  number of countries participating in the Olympic Games per year and medals counts and athletes by country. 
 
 ## Technologies
--TS
--HTML
--CSS
--Angular
+- TS
+- HTML
+- CSS
+- Angular
 
 ## Contribute to the project
 
@@ -27,6 +27,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Licensing 
-This project was created by OpenClassroom for the trainig course "Dévéloppeur Fullstack Java-Angular".
+This project was created by OpenClassroom for the trainig course "Développeur Fullstack Java-Angular".
 
 
