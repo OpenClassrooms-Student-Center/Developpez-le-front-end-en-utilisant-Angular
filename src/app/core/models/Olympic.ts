@@ -7,3 +7,17 @@ example of an olympic country:
     participations: []
 }
 */
+
+import { Participation } from "./Participation";
+
+/**
+   * We create a class to organise our data
+   * 
+*/
+
+export class Olympic {
+    id!: number;
+    country!: string;
+    participations!: Array<Participation>;
+    medalsCount!: number;
+}

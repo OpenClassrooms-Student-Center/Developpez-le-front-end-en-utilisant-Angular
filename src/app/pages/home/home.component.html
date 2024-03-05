@@ -1,3 +1,8 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<app-header [olympics$]="olympics$" [mNumberOfGames]="mNumberOfGames"></app-header>
+<div class="fullApp">
+    <div class="chart-wrapper">
+        <canvas id="MyChart">
+            <!-- <canvas id="MyChart" (chartClick)="onChartClick($event)"></canvas> -->
+        </canvas>
+    </div>
+</div>

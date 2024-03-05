@@ -9,3 +9,15 @@ example of participation:
     athleteCount: 372
 }
 */
+
+/**
+   * We create a class Participation that will be in our main class Olympic
+*/
+
+export class Participation {
+    id!: number;
+    year!: number;
+    city!: string;
+    medalsCount!: number;
+    athleteCount!: number;
+}

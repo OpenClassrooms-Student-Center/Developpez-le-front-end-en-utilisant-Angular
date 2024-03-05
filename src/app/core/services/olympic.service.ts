@@ -1,19 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Olympic } from '../models/Olympic';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  private olympics$ = new BehaviorSubject<Array<Olympic> | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
+  loadInitialData(): Observable<Array<Olympic>>  {
+    return this.http.get<Array<Olympic>>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
@@ -25,7 +27,32 @@ export class OlympicService {
     );
   }
 
-  getOlympics() {
+  getOlympics(): Observable<Array<Olympic> | null> {
     return this.olympics$.asObservable();
+  }
+
+  /**
+   * We count the number of medals and return the value
+  */
+  countMedals(olympic:Olympic):number {
+    let medals: number = 0;
+
+    for (let participation of olympic.participations) {
+      medals += participation.medalsCount;
+    }
+    return medals;
+  }  
+
+  /**
+   * We count the total games the country were in and return the value
+  */
+  countUniqueGames(olympic:Olympic):number {
+    let totalGames: number = 0;
+
+    for (let participation of olympic.participations) {
+      totalGames = participation.id;
+    }
+
+    return totalGames;
   }
 }
