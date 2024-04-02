@@ -1,11 +1,10 @@
-// TODO: create here a typescript interface for a participation
-/*
-example of participation:
-{
-    id: 1,
-    year: 2012,
-    city: "Londres",
-    medalsCount: 28,
-    athleteCount: 372
+/**
+ * Definition of the Participation class with the following properties:
+ */
+export class Participation {
+  id!: number;
+  year!: number;
+  city!: number;
+  medalsCount!: number;
+  athleteCount!: number;
 }
-*/
