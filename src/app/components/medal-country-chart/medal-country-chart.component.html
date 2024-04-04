@@ -1,1 +1,18 @@
-<p>medal-country-chart works!</p>
+<div class="Charts">
+  <h2 class="title_charts">Medal per County</h2>
+
+  <div class="card-info">
+    <p class="card">Numbers of Countries: <br> {{number_of_country}}</p>
+    <p class="card">Numbers of JOs: <br> {{number_of_jo}}</p>
+  </div>
+  <div>
+    <ngx-charts-pie-chart
+      [results]="country_medal_data"
+      [view]="[1000,300]"
+      [labels]="true"
+      [arcWidth]="15"
+      style="width: 500px;"
+    >
+    </ngx-charts-pie-chart>
+  </div>
+</div>

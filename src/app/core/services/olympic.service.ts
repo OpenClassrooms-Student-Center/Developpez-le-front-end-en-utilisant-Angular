@@ -1,16 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, find, Observable, of} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
-interface Olympic {
-  // Définissez les propriétés de l'interface Olympic en fonction des données à récupérer
-  // Exemple :
-  id: number;
-  name: string;
-  year: number;
-  hostCity: string;
-}
+import {Olympic} from "../models/Olympic";
+import {MedalData} from "../models/MedalData";
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +24,130 @@ export class OlympicService {
       })
     );
   }
+    /**
+     * Obtient un Observable émettant les données olympiques.
+     * @returns Observable émettant les données olympiques.
+     */
 
-  getOlympics(): Observable<Olympic[]> { // Renvoie un Observable représentant la valeur courante du BehaviorSubject
-    return this.olympics$.asObservable();
+    getOlympics():Observable<Olympic[]> { // Renvoie un Observable représentant la valeur courante du BehaviorSubject
+      return this.olympics$.asObservable();
+    }
+
+
+    /**
+     * Récupère les détails d'un pays spécifique.
+     * @param countryId ID du pays.
+     * @returns Observable émettant les détails du pays spécifié.
+     */
+    getCountryDetails(countryId: string | number): Observable<Olympic[]> {
+      const country = this.olympics$.value.find((country) => country.id == countryId);
+      console.log('country', country);
+      return country ? of([country]) : this.loadInitialData(); // cette ligne sert à charger les données si elles ne sont pas déjà chargées
+    }
+
+    /**
+     * Calcule le nombre de pays participants.
+     * @param olympicData Données contenant des informations olympiques.
+     * @returns Nombre de pays participants.
+     */
+    calculCountry(olympicData: Olympic[]): number {
+      const countries = new Set();
+      for (const country of olympicData) {
+        countries.add(country.country);
+      }
+      return countries.size;
+    }
+
+    /**
+     * Calcule le nombre d'éditions des JO.
+     * @param olympicData Données olympiques.
+     * @returns Nombre d'éditions des JO.
+     */
+    calculJo(olympicData: Olympic[]): number {
+      const jo = new Set();
+      for (const country of olympicData) {
+        for (const participation of country.participations) {
+          jo.add(participation.year);
+        }
+      }
+      return jo.size;
+    }
+
+    /**
+     * Calcule les données pour une représentation de tableau des médailles.
+     * @param olympicData Données contenant des informations olympiques.
+     * @returns Données formatées pour un tableau des médailles.
+     */
+    calculOlympicData(olympicData: Olympic[]): MedalData[] {
+      const countryMedals = this.getCountryMedals(olympicData);
+      return this.convertMapToArray(countryMedals);
+    }
+
+
+    /**
+     * Calcule le nombre total de médailles remportées par chaque pays.
+     * @param olympicData Données olympiques.
+     * @returns Un objet contenant le nombre total de médailles pour chaque pays.
+     */
+    getCountryMedals(olympicData: Olympic[]): { [country: string]: MedalData } {
+      const countryMedals: { [country: string]: MedalData } = {};
+
+      for (const country of olympicData) {
+        if (!countryMedals.hasOwnProperty(country.country)) {
+          countryMedals[country.country] = {
+            value: 0,
+            name: country.country,
+            extra: { id: country.id },
+          };
+        }
+
+        for (const participation of country.participations) {
+          countryMedals[country.country].value += participation.medalsCount;
+        }
+      }
+
+      return countryMedals;
+    }
+
+    /**
+     * Récupère le nombre total de médailles pour chaque pays.
+     * Cette méthode est redondante avec getCountryMedals, on peut la supprimer.
+     * @param olympicData Données olympiques.
+     * @returns Un objet contenant le nombre total de médailles pour chaque pays.
+     */
+
+    getCountryTotalMedals(olympicData: Olympic[]): { [country: string]: number } {
+      const countryMedals: { [country: string]: number } = {};
+
+      for (const country of olympicData) {
+        for (const participation of country.participations) {
+          countryMedals[country.country] =
+            (countryMedals[country.country] || 0) + participation.medalsCount;
+        }
+      }
+
+      return countryMedals;
+    }
+    /**
+     * Convertit un objet contenant les médailles par pays en un tableau de MedalData.
+     * @param countryMedals Objet contenant les médailles par pays.
+     * @returns Un tableau de MedalData.
+     */
+    convertMapToArray(countryMedals: { [country: string]: MedalData }): MedalData[] {
+      const data: MedalData[] = [];
+      for (const [country, medals] of Object.entries(countryMedals)) {
+        data.push({
+          name: country,
+          value: medals.value,
+          extra: { id: medals.extra.id },
+        });
+      }
+
+      return data;
+    }
+
+
+
+
+
   }
-}
