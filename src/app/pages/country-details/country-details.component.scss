@@ -1,0 +1,37 @@
+.Charts {
+  text-align: center;
+}
+
+.title_charts {
+  padding: 10px;
+  margin : 10px;
+  text-transform: uppercase;
+  background-color: #0cc7b5;
+  color: white;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.card{
+  margin: 10px;
+  padding: 10px;
+  border: 5px solid #0cc7b5;
+  border-radius: 15px;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// responsive graphique
+
+.ngx-charts-pie-chart {
+  max-width: 300px;
+}
