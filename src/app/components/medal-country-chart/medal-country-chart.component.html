@@ -7,7 +7,7 @@
   </div>
   <div>
     <ngx-charts-pie-chart
-
+      (select)="onCountryClick($event)"
       [results]="country_medal_data"
       [view]="[1000,300]"
       [labels]="true"

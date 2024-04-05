@@ -29,5 +29,10 @@ export class MedalCountryChartComponent implements OnInit {
 
     });
   }
+  onCountryClick(event: any): void {
+    const countryId:number = event.extra.id; // `countryId` est de type `number`
+    console.log('countryId', countryId)
+    this.router.navigate(['/details-country/', countryId]).then();
+  }
 
 }
