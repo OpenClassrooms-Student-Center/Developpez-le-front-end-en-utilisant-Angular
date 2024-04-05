@@ -7,10 +7,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MedalCountryChartComponent } from './components/medal-country-chart/medal-country-chart.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import { CountryDetailsComponent } from './pages/country-details/country-details.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, MedalCountryChartComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, MedalCountryChartComponent, CountryDetailsComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],
