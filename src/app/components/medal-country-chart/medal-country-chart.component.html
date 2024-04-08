@@ -12,8 +12,13 @@
       [view]="[1000,300]"
       [labels]="true"
       [arcWidth]="15"
-      style="width: 500px;"
-    >
+      style="width: 500px;">
+      <ng-template #tooltipTemplate let-model="model">
+        <div ngx-tooltip>
+          <p><strong>{{ model.name }}</strong></p>
+          <p>🏅 {{ model.value }}</p>
+        </div>
+      </ng-template>
     </ngx-charts-pie-chart>
   </div>
 </div>
