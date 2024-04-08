@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, find, Observable, of} from 'rxjs';
+import {BehaviorSubject, find, map, Observable, of} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {Olympic} from "../models/Olympic";
 import {MedalData} from "../models/MedalData";
@@ -40,9 +40,28 @@ export class OlympicService {
      * @returns Observable émettant les détails du pays spécifié.
      */
     getCountryDetails(countryId: string | number): Observable<Olympic[]> {
-      const country = this.olympics$.value.find((country) => country.id == countryId);
-      console.log('country', country);
-      return country ? of([country]) : this.loadInitialData(); // cette ligne sert à charger les données si elles ne sont pas déjà chargées
+      // Récupérer les données en cache
+      const cachedData = this.olympics$.getValue();
+
+      // Rechercher le pays dans les données en cache
+      const country = cachedData.find(countryIdItem => countryIdItem.id == countryId); // Utiliser == au lieu de === car countryId peut être de type string ou number
+
+      // Vérifier si le pays a été trouvé dans les données en cache
+      if (country) {
+        // Retourner les détails du pays sous forme de tableau avec un observable de type Olympic[]
+        return of([country]);
+      } else {
+        // Si le pays n'est pas trouvé dans les données en cache, charger les données initiales depuis le service
+        return this.loadInitialData().pipe(
+          map((data: Olympic[]) => {
+            // Rechercher à nouveau le pays dans les données fraîchement chargées
+            const country = data.find(countryIdItem => countryIdItem.id == countryId); // Utiliser == au lieu de === car countryId peut être de type string ou number
+
+            // Vérifier si le pays a été trouvé dans les données fraîchement chargées
+            return country ? [country] : []; // Retourner les détails du pays sous forme de tableau s'il est trouvé, sinon retourner un tableau vide
+          })
+        );
+      }
     }
 
     /**
