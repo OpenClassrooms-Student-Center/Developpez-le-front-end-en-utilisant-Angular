@@ -135,18 +135,18 @@ export class OlympicService {
      * @returns Un objet contenant le nombre total de médailles pour chaque pays.
      */
 
-    getCountryTotalMedals(olympicData: Olympic[]): { [country: string]: number } {
-      const countryMedals: { [country: string]: number } = {};
-
-      for (const country of olympicData) {
-        for (const participation of country.participations) {
-          countryMedals[country.country] =
-            (countryMedals[country.country] || 0) + participation.medalsCount;
-        }
-      }
-
-      return countryMedals;
-    }
+    // getCountryTotalMedals(olympicData: Olympic[]): { [country: string]: number } {
+    //   const countryMedals: { [country: string]: number } = {};
+    //
+    //   for (const country of olympicData) {
+    //     for (const participation of country.participations) {
+    //       countryMedals[country.country] =
+    //         (countryMedals[country.country] || 0) + participation.medalsCount;
+    //     }
+    //   }
+    //
+    //   return countryMedals;
+    // }
     /**
      * Convertit un objet contenant les médailles par pays en un tableau de MedalData.
      * @param countryMedals Objet contenant les médailles par pays.
@@ -165,8 +165,20 @@ export class OlympicService {
       return data;
     }
 
-
-
-
-
+  /**
+   * Récupère le total des athlétes dans une participations  liée à un pays
+   */
+  calculAthletes(data: Olympic[]): number {
+    let athletes = 0;
+    for (let i = 0; i < data[0].participations.length; i++) {
+      athletes += data[0].participations[i].athleteCount;
+    }
+    return athletes;
   }
+
+
+
+
+
+
+}

@@ -1,12 +1,13 @@
+
 <div class="Charts">
 
-  <h2 class="title_charts"> UNITED STATES</h2>
+  <h2 class="title_charts"> {{ country_name }} </h2>
   <div class="card-info">
-    <p class="card">Numbers of Entries: <br> </p>
-    <p class="card">Total Number medals: <br>  </p>
-    <p class="card">total Number athléte: <br>  </p>
+    <p class="card">Numbers of Entries: <br> {{ number_of_entries }}</p>
+    <p class="card">Total Number medals: <br> {{ country_medal_data[0].value }} </p>
+    <p class="card">total Number athléte: <br> {{number_of_athletes }} </p>
   </div>
+
 
   <a routerLink="">Go back</a>
 </div>
-
