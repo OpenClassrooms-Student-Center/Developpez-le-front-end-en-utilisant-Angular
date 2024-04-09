@@ -5,6 +5,7 @@ import { Olympic } from '../../core/models/Olympic';
 import {MedalData} from "../../core/models/MedalData";
 import { Location } from '@angular/common';
 import { SeriesDataYearsMedal } from '../../core/models/SeriesDataYearsMedal';
+import {Subscription} from "rxjs";
 
 
 
@@ -24,9 +25,14 @@ export class CountryDetailsComponent implements OnInit {
   number_of_athletes: number = 0; // explication : nombre d'athlètes
   country_medal_data: MedalData[] = [];
   seriesData: SeriesDataYearsMedal[] = []; // explication : données pour le graphique lineChart
-
+  countryDetailSubscription: Subscription = new Subscription;
 
   constructor(private location: Location, private olympicService: OlympicService, private route: ActivatedRoute) { } // Injection de ActivatedRoute ici
+
+
+  ngOnDestroy(): void {
+    this.countryDetailSubscription.unsubscribe()
+  }
 
   ngOnInit() {
 

@@ -160,34 +160,12 @@ export class OlympicService {
     return athletes;
   }
 
-  // MedalYearsConvertData(olympicData: Olympic[]): { [seriesName: string]: SeriesDataYearsMedal } {
-  //   const seriesData: { [seriesName: string]: SeriesDataYearsMedal } = {};
-  //
-  //   for (const country of olympicData) {
-  //     for (const participation of country.participations) {
-  //       const seriesName = participation.year.toString(); // Access series name
-  //
-  //       if (!seriesData.hasOwnProperty(seriesName)) {
-  //         seriesData[seriesName] = {
-  //           // value: 0,
-  //           name: seriesName,
-  //           series: [],
-  //         };
-  //       }
-  //
-  //       const year = participation.year.toString();
-  //       const existingYearData = seriesData[seriesName];
-  //
-  //       if (existingYearData) {
-  //         // existingYearData.value += participation.medalsCount;
-  //         existingYearData.series.push({  value: participation.medalsCount, name: year });
-  //       }
-  //
-  //     }
-  //   }
-  //
-  //   return seriesData;
-  // }
+  /**
+   * Convertit les données olympiques en un format adapté pour un graphique en ligne.
+   * @param olympicData Données olympiques.
+   * @returns Données formatées pour un graphique en ligne.
+   * Utilisation dans country-details.component.ts
+   */
 
   MedalYearsConvertData(olympicData: Olympic[]): SeriesDataYearsMedal[] {
     const seriesData: SeriesDataYearsMedal[] = [];
@@ -222,9 +200,6 @@ export class OlympicService {
 
     return seriesData;
   }
-
-
-
 
 
 

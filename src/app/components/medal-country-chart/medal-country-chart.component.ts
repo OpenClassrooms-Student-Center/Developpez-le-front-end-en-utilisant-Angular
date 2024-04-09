@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OlympicService} from "../../core/services/olympic.service";
 import {Router} from "@angular/router";
 import {MedalData} from "../../core/models/MedalData";
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-medal-country-chart',
   templateUrl: './medal-country-chart.component.html',
@@ -17,6 +18,12 @@ export class MedalCountryChartComponent implements OnInit {
   // Variables pour le nombre de pays et de JO (nombres)
   number_of_country: number = 0;
   number_of_jo: number = 0;
+  medal_chart_subscription : Subscription = new Subscription;
+
+
+  ngOnDestroy(): void {
+    this.medal_chart_subscription.unsubscribe()
+  }
 
   ngOnInit(): void {
     // Chargement et traitement des données des médailles
