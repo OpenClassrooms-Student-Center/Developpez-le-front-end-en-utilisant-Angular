@@ -4,6 +4,7 @@ import { OlympicService } from '../../core/services/olympic.service';
 import { Olympic } from '../../core/models/Olympic';
 import {MedalData} from "../../core/models/MedalData";
 import { Location } from '@angular/common';
+import { SeriesDataYearsMedal } from '../../core/models/SeriesDataYearsMedal';
 
 
 
@@ -22,6 +23,7 @@ export class CountryDetailsComponent implements OnInit {
   // number_of_medals: number = 0; // explication : nombre de médailles
   number_of_athletes: number = 0; // explication : nombre d'athlètes
   country_medal_data: MedalData[] = [];
+  seriesData: SeriesDataYearsMedal[] = []; // explication : données pour le graphique lineChart
 
 
   constructor(private location: Location, private olympicService: OlympicService, private route: ActivatedRoute) { } // Injection de ActivatedRoute ici
@@ -37,6 +39,8 @@ export class CountryDetailsComponent implements OnInit {
       this.number_of_entries = this.olympicService.calculJo(data);
       this.country_medal_data = this.olympicService.calculOlympicData(data);
       this.number_of_athletes = this.olympicService.calculAthletes(data);
+      this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(data));
+
     });
   }
 

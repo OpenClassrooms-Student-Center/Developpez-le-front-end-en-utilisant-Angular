@@ -30,8 +30,42 @@
   margin-right: auto;
 }
 
-// responsive graphique
 
 .ngx-charts-pie-chart {
   max-width: 300px;
+}
+
+.graph {
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  margin: 5px;
+}
+
+
+@media screen and (max-width: 767px) {
+
+  .Charts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .graph {
+    height: 200px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .graph {
+    height: 150px;
+  }
 }

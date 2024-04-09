@@ -7,7 +7,18 @@
     <p class="card">Total Number medals: <br> {{ country_medal_data[0].value }} </p>
     <p class="card">total Number athléte: <br> {{number_of_athletes }} </p>
   </div>
-
+  <div class = "line_chart">
+    <ngx-charts-line-chart
+      [results]="seriesData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Year'"
+      [yAxisLabel]="'Medal Count'"
+      class="graph"
+    >
+    </ngx-charts-line-chart>
 
   <a routerLink="">Go back</a>
 </div>
