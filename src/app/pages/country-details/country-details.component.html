@@ -1,13 +1,15 @@
 
-<div class="Charts">
 
+<div class="Charts">
   <h2 class="title_charts"> {{ country_name }} </h2>
+
   <div class="card-info">
     <p class="card">Numbers of Entries: <br> {{ number_of_entries }}</p>
     <p class="card">Total Number medals: <br> {{ country_medal_data[0].value }} </p>
     <p class="card">total Number athléte: <br> {{number_of_athletes }} </p>
   </div>
-  <div class = "line_chart">
+
+  <div class="line-chart-container">
     <ngx-charts-line-chart
       [results]="seriesData"
       [xAxis]="true"
@@ -16,10 +18,10 @@
       [showYAxisLabel]="true"
       [xAxisLabel]="'Year'"
       [yAxisLabel]="'Medal Count'"
-      class="graph"
+      class="line-chart"
     >
     </ngx-charts-line-chart>
+  </div>
 
   <a routerLink="">Go back</a>
-  </div>
 </div>

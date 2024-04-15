@@ -1,10 +1,11 @@
+
 .Charts {
   text-align: center;
 }
 
 .title_charts {
   padding: 10px;
-  margin : 10px;
+  margin: 10px;
   text-transform: uppercase;
   background-color: #0cc7b5;
   color: white;
@@ -12,60 +13,61 @@
   display: inline-block;
 }
 
-.card{
+.card {
   margin: 10px;
   padding: 10px;
   border: 5px solid #0cc7b5;
   border-radius: 15px;
+  width: 40%; /* Adjust width as needed */
 }
 
 .card-info {
   display: flex;
   justify-content: space-around;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
+.line-chart-container {
+  display: flex;
+  justify-content: center;
+  margin-right: 100px
+  
 }
 
-
-.ngx-charts-pie-chart {
-  max-width: 300px;
-}
-
-.graph {
-  width: 100%;
-  max-width: 1000px;
-  height: 500px;
+.line-chart {
+  width: 100%; /* Fills container width */
+  max-width: 80vw; /* Max width on larger screens */
+  height: 300px; /* Adjust height as needed */
   margin: 5px;
 }
 
-
-@media screen and (max-width: 767px) {
-
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .Charts {
-    display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .card{
+  .card {
     margin-top: 20px;
     margin-bottom: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
+    width: 100%; /* Take full width on smaller screens */
   }
 
-  .graph {
-    height: 200px;
+  .line-chart-container{
+    margin-right: 40px;
   }
 
+  .line-chart {
+    height: 300px; /* Adjust height for smaller screens */
+  }
 }
 
 @media (max-width: 480px) {
-  .graph {
-    height: 150px;
+  .line-chart {
+    height: 220px; /* Adjust height for very small screens */
   }
 }
