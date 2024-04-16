@@ -97,10 +97,11 @@ export class CountryDetailsComponent implements OnInit {
 
   ngOnInit() {
 
-    const countryId = this.route.snapshot.params['countryId']; // Utilisation de ActivatedRoute pour obtenir l'ID du pays directement à partir de la route active
+    // const countryId = this.route.snapshot.params['countryId']; // Utilisation de ActivatedRoute pour obtenir l'ID du pays directement à partir de la route active
+    const countryId = parseInt(this.route.snapshot.params['countryId'], 10);
     console.log('countryId est bien le : ', countryId);
     // Utiliser le service pour récupérer les détails du pays
-    this.olympicService.getCountryDetails(countryId as string).subscribe(data => {
+    this.olympicService.getCountryDetails(countryId as string | number).subscribe(data => {
       this.countryDetails = data;
       this.country_name = data[0].country;
       this.number_of_entries = this.olympicService.calculJo(data);
