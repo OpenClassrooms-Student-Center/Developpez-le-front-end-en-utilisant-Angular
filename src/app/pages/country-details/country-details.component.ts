@@ -100,36 +100,36 @@ export class CountryDetailsComponent implements OnInit {
    * Rajout de la vérification via le localstroage pour récupérer les données afin d'etre en raccords avec le guards de sécurité , stocker les 
    * donnée dans le localstroage 
    */
-
   ngOnInit() {
     const countryId = parseInt(this.route.snapshot.params['countryId'], 10);
     console.log('countryId est bien le : ', countryId);
   
-    // Vérifiez s'il y a des données stockées dans le local storage
-    if (localStorage.getItem(`countryDetails_${countryId}`)) {
-      const storedData = JSON.parse(localStorage.getItem(`countryDetails_${countryId}`)!);
-      console.log('Données stockées dans le local storage :', storedData);
-      this.countryDetails = storedData;
-      this.country_name = storedData[0].country;
-      this.number_of_entries = this.olympicService.calculJo(storedData);
-      this.country_medal_data = this.olympicService.calculOlympicData(storedData);
-      this.number_of_athletes = this.olympicService.calculAthletes(storedData);
-      this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(storedData));
-    } else {
-      // Sinon, procédez comme d'habitude pour récupérer les données à partir du service
-      this.olympicService.getCountryDetails(countryId as string | number).subscribe(data => {
-        this.countryDetails = data;
-        this.country_name = data[0].country;
-        this.number_of_entries = this.olympicService.calculJo(data);
-        this.country_medal_data = this.olympicService.calculOlympicData(data);
-        this.number_of_athletes = this.olympicService.calculAthletes(data);
-        this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(data));
+    // Tout d'abord, essayez d'obtenir les données à partir du service
+    this.olympicService.getCountryDetails(countryId as string | number).subscribe(data => {
+      this.countryDetails = data;
+      this.country_name = data[0].country;
+      this.number_of_entries = this.olympicService.calculJo(data);
+      this.country_medal_data = this.olympicService.calculOlympicData(data);
+      this.number_of_athletes = this.olympicService.calculAthletes(data);
+      this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(data));
   
-        // Et stockez les données dans le local storage
-        localStorage.setItem(`countryDetails_${countryId}`, JSON.stringify(data));
-      });
-    }
+      // Et stockez les données dans le local storage
+      localStorage.setItem(`countryDetails_${countryId}`, JSON.stringify(data));
+    }, error => {
+      // Si la récupération des données échoue, vérifiez dans le localStorage
+      if (localStorage.getItem(`countryDetails_${countryId}`)) {
+        const storedData = JSON.parse(localStorage.getItem(`countryDetails_${countryId}`)!);
+        console.log('Données stockées dans le local storage :', storedData);
+        this.countryDetails = storedData;
+        this.country_name = storedData[0].country;
+        this.number_of_entries = this.olympicService.calculJo(storedData);
+        this.country_medal_data = this.olympicService.calculOlympicData(storedData);
+        this.number_of_athletes = this.olympicService.calculAthletes(storedData);
+        this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(storedData));
+      }
+    });
   }
+  
 }
 
 
