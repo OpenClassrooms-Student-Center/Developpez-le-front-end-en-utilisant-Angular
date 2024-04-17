@@ -76,10 +76,14 @@ export class CountryDetailsComponent implements OnInit {
   /**
    * Se désabonne du `countryDetailSubscription` pour empêcher les fuites de mémoire lorsque le composant est détruit.
    */
+  // ngOnDestroy(): void {
+  //   this.countryDetailSubscription.unsubscribe()
+  // }
   ngOnDestroy(): void {
-    this.countryDetailSubscription.unsubscribe()
+    const countryId = parseInt(this.route.snapshot.params['countryId'], 10);
+    localStorage.removeItem(`countryDetails_${countryId}`);
+    this.countryDetailSubscription.unsubscribe();
   }
-
   /**
    * Fetches country details and processes them for display on the component template.
    *
@@ -93,25 +97,39 @@ export class CountryDetailsComponent implements OnInit {
    *    - Récupère les données des médailles à l'aide de `olympicService.calculOlympicData` et les assigne à `country_medal_data`.
    *    - Calcule le nombre d'athlètes à l'aide de `olympicService.calculAthletes` et l'assigne à `number_of_athletes`.
    *    - Transforme les données des médailles pour le graphique linéaire à l'aide de `olympicService.MedalYearsConvert
+   * Rajout de la vérification via le localstroage pour récupérer les données afin d'etre en raccords avec le guards de sécurité , stocker les 
+   * donnée dans le localstroage 
    */
 
   ngOnInit() {
-
-    // const countryId = this.route.snapshot.params['countryId']; // Utilisation de ActivatedRoute pour obtenir l'ID du pays directement à partir de la route active
     const countryId = parseInt(this.route.snapshot.params['countryId'], 10);
     console.log('countryId est bien le : ', countryId);
-    // Utiliser le service pour récupérer les détails du pays
-    this.olympicService.getCountryDetails(countryId as string | number).subscribe(data => {
-      this.countryDetails = data;
-      this.country_name = data[0].country;
-      this.number_of_entries = this.olympicService.calculJo(data);
-      this.country_medal_data = this.olympicService.calculOlympicData(data);
-      this.number_of_athletes = this.olympicService.calculAthletes(data);
-      this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(data));
-
-    });
+  
+    // Vérifiez s'il y a des données stockées dans le local storage
+    if (localStorage.getItem(`countryDetails_${countryId}`)) {
+      const storedData = JSON.parse(localStorage.getItem(`countryDetails_${countryId}`)!);
+      console.log('Données stockées dans le local storage :', storedData);
+      this.countryDetails = storedData;
+      this.country_name = storedData[0].country;
+      this.number_of_entries = this.olympicService.calculJo(storedData);
+      this.country_medal_data = this.olympicService.calculOlympicData(storedData);
+      this.number_of_athletes = this.olympicService.calculAthletes(storedData);
+      this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(storedData));
+    } else {
+      // Sinon, procédez comme d'habitude pour récupérer les données à partir du service
+      this.olympicService.getCountryDetails(countryId as string | number).subscribe(data => {
+        this.countryDetails = data;
+        this.country_name = data[0].country;
+        this.number_of_entries = this.olympicService.calculJo(data);
+        this.country_medal_data = this.olympicService.calculOlympicData(data);
+        this.number_of_athletes = this.olympicService.calculAthletes(data);
+        this.seriesData = Object.values(this.olympicService.MedalYearsConvertData(data));
+  
+        // Et stockez les données dans le local storage
+        localStorage.setItem(`countryDetails_${countryId}`, JSON.stringify(data));
+      });
+    }
   }
-
 }
 
 
