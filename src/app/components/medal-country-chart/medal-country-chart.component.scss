@@ -1,0 +1,51 @@
+
+
+.Charts {
+  text-align: center;
+}
+
+.title_charts {
+  padding: 10px;
+  margin: 10px;
+  text-transform: uppercase;
+  background-color: #0cc7b5;
+  color: white;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  margin: 10px;
+  padding: 10px;
+  border: 5px solid #0cc7b5;
+  border-radius: 15px;
+  width: 40%; /* Ajuster la largeur en fonction de la disposition souhaitée */
+}
+
+.charts-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pie-chart {
+  max-width: 80vw; /* Ajuster la largeur maximale du graphique */
+  height: 50vh; /* Ajuster la hauteur du graphique */
+}
+
+/* Requêtes média pour les petits écrans */
+@media (max-width: 768px) {
+  .card {
+    width:100%; /* Prendre toute la largeur sur les petits écrans */
+  }
+
+  .pie-chart {
+    max-width: 90vw; /* Ajuster la largeur maximale du graphique sur les petits écrans */
+  }
+}

@@ -1,0 +1,73 @@
+
+.Charts {
+  text-align: center;
+}
+
+.title_charts {
+  padding: 10px;
+  margin: 10px;
+  text-transform: uppercase;
+  background-color: #0cc7b5;
+  color: white;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.card {
+  margin: 10px;
+  padding: 10px;
+  border: 5px solid #0cc7b5;
+  border-radius: 15px;
+  width: 40%; /* Adjust width as needed */
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.line-chart-container {
+  display: flex;
+  justify-content: center;
+  margin-right: 100px
+  
+}
+
+.line-chart {
+  width: 100%; /* Fills container width */
+  max-width: 80vw; /* Max width on larger screens */
+  height: 300px; /* Adjust height as needed */
+  margin: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .Charts {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%; /* Take full width on smaller screens */
+  }
+
+  .line-chart-container{
+    margin-right: 40px;
+  }
+
+  .line-chart {
+    height: 300px; /* Adjust height for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .line-chart {
+    height: 220px; /* Adjust height for very small screens */
+  }
+}

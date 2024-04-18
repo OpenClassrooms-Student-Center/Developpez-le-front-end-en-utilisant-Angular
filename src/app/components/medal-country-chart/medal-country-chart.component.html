@@ -1,0 +1,26 @@
+<div class="Charts">
+  <h2 class="title_charts">Medals per Country</h2>
+
+  <div class="card-info">
+    <p class="card">Numbers of Countries: <br> {{number_of_country}}</p>
+    <p class="card">Numbers of JOs: <br> {{number_of_jo}}</p>
+  </div>
+
+  <div class="charts-container">
+    <ngx-charts-pie-chart
+      (select)="onCountryClick($event)"
+      [results]="country_medal_data"
+      
+      [labels]="true"
+      [arcWidth]="15"
+      class="pie-chart"
+    >
+      <ng-template #tooltipTemplate let-model="model">
+        <div ngx-tooltip>
+          <p><strong>{{ model.name }}</strong></p>
+          <p> 🏅 {{ model.value }}</p>
+        </div>
+      </ng-template>
+    </ngx-charts-pie-chart>
+  </div>
+</div>
