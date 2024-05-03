@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { OlympicService } from 'src/app/core/services/olympic.service';
+import {Component} from '@angular/core';
+import {Observable} from 'rxjs';
 import {AsyncPipe} from "@angular/common";
+import {OlympicService} from "@services/olympic.service";
+import {Olympics} from "@models/Olympic";
 
 @Component({
   selector: 'app-home',
@@ -12,12 +13,8 @@ import {AsyncPipe} from "@angular/common";
     AsyncPipe
   ]
 })
-export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+export class HomeComponent {
+  private _olympicService: OlympicService = new OlympicService();
 
-  constructor(private olympicService: OlympicService) {}
-
-  ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-  }
+  protected olympics$: Observable<Olympics> = this._olympicService.getOlympics$();
 }

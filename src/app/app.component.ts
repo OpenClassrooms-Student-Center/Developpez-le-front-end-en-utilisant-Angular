@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
-import { OlympicService } from './core/services/olympic.service';
+import {Component} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
 
 @Component({
@@ -12,10 +10,4 @@ import {RouterOutlet} from "@angular/router";
     RouterOutlet
   ]
 })
-export class AppComponent implements OnInit {
-  constructor(private olympicService: OlympicService) {}
-
-  ngOnInit(): void {
-    this.olympicService.loadInitialData().pipe(take(1)).subscribe();
-  }
-}
+export class AppComponent {}
