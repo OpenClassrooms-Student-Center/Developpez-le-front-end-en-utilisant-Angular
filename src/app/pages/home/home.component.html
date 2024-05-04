@@ -1,3 +1,12 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<section class="container">
+  <div class="top-container">
+    <app-title title="Medals per Country"/>
+    <div class="tag-container">
+      <app-tags title="Number of JOs" counter={{numberOfMedals}} />
+      <app-tags title="Number of countries" counter={{numberOfCountry}} />
+    </div>
+  </div>
+</section>
+
+<ng-container *ngIf="olympics$ | async as medals">
+</ng-container>
