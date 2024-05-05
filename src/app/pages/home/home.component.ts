@@ -18,7 +18,7 @@ import {TagsComponent} from "@shared/components/tags/tags.component";
     NgIf
   ]
 })
-export class HomeComponent {
+export default class HomeComponent {
   private _olympicService: OlympicService = new OlympicService();
 
   protected numberOfCountry!: number;

@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, catchError, Observable, tap} from "rxjs";
-import {Olympics} from "@models/Olympic";
+import {BehaviorSubject, catchError, EMPTY, map, Observable, tap} from "rxjs";
+import {Olympic, Olympics} from "@models/Olympic";
+import {Id} from "@models/id";
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,20 @@ export class OlympicService {
       tap((olympics) => this._olympics$.next(olympics)),
       catchError((error) => {
         console.error('Error fetching olympics', error);
-        return [];
+        return EMPTY;
+      })
+    );
+  }
+
+  public getOlympic$(id: Id): Observable<Olympic | undefined> {
+    return this._http.get<Olympics>(this.olympicUrl).pipe(
+      map((olympics) => {
+         return olympics.find((olympic) => olympic.id === id);
+      }
+      ),
+      catchError((error) => {
+        console.error('Error fetching olympic', error);
+        return EMPTY;
       })
     );
   }
