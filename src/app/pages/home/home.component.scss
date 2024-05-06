@@ -16,3 +16,21 @@
   flex-direction: row;
   gap: 20px;
 }
+
+
+::ng-deep ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+  .tooltip-caret.position-top {
+    border-top-color: #08838f;
+  }
+
+  color: white;
+  padding: 5px 20px;
+  background-color: #08838f;
+}
+
+.medals-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
