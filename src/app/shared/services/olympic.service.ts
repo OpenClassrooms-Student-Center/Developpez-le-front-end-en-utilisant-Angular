@@ -27,8 +27,7 @@ export class OlympicService {
     return this._http.get<Olympics>(this.olympicUrl).pipe(
       map((olympics) => {
          return olympics.find((olympic) => olympic.id === id);
-      }
-      ),
+      }),
       catchError((error) => {
         console.error('Error fetching olympic', error);
         return EMPTY;

@@ -1,12 +1,13 @@
 import {Component, inject} from '@angular/core';
-import {map, tap} from 'rxjs';
+import {map, Observable, take, tap} from 'rxjs';
 import {AsyncPipe} from "@angular/common";
 import {OlympicService} from "@services/olympic.service";
-import {Olympics} from "@models/Olympic";
+import {Olympic, Olympics} from "@models/Olympic";
 import {TitleComponent} from "@shared/components/title/title.component";
 import {TagsComponent} from "@shared/components/tags/tags.component";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {Router} from "@angular/router";
+import { OlympicsLineChart } from "@models/HomeChart";
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export default class HomeComponent {
   protected numberOfCountry!: number;
   protected numberOfParticipations!: number;
 
-  protected olympics$ = this._olympicService.getOlympics$().pipe(
+  protected olympics$: Observable<OlympicsLineChart> = this._olympicService.getOlympics$().pipe(
     tap((olympics: Olympics) => {
       this.numberOfParticipations = olympics.flatMap(o => o.participations).length;
       this.numberOfCountry = olympics.length
@@ -36,16 +37,16 @@ export default class HomeComponent {
         return olympics.map(olympic => {
           return {
             id: olympic.id,
-            name: olympic.country,
-            value: olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0)
+              name: olympic.country,
+              value: olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0)
           }
         })
       }
     ));
 
-  navigateToDetail(data: any) {
-    console.log(data)
+  navigateToDetail(data: {name: string, value: number, label: string}) {
     this.olympics$.pipe(
+      take(1),
       map(olympics => olympics.find(olympic => olympic.name === data.name)),
       tap(olympic => this._router.navigate(['', olympic!.id])
       )).subscribe()
