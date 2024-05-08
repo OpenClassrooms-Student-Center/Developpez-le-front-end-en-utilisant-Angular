@@ -1,3 +1,36 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="container">
+  <h2
+    class="mb-5 bg-success text-center text-white p-2 col-md-4 mx-auto mt-4 border rounded"
+  >
+    Medals per Country
+  </h2>
+
+  <section>
+    <div class="mx-auto col-6 text-center">
+      <div class="row">
+        <div class="col-5 border rounded border-success border-2">
+          <p class="fst-italic">Number of JOs</p>
+          <span>{{ numberOfJO }}</span>
+        </div>
+
+        <div class="offset-2 col-5 border rounded border-success border-2">
+          <p class="fst-italic">Number of countries</p>
+          <span>{{ olympicList.length }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <ngx-charts-pie-chart
+        [results]="olympicFormatData"
+        [legend]="showLegend"
+        [explodeSlices]="explodeSlices"
+        [labels]="showLabels"
+        [doughnut]="doughnut"
+        (select)="onSelect($event)"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+  </section>
+  <!-- <p>{{ (olympics$ | async)?.length }} data loaded</p> -->
+</div>
