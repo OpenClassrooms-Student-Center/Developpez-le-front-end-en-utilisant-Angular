@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
+import { EventGraph } from 'src/app/core/models/EventGraph';
+import { Graph } from 'src/app/core/models/Graph';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -9,25 +11,21 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   //la partie de graphique
-  single!: any[];
-  multi!: any[];
-  view: any[] = [700, 400];
-  showLegend = true;
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
+  view: number[] = [700, 400];
+  showLegend: boolean = true;
+
+  showLabels: boolean = true;
+  explodeSlices: boolean = false;
+  doughnut: boolean = false;
 
   olympicList: Olympic[] = [];
-  olympicFormatData: any[] = [];
+  olympicFormatData: Graph[] = [];
   numberOfJO: number = 0;
+  subscription!: Subscription;
 
-  //public olympics$: Observable<any> = of(null);
   constructor(
     private olympicService: OlympicService,
     private router: Router
@@ -35,23 +33,27 @@ export class HomeComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe((res) => {
+    this.subscription = this.olympicService.getOlympics().subscribe((res) => {
       this.olympicList = res;
       this.olympicFormatData = this.calculateMedalCountByCountry(this.olympicList);
       this.numberOfJO = this.calculateNumberOfJO();
     });
   }
 
-  calculateMedalCountByCountry(data: Olympic[]): any[] {
+  calculateMedalCountByCountry(data: Olympic[]): Graph[] {
     return data.map(country => {
       const totalMedals = country.participations.reduce(
-        (total: any, participation: { medalsCount: any; }) => total + participation.medalsCount, 0);
+        (total: number, participation: { medalsCount: number; }) => total + participation.medalsCount, 0);
       return { name: country.country, value: totalMedals };
     });
   }
 
-  calculateNumberOfJO() {
+  calculateNumberOfJO(): number {
     const uniqueYears = new Set<number>();
     if (this.olympicList) {
       this.olympicList.forEach(country => {
@@ -60,15 +62,13 @@ export class HomeComponent implements OnInit {
         });
       });
     }
-    const numberOfUniqueYears = uniqueYears.size;
-    return numberOfUniqueYears;
+    return uniqueYears.size;
   }
 
-  onSelect(event: any) {
+  onSelect(event: EventGraph): void {
     //TODO: faire un control de country name /formatage
     console.log(event.name);
-    const countryName = event.name;
-    this.router.navigate(['/country/details', countryName]);
+    this.router.navigate(['/country/', event.name]);
   }
 }
 
