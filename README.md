@@ -1,6 +1,6 @@
 # OlympicGamesStarter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
 
 Don't forget to install your node_modules before starting (`npm install`).
 
@@ -14,16 +14,19 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Where to start
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+We have in this project few components and a service that you can use to start your project. Here are some of them:
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+- `app.component` - The main component of the application, this is the entrypoint.
+- `olympic.service.ts` - The service that will provide you with the data you need to display in your application. It has a method called `getOlympicGames()` that will return an array of `OlympicGame` objects and a method called `getOlympicGame(id: Id)` that will return a single `OlympicGame` object.
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+We have also some pages, they are located in the `pages` folder. You can use them to enjoy the project.
+- `home` - The home page of the application, in this component we called the `OlympicService` to get all data. You can use this component to display the Pie chart of medals per country.
+- `detail-country` - The detail page of a country, in this component we called the `OlympicService` to get just the country's data. You can use this component to display the medals of a country per years in a bar chart.
+- `not-found` - The 404 page of the application, in this component we display a message to the user that the page he is looking for does not exist.
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+We have also a shared folder that contains some components, models and our `OlympicService` that you can use in your project.
 
-You're now ready to implement the requested features.
 
-Good luck!
+An important point to know is all components are standalone, and we don't have any modules in our project.
+
+  
