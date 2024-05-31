@@ -13,7 +13,6 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
-  
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
@@ -32,11 +31,19 @@ export class OlympicService {
   }
 
   getMedalsPerCountry() {
-    return this.olympics$.getValue().map((olympic) => {
-      return {
-        country: olympic.country,
-        medalsCount: olympic.participations?.reduce((acc, curr) => acc + curr.medalsCount, 0),
-      };
+    let medalsPerCountry: { country: string; medalsCount: number }[] = [];
+
+    this.olympics$.subscribe((olympics) => {
+      olympics.forEach((olympic) => {
+        medalsPerCountry.push({
+          country: olympic.country ? olympic.country : '',
+          medalsCount: olympic.participations ? olympic.participations.reduce((total, participation) => {
+            return total + participation.medalsCount;
+          }, 0) : 0,
+        });
+      });
     });
+
+    return medalsPerCountry;
   }
 }
