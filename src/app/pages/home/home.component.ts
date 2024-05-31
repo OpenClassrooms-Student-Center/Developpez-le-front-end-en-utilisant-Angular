@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -14,19 +13,12 @@ export class HomeComponent implements OnInit {
 
   constructor(private olympicService: OlympicService) {}
 
-  
+  public countries: string[] = [];
+  public medals: number[] = [];
 
   public medalsPerCountry = this.olympicService.getMedalsPerCountry();
 
-  public pieChartOptions: ChartOptions<'pie'> = {
-    responsive: true,
-  };
-
-  public pieChartData!: ChartDataset<"pie", number[]>[];
-  public pieChartLabels: string[] = [];
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
-
+ 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
 
@@ -34,23 +26,15 @@ export class HomeComponent implements OnInit {
 
     console.log("MedalsPerCountry : ")
     console.log(this.medalsPerCountry);
+    
+    this.countries = this.olympicService.getCountries();
+    console.log("Countries : ");
+    console.log(this.countries);
 
-
-    this.medalsPerCountry.forEach((country) =>
-      this.pieChartLabels.push(country.country)
-    );
-
-    console.log("pieChartLabels : " )
-    console.log(this.pieChartLabels);
-
-    this.pieChartData = [
-      {
-        data: this.medalsPerCountry.map((country) => country.medalsCount)
-        .filter((value): value is number => value !== undefined)
-      }
-    ];
-
-    console.log(this.pieChartData);
+    this.medals = this.olympicService.getMedals();
+    console.log("Medals : ");
+    console.log(this.medals);
+    
   }
 
 }

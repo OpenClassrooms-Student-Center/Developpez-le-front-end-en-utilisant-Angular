@@ -37,13 +37,48 @@ export class OlympicService {
       olympics.forEach((olympic) => {
         medalsPerCountry.push({
           country: olympic.country ? olympic.country : '',
-          medalsCount: olympic.participations ? olympic.participations.reduce((total, participation) => {
-            return total + participation.medalsCount;
-          }, 0) : 0,
+          medalsCount: olympic.participations
+            ? olympic.participations.reduce((total, participation) => {
+                return total + participation.medalsCount;
+              }, 0)
+            : 0,
         });
       });
     });
 
     return medalsPerCountry;
+  }
+
+  getCountries() {
+    let countries: string[] = [];
+    this.olympics$.subscribe((olympics) => {
+      olympics.forEach((olympic) => {
+        if (olympic.country) {
+          countries.push(olympic.country);
+        }
+      });
+    });
+
+    return countries;
+  }
+
+  getMedals() {
+    let medals: number[] = [];
+
+    this.olympics$.subscribe((olympics) => {
+      olympics.forEach((olympic) => {
+        if (olympic.participations) {
+          let count = 0;
+          olympic.participations.forEach((participation) => {
+            if (participation.medalsCount) {
+              count += participation.medalsCount;
+            }
+          });
+          medals.push(count);
+        }
+      });
+    });
+
+    return medals;
   }
 }
