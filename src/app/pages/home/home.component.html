@@ -1,5 +1,22 @@
-<h2>Olympic games app</h2>
-<hr/>
+<app-title [title]="pageTitle"></app-title>
 
-<div id="pieChart"></div>
+<div id="infoContainer">
+  <app-info [info]="info1" [value]="numberOfJOs"></app-info>
+  <app-info [info]="info2" [value]="numberOfCountries"></app-info>
+</div>
 
+<div id="pieContainer" *ngIf="medalsPerCountry$ | async as medals">
+  <ngx-charts-pie-chart
+    [gradient]="gradient"
+    [legend]="showLegend"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+    [results]="medals"
+    [view]="[windowWidth, 400]"
+    [customColors]="colorHelper"
+    [legendPosition]="legendPosition"
+    [legendTitle]="legendTitle"
+    (select)="onSelectCountry($event)"
+  >
+  </ngx-charts-pie-chart>
+</div>

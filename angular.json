@@ -28,10 +28,12 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/chartist/dist/index.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "rfdc"
+            ]
           },
           "configurations": {
             "production": {

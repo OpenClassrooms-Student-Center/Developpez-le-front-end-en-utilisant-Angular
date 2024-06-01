@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map, tap, filter } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -26,59 +26,95 @@ export class OlympicService {
     );
   }
 
-  getOlympics() {
+  getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
-
-  getMedalsPerCountry() {
-    let medalsPerCountry: { country: string; medalsCount: number }[] = [];
-
-    this.olympics$.subscribe((olympics) => {
-      olympics.forEach((olympic) => {
-        medalsPerCountry.push({
-          country: olympic.country ? olympic.country : '',
-          medalsCount: olympic.participations
-            ? olympic.participations.reduce((total, participation) => {
-                return total + participation.medalsCount;
-              }, 0)
+  // Recup un tableau de paires pays:medailles sous le format de pieChart
+  getMedalsPerCountry(): Observable<{ name: string; value: number }[]> {
+    return this.olympics$.pipe(
+      map((olympics) =>
+        olympics.map((olympic) => ({
+          name: olympic.country || '',
+          value: olympic.participations
+            ? olympic.participations.reduce(
+                (total, participation) => total + participation.medalsCount,
+                0
+              )
             : 0,
-        });
-      });
-    });
-
-    return medalsPerCountry;
+        }))
+      )
+    );
   }
 
+  // Recupere un tableau de pays
   getCountries() {
-    let countries: string[] = [];
-    this.olympics$.subscribe((olympics) => {
-      olympics.forEach((olympic) => {
-        if (olympic.country) {
-          countries.push(olympic.country);
-        }
-      });
-    });
-
-    return countries;
+    return this.olympics$.pipe(
+      map((olympics) => {
+        let countries: string[] = [];
+        olympics.forEach((olympic) => {
+          if (olympic.country) {
+            countries.push(olympic.country);
+          }
+        });
+        return countries;
+      })
+    );
   }
 
-  getMedals() {
-    let medals: number[] = [];
-
-    this.olympics$.subscribe((olympics) => {
-      olympics.forEach((olympic) => {
-        if (olympic.participations) {
-          let count = 0;
-          olympic.participations.forEach((participation) => {
-            if (participation.medalsCount) {
-              count += participation.medalsCount;
-            }
-          });
-          medals.push(count);
+  // Recupere le nombre de JO pris en compte dans la bdd
+  getNumberOfJOs(): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        if (olympics.length > 0 && olympics[0].participations) {
+          return olympics[0].participations.length;
+        } else {
+          return 0;
         }
-      });
-    });
-
-    return medals;
+      })
+    );
   }
+
+  // Recupere le nombre total de medailles pour un pays
+  getTotalMedals(searchedCountry: string): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        const countryOlympic = olympics.find(
+          (olympic) => olympic.country === searchedCountry
+        );
+
+        if (!countryOlympic || !countryOlympic.participations) {
+          return 0; 
+        }
+
+        return countryOlympic.participations.reduce(
+          (total, participation) => total + participation.medalsCount,
+          0
+        );
+      })
+    );
+  }
+
+
+  // Recupere le nombre total d'athletes pour un pays
+  getTotalAthletes(searchedCountry: string): Observable<number> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        const countryOlympic = olympics.find(
+          (olympic) => olympic.country === searchedCountry
+        );
+
+        if (!countryOlympic || !countryOlympic.participations) {
+          return 0;
+        }
+
+        return countryOlympic.participations.reduce(
+          (total, participation) => total + participation.athleteCount,
+          0
+        );
+      })
+    );
+  }
+
+
+
 }

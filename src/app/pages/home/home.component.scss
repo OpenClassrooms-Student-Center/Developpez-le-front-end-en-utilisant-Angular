@@ -1,3 +1,29 @@
 #pieChart {
-    height : 300px;
+  height: 500px;
+}
+
+::ng-deep .ngx-charts {
+  text {
+    fill: #030303 !important;
+    font-size: large !important;
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+#infoContainer {
+  width : 100%;
+  height : auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#pieContainer {
+  display : flex;
+  justify-content: center;
+}
+
+
+::ng-deep .legend-label-text {
+  font-family: 'Montserrat', sans-serif;
 }
