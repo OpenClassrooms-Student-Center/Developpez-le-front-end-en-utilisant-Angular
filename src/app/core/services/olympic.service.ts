@@ -29,7 +29,7 @@ export class OlympicService {
   getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
-  // Recup un tableau de paires pays:medailles sous le format de pieChart
+  // Recup un tableau de paires pays:medailles sous le format de pieChart de ngx-charts
   getMedalsPerCountry(): Observable<{ name: string; value: number }[]> {
     return this.olympics$.pipe(
       map((olympics) =>
@@ -111,6 +111,29 @@ export class OlympicService {
           (total, participation) => total + participation.athleteCount,
           0
         );
+      })
+    );
+  }
+
+  //Recupere, pour un pays, le nombre de medailles par année au format lineChart de ngx-charts
+  getMedalsPerYear(searchedCountry: string): Observable<{ name: string; series: { name: string; value: number }[] }[]> {
+    return this.olympics$.pipe(
+      map((olympics) => {
+        const countryOlympic = olympics.find(
+          (olympic) => olympic.country === searchedCountry
+        );
+
+        if (!countryOlympic || !countryOlympic.participations) {
+          return [{ name: '', series: [] }];
+        }
+
+        return [{
+          name: searchedCountry,
+          series: countryOlympic.participations.map((participation) => ({
+            name: participation.year.toString(),
+            value: participation.medalsCount,
+          }))
+        }];
       })
     );
   }

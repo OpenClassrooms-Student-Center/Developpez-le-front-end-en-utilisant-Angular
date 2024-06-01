@@ -19,23 +19,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
+  constructor(private olympicService: OlympicService, private router: Router) {}
+
+  // Initialisation des donnees pour les bulles d'infos
+  windowWidth = window.innerWidth;
   pageTitle = 'Medals per Country';
   info1 = 'Number of JOs';
   numberOfJOs!: number;
   info2 = 'Number of countries';
   numberOfCountries!: number;
 
+  // Initialisation des observables
   public olympics$: Observable<Olympic[]> = of([]);
   public medalsPerCountry$: Observable<{ name: string; value: number }[]> = of(
     []
   );
+ 
 
-  constructor(private olympicService: OlympicService, private router: Router) {}
-
-  windowWidth = window.innerWidth;
-
-  // PIE CHART
-  // options
+  // PIE CHART options
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
@@ -67,7 +69,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Initialisation des paaramètre responsives
+    // Initialisation des parametres responsives
     this.showLabels = this.windowWidth > 600;
     this.showLegend = this.windowWidth < 600;
 

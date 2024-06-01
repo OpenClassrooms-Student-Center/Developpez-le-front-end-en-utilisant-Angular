@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -11,9 +11,17 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrl: './detail.component.scss',
 })
 export class DetailComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private olympicService: OlympicService,
+    private router: Router
+  ) {}
+
+  // Initialisation page
   country!: string;
   pageTitle!: string;
 
+  // Initialisation des donnees pour les bulles d'info
   info1 = 'Number of entries';
   numberOfEntries!: number;
   info2 = 'Total number medals';
@@ -21,13 +29,19 @@ export class DetailComponent implements OnInit {
   info3 = 'Total number of athletes';
   numberOfAthletes!: number;
 
+  // Initialisation des observables
   public olympics$: Observable<Olympic[]> = of([]);
+  public medalsPerYear$: Observable<
+    { name: string; series: { name: string; value: number }[] }[]
+  > = of([]);
 
-  constructor(
-    private route: ActivatedRoute,
-    private olympicService: OlympicService,
-    private router: Router
-  ) {}
+  // LINE CHART options
+  legend: boolean = false;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showXAxisLabel: boolean = true;
+  showYAxisLabel: boolean = true;
+  xAxisLabel: string = 'Dates';
 
   ngOnInit(): void {
     this.country = this.route.snapshot.paramMap.get('country')!;
@@ -38,6 +52,8 @@ export class DetailComponent implements OnInit {
       this.numberOfEntries = numberOfJOs;
     });
 
+    this.medalsPerYear$ = this.olympicService.getMedalsPerYear(this.country);
+
     this.olympicService
       .getTotalMedals(this.country)
       .subscribe((totalMedals) => {
@@ -45,9 +61,9 @@ export class DetailComponent implements OnInit {
       });
 
     this.olympicService
-    .getTotalAthletes(this.country)
-    .subscribe((numberOfAthletes) => {
-      this.numberOfAthletes = numberOfAthletes;
-    })
+      .getTotalAthletes(this.country)
+      .subscribe((numberOfAthletes) => {
+        this.numberOfAthletes = numberOfAthletes;
+      });
   }
 }
