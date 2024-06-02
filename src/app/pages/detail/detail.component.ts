@@ -47,6 +47,17 @@ export class DetailComponent implements OnInit {
     this.country = this.route.snapshot.paramMap.get('country')!;
     this.pageTitle = this.country;
 
+    const resolveData = this.route.snapshot.data['olympicsData'];
+
+    if (!resolveData) {
+      console.log('No data found');
+      this.router.navigate(['']);
+      return;
+    }
+
+    // Charge les données depuis le service
+    this.olympics$ = this.olympicService.getOlympics();
+
     //recup des données
     this.olympicService.getNumberOfJOs().subscribe((numberOfJOs) => {
       this.numberOfEntries = numberOfJOs;

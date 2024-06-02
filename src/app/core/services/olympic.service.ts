@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map, tap, filter } from 'rxjs/operators';
+import { catchError, map, tap, filter, shareReplay, first } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Olympic } from '../models/Olympic';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<Olympic[]>([]);
+  public olympics$ = new BehaviorSubject<Olympic[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -138,6 +138,13 @@ export class OlympicService {
     );
   }
 
-
-
+  //verifie si un pays est dans la bdd
+  isCountryInDatabase(country: string): Observable<boolean> {
+    console.log('Checking database for country:', country); // for debugging
+    return this.olympics$.pipe(
+      first(),
+      tap(response => console.log('Response:', response)), // for debugging
+      map((olympics) => olympics.some((olympic) => olympic.country === country))
+    );
+  }
 }
