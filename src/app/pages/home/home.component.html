@@ -16,15 +16,15 @@
     [customColors]="colorHelper"
     [legendPosition]="legendPosition"
     [legendTitle]="legendTitle"
+    [view]="[windowWidth /1.2, windowHeight -200 ]"
     (select)="onSelectCountry($event)"
   >
-  <ng-template #tooltipTemplate let-model="model">
-    <div class="custom-tooltip">
-      <span>{{ model.name }} </span><br>
-      <i class="fa fa-solid fa-award"></i>
-      <span> {{ model.value }}</span>
-    </div>
-  </ng-template>
-
+    <ng-template #tooltipTemplate let-model="model">
+      <div class="custom-tooltip">
+        <span>{{ model.name }} </span><br />
+        <i class="fa fa-solid fa-award"></i>
+        <span> {{ model.value }}</span>
+      </div>
+    </ng-template>
   </ngx-charts-pie-chart>
 </div>

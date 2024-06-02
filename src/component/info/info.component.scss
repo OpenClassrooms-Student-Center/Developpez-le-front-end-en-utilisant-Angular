@@ -3,8 +3,8 @@
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    margin : 1rem;
-    padding: 0.5rem;
+    margin : 1vw;
+    padding: 1vw;
     border : solid 3px  #04838f;
     border-radius: 0.5rem;
     width :fit-content;
@@ -12,18 +12,32 @@
 }
 
 #info {
-    color: rgba(73, 70, 70, 0.555);
+    color: rgba(41, 39, 39, 0.555);
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    margin-top : 0.5rem;
+    font-size: 1.5vw;
+    margin-bottom: 0vw;
+    margin-top : 0.2vw;
 }
 
 #value {
     color : black;
     font-weight: bold;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
+    font-size: 1.5vw;
     margin-top : 0;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0vw;
+}
+
+@media screen and (max-width: 768px) {
+    #info {
+        font-size: 4vw;
+        margin-bottom: 0vw;
+        margin-top : 0.2vw;
+    }
+    
+    #value {
+        font-size: 4vw;
+        margin-top : 0;
+        margin-bottom: 0vw;
+    }
 }

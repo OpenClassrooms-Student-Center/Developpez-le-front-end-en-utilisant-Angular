@@ -21,19 +21,10 @@
 
 ::ng-deep .ngx-charts {
   text {
-    fill: #030303 !important;
+    fill: #030303 ;
     font-size: large !important;
     font-family: "Montserrat", sans-serif;
   }
-}
-
-::ng-deep .legend-label-text {
-  font-family: "Montserrat", sans-serif;
-  color: darkgrey;
-}
-
-.custom-axis-label text {
-  fill: darkgrey !important;
 }
 
 #button {
@@ -48,3 +39,4 @@
 #button:hover {
   cursor : pointer;
 }
+

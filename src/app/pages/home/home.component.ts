@@ -2,13 +2,10 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
-import {
-  LegendPosition,
-  ColorHelper,
-  ScaleType,
-} from '@swimlane/ngx-charts';
+import { LegendPosition, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { calculateViewDimensions, ViewDimensions } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-home',
@@ -16,13 +13,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
- // @ViewChild('customTooltipTemplate') customTooltipTemplate!: TemplateRef<any>;
-
-  constructor(private olympicService: OlympicService, private router: Router ) {}
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   // Initialisation des donnees pour les bulles d'infos
   windowWidth = window.innerWidth;
+  windowHeight = window.innerWidth <= 768 ? window.innerHeight - 350 : window.innerHeight;
   pageTitle = 'Medals per Country';
   info1 = 'Number of JOs';
   numberOfJOs!: number;
@@ -31,8 +26,10 @@ export class HomeComponent implements OnInit {
 
   // Initialisation des observables
   public olympics$: Observable<Olympic[]> = of([]);
-  public medalsPerCountry$: Observable<{ name: string; value: number }[]> = of([]);
- 
+  public medalsPerCountry$: Observable<{ name: string; value: number }[]> = of(
+    []
+  );
+
   // PIE CHART options
   gradient: boolean = true;
   showLegend: boolean = false;
@@ -45,30 +42,22 @@ export class HomeComponent implements OnInit {
     { name: 'Germany', value: '#793d52' },
     { name: 'France', value: '#9780a1' },
   ];
-  colorHelper = new ColorHelper('cool', ScaleType.Linear, [0, 100], this.customColors);
+  colorHelper = new ColorHelper(
+    'cool',
+    ScaleType.Linear,
+    [0, 100],
+    this.customColors
+  );
   legendPosition: LegendPosition = LegendPosition.Below;
   legendTitle = '';
- 
-
-  // Responsive
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.windowWidth = window.innerWidth;
-    this.showLabels = this.windowWidth > 600;
-    this.showLegend = this.windowWidth < 600;
-  }
 
   // Redirection vers page de detail
-  onSelectCountry(event: { name: any; }): void {
+  onSelectCountry(event: { name: any }): void {
     this.router.navigate(['/detail', event.name]);
     console.log(event.name);
   }
 
   ngOnInit(): void {
-    // Initialisation des parametres responsives
-    this.showLabels = this.windowWidth > 600;
-    this.showLegend = this.windowWidth < 600;
-
     // Recup des données
     this.olympics$ = this.olympicService.getOlympics();
     this.medalsPerCountry$ = this.olympicService.getMedalsPerCountry();
@@ -82,5 +71,4 @@ export class HomeComponent implements OnInit {
       this.numberOfJOs = numberOfJOs;
     });
   }
-
 }
