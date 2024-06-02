@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map, tap, filter, shareReplay, first } from 'rxjs/operators';
+import { catchError, map, tap, first } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -17,9 +17,9 @@ export class OlympicService {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
-        // TODO: improve error handling
+        // TODO: improve error handling : 
+        //can be useful to end loading state and let the user know something went wrong
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next([]);
         return caught;
       })
@@ -29,7 +29,8 @@ export class OlympicService {
   getOlympics(): Observable<Olympic[]> {
     return this.olympics$.asObservable();
   }
-  // Recup un tableau de paires pays:medailles sous le format de pieChart de ngx-charts
+
+  // Get an array of pairs country:medals under the format of ngx-charts pieChart
   getMedalsPerCountry(): Observable<{ name: string; value: number }[]> {
     return this.olympics$.pipe(
       map((olympics) =>
@@ -46,7 +47,7 @@ export class OlympicService {
     );
   }
 
-  // Recupere un tableau de pays
+  // Get an array of countries
   getCountries() {
     return this.olympics$.pipe(
       map((olympics) => {
@@ -61,7 +62,7 @@ export class OlympicService {
     );
   }
 
-  // Recupere le nombre de JO pris en compte dans la bdd
+  // Get the number of JOs took into account in the db
   getNumberOfJOs(): Observable<number> {
     return this.olympics$.pipe(
       map((olympics) => {
@@ -74,7 +75,7 @@ export class OlympicService {
     );
   }
 
-  // Recupere le nombre total de medailles pour un pays
+  // Get total number of medals for a country
   getTotalMedals(searchedCountry: string): Observable<number> {
     return this.olympics$.pipe(
       map((olympics) => {
@@ -95,7 +96,7 @@ export class OlympicService {
   }
 
 
-  // Recupere le nombre total d'athletes pour un pays
+  // Get total number of athletes for a country
   getTotalAthletes(searchedCountry: string): Observable<number> {
     return this.olympics$.pipe(
       map((olympics) => {
@@ -115,7 +116,7 @@ export class OlympicService {
     );
   }
 
-  //Recupere, pour un pays, le nombre de medailles par année au format lineChart de ngx-charts
+  // For a specified country, get the number of medals per year in the format of ngx-charts lineChart
   getMedalsPerYear(searchedCountry: string): Observable<{ name: string; series: { name: string; value: number }[] }[]> {
     return this.olympics$.pipe(
       map((olympics) => {
@@ -138,12 +139,10 @@ export class OlympicService {
     );
   }
 
-  //verifie si un pays est dans la bdd
+  // Check if the country is in the database
   isCountryInDatabase(country: string): Observable<boolean> {
-    console.log('Checking database for country:', country); // for debugging
     return this.olympics$.pipe(
       first(),
-      tap(response => console.log('Response:', response)), // for debugging
       map((olympics) => olympics.some((olympic) => olympic.country === country))
     );
   }

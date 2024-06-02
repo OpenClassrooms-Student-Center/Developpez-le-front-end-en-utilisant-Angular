@@ -1,11 +1,9 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { LegendPosition, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
-import { HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { calculateViewDimensions, ViewDimensions } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-home',
@@ -15,22 +13,25 @@ import { calculateViewDimensions, ViewDimensions } from '@swimlane/ngx-charts';
 export class HomeComponent implements OnInit {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
-  // Initialisation des donnees pour les bulles d'infos
+  //Initialization of screen data for the charts
   windowWidth = window.innerWidth;
-  windowHeight = window.innerWidth <= 768 ? window.innerHeight - 350 : window.innerHeight;
+  windowHeight =
+    window.innerWidth <= 500 ? window.innerHeight - 350 : window.innerHeight;
+
+  //Data initialization for the info bubbles
   pageTitle = 'Medals per Country';
   info1 = 'Number of JOs';
   numberOfJOs!: number;
   info2 = 'Number of countries';
   numberOfCountries!: number;
 
-  // Initialisation des observables
+  // Observable initialization
   public olympics$: Observable<Olympic[]> = of([]);
   public medalsPerCountry$: Observable<{ name: string; value: number }[]> = of(
     []
   );
 
-  // PIE CHART options
+  // Pie chart options
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
@@ -51,18 +52,18 @@ export class HomeComponent implements OnInit {
   legendPosition: LegendPosition = LegendPosition.Below;
   legendTitle = '';
 
-  // Redirection vers page de detail
+  // Redirection to detail page when a country is selected
   onSelectCountry(event: { name: any }): void {
     this.router.navigate(['/detail', event.name]);
     console.log(event.name);
   }
 
   ngOnInit(): void {
-    // Recup des données
+    // Data loading
     this.olympics$ = this.olympicService.getOlympics();
     this.medalsPerCountry$ = this.olympicService.getMedalsPerCountry();
 
-    // Calcul des valeurs des info bulles
+    // Values calculation of info bubbles
     this.olympicService.getCountries().subscribe((countries) => {
       this.numberOfCountries = countries.length;
     });

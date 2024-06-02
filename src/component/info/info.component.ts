@@ -3,18 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrl: './info.component.scss'
+  styleUrl: './info.component.scss',
 })
-export class InfoComponent implements OnInit{
+export class InfoComponent implements OnInit {
+  @Input() info!: string;
+  @Input() value!: number;
 
-  @Input () info!: string;
-  @Input () value!: number;
+  constructor() {}
 
-  constructor() {
-    
-   }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

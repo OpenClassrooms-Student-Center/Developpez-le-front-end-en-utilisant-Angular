@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 import { Observable, of, map } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -14,14 +13,15 @@ export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private olympicService: OlympicService,
-    private router: Router
   ) {}
 
-  // Initialisation page
+  // Page initialization
   country!: string;
   pageTitle!: string;
+  windowWidth = window.innerWidth <= 500? window.innerWidth : window.innerWidth /2;
+  windowHeight = window.innerWidth <= 500? window.innerHeight - 350 : window.innerHeight;
 
-  // Initialisation des donnees pour les bulles d'info
+  // Data initialization for the info bubbles
   info1 = 'Number of entries';
   numberOfEntries!: number;
   info2 = 'Total number medals';
@@ -29,13 +29,13 @@ export class DetailComponent implements OnInit {
   info3 = 'Total number of athletes';
   numberOfAthletes!: number;
 
-  // Initialisation des observables
+  // Observable initialization
   public olympics$: Observable<Olympic[]> = of([]);
   public medalsPerYear$: Observable<
     { name: string; series: { name: string; value: number }[] }[]
   > = of([]);
 
-  // LINE CHART options
+  // Line chart options
   legend: boolean = false;
   xAxis: boolean = true;
   yAxis: boolean = true;
@@ -43,15 +43,20 @@ export class DetailComponent implements OnInit {
   showYAxisLabel: boolean = true;
   xAxisLabel: string = 'Dates';
   tooltipDisabled: boolean = true;
+  xScaleMax: number = 5;
+  xScaleMin: number = 3;
+  yScaleMax: number = 150;
+  yScaleMin: number = 0; 
+
 
   ngOnInit(): void {
     this.country = this.route.snapshot.paramMap.get('country')!;
     this.pageTitle = this.country;
 
-    // Charge les données depuis le service
+    // Data loading
     this.olympics$ = this.olympicService.getOlympics();
 
-    //recup des données
+    // Data loading for the info bubbles
     this.olympicService.getNumberOfJOs().subscribe((numberOfJOs) => {
       this.numberOfEntries = numberOfJOs;
     });

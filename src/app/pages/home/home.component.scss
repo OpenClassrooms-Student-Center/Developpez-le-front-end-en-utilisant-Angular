@@ -1,15 +1,3 @@
-
-
-::ng-deep .ngx-charts {
-  text {
-    fill: #030303 !important;
-    font-size: 1.5vw !important;
-    font-family: "Montserrat", sans-serif;
-    width: 50% !important;
-    height: 100% !important;
-  }
-}
-
 #infoContainer {
   width: 100%;
   height: auto;
@@ -23,36 +11,51 @@
   justify-content: center;
 }
 
+// Pie chart appearance
+::ng-deep .ngx-charts {
+  text {
+    fill: #030303 !important;
+    font-size: 1.5vw !important;
+    font-family: "Montserrat", sans-serif;
+    width: 50% !important;
+    height: 100% !important;
+  }
+}
+
+// Legend appearance
 ::ng-deep .legend-label-text {
   font-family: "Montserrat", sans-serif;
 }
 
+// Tooltip appearance
 ::ng-deep .ngx-charts-tooltip-content {
   background-color: #04838f !important;
   color: #fff !important;
   font-family: "Montserrat", sans-serif !important;
-  font-size: 1vw !important;
+  font-size: 1.5vw !important;
   padding: 10px !important;
   border-radius: 5px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
-@media screen and (max-width: 768px) {
+// Responsive to phone-size screens
+@media screen and (max-width: 900px) {
+  ::ng-deep .ngx-charts-tooltip-content {
+    font-size: 4vw !important;
+  }
   ::ng-deep .ngx-charts {
     text {
-      font-size: 4vw !important; 
-    }
-    ::ng-deep .ngx-charts-tooltip-content {
       font-size: 4vw !important;
     }
+
     #infoContainer {
-      flex-direction: column; /* Affichez les informations en colonne sur les téléphones */
-      align-items: center; /* Centrez les éléments sur les téléphones */
+      flex-direction: column;
+      align-items: center;
     }
-  
+
     #pieContainer {
-      align-items: center; /* Centrez le pie chart sur les téléphones */
+      align-items: center;
     }
   }
 }

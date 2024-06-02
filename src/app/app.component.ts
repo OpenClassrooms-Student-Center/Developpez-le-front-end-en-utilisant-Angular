@@ -10,6 +10,8 @@ import { OlympicService } from './core/services/olympic.service';
 export class AppComponent implements OnInit {
   constructor(private olympicService: OlympicService) {}
 
+  title = "olympic-games-starter";
+
   ngOnInit(): void {
     this.olympicService.loadInitialData().pipe(take(1)).subscribe();
   }

@@ -1,4 +1,3 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,12 +12,24 @@ import { DetailComponent } from 'src/app/pages/detail/detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PieChartModule } from '@swimlane/ngx-charts';
 
-@NgModule({ 
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, TitleComponent, InfoComponent, DetailComponent],
-    bootstrap: [AppComponent], 
-    imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule, BrowserAnimationsModule, PieChartModule], 
-    providers: []
-   })
-
-
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NotFoundComponent,
+    TitleComponent,
+    InfoComponent,
+    DetailComponent,
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    PieChartModule,
+  ],
+  providers: [],
+})
 export class AppModule {}
