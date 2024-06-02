@@ -42,18 +42,11 @@ export class DetailComponent implements OnInit {
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
   xAxisLabel: string = 'Dates';
+  tooltipDisabled: boolean = true;
 
   ngOnInit(): void {
     this.country = this.route.snapshot.paramMap.get('country')!;
     this.pageTitle = this.country;
-
-    const resolveData = this.route.snapshot.data['olympicsData'];
-
-    if (!resolveData) {
-      console.log('No data found');
-      this.router.navigate(['']);
-      return;
-    }
 
     // Charge les données depuis le service
     this.olympics$ = this.olympicService.getOlympics();

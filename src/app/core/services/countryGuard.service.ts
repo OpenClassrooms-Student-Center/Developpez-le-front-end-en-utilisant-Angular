@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   Router,
+  UrlTree,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from './olympic.service';
-import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CountryGuard implements CanActivate {
+export class CountryGuard {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
-  canActivate(
+  canActivate (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ): Observable<boolean | UrlTree> {
     const country = route.paramMap.get('country');
+    
     if (!country) {
       console.log('Country not found');
       return of(false);
@@ -30,15 +30,15 @@ export class CountryGuard implements CanActivate {
         switchMap(() => this.olympicService.isCountryInDatabase(country)),
         map(isInDb => {
           if (!isInDb) {
-            this.router.navigate(['']);
-            return false;
+            return this.router.createUrlTree(['']);
           }
           return true;
         }),
         catchError(() => {
-          this.router.navigate(['']);
-          return of(false);
+          return of(this.router.createUrlTree(['']));
+          
         })
       );
     }
   }
+

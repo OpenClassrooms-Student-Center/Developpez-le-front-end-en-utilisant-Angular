@@ -6,24 +6,35 @@
   text {
     fill: #030303 !important;
     font-size: large !important;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 }
 
 #infoContainer {
-  width : 100%;
-  height : auto;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
 #pieContainer {
-  display : flex;
+  display: flex;
   justify-content: center;
 }
 
-
 ::ng-deep .legend-label-text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+::ng-deep .ngx-charts-tooltip-content {
+  background-color: #04838f !important;
+  color: #fff !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: medium !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  
 }
