@@ -12,7 +12,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
+## Architecture
 
 The architecture includes (in addition to the default angular architecture) the following:
 
@@ -21,4 +21,19 @@ The architecture includes (in addition to the default angular architecture) the 
     - titleComponent for the title of each page
 - `pages` folder: contains components used for routing
 - `core` folder: contains the business logic (`services` and `models` folders)
+
+## Data
+
+The data of this project is in assets/mock/olympic.json. If you add data there it will work anyway.
+You can also crearte an API but you'll have to implement the back-end.
+
+## Responsiveness
+
+This app works on both computer and phone. 
+The main difference is that the tooltips that appears when the cursor is over the pie chart can't appear on a phone. 
+
+## Routing
+
+Routing is managed by app-routing.module and a guard was implemented to avoid problems when you enter a country in the URL that doesn't appear in the data. The guard is in core/services.
+If you enter a country that isn't in the data, you will be redirected to the home page.
 

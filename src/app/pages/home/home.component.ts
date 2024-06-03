@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { LegendPosition, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   constructor(private olympicService: OlympicService, private router: Router) {}
+
+  // Management of subscriptions
+  private subscriptions: Subscription[] = [];
 
   //Initialization of screen data for the charts
   windowWidth = window.innerWidth;
@@ -51,6 +54,7 @@ export class HomeComponent implements OnInit {
   );
   legendPosition: LegendPosition = LegendPosition.Below;
   legendTitle = '';
+  maxLabelLength = 20;
 
   // Redirection to detail page when a country is selected
   onSelectCountry(event: { name: any }): void {
@@ -64,12 +68,29 @@ export class HomeComponent implements OnInit {
     this.medalsPerCountry$ = this.olympicService.getMedalsPerCountry();
 
     // Values calculation of info bubbles
-    this.olympicService.getCountries().subscribe((countries) => {
-      this.numberOfCountries = countries.length;
-    });
+    this.subscriptions.push(
+      this.olympicService.getCountries().subscribe((countries) => {
+        this.numberOfCountries = countries.length;
+      }),
 
-    this.olympicService.getNumberOfJOs().subscribe((numberOfJOs) => {
-      this.numberOfJOs = numberOfJOs;
-    });
+      this.olympicService.getNumberOfJOs().subscribe((numberOfJOs) => {
+        this.numberOfJOs = numberOfJOs;
+      })
+    );
+
+    // Listen to resize events
+    this.subscriptions.push(
+      fromEvent(window, 'resize')
+      .subscribe(() => {
+        this.windowWidth = window.innerWidth;
+        this.windowHeight =
+          window.innerWidth <= 500 ? window.innerHeight - 350 : window.innerHeight;
+      })
+  );
+}
+
+  // Unsubscribe from all subscriptions
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

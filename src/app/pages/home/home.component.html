@@ -12,11 +12,11 @@
     [labels]="showLabels"
     [doughnut]="isDoughnut"
     [results]="medals"
-    [view]="[windowWidth, 400]"
     [customColors]="colorHelper"
     [legendPosition]="legendPosition"
     [legendTitle]="legendTitle"
     [view]="[windowWidth /1.2, windowHeight -200 ]"
+    [maxLabelLength]="maxLabelLength" 
     (select)="onSelectCountry($event)"
   >
     <ng-template #tooltipTemplate let-model="model">
