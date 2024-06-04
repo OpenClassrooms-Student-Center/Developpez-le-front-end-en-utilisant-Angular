@@ -1,12 +1,5 @@
-// TODO: create here a typescript interface for an olympic country
+import { Participations } from "./Participation";
 
-export interface Participations {
-    id: number,
-    year: number,
-    city: string,
-    medalsCount: number,
-    athleteCount: number
-}
 
 export interface Country {
     id: number,
