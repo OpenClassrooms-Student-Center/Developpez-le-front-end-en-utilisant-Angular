@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap, first } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -11,19 +12,28 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   public olympics$ = new BehaviorSubject<Olympic[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  
+  loading$ = new BehaviorSubject<boolean>(false);
 
   loadInitialData(): Observable<Olympic[]>  {
-    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling : 
-        //can be useful to end loading state and let the user know something went wrong
-        console.error(error);
-        this.olympics$.next([]);
-        return caught;
-      })
-    );
+    this.loading$.next(true);
+  return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+    tap((value) => {
+      this.olympics$.next(value);
+      this.loading$.next(false);
+      if (!value) {
+        this.toastr.warning('Database successfully loaded but empty.');
+      }
+    }),
+    catchError((error, caught) => {
+      console.error(error);
+      this.olympics$.next([]);
+      this.loading$.next(false);
+      this.toastr.error('An error occured while loading the data.');
+      return caught;
+    })
+  );
   }
 
   getOlympics(): Observable<Olympic[]> {
@@ -48,7 +58,7 @@ export class OlympicService {
   }
 
   // Get an array of countries
-  getCountries() {
+  getCountries(): Observable<string[]> {
     return this.olympics$.pipe(
       map((olympics) => {
         let countries: string[] = [];

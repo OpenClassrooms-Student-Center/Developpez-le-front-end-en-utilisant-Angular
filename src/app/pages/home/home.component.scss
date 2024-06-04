@@ -39,6 +39,12 @@
   padding-bottom: 0 !important;
 }
 
+//Toast warning appearance
+::ng-deep #toast-container {
+  font-family: "Montserrat", sans-serif !important;
+  text-align: center !important;
+}
+
 // Responsive to phone-size screens
 @media screen and (max-width: 900px) {
   ::ng-deep .ngx-charts-tooltip-content {
@@ -59,3 +65,5 @@
     }
   }
 }
+
+

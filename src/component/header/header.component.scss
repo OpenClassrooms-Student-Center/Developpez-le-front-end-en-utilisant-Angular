@@ -1,0 +1,32 @@
+.header-banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-family: "Montserrat";
+  background-color: #793d52;
+  height: 7vh;
+  justify-content: left;
+  box-sizing: border-box;
+  margin-bottom : 10px;
+}
+
+.logo {
+  margin-right: 10px;
+  object-fit: contain;
+  max-height: 100%;
+}
+
+.title {
+  text-align: center;
+  margin-left: 10px;
+  font-size: 1vw;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.3vh;
+  }
+}

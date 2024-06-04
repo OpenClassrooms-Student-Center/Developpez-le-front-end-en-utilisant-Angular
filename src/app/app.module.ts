@@ -11,6 +11,8 @@ import { InfoComponent } from '../component/info/info.component';
 import { DetailComponent } from 'src/app/pages/detail/detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PieChartModule } from '@swimlane/ngx-charts';
+import { ToastrModule } from 'ngx-toastr';
+import { HeaderComponent } from 'src/component/header/header.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { PieChartModule } from '@swimlane/ngx-charts';
     TitleComponent,
     InfoComponent,
     DetailComponent,
+    HeaderComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -29,6 +32,7 @@ import { PieChartModule } from '@swimlane/ngx-charts';
     NgxChartsModule,
     BrowserAnimationsModule,
     PieChartModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
 })

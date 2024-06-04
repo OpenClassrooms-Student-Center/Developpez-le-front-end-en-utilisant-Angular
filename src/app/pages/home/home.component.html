@@ -1,8 +1,8 @@
-<app-title [title]="pageTitle"></app-title>
+<app-title *ngIf="numberOfJOs" [title]="pageTitle"></app-title>
 
 <div id="infoContainer">
-  <app-info [info]="info1" [value]="numberOfJOs"></app-info>
-  <app-info [info]="info2" [value]="numberOfCountries"></app-info>
+  <app-info *ngIf="numberOfJOs" [info]="info1" [value]="numberOfJOs"></app-info>
+  <app-info *ngIf="numberOfCountries" [info]="info2" [value]="numberOfCountries"></app-info>
 </div>
 
 <div id="pieContainer" *ngIf="medalsPerCountry$ | async as medals">
@@ -15,7 +15,7 @@
     [customColors]="colorHelper"
     [legendPosition]="legendPosition"
     [legendTitle]="legendTitle"
-    [view]="[windowWidth /1.2, windowHeight -200 ]"
+    [view]="[windowWidth /1.2, windowHeight -300 ]"
     [maxLabelLength]="maxLabelLength" 
     (select)="onSelectCountry($event)"
   >

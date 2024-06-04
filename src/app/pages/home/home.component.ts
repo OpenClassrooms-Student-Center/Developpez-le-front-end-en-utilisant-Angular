@@ -4,6 +4,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { LegendPosition, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private olympicService: OlympicService, private router: Router) {}
+  constructor(private olympicService: OlympicService, private router: Router, private toastr: ToastrService) {}
 
   // Management of subscriptions
   private subscriptions: Subscription[] = [];
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
   //Initialization of screen data for the charts
   windowWidth = window.innerWidth;
   windowHeight =
-    window.innerWidth <= 500 ? window.innerHeight - 350 : window.innerHeight;
+    window.innerWidth <= 500 ? (window.innerHeight > 750 ? window.innerHeight - 200 : window.innerHeight ) : window.innerHeight;
+    
 
   //Data initialization for the info bubbles
   pageTitle = 'Medals per Country';
@@ -63,6 +65,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.toastr.info('Click on the pie chart to see details on a specific country.');
+
+
     // Data loading
     this.olympics$ = this.olympicService.getOlympics();
     this.medalsPerCountry$ = this.olympicService.getMedalsPerCountry();
@@ -84,7 +90,7 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.windowWidth = window.innerWidth;
         this.windowHeight =
-          window.innerWidth <= 500 ? window.innerHeight - 350 : window.innerHeight;
+        window.innerWidth <= 500 ? (window.innerHeight > 750 ? window.innerHeight - 200 : window.innerHeight ) : window.innerHeight;
       })
   );
 }
