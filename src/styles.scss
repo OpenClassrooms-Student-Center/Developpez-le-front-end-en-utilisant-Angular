@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+/* Define global colors */
+:root {
+    --mainColor: #04838F;
+}
+
+/* Apply the font to the whole app */
+* {
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.category {
+    text-align: center; 
+    margin: 25px;
+
+    span {
+        font-size: x-large;
+        font-weight: 100;
+        color: white;
+        background-color: var(--mainColor);
+        padding: 10px;
+        border-style: solid;
+        border: 5px;
+        border-radius: 5px;
+        border-color: var(--mainColor);
+    }
+}
