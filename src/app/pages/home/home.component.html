@@ -1,3 +1,8 @@
 <h2>Olympic games app</h2>
 <hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="container">
+  <div class="graph">
+  <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="pie">
+  </canvas>
+  </div>
+</div>
