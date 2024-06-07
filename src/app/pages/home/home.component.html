@@ -2,22 +2,23 @@
     <span>Medals per Country</span>
 </div>
 
-<div class="chart">
+<div class="legend">
+    <p>Number of JOs
+        <br>
+        <span>{{JOsCount}}</span>
+    </p>
+    <p>Number of Countries
+        <br>
+        <span>{{countriesCount}}</span>
+    </p>
+</div>
+
+<div class="pie-chart">
     <ngx-charts-pie-chart   [gradient]="false"
                             [legend]="false"
                             [animations]="false"
                             [labels]="showLabels"
-                            [doughnut]="false"
-                            [results]="data"/>
+                            [trimLabels]="false"
+                            [scheme]="colorScheme"
+                            [results]="chartData"/>
 </div>
-
-<!-- <div *ngFor="let olympic of olympics$ | async">
-    <p>{{olympic.id}} {{olympic.country}}</p>
-    <ul *ngFor="let participation of olympic.participations">
-        <li>{{ participation.id }}</li>
-        <li>{{ participation.year }}</li>
-        <li>{{ participation.city }}</li>
-        <li>{{ participation.medalsCount }}</li>
-        <li>{{ participation.athleteCount }}</li>
-    </ul>
-</div> -->

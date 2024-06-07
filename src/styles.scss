@@ -8,8 +8,13 @@
     font-family: "Roboto", sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    height: 100%;
 }
 
 .category {
@@ -21,10 +26,29 @@ body {
         font-weight: 100;
         color: white;
         background-color: var(--mainColor);
+        padding: 5px;
+        border: 5px solid var(--mainColor);
+        border-radius: 10px;
+    }
+}
+
+.legend {
+    text-align: center; 
+    margin: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 5%;
+
+    p {
+        font-size: large;
+        font-weight: 100;
         padding: 10px;
-        border-style: solid;
-        border: 5px;
-        border-radius: 5px;
-        border-color: var(--mainColor);
+        border: 2px solid var(--mainColor);
+        border-radius: 10px;
+    }
+
+    p span {
+        font-weight: bold;
     }
 }
