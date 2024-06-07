@@ -20,5 +20,13 @@
                             [labels]="showLabels"
                             [trimLabels]="false"
                             [scheme]="colorScheme"
-                            [results]="chartData"/>
+                            [results]="chartData"
+                            (select)="onCountrySelected($event)">
+        <ng-template #tooltipTemplate let-model="model">
+            <div class="tooltip">
+                {{model.name}}<br>
+                <span>🏅 {{model.value}}</span>
+            </div>
+        </ng-template>
+    </ngx-charts-pie-chart>
 </div>

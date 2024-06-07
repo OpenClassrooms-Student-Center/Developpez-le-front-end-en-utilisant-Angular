@@ -40,6 +40,10 @@ export class HomeComponent implements OnInit
       }));
   }
 
+  onCountrySelected(data : any) : void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
   // Called whenever our data changed
   private onOlympicsUpdate(data : Olympic[]) {
     this.chartData = this.formatOlympics(data);
