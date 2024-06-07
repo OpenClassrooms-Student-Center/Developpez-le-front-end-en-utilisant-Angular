@@ -2,9 +2,16 @@
     <span>Medals per Country</span>
 </div>
 
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="chart">
+    <ngx-charts-pie-chart   [gradient]="false"
+                            [legend]="false"
+                            [animations]="false"
+                            [labels]="showLabels"
+                            [doughnut]="false"
+                            [results]="data"/>
+</div>
 
-<div *ngFor="let olympic of olympics$ | async">
+<!-- <div *ngFor="let olympic of olympics$ | async">
     <p>{{olympic.id}} {{olympic.country}}</p>
     <ul *ngFor="let participation of olympic.participations">
         <li>{{ participation.id }}</li>
@@ -13,4 +20,4 @@
         <li>{{ participation.medalsCount }}</li>
         <li>{{ participation.athleteCount }}</li>
     </ul>
-</div>
+</div> -->
