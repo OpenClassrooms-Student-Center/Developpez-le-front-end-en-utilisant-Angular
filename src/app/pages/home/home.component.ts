@@ -1,33 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart, ChartData, ChartOptions } from 'chart.js';
 import { Country } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-piechart-outlabels';
 
-Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
   private country: Country[] = [];
   private countryLabels : string[]= [];
+  private countryColors = ['#793d52', '#89a1db', '#9780a1', '#bfe0f1', '#b8cbe7', '#956065']
+  private ctx : any;
+  @ViewChild('chartRef') myChartRef : ElementRef | undefined;
+  private myChart : Chart | undefined;
 
   public numberOfJos = 0;
   public numberOfCountries = 0;
-  public barChartData: ChartData<"pie", number[]> | undefined;
-  public barChartOptions : ChartOptions<'pie'>= {
-
-  }
   public error: Error | undefined;
 
-  constructor(private olympicService: OlympicService) { }
+  constructor(private olympicService: OlympicService) {
 
-  ngOnInit(): void {
+   }
+  ngAfterViewInit(): void {
     this.getAllCountrysAndInitializeGraph();
+  }
+
+  initializeChart(country : Country[]){
+    this.ctx = this.myChartRef?.nativeElement.getContext('2d');
+    this.myChart = new Chart(this.ctx, {
+      type: 'outlabeledPie',
+      data: this.initializeBarChartData(country),
+      options: this.initializeBarChartOption(),
+    });
+
   }
 
   /**
@@ -37,10 +47,9 @@ export class HomeComponent implements OnInit {
     this.olympicService.getOlympics().subscribe({
       next: (country: Country[]) => {
         this.country = country;
-        this.initializeBarChartData(this.country);
-        this.initializeBarChartOption();
         this.initializeNumberOfCountrie(this.country);
         this.initializeNumberOfJos(this.country);
+        this.initializeChart(country)
 
       },
       error: (error: Error) => this.error = error
@@ -52,58 +61,40 @@ export class HomeComponent implements OnInit {
    *
    * @param country
    */
-  initializeBarChartData(country: Country[]) {
-    this.barChartData = {
-      datasets: [{
-        data: this.getAllMedalsForEachCountry(country),
-      }],
+  initializeBarChartData(country: Country[]) : ChartData {
+    return {
       labels: this.getAllLabelsForEachCountry(country),
-
-
+      datasets: [
+        {
+          backgroundColor: this.countryColors,
+          data: this.getAllMedalsForEachCountry(country),
+        },
+      ],
     }
   }
 
-  initializeBarChartOption(){
-   this.barChartOptions = {
-
-    layout: {
-      padding: {
-          left: 100,
-          right: 100,
-          top: 100,
-          bottom: 100
-      }
-  },
-      responsive: true,
-      spacing : 0,
-      events : ['click', 'mousemove', 'mouseout'],
-      onClick(event, elements, chart) {
-
-      },
-      plugins : {
-        legend: {
-        display: false
-    },
-        datalabels: {
-
-          color: '#000',
-          anchor: 'end',
-          align: 'start',
-          offset: -100,
-          borderWidth: 2,
-          borderRadius: 25,
+  /**
+   *
+   * @returns
+   */
+  initializeBarChartOption() : ChartOptions{
+    return {
+      responsive : true,
+      plugins: {
+        legend: false,
+        outlabels: {
+          backgroundColor: 'transparent',
+          text: '🏅%l',
+          color: 'black',
+          stretch: 35,
           font: {
-            size: 16
+            resizable: true,
+            minSize: 12,
+            maxSize: 18,
           },
-          formatter: (value, context : any) => {
-            return context.chart.data.labels[context.dataIndex];
-          },
-
         },
-      }
-
-
-    };
+      },
+    }
   }
 
   /**
