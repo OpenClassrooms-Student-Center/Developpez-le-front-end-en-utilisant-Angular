@@ -1,8 +1,22 @@
-<h2>Olympic games app</h2>
-<hr />
 <div class="container">
+  <div class="title">Medals per Country</div>
+  <div class="joandcountry">
+    <div class="jos">
+      <p>Number of JOs</p>
+      <p class="numberJoCountry">{{numberOfJos}}</p>
+
+    </div>
+    <div class="countries">
+      <p>Number of countries</p>
+      <p class="numberJoCountry">{{numberOfCountries}}</p>
+
+    </div>
+  </div>
   <div class="graph">
-  <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="pie">
-  </canvas>
+    <div>
+      <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="pie" #myChart>
+      </canvas>
+    </div>
+
   </div>
 </div>
