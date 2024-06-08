@@ -3,6 +3,9 @@ import { Chart, ChartData, ChartOptions } from 'chart.js';
 import { Country } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
+
+Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-home',
@@ -12,7 +15,6 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 export class HomeComponent implements OnInit {
   private country: Country[] = [];
   private countryLabels : string[]= [];
-  private index = 0;
 
   public numberOfJos = 0;
   public numberOfCountries = 0;
@@ -63,6 +65,15 @@ export class HomeComponent implements OnInit {
 
   initializeBarChartOption(){
    this.barChartOptions = {
+
+    layout: {
+      padding: {
+          left: 100,
+          right: 100,
+          top: 100,
+          bottom: 100
+      }
+  },
       responsive: true,
       spacing : 0,
       events : ['click', 'mousemove', 'mouseout'],
@@ -70,22 +81,27 @@ export class HomeComponent implements OnInit {
 
       },
       plugins : {
+        legend: {
+        display: false
+    },
+        datalabels: {
 
+          color: '#000',
+          anchor: 'end',
+          align: 'start',
+          offset: -100,
+          borderWidth: 2,
+          borderRadius: 25,
+          font: {
+            size: 16
+          },
+          formatter: (value, context : any) => {
+            return context.chart.data.labels[context.dataIndex];
+          },
+
+        },
       }
-      // plugins: {
-      //   // Change options for ALL labels of THIS CHART
-      //   datalabels: {
-      //     color: '#000',
-      //     backgroundColor: 'white',
-      //     anchor : 'end',
-      //     padding: 4,
-      //     formatter: () => {
-      //       this.index === 5 ? this.index = 0 : this.index++;
 
-      //       return this.countryLabels[this.index-1]
-      //     }
-      //   }
-      // }
 
     };
   }
