@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, ChartData } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart, ChartData, ChartOptions } from 'chart.js';
 import { Country } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
@@ -18,7 +17,7 @@ export class HomeComponent implements OnInit {
   public numberOfJos = 0;
   public numberOfCountries = 0;
   public barChartData: ChartData<"pie", number[]> | undefined;
-  public barChartOptions = {
+  public barChartOptions : ChartOptions<'pie'>= {
 
   }
   public error: Error | undefined;
@@ -37,7 +36,7 @@ export class HomeComponent implements OnInit {
       next: (country: Country[]) => {
         this.country = country;
         this.initializeBarChartData(this.country);
-        // this.initializeBarChartOption();
+        this.initializeBarChartOption();
         this.initializeNumberOfCountrie(this.country);
         this.initializeNumberOfJos(this.country);
 
@@ -65,6 +64,14 @@ export class HomeComponent implements OnInit {
   initializeBarChartOption(){
    this.barChartOptions = {
       responsive: true,
+      spacing : 0,
+      events : ['click', 'mousemove', 'mouseout'],
+      onClick(event, elements, chart) {
+
+      },
+      plugins : {
+
+      }
       // plugins: {
       //   // Change options for ALL labels of THIS CHART
       //   datalabels: {
