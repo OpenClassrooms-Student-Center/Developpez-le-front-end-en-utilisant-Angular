@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="title" #nameCountry>{{nameOfCountry}}</div>
+  <div class="joandcountry">
+    <div class="jos">
+      <p>Number of entries</p>
+      <p class="numberJoCountry">{{entriesNumber}}</p>
+
+    </div>
+    <div class="countries">
+      <p>Total number medals</p>
+      <p class="numberJoCountry">{{medalsNumber}}</p>
+
+    </div>
+    <div class="countries">
+      <p>Total number of athletes</p>
+      <p class="numberJoCountry">{{athletesNumber}}</p>
+
+    </div>
+  </div>
+  <div class="graph">
+    <canvas id="myChart" height="400" width="350" #chartRef></canvas>
+
+  </div>
+  <button class="goBack">
+    <a routerLink="">Revenir en arrière</a>
+  </button>
+</div>

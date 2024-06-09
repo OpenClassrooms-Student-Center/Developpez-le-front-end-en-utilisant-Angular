@@ -1,3 +1,19 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<div class="container">
+  <h1 class="title" #medalsTitle>{{principalTitle}}</h1>
+  <div class="joandcountry">
+    <div class="jos">
+      <p>Number of JOs</p>
+      <p class="numberJoCountry">{{numberOfJos}}</p>
+
+    </div>
+    <div class="countries">
+      <p>Number of countries</p>
+      <p class="numberJoCountry">{{numberOfCountries}}</p>
+
+    </div>
+  </div>
+  <div class="graph">
+    <canvas id="myChart" height="400" width="390" #chartRef></canvas>
+
+  </div>
+</div>

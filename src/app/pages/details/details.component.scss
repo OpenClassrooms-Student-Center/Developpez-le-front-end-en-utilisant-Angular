@@ -6,7 +6,7 @@
   justify-content: space-around;
   align-items: center;
   width : 100vw;
-  height : 70vh;
+  height : 80vh;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -28,7 +28,8 @@
 .joandcountry{
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 10px;
+  padding: 10px;
 }
 
 .jos{
@@ -66,6 +67,17 @@
   padding-left: 10px;
 }
 
+.goBack{
+  padding: 10px;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.goBack a{
+  text-decoration: none;
+  color: var(--main-color);
+}
 
 @media(min-width : 992px){
 
