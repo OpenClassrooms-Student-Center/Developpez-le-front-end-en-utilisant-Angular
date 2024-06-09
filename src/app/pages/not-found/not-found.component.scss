@@ -6,3 +6,18 @@
   align-items: center;
   flex-direction: column;
 }
+
+h2{
+
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    color : red;
+    padding: 10px;
+    margin: 15px;
+
+}
+
+a{
+  text-decoration: none;
+  color : var(--main-color);
+}

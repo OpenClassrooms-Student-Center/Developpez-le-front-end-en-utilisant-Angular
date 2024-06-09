@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart, ChartData, ChartOptions } from 'chart.js';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Chart, ChartData, ChartOptions, ChartPoint } from 'chart.js';
 import { Country } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import 'chartjs-plugin-piechart-outlabels';
+import { Router } from '@angular/router';
+import { ChartElement } from 'src/app/core/models/ActiveElement';
 
 
 @Component({
@@ -11,34 +13,32 @@ import 'chartjs-plugin-piechart-outlabels';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+  readonly title = "Medals per Country";
+  readonly color = '#04838f';
+  readonly countryColors = ['#793d52', '#89a1db', '#9780a1', '#bfe0f1', '#b8cbe7', '#956065'];
+
   private country: Country[] = [];
   private countryLabels : string[]= [];
-  private countryColors = ['#793d52', '#89a1db', '#9780a1', '#bfe0f1', '#b8cbe7', '#956065']
   private ctx : any;
-  @ViewChild('chartRef') myChartRef : ElementRef | undefined;
   private myChart : Chart | undefined;
 
+  @ViewChild('chartRef') myChartRef : ElementRef | undefined;
+  @ViewChild('medalsTitle') medalsTitle! : ElementRef;
   public numberOfJos = 0;
   public numberOfCountries = 0;
+  public principalTitle = this.title;
   public error: Error | undefined;
 
-  constructor(private olympicService: OlympicService) {
+  constructor(private olympicService: OlympicService, private router : Router, private cdRef: ChangeDetectorRef) {
 
    }
+  ngOnInit(): void {
+  }
   ngAfterViewInit(): void {
     this.getAllCountrysAndInitializeGraph();
   }
 
-  initializeChart(country : Country[]){
-    this.ctx = this.myChartRef?.nativeElement.getContext('2d');
-    this.myChart = new Chart(this.ctx, {
-      type: 'outlabeledPie',
-      data: this.initializeBarChartData(country),
-      options: this.initializeBarChartOption(),
-    });
-
-  }
 
   /**
    * get countrys with their datas and launch method that initialize barChartData and barChartOptions
@@ -47,15 +47,35 @@ export class HomeComponent implements AfterViewInit {
     this.olympicService.getOlympics().subscribe({
       next: (country: Country[]) => {
         this.country = country;
+        this.principalTitle = this.title;
+        this.medalsTitle.nativeElement.style.backgroundColor = this.color;
+
         this.initializeNumberOfCountrie(this.country);
         this.initializeNumberOfJos(this.country);
-        this.initializeChart(country)
+        this.initializeChart(country);
+        this.cdRef.detectChanges();   // utilisé pour détécter les changement des valeurs initialisé dynamiquement car le onClick de
+        // initializeBarCharOption retournait une erreur lorsqu'on revenait à la page précédente
+
 
       },
       error: (error: Error) => this.error = error
     })
 
   }
+
+    /**
+   *
+   * @param country
+   */
+    initializeChart(country : Country[]){
+      this.ctx = this.myChartRef?.nativeElement.getContext('2d');
+      this.myChart = new Chart(this.ctx, {
+        type: 'outlabeledPie',
+        data: this.initializeBarChartData(country),
+        options: this.initializeBarChartOption(),
+      });
+
+    }
 
   /**
    *
@@ -84,7 +104,7 @@ export class HomeComponent implements AfterViewInit {
         legend: false,
         outlabels: {
           backgroundColor: 'transparent',
-          text: '🏅%l',
+          text: '%l',
           color: 'black',
           stretch: 35,
           font: {
@@ -94,11 +114,16 @@ export class HomeComponent implements AfterViewInit {
           },
         },
       },
+      onClick :(event : MouseEvent, activeElements : ChartElement[]) => {
+        if(activeElements.length > 0){
+         this.router.navigateByUrl(`details?country=${activeElements[0].$outlabels.label}`)
+        }
+      },
     }
   }
 
   /**
-   *
+   *()
    * @param country
    * @returns an array that contains the sum of each medals per participation of each country
    */
@@ -106,7 +131,9 @@ export class HomeComponent implements AfterViewInit {
     return [...country
       .map((oneCountry: Country) => oneCountry.participations
         .map((participation: Participation) => participation.medalsCount)
-        .reduce((acc, currentValue) => acc + currentValue))]
+        .reduce((acc, currentValue) => acc + currentValue)
+      )
+    ]
   }
 
   /**
@@ -140,6 +167,14 @@ export class HomeComponent implements AfterViewInit {
     })
 
     this.numberOfJos = numberOfJo;
+  }
+
+  /**
+   *
+   */
+  checkErrorOfGetCountry(){
+    this.principalTitle = "Malheureusement Aucun Pays n'a pas être trouvé"
+    this.medalsTitle.nativeElement.style.backgroundColor = 'red';
   }
 
 }
