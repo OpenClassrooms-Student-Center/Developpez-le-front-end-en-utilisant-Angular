@@ -52,7 +52,6 @@ export class DetailsComponent implements OnInit
     this.athleteCount = data.participations.reduce((sum: number, p: { athleteCount: number }) => sum + p.athleteCount, 0);
 
     this.data = this.formatOlympic(data);
-    console.log(data);
   }
 
   private formatOlympic(olympic: Olympic) : any {
