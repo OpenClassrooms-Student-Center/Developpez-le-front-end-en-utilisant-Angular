@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit
   }
 
   // Parse Olympics to be used with the pie chart
-  private formatOlympics(olympics : Olympic[]) : any{
+  private formatOlympics(olympics : Olympic[]) : any {
     return olympics.map(olympic => ({
         name: olympic.country,
         value: olympic.participations?.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0),

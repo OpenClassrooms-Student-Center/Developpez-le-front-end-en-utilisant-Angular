@@ -30,3 +30,16 @@
         <span>{{athleteCount}}</span>
     </p>
 </div>
+
+<div class="line-chart">
+    <ngx-charts-line-chart  [scheme]="colorScheme"
+                            [showXAxisLabel]="true"
+                            [showYAxisLabel]="false"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [xAxisLabel]="xAxisLabel"
+                            [timeline]="true"
+                            [results]="data"
+                            [timeline]="false">
+    </ngx-charts-line-chart>
+</div>

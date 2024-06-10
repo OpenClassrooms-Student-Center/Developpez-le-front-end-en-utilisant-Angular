@@ -10,3 +10,26 @@
     color: var(--mainColor);
     cursor: pointer;
 }
+
+.line-chart {
+    width: 80%;
+    height: calc(100% - 340px);
+    min-height: 350px;
+    padding-left: 20%;
+    display: flex;
+    flex-flow: column;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+// Tooltip
+::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+    background-color: var(--mainColor) !important;
+    color: white !important;
+    border-radius: 5px;
+
+    // Tooltip tip
+    .tooltip-caret.position-right {
+        border-right: 7px solid var(--mainColor) !important;
+    }
+}

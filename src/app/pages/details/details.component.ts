@@ -16,6 +16,10 @@ export class DetailsComponent implements OnInit
   medalsCount!: Number;
   athleteCount!: Number;
 
+  data!: { name : String, series : { name : String, value : Number }[] };
+  xAxisLabel: string = 'Dates';
+  colorScheme: any = {domain: ['#89A1DB']}
+
   constructor(private olympicService: OlympicService,
               private route: ActivatedRoute,
               private router: Router) {}
@@ -33,7 +37,7 @@ export class DetailsComponent implements OnInit
   private onOlympicsFetched(data : Olympic | undefined) {
     // Navigate to NotFound Page if data is undefined
     if (data === undefined){
-      //this.router.navigateByUrl('**');
+      this.router.navigateByUrl('**');
       return;
     }
 
@@ -46,5 +50,18 @@ export class DetailsComponent implements OnInit
     this.entriesCount = data.participations.length;
     this.medalsCount = data.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0);
     this.athleteCount = data.participations.reduce((sum: number, p: { athleteCount: number }) => sum + p.athleteCount, 0);
+
+    this.data = this.formatOlympic(data);
+    console.log(data);
+  }
+
+  private formatOlympic(olympic: Olympic) : any {
+    return [{
+      name : olympic.country,
+      series : olympic.participations?.map(p => ({
+        name : p.year,
+        value : p.medalsCount
+      }))
+    }];
   }
 }
