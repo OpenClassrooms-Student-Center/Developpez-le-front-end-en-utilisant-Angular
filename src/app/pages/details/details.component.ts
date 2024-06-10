@@ -16,9 +16,11 @@ export class DetailsComponent implements OnInit
   medalsCount!: Number;
   athleteCount!: Number;
 
+  // Chart settings
   data!: { name : String, series : { name : String, value : Number }[] };
   xAxisLabel: string = 'Dates';
   colorScheme: any = {domain: ['#89A1DB']}
+  //
 
   constructor(private olympicService: OlympicService,
               private route: ActivatedRoute,
@@ -51,14 +53,16 @@ export class DetailsComponent implements OnInit
     this.medalsCount = data.participations.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0);
     this.athleteCount = data.participations.reduce((sum: number, p: { athleteCount: number }) => sum + p.athleteCount, 0);
 
+    // Fill chart
     this.data = this.formatOlympic(data);
   }
 
+  // Return chart-friendly data structure from an olympic
   private formatOlympic(olympic: Olympic) : any {
     return [{
       name : olympic.country,
       series : olympic.participations?.map(p => ({
-        name : p.year,
+        name : String(p.year),
         value : p.medalsCount
       }))
     }];

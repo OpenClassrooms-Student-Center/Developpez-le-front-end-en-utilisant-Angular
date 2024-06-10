@@ -13,6 +13,7 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
+  // Called once by app component to load data
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),

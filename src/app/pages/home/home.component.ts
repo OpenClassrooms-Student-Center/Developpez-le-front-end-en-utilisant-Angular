@@ -17,12 +17,13 @@ export class HomeComponent implements OnInit
   JOsCount: Number = 0;
   countriesCount: Number = 0;
 
-  // Chart parameters
+  // Chart settings
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   colorScheme: any = {domain: ['#956065', '#793D52', '#89A1DB', '#9780A1', '#BFE0F1', '#B8CBE7']}
+  //
 
   constructor(private olympicService: OlympicService,
               private router: Router) {}
