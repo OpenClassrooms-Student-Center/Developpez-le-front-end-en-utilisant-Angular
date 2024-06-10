@@ -25,6 +25,7 @@
 ::ng-deep .ngx-charts-tooltip-content.type-tooltip {
     background-color: var(--mainColor) !important;
     color: white !important;
+    border-radius: 5px;
 
     // Tooltip tip
     .tooltip-caret.position-top {

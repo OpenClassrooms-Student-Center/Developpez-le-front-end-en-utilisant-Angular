@@ -1,0 +1,12 @@
+.first-line {
+    display: flex;
+    align-items: center;
+    margin-top: -25px;
+}
+
+.back-button {
+    margin-left: 20px;
+    position: absolute;
+    color: var(--mainColor);
+    cursor: pointer;
+}

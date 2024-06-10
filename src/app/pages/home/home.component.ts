@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit
   isDoughnut: boolean = false;
   colorScheme: any = {domain: ['#956065', '#793D52', '#89A1DB', '#9780A1', '#BFE0F1', '#B8CBE7']}
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService,
+              private router: Router) {}
 
   ngOnInit(): void {
     // Fetch data and subscribe for changes
@@ -40,8 +42,9 @@ export class HomeComponent implements OnInit
       }));
   }
 
+  // Navigate to the Details page of the selected country
   onCountrySelected(data : any) : void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    this.router.navigateByUrl(`details/${data.name}`)
   }
 
   // Called whenever our data changed
