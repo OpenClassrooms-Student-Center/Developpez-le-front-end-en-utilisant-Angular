@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
 
@@ -9,10 +9,12 @@ import { Olympic } from 'src/app/core/models/Olympic';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit 
+export class HomeComponent implements OnInit, OnDestroy
 {
   olympics$: Observable<Olympic[]> = of([]);
   chartData: {city : String, year : Number}[] = [];
+
+  olympicsSubscription!: Subscription;
 
   JOsCount: Number = 0;
   countriesCount: Number = 0;
@@ -28,10 +30,15 @@ export class HomeComponent implements OnInit
   constructor(private olympicService: OlympicService,
               private router: Router) {}
 
+
   ngOnInit(): void {
     // Fetch data and subscribe for changes
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe(data => this.onOlympicsUpdate(data));
+    this.olympicsSubscription = this.olympics$.subscribe(data => this.onOlympicsUpdate(data));
+  }
+
+  ngOnDestroy(): void {
+    this.olympicsSubscription.unsubscribe();
   }
 
   // Parse Olympics to be used with the pie chart

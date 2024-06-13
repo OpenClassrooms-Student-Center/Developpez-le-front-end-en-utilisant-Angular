@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -9,8 +9,10 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit
+export class DetailsComponent implements OnInit, OnDestroy
 {
+  olympicsSubscription!: Subscription;
+
   countryName!: String;
   entriesCount!: Number;
   medalsCount!: Number;
@@ -26,10 +28,15 @@ export class DetailsComponent implements OnInit
               private route: ActivatedRoute,
               private router: Router) {}
 
+
   ngOnInit(): void {
     // Fetch olympic from route
     let countryName: string = this.route.snapshot.params['countryName'];
-    this.olympicService.getOlympics().pipe(map((olympics : Olympic[]) => olympics.find(o => o.country === countryName))).subscribe(data => this.onOlympicsFetched(data));
+    this.olympicsSubscription = this.olympicService.getOlympics().pipe(map((olympics : Olympic[]) => olympics.find(o => o.country === countryName))).subscribe(data => this.onOlympicsFetched(data));
+  }
+
+  ngOnDestroy(): void {
+    this.olympicsSubscription.unsubscribe();
   }
 
   onBackButtonClicked() : void {
