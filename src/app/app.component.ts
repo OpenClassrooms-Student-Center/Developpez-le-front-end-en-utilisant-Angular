@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, take } from 'rxjs';
 import { OlympicService } from './core/services/olympic.service';
 import { Router } from '@angular/router';
 
@@ -8,12 +8,19 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy
+{
+  olympicsSubscription! : Subscription;
+
   constructor(private olympicService: OlympicService,
               private router: Router) {}
 
   ngOnInit(): void {
-    this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+    this.olympicsSubscription = this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.olympicsSubscription.unsubscribe();
   }
 
   setCursor() : String {
