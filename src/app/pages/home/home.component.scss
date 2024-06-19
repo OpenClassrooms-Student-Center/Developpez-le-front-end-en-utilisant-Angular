@@ -1,9 +1,14 @@
 .tooltip {
+  position: absolute;
+  bottom: 0;
+  right: -150%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
+  padding: 5px 20px;
   font-size: 1.1rem;
+  background-color: var(--primary-color);
+  border-radius: 10px;
 
   .medals {
     display: flex;
