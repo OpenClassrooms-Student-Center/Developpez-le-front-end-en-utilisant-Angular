@@ -19,7 +19,7 @@ export class DetailsComponent implements OnInit, OnDestroy
   athleteCount!: Number;
 
   // Chart settings
-  data!: { name : String, series : { name : String, value : Number }[] };
+  data!: [{ name : String, series: ({ name: String, value : Number }[] | undefined) }];
   xAxisLabel: string = 'Dates';
   colorScheme: any = {domain: ['#89A1DB']}
   //
@@ -65,7 +65,7 @@ export class DetailsComponent implements OnInit, OnDestroy
   }
 
   // Return chart-friendly data structure from an olympic
-  private formatOlympic(olympic: Olympic) : any {
+  private formatOlympic(olympic: Olympic) : [{ name : String, series: ({ name: String, value : Number }[] | undefined) }] {
     return [{
       name : olympic.country,
       series : olympic.participations?.map(p => ({

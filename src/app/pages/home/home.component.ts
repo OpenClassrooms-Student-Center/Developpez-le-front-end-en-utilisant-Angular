@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription, of } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
+import { Participation } from 'src/app/core/models/Participation';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { Olympic } from 'src/app/core/models/Olympic';
 export class HomeComponent implements OnInit, OnDestroy
 {
   olympics$: Observable<Olympic[]> = of([]);
-  chartData: {city : String, year : Number}[] = [];
+  chartData: { name : String, value : Number, participations : Participation[] | undefined }[] = [];
 
   olympicsSubscription!: Subscription;
 
@@ -42,16 +43,16 @@ export class HomeComponent implements OnInit, OnDestroy
   }
 
   // Parse Olympics to be used with the pie chart
-  private formatOlympics(olympics : Olympic[]) : any {
+  private formatOlympics(olympics : Olympic[]) : { name : String, value : Number, participations : Participation[] | undefined }[] {
     return olympics.map(olympic => ({
         name: olympic.country,
-        value: olympic.participations?.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0),
+        value: olympic.participations?.reduce((sum: number, p: { medalsCount: number }) => sum + p.medalsCount, 0) ?? 0,
         participations: olympic.participations, 
       }));
   }
 
   // Navigate to the Details page of the selected country
-  onCountrySelected(data : any) : void {
+  onCountrySelected(data : {name : String, value : Number}) : void {
     this.router.navigateByUrl(`details/${data.name}`)
   }
 
