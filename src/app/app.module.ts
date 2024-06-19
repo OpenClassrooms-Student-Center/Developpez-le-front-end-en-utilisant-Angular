@@ -7,9 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { TitleComponent } from './components/title/title.component';
+import { StatComponent } from './components/stat/stat.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NotFoundComponent,
+    TitleComponent,
+    StatComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
