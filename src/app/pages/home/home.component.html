@@ -1,16 +1,29 @@
-<ngx-charts-pie-chart
-  [results]="data"
-  [view]="view"
-  [labels]="showLabels"
-  [doughnut]="isDoughnut"
->
-  <ng-template #tooltipTemplate let-model="model">
-    <div class="tooltip">
-      <span>{{ model.name }}</span>
-      <span class="medals">
-        <img [src]="medalImage" alt="medal" />
-        <span>{{ model.value }}</span>
-      </span>
-    </div>
-  </ng-template>
-</ngx-charts-pie-chart>
+<app-title [title]="title"></app-title>
+
+<div class="stat-zone">
+  <app-stat
+    *ngFor="let stat of stats"
+    [title]="stat.title"
+    [value]="stat.value"
+  ></app-stat>
+</div>
+
+<div #ContainerRef>
+  <ngx-charts-pie-chart
+    (window:resize)="resizeChart(ContainerRef.offsetWidth)"
+    [view]="view"
+    [results]="data"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+  >
+    <ng-template #tooltipTemplate let-model="model">
+      <div class="tooltip">
+        <span>{{ model.name }}</span>
+        <span class="medals">
+          <img [src]="medalImage" alt="medal" />
+          <span>{{ model.value }}</span>
+        </span>
+      </div>
+    </ng-template>
+  </ngx-charts-pie-chart>
+</div>
