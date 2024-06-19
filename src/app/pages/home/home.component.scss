@@ -1,0 +1,35 @@
+.pie-chart {
+    width: 100%;
+    height: calc(100% - 315px);
+    min-height: 300px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+// Chart Tooltip content
+.tooltip {
+    font-size: medium;
+    padding: 5px;
+
+    span {
+        color: transparent;  
+        text-shadow: 0 0 0 white;
+        font-weight: 100;
+    }
+}
+
+// Chart Tooltip
+::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+    background-color: var(--mainColor) !important;
+    color: white !important;
+    border-radius: 5px;
+
+    // Tooltip tip
+    .tooltip-caret.position-top {
+        color: white !important;
+        border-top: 7px solid var(--mainColor) !important;
+    }
+}

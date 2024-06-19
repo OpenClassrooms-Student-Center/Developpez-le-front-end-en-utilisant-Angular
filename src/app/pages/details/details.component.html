@@ -1,0 +1,46 @@
+<div class="first-line">
+    <div class="back-button" (click)="onBackButtonClicked()">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+            </svg>
+            Back
+        </h3>
+    </div>
+    
+    <div style="flex: 2;">
+        <div class="category">
+            <span>{{countryName}}</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="legend">
+    <p>Number of entries
+        <br>
+        <span>{{entriesCount}}</span>
+    </p>
+    <p>Total number of medals
+        <br>
+        <span>{{medalsCount}}</span>
+    </p>
+    <p>Total number of athletes
+        <br>
+        <span>{{athleteCount}}</span>
+    </p>
+</div>
+
+<div class="line-chart">
+    <ngx-charts-line-chart  [scheme]="colorScheme"
+                            [showXAxisLabel]="true"
+                            [showYAxisLabel]="false"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [xAxisLabel]="xAxisLabel"
+                            [timeline]="true"
+                            [results]="data"
+                            [timeline]="false"
+                            [animations]="false">
+    </ngx-charts-line-chart>
+</div>

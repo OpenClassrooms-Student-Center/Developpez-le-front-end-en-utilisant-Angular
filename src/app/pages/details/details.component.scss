@@ -1,0 +1,35 @@
+.first-line {
+    display: flex;
+    align-items: center;
+    margin-top: -25px;
+}
+
+.back-button {
+    margin-left: 20px;
+    position: absolute;
+    color: var(--mainColor);
+    cursor: pointer;
+}
+
+.line-chart {
+    width: 80%;
+    height: calc(100% - 360px);
+    min-height: 350px;
+    padding-left: 20%;
+    display: flex;
+    flex-flow: column;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+// Chart Tooltip
+::ng-deep .ngx-charts-tooltip-content.type-tooltip {
+    background-color: var(--mainColor) !important;
+    color: white !important;
+    border-radius: 5px;
+
+    // Tooltip tip
+    .tooltip-caret.position-right {
+        border-right: 7px solid var(--mainColor) !important;
+    }
+}
