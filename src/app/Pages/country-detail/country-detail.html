@@ -1,0 +1,28 @@
+<div class="container home-wrapper" *ngIf="(country)">
+ 
+  <h2 class="countryTitle"> {{ country.country}}</h2>
+  <div class="d-flex justify-content-center flex-wrap gap-3 p-3">
+    <h3 class="subtitle">Nomber of entries <span class="detail"> {{numberOfJOs}}</span></h3>
+    <h3 class="subtitle">Total number medals<span class="detail"> {{ totalMedals}}</span></h3>
+    <h3 class="subtitle">Total number of athletes<span class="detail"> {{ totalAthletes}}</span></h3>
+  </div>
+  
+  <div *ngIf="lineChartData">
+    <ngx-charts-line-chart 
+    [results]="[lineChartData]" 
+    [xAxis]="xAxis" [yAxis]="yAxis" 
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel" 
+    [xAxisLabel]="xAxisLabel" 
+    [yAxisLabel]="yAxisLabel" 
+    [timeline]="timeline"
+    [view]="[width, height]" 
+    [showRefLabels]="showRefLabels" 
+    [showRefLines]="showRefLines"
+    [showGridLines]="showGridLines" 
+    [legend]="legend" 
+    [gradient]="gradient">
+    </ngx-charts-line-chart>
+  </div>
+  <button class="backToHome" (click)="backToHome()">&larr; Back to Home</button>
+</div>

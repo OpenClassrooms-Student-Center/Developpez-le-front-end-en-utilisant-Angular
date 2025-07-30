@@ -1,29 +1,68 @@
-# OlympicGamesStarter
+# Olympic Games Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+An interactive, responsive Angular application that visualizes past Olympic Games data with charts. Users can:
 
-Don't forget to install your node_modules before starting (`npm install`).
+* View a **pie chart** of total medals per country.
+* Click on any country slice to navigate to a **detail page**.
+* On the detail page, see:
 
-## Development server
+  * Total number of participations
+  * Total number of medals
+  * Total number of athletes
+  * A **bar chart** of medals by edition
+* Return to the dashboard at any time.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Fully responsive—no external CSS framework required.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+##  Features
 
-## Where to start
+* **Home / Dashboard**
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+  * Pie chart of \[country → total medals]
+  * Summary stats: number of editions (JOs), number of countries
+  * Clickable slices that route to detail pages
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+* **Country Detail**
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+  * Displays:
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+    * Number of participations
+    * Total medals
+    * Total athletes
+  * Bar chart showing medals per edition
+  * “Back to Home” link
 
-You're now ready to implement the requested features.
+* **Data service**
 
-Good luck!
+  * Loads `assets/mock/olympic.json` once at app start
+  * Provides an RxJS `Observable<Olympic[]>` to all components
+  * Utility function to sum medals or athletes
+
+---
+
+## Technologies Used
+
+* Node.js: 22.16.0
+* Angular CLI: 20.0.3
+* Package Manager: npm 11.4.2
+
+## How to Use
+
+1. Launch the app (`ng serve`).
+2. On the **Home** page:
+
+   * View the pie chart of total medals.
+   * Hover or click on slices to see tooltip & navigate.
+3. On a **Country Detail** page:
+
+   * Read summary stats at the top.
+   * Explore the bar chart showing medals per year.
+   * Click “Back to Home” to return.
+
+---
+
+## Author
+
+Abubaker ISMAIL NEMAIRY

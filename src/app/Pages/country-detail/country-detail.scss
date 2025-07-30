@@ -1,0 +1,36 @@
+.countryTitle {
+  background-color: #0f9db6d2;
+  display: inline-block;
+  /* shrinks to content width */
+  white-space: nowrap;
+  /* prevents wrapping */
+  padding: 0.5rem 1rem;
+  /* switch to rem units for consistent padding */
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  width: fit-content;
+  /* modern browsers only */
+  max-width: 100%;
+  /* never exceed container width */
+  padding: 0.5rem;
+  border-radius: .4rem;
+  text-align: center;
+}
+
+
+// Styles for the "Back to Home" link/button.
+// - Displays as a block element.
+// - Adds a top margin for spacing.
+// - Uses a responsive font size with clamp for better scaling.
+// - Applies bold font weight for emphasis.
+// - Centers the text horizontally.
+// - Sets the text color to a teal shade (#0388a0).
+// - Removes underline from the text for a cleaner look.
+.backToHome {
+  display: block;
+  margin-top: 30px;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-weight: bold;
+  text-align: center;
+  color: #0388a0;
+  text-decoration: none;
+}

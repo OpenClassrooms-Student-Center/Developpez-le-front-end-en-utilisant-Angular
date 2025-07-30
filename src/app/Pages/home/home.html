@@ -1,0 +1,30 @@
+
+<div class="container home-wrapper"> 
+  <h1 class="title">Medals per Country</h1>
+  <ng-container *ngIf="(olympics$ | async) as olympics">
+    <div class="d-flex justify-content-center flex-wrap gap-3 p-3">
+      <h3 class="subtitle">Number of JOs<span class="detail">{{ numberOfJOs$ | async }}</span></h3>
+      <h3 class="subtitle">Number of countries<span class="detail">{{ olympics.length }}</span></h3>
+    </div>
+  </ng-container>
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <ngx-charts-pie-chart class="piechart" 
+       *ngIf="pieData$ | async as pieData"
+       [view]="[width, height]"
+       [results]="pieData" 
+       [legend]="showLegend"
+       [labels]="showLabels" 
+       [gradient]="gradient" 
+       [doughnut]="isDoughnut" 
+       (select)="onCountrySelect($event)">
+   
+        <ng-template #tooltipTemplate let-model="model">
+          <div>{{model.name}}</div>
+          <div>🥇{{model.value}}</div>
+        </ng-template>
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+
+</div>

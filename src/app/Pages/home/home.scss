@@ -1,0 +1,40 @@
+
+
+/*
+  Styles for the pie chart container and ngx-charts tooltip.
+
+  .piechart:
+    - Responsive width between 300px and 800px.
+    - Height set to 70% of viewport, reduced to 50% on screens <= 600px.
+    - Minimum height of 200px.
+    - Margin of 2rem for spacing.
+
+  .ngx-charts-tooltip-content.type-tooltip:
+    - Custom tooltip caret color.
+    - Tooltip background set to a semi-transparent teal.
+    - White text, increased font size for readability.
+    - Rounded corners for visual appeal.
+*/
+
+.piechart { 
+  width: 100%;
+  max-width: 800px; 
+  min-width: 300px;
+  height: 70vh;
+
+  @media (max-width: 600px) {
+    height: 50vh;
+  }
+  min-height: 200px;
+  margin: 2rem; 
+}
+
+.ngx-charts-tooltip-content.type-tooltip {
+  .tooltip-caret {
+    border-top-color: #0388a0d2 !important;  
+  }
+  background-color: #0388a0d2 !important;
+  color: white !important;
+  font-size: 20px !important;
+  border-radius: 15px !important; 
+}
