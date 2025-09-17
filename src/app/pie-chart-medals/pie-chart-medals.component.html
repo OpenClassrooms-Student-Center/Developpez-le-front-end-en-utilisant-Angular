@@ -1,0 +1,22 @@
+<div class="chart-wrapper">
+  <h2 class="chart-header">
+    Medals per country
+  </h2>
+  <div class="stats-container">
+    <div class="stat-box">
+      Number of countries <br/> {{this.nbCountry}}
+    </div>
+    <div class="stat-box">
+      Number of JO <br/> {{this.nbOlympics}}
+    </div>
+  </div>
+</div>
+<div class="chart-container">
+  <ngx-charts-pie-chart
+    [results]="data"
+    [legend]="showLegend"
+    [labels]="showLabels"
+    [doughnut]="doughnut"
+    (select)="onClicOnCountry($event)">
+  </ngx-charts-pie-chart>
+</div>

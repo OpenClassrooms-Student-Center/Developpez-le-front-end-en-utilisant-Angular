@@ -1,0 +1,45 @@
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 2rem 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.olympic-rings {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -1rem;
+  gap: 0; /* pas d’espace auto */
+}
+
+.ring {
+  width: 50px;
+  height: 50px;
+  border: 4px solid;
+  border-radius: 50%;
+  margin: 0 -12px; /* chevauchement */
+  background: transparent;
+}
+
+/* Couleurs officielles */
+.ring.blue   { border-color: #0085C7; }
+.ring.yellow { border-color: #F4C300; margin-top: 28px; } /* 2e ligne */
+.ring.black  { border-color: #000000; }
+.ring.green  { border-color: #009F3D; margin-top: 28px; } /* 2e ligne */
+.ring.red    { border-color: #DF0024; }
+
+:host {
+  display: block;
+  width: 80%;                 /* 80% de la largeur du parent */
+  margin: 1rem auto 0 auto;   /* centré horizontalement + espace au dessus */
+  background-color: #ececec;  /* gris clair */
+  padding: 1rem 2rem;         /* espace intérieur */
+  border-radius: 12px;        /* coins arrondis */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* léger effet de profondeur */
+  text-align: center;         /* centrer le texte à l’intérieur */
+  font-family: 'Montserrat', sans-serif; /* appliquer la police Montserrat */
+}

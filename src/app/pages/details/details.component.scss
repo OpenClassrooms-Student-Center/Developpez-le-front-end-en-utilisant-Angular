@@ -1,0 +1,20 @@
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto; 
+}
+
+:host {
+  display: block;
+  width: 80%;
+  margin: 1rem auto 0 auto;
+  background-color: #ececec;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  text-align: start;
+  font-family: 'Montserrat', sans-serif;
+}
