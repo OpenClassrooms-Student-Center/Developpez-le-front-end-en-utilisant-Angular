@@ -1,0 +1,17 @@
+<div *ngIf="dataPie && dataPie.length > 0; else loading">
+  <ngx-charts-pie-chart
+    [results]="dataPie"
+    [scheme]="colorScheme"
+    [gradient]="gradient"
+    [view]="view"
+    [doughnut]="isDoughnut"
+    [labels]="showLabels"
+    [legend]="showLegend"
+    (select)="onSelect($event)"
+  >
+  </ngx-charts-pie-chart>
+</div>
+
+<ng-template #loading>
+  <div class="loading">Chargement des données...</div>
+</ng-template>
