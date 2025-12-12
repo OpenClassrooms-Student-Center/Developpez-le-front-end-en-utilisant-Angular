@@ -1,0 +1,28 @@
+<button class="btn btn-success pull-right" (click)="returnHome()">Return to Home page</button>
+
+<h1 class="stat-item">
+    <strong></strong> {{displayNameCountry()}}
+</h1>
+
+<div class="details-box stats-row">
+
+  <div class="stat-item">
+  <span class="label">Participations :</span>
+  <span class="value">{{ entriesNumber() }}</span>
+</div>
+
+<div class="stat-item">
+  <span class="label">Médailles :</span>
+  <span class="value">{{ totalMedalsforCountry() }}</span>
+</div>
+
+<div class="stat-item">
+  <span class="label">Athlètes :</span>
+  <span class="value">{{ totalAthletesForCountry() }}</span>
+</div>
+
+</div>
+
+<div class="chart-wrapper">
+  <app-line-chart></app-line-chart>
+</div>

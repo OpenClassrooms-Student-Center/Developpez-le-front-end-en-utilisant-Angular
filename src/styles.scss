@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+/* Style général du tooltip */
+.ngx-charts-tooltip-content.type-tooltip {
+    background: rgb(0, 165, 184) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    text-align: center;
+    padding: 14px 18px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Titre du pays */
+.ngx-charts-tooltip-content.type-tooltip .tooltip-title {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Zone content : icône + valeur alignées horizontalement */
+.ngx-charts-tooltip-content.type-tooltip .tooltip-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important; /* petit espace entre icône et nombre */
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+/* Ajout de l’icône avant la valeur */
+.ngx-charts-tooltip-content.type-tooltip .tooltip-content::before {
+    content: "🏅"; /* Icône médaille */
+    font-size: 22px; /* Taille adaptée pour ressembler à ton exemple */
+    margin-right: 2px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}

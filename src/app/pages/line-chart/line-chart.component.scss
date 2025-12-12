@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+ngx-charts-line-chart {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+svg {
+  margin: 0 auto !important;
+  display: block;
+}

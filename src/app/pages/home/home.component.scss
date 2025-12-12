@@ -1,0 +1,146 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+h1.stat-item {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  background: rgb(0, 165, 184);
+  color: white;                  
+  padding: 15px 30px;           
+  border-radius: 12px;           
+  width: fit-content;
+  max-width: 100%;            
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  word-wrap: break-word; //permet d'éviter que ca déborde de l'écran mobile
+}
+
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.stat-item {
+  background: #ffffff;       
+  border-radius: 12px;
+  padding: 20px 25px;
+  min-width: 120px;
+  flex: 1;
+  max-width: 200px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border: 3px solid rgb(0, 165, 184);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.stat-item strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.stat-item .label {
+  font-size: 1.1rem;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.stat-item .value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.chart-wrapper {
+  width: 100%;
+  max-width: 900px;         
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+//Dimension tablette
+
+@media (max-width: 768px) {
+
+  :host {
+    padding: 15px 20px;
+  }
+
+  h1.stat-item {
+    font-size: 1.7rem;
+    padding: 12px 24px;
+  }
+
+  .stats-row {
+    gap: 15px;
+  }
+
+  .stat-item {
+    min-width: 130px;
+    padding: 18px 20px;
+  }
+
+  .stat-item .value {
+    font-size: 1.4rem;
+  }
+
+  .chart-wrapper {
+    padding: 15px 20px;
+    max-width: 100%;
+  }
+}
+
+//Dimension Smartphone
+@media (max-width: 600px) {
+  :host {
+    padding: 20px 10px;
+  }
+
+  h1.stat-item {
+    font-size: 1.4rem;
+    padding: 8px 15px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat-item {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+  
+  .stat-item.value{
+    font-size: 1.3rem;
+  }
+
+  .chart-wrapper {
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: none;
+  }
+
+  ngx-charts-pie-chart{
+    height: 350px;
+  }
+}
