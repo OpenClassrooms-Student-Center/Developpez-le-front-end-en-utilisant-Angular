@@ -51,3 +51,5 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/* Comprendre le système de flag et déterminer ceux dont on a besoin pour faire fonctionner notre site sur différents hardware*/
